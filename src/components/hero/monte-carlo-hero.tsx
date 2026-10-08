@@ -39,7 +39,7 @@ export function MonteCarloHero({
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_right,rgb(0_0_0/0.16),rgb(0_0_0/0.45)_35%,black_58%)] max-lg:[mask-image:linear-gradient(to_bottom,rgb(0_0_0/0.5),black_70%)]"
+        className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_right,rgb(0_0_0/0.16),rgb(0_0_0/0.45)_35%,black_52%)] max-lg:[mask-image:linear-gradient(to_bottom,rgb(0_0_0/0.5),black_70%)]"
       >
         <MonteCarloCanvas />
       </div>
