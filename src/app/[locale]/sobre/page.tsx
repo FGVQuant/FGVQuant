@@ -1,0 +1,199 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import {
+  Braces,
+  CalendarDays,
+  LineChart,
+  Mail,
+  Trophy,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { getPageLocale } from "@/lib/locale";
+import { getAreas, getSite, getStats, tr } from "@/lib/content";
+import { PageIntro } from "@/components/layout/page-intro";
+import { Em, SectionHeader } from "@/components/ui/section-header";
+import { ButtonLink } from "@/components/ui/button";
+import { PlaceholderNote } from "@/components/ui/placeholder-note";
+import {
+  BentoCard,
+  BentoGrid,
+  CandlesBg,
+  EquationBg,
+  NodeGraphBg,
+} from "@/components/sections/bento-grid";
+import { KpiStrip } from "@/components/sections/kpi-strip";
+import { Equation } from "./_components/equation";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("About");
+  return { title: t("metaTitle"), description: t("metaDescription") };
+}
+
+const AREA_LAYOUT: Record<string, { span: string; bg: "graph" | "candles" | "eq" | null }> = {
+  derivatives: { span: "lg:col-span-4", bg: "eq" },
+  ml: { span: "lg:col-span-2", bg: "graph" },
+  algo: { span: "lg:col-span-2", bg: "candles" },
+  research: { span: "lg:col-span-2", bg: null },
+  python: { span: "lg:col-span-2", bg: "graph" },
+};
+
+const WAYS: { key: string; href: string; Icon: LucideIcon }[] = [
+  { key: "study", href: "/sobre", Icon: Users },
+  { key: "research", href: "/newsletter", Icon: Braces },
+  { key: "newsletter", href: "/newsletter", Icon: Mail },
+  { key: "fund", href: "/capital", Icon: LineChart },
+  { key: "competitions", href: "/competicoes", Icon: Trophy },
+  { key: "events", href: "/eventos", Icon: CalendarDays },
+];
+
+export default async function AboutPage() {
+  const locale = await getPageLocale();
+  const t = await getTranslations("About");
+  const tCommon = await getTranslations("Common");
+  const site = getSite();
+  const stats = getStats();
+  const areas = getAreas();
+
+  return (
+    <main id="content">
+      <PageIntro
+        eyebrow={t("eyebrow")}
+        title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
+        description={t("lead", { year: site.founded, members: site.members })}
+      />
+
+      <section className="container-page grid gap-12 py-20 md:py-24 lg:grid-cols-[1fr_1.2fr]">
+        <SectionHeader
+          eyebrow={t("mission.eyebrow")}
+          title={t.rich("mission.title", { em: (c) => <Em>{c}</Em> })}
+        />
+        <div className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p>{t("mission.p1")}</p>
+          <p>{t("mission.p2")}</p>
+        </div>
+      </section>
+
+      <section className="container-page border-t border-border py-20 md:py-24">
+        <SectionHeader
+          eyebrow={t("areas.eyebrow")}
+          title={t.rich("areas.title", { em: (c) => <Em>{c}</Em> })}
+          description={t("areas.description")}
+        />
+        <BentoGrid className="mt-12">
+          {areas.map((a, i) => {
+            const layout = AREA_LAYOUT[a.id] ?? { span: "lg:col-span-2", bg: null };
+            const background =
+              layout.bg === "graph" ? (
+                <NodeGraphBg />
+              ) : layout.bg === "candles" ? (
+                <CandlesBg />
+              ) : layout.bg === "eq" ? (
+                <EquationBg />
+              ) : undefined;
+            return (
+              <BentoCard
+                key={a.id}
+                eyebrow={String(i + 1).padStart(2, "0")}
+                title={tr(a.title, locale)}
+                description={tr(a.description, locale)}
+                className={layout.span}
+                background={background}
+              />
+            );
+          })}
+        </BentoGrid>
+      </section>
+
+      <section className="container-page border-t border-border py-20 md:py-24">
+        <SectionHeader
+          eyebrow={t("how.eyebrow")}
+          title={t.rich("how.title", { em: (c) => <Em>{c}</Em> })}
+          description={t("how.description")}
+        />
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {WAYS.map(({ key, href, Icon }) => {
+            const linked = key !== "study" && key !== "research";
+            const body = (
+              <>
+                <Icon aria-hidden className="size-6 stroke-[1.5] text-highlight" />
+                <h3 className="mt-4 font-display text-xl text-foreground">
+                  {t(`how.${key}.title`)}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">{t(`how.${key}.body`)}</p>
+                {linked ? (
+                  <span className="mt-4 inline-block font-mono text-xs text-highlight">
+                    {t(`how.${key}.cta`)} →
+                  </span>
+                ) : null}
+              </>
+            );
+            const cls = "glass block h-full rounded-2xl border border-border p-6 transition-colors";
+            return (
+              <li key={key}>
+                {linked ? (
+                  <Link href={href} className={`${cls} hover:border-border-strong`}>
+                    {body}
+                  </Link>
+                ) : (
+                  <div className={cls}>{body}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section className="border-t border-border py-20 md:py-24">
+        <div className="container-page">
+          <SectionHeader
+            eyebrow={t("numbers.eyebrow")}
+            title={t.rich("numbers.title", { em: (c) => <Em>{c}</Em> })}
+          />
+          <KpiStrip
+            className="mt-12"
+            locale={locale}
+            items={[
+              { label: t("numbers.members"), value: stats.members },
+              { label: t("numbers.issues"), value: stats.issues },
+              { label: t("numbers.teams"), value: stats.rankedTeams },
+              {
+                label: t("numbers.fund"),
+                value: stats.fundCumulative,
+                decimals: 1,
+                suffix: "%",
+                note: tCommon("simulated"),
+              },
+            ]}
+          />
+          <p className="mt-4 font-mono text-xs text-muted-foreground">
+            {t("numbers.note", { asOf: site.membersAsOf })}
+          </p>
+        </div>
+      </section>
+
+      <section className="container-page py-20 md:py-24">
+        <Equation caption={t("equationCaption")} />
+        <PlaceholderNote label={tCommon("pending")} className="mt-10">
+          {t("structurePending")}
+        </PlaceholderNote>
+      </section>
+
+      <section className="container-page border-t border-border py-20 text-center md:py-24">
+        <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
+          {t.rich("cta.title", { em: (c) => <Em>{c}</Em> })}
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
+        <div className="mt-8 flex justify-center gap-3">
+          <ButtonLink href="/processo-seletivo" size="lg" arrow>
+            {t("cta.button")}
+          </ButtonLink>
+          <ButtonLink href="/time" variant="outline" size="lg">
+            {t("cta.team")}
+          </ButtonLink>
+        </div>
+      </section>
+    </main>
+  );
+}

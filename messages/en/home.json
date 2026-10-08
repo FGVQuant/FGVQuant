@@ -1,1 +1,81 @@
-{}
+{
+  "Home": {
+    "metaTitle": "FGV Quant — Quantitative Finance League",
+    "hero": {
+      "eyebrow": "Quantitative Finance League · FGV-SP",
+      "titleA": "Quantitative finance,",
+      "titleEm": "done rigorously",
+      "description": "Research, systematic strategies and technical training for Brazil's next generation of quants.",
+      "join": "Join us",
+      "newsletter": "Read the newsletter",
+      "legend": "N = 128 paths · μ = 8% · σ = 24% · p5–p95 band · simulation"
+    },
+    "stats": {
+      "members": "Members",
+      "issues": "Newsletter issues",
+      "ranked": "Ranked teams · Desafio Quant AI",
+      "fund": "FGV Quant Capital",
+      "fundNote": "Simulated fund · through {month}"
+    },
+    "about": {
+      "eyebrow": "Who we are",
+      "titleA": "Mathematics, statistics and code",
+      "titleEm": "applied to markets",
+      "body": "Founded in 2021, FGV Quant brings together FGV-SP students interested in quantitative finance. We learn by solving real problems (PBL): from derivatives and machine learning to algorithmic trading and Python.",
+      "cta": "About the league"
+    },
+    "terminal": {
+      "title": "fgvquant@league: ~",
+      "introCommand": "cat mission.txt",
+      "intro1": "FGV Quant is FGV-SP's Quantitative Finance League, founded in 2021.",
+      "intro2": "We apply mathematics, statistics and programming to financial markets —",
+      "intro3": "derivatives, machine learning, algorithmic trading and Python — through problem-based learning.",
+      "hint": "Type /help to see the commands.",
+      "helpHeading": "Available commands:",
+      "notFound": "command not found: {cmd}",
+      "navigating": "opening {path}…",
+      "inputLabel": "Terminal command",
+      "chipsLabel": "Quick commands",
+      "cmdJoin": "how to join the league",
+      "cmdNewsletter": "FGV Quant Insights, monthly",
+      "cmdCapital": "our simulated fund",
+      "cmdTeam": "who runs the league",
+      "cmdAbout": "mission and history",
+      "cmdMotto": "our motto"
+    },
+    "areas": {
+      "eyebrow": "Focus areas",
+      "titleA": "Five fronts,",
+      "titleEm": "one standard of rigor",
+      "description": "Each front combines theory, data and code."
+    },
+    "newsletter": {
+      "eyebrow": "FGV Quant Insights",
+      "titleA": "The monthly",
+      "titleEm": "newsletter",
+      "description": "People, strategies, news and opportunities from the quant world — every month on LinkedIn (in Portuguese).",
+      "all": "See all issues",
+      "read": "Read summary"
+    },
+    "activities": {
+      "eyebrow": "Activities",
+      "titleA": "Classes, visits and",
+      "titleEm": "competitions",
+      "all": "See all events"
+    },
+    "capital": {
+      "eyebrow": "FGV Quant Capital",
+      "title": "Our simulated portfolio",
+      "body": "Members practise portfolio construction, risk management and monthly reporting in a simulated fund.",
+      "label": "Cumulative return since inception",
+      "asOf": "through {month}",
+      "cta": "See FGV Quant Capital"
+    },
+    "join": {
+      "eyebrow": "Join us",
+      "title": "Want to be part of FGV Quant?",
+      "body": "Follow us to find out when applications open.",
+      "cta": "How to join"
+    }
+  }
+}

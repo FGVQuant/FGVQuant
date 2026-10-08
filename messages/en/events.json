@@ -1,1 +1,33 @@
-{}
+{
+  "Events": {
+    "meta": {
+      "title": "Events",
+      "description": "Classes, company visits, competitions and milestones from FGV Quant, FGV-SP's Quantitative Finance League."
+    },
+    "intro": {
+      "eyebrow": "Agenda and history",
+      "title": "Events and <em>milestones</em>",
+      "description": "Classes, company visits, competitions and workshops: a chronological timeline of what the league has done."
+    },
+    "timeline": {
+      "eyebrow": "Timeline",
+      "title": "What has <em>happened</em>",
+      "description": "Dates are shown only at the precision we know: when we only know the month or semester, that's what we show.",
+      "ariaLabel": "FGV Quant events timeline",
+      "linkLabel": "read more"
+    },
+    "kinds": {
+      "event": "Event",
+      "competition": "Competition",
+      "class": "Class",
+      "visit": "Visit",
+      "milestone": "Milestone"
+    },
+    "cta": {
+      "eyebrow": "Upcoming events",
+      "title": "Follow the <em>agenda</em>",
+      "description": "Upcoming events are announced on the league's Instagram.",
+      "button": "Follow on Instagram"
+    }
+  }
+}

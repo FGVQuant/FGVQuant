@@ -2,21 +2,13 @@ import { ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
+import { getSite } from "@/lib/content";
 import { JOIN_HREF, navItems } from "./nav-items";
 
 async function getYear() {
   "use cache";
   return new Date().getFullYear();
 }
-
-const follow = [
-  { label: "Instagram", href: "https://www.instagram.com/fgvquant/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/fgvquant" },
-  {
-    label: null, // Footer.subscribe
-    href: "https://www.linkedin.com/newsletters/fgv-quant-insights-7435439773789437952/",
-  },
-] as const;
 
 const linkClass =
   "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground";
@@ -28,6 +20,12 @@ export async function SiteFooter() {
     getTranslations("Brand"),
     getYear(),
   ]);
+  const site = getSite();
+  const follow = [
+    { label: "Instagram", href: site.instagram },
+    { label: "LinkedIn", href: site.linkedin },
+    { label: t("subscribe"), href: site.newsletterUrl },
+  ];
 
   return (
     <footer className="relative isolate mt-24 overflow-hidden border-t border-border">
@@ -71,7 +69,7 @@ export async function SiteFooter() {
               {follow.map(({ label, href }) => (
                 <li key={href}>
                   <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                    {label ?? t("subscribe")}
+                    {label}
                     <ArrowUpRight className="size-3.5" aria-hidden />
                   </a>
                 </li>
@@ -83,10 +81,19 @@ export async function SiteFooter() {
             <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
               {t("contact")}
             </h2>
-            {/* TODO(Phase 0.3): real email */}
-            <p className="mt-4 inline-block rounded-md border border-dashed border-border-strong px-2 py-1 font-mono text-xs text-muted-foreground">
-              contato@fgvquant — TBD
-            </p>
+            {site.email ? (
+              <a href={`mailto:${site.email}`} className={`mt-4 ${linkClass}`}>
+                {site.email}
+              </a>
+            ) : (
+              // email pending from the league (docs/INPUTS.md 0.3) — shown honestly as TBD
+              <p className="mt-4 inline-block rounded-md border border-dashed border-border-strong px-2 py-1 font-mono text-xs text-muted-foreground">
+                {t("emailPending")}
+              </p>
+            )}
+            <Link href="/parceiros#contato" className={`mt-4 flex ${linkClass}`}>
+              {t("allChannels")}
+            </Link>
           </div>
         </div>
 

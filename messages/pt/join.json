@@ -1,1 +1,87 @@
-{}
+{
+  "Join": {
+    "meta": {
+      "title": "Processo seletivo",
+      "description": "Informações sobre como entrar na FGV Quant, a Liga de Finanças Quantitativas da FGV-SP."
+    },
+    "intro": {
+      "eyebrow": "Entre na liga",
+      "title": "Processo <em>seletivo</em>",
+      "description": "A FGV Quant reúne estudantes da FGV que querem aprender finanças quantitativas fazendo. Os detalhes do próximo processo ainda não foram divulgados — esta página será atualizada assim que forem."
+    },
+    "status": {
+      "label": "Status",
+      "open": "Inscrições: abertas",
+      "closed": "Inscrições: encerradas",
+      "tbd": "Inscrições: a confirmar"
+    },
+    "apply": "Inscreva-se",
+    "how": {
+      "eyebrow": "Etapas",
+      "title": "Como <em>funciona</em>",
+      "description": "As etapas, prazos e critérios serão publicados aqui quando a liga divulgar o processo.",
+      "pending": "As etapas do processo seletivo ainda não foram divulgadas. Nada aqui é uma estimativa: publicaremos apenas o que a liga confirmar."
+    },
+    "who": {
+      "eyebrow": "Elegibilidade",
+      "title": "Quem pode <em>participar</em>",
+      "body": "A liga é voltada a estudantes da FGV interessados em finanças quantitativas.",
+      "pending": "Requisitos de elegibilidade (cursos, semestres, pré-requisitos) ainda não divulgados."
+    },
+    "build": {
+      "eyebrow": "Na prática",
+      "title": "O que você vai <em>desenvolver</em>",
+      "description": "Matemática, estatística e programação aplicadas a problemas reais, com aprendizado baseado em problemas (PBL).",
+      "items": {
+        "derivatives": "Derivativos",
+        "ml": "Machine learning",
+        "algo": "Trading algorítmico",
+        "python": "Python",
+        "research": "Pesquisa quantitativa",
+        "newsletter": "Newsletter",
+        "fund": "Fundo fictício",
+        "competitions": "Competições"
+      },
+      "descriptions": {
+        "derivatives": "Precificação, gregas e volatilidade implícita.",
+        "ml": "Modelos de aprendizado de máquina aplicados a mercados.",
+        "algo": "Estratégias sistemáticas e sua avaliação.",
+        "python": "Programação e dados como ferramenta de pesquisa.",
+        "research": "Estudo aprofundado de temas de finanças quantitativas.",
+        "newsletter": "Textos mensais da FGV Quant Insights.",
+        "fund": "O FGV Quant Capital, um fundo fictício com fins educacionais.",
+        "competitions": "Desafios universitários de finanças quantitativas."
+      },
+      "explore": "Saiba mais"
+    },
+    "faq": {
+      "eyebrow": "Dúvidas",
+      "title": "Perguntas <em>frequentes</em>",
+      "items": [
+        {
+          "q": "Quando abrem as inscrições?",
+          "a": "Ainda não há data divulgada. Quando a liga anunciar, publicaremos aqui e nos nossos canais."
+        },
+        {
+          "q": "Quem pode participar?",
+          "a": "A liga é voltada a estudantes da FGV. Os requisitos de elegibilidade serão publicados junto com os detalhes do processo."
+        },
+        {
+          "q": "Preciso saber programar?",
+          "a": "Os pré-requisitos ainda não foram divulgados e serão publicados com o processo. O que podemos dizer é que a liga trabalha com aprendizado baseado em problemas (PBL), com formação técnica em programação e dados."
+        },
+        {
+          "q": "Como fico sabendo quando as inscrições abrirem?",
+          "a": "Siga a FGV Quant no Instagram e no LinkedIn: é por lá que os avisos serão publicados."
+        }
+      ]
+    },
+    "notify": {
+      "eyebrow": "Fique por dentro",
+      "title": "Seja avisado quando <em>abrir</em>",
+      "description": "Acompanhe a liga para saber quando o processo seletivo for divulgado.",
+      "instagram": "Seguir no Instagram",
+      "linkedin": "Seguir no LinkedIn"
+    }
+  }
+}

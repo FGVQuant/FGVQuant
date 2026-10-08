@@ -39,7 +39,9 @@
     "contact": "Contato",
     "subscribe": "Assinar a newsletter",
     "rights": "© {year} FGV Quant – Liga Estudantil. Todos os direitos reservados.",
-    "disclaimer": "O FGV Quant Capital é um fundo fictício com fins educacionais. Nada neste site é recomendação de investimento."
+    "disclaimer": "O FGV Quant Capital é um fundo fictício com fins educacionais. Nada neste site é recomendação de investimento.",
+    "emailPending": "E-mail a confirmar",
+    "allChannels": "Todos os canais"
   },
   "NotFound": {
     "title": "Página não encontrada",
@@ -54,6 +56,14 @@
     "pending": "A confirmar com a liga",
     "soon": "Em breve",
     "source": "Fonte",
-    "simulated": "Fundo fictício"
+    "simulated": "Fundo fictício",
+    "kinds": {
+      "event": "Evento",
+      "competition": "Competição",
+      "class": "Aula",
+      "visit": "Visita",
+      "milestone": "Marco"
+    },
+    "timelineLabel": "Linha do tempo de atividades"
   }
 }

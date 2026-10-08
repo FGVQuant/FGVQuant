@@ -1,1 +1,68 @@
-{}
+{
+  "Newsletter": {
+    "meta": {
+      "title": "Newsletter",
+      "description": "FGV Quant Insights: the league's monthly newsletter, with a field personality, a strategy radar, news, a cultural pick and opportunities."
+    },
+    "intro": {
+      "eyebrow": "FGV Quant Insights",
+      "title": "The <em>league's</em> monthly newsletter",
+      "description": "Every month, FGV Quant gathers what we follow most closely in quantitative finance into one issue, on LinkedIn and here on the site.",
+      "subscribe": "Subscribe on LinkedIn",
+      "enNote": "Issues are published in Portuguese only."
+    },
+    "format": {
+      "eyebrow": "The format",
+      "title": "Five sections, one <em>issue</em> a month",
+      "description": "Every issue follows a recurring structure.",
+      "sections": {
+        "personality": {
+          "title": "Field Personality",
+          "body": "A name that shaped quantitative finance."
+        },
+        "radar": {
+          "title": "Strategy Radar",
+          "body": "One systematic strategy in the spotlight."
+        },
+        "news": {
+          "title": "News",
+          "body": "What happened in the market and is worth reading."
+        },
+        "culture": {
+          "title": "Cultural Pick",
+          "body": "A book, film or series away from the spreadsheets."
+        },
+        "jobs": {
+          "title": "Internships and Openings",
+          "body": "Ways into the field."
+        }
+      }
+    },
+    "featured": {
+      "eyebrow": "Latest issue"
+    },
+    "archive": {
+      "eyebrow": "Archive",
+      "title": "All <em>issues</em>",
+      "filterLabel": "Filter by topic",
+      "all": "All",
+      "empty": "No issues with this topic.",
+      "read": "Read issue"
+    },
+    "issue": {
+      "back": "All issues",
+      "enNote": "This issue was published in Portuguese only.",
+      "summaryTitle": "Issue summary",
+      "summaryBody": "Issue summary. Read the full issue on LinkedIn.",
+      "readFull": "Read the full issue on LinkedIn",
+      "originally": "Originally published on LinkedIn",
+      "personality": "Field personality",
+      "prev": "Previous issue",
+      "next": "Next issue",
+      "subscribeTitle": "Get the next issue",
+      "subscribeBody": "Subscribe to FGV Quant Insights on LinkedIn and follow along every month.",
+      "subscribe": "Subscribe on LinkedIn"
+    },
+    "issueNavLabel": "Issue navigation"
+  }
+}

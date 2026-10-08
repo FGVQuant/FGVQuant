@@ -1,1 +1,87 @@
-{}
+{
+  "Join": {
+    "meta": {
+      "title": "Join the league",
+      "description": "How to join FGV Quant, FGV-SP's Quantitative Finance League."
+    },
+    "intro": {
+      "eyebrow": "Join the league",
+      "title": "Recruitment <em>process</em>",
+      "description": "FGV Quant brings together FGV students who want to learn quantitative finance by doing. Details of the next process haven't been announced yet — this page will be updated as soon as they are."
+    },
+    "status": {
+      "label": "Status",
+      "open": "Applications: open",
+      "closed": "Applications: closed",
+      "tbd": "Applications: to be confirmed"
+    },
+    "apply": "Apply now",
+    "how": {
+      "eyebrow": "Stages",
+      "title": "How it <em>works</em>",
+      "description": "Stages, deadlines and criteria will be published here once the league announces the process.",
+      "pending": "The recruitment stages haven't been announced. Nothing here is an estimate: we'll publish only what the league confirms."
+    },
+    "who": {
+      "eyebrow": "Eligibility",
+      "title": "Who can <em>take part</em>",
+      "body": "The league is for FGV students interested in quantitative finance.",
+      "pending": "Eligibility requirements (programmes, semesters, prerequisites) haven't been announced yet."
+    },
+    "build": {
+      "eyebrow": "In practice",
+      "title": "What you'll <em>build</em>",
+      "description": "Mathematics, statistics and programming applied to real problems, through problem-based learning (PBL).",
+      "items": {
+        "derivatives": "Derivatives",
+        "ml": "Machine learning",
+        "algo": "Algorithmic trading",
+        "python": "Python",
+        "research": "Quantitative research",
+        "newsletter": "Newsletter",
+        "fund": "Simulated fund",
+        "competitions": "Competitions"
+      },
+      "descriptions": {
+        "derivatives": "Pricing, Greeks and implied volatility.",
+        "ml": "Machine-learning models applied to markets.",
+        "algo": "Systematic strategies and how to evaluate them.",
+        "python": "Programming and data as a research tool.",
+        "research": "In-depth study of quantitative finance topics.",
+        "newsletter": "Monthly pieces for FGV Quant Insights.",
+        "fund": "FGV Quant Capital, a simulated fund for educational purposes.",
+        "competitions": "University quantitative finance challenges."
+      },
+      "explore": "Learn more"
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Frequently asked <em>questions</em>",
+      "items": [
+        {
+          "q": "When do applications open?",
+          "a": "No date has been announced yet. Once the league announces it, we'll publish it here and on our channels."
+        },
+        {
+          "q": "Who can take part?",
+          "a": "The league is for FGV students. Eligibility requirements will be published together with the process details."
+        },
+        {
+          "q": "Do I need to know how to code?",
+          "a": "Prerequisites haven't been announced yet and will be published with the process. What we can say is that the league uses problem-based learning (PBL), with technical training in programming and data."
+        },
+        {
+          "q": "How will I know when applications open?",
+          "a": "Follow FGV Quant on Instagram and LinkedIn: that's where announcements will be posted."
+        }
+      ]
+    },
+    "notify": {
+      "eyebrow": "Stay in the loop",
+      "title": "Get notified when it <em>opens</em>",
+      "description": "Follow the league to find out when the recruitment process is announced.",
+      "instagram": "Follow on Instagram",
+      "linkedin": "Follow on LinkedIn"
+    }
+  }
+}

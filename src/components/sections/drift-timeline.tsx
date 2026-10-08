@@ -19,6 +19,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
 
 export type TimelineKind = "event" | "competition" | "class" | "visit" | "milestone";
 
@@ -221,14 +222,25 @@ function Card({
 
   const cls = "group/card block rounded-2xl p-5 transition-colors md:p-6 glass";
 
+  const linkCls = cn(cls, "hover:border-border-strong hover:bg-accent");
+  const linkAria = linkLabel ? `${item.title} — ${linkLabel}` : undefined;
+  // internal paths go through next-intl's Link so they keep the current locale
   const inner = item.href ? (
-    <a
-      href={item.href}
-      aria-label={linkLabel ? `${item.title} — ${linkLabel}` : undefined}
-      className={cn(cls, "hover:border-border-strong hover:bg-accent")}
-    >
-      {body}
-    </a>
+    item.href.startsWith("/") ? (
+      <Link href={item.href} aria-label={linkAria} className={linkCls}>
+        {body}
+      </Link>
+    ) : (
+      <a
+        href={item.href}
+        aria-label={linkAria}
+        className={linkCls}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {body}
+      </a>
+    )
   ) : (
     <div className={cls}>{body}</div>
   );

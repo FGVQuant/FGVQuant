@@ -137,7 +137,7 @@ Legend:
 - **Still pending:** every remaining league input is listed in [INPUTS.md](INPUTS.md).
 - **Writing display math:** put `$$` on its own lines. A single-line `$$…$$` renders inline.
 
-## Phase 4 — Pages (localhost)
+## Phase 4 — Pages (localhost) ✅ done 2026-10-09
 
 | #    | Page                                                                                                                                                 | Who           |
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
@@ -154,6 +154,24 @@ Legend:
 | 4.11 | Integration pass: navigation, cross-links, consistent spacing                                                                                        | 🤖            |
 
 Pages 4.2–4.9 can run as parallel subagents because each owns its own route folder.
+
+**Phase 4 notes:**
+
+- **Who built what:**
+  - Claude: Home, shared prep (per-namespace `messages/{locale}/*.json`, `PageIntro`, `PlaceholderNote`, `getPageLocale`), footer wired to `content/site.json`, and integration.
+  - Sonnet agents, in parallel with disjoint route folders: Sobre + Time; Newsletter archive + issue; Capital + Competições; Processo seletivo + Eventos + Parceiros/Contato; SEO (sitemap, robots, OG/Twitter images per locale, `SITE_URL`).
+- **Integration fixes:**
+  - The terminal's `{cmd}`/`{path}` strings had to be passed with `t.raw`.
+  - `DriftTimeline` internal links now use the locale-aware `Link`, which replaced a local `/en` prefix workaround.
+  - The Competições list indices ("01/02/03") read as placements and were removed.
+  - Placeholder team seats showed "AC" initials; they now show "?" and "A confirmar".
+  - `metadataBase` now uses `SITE_URL`, and the hardcoded aria-label is localized.
+- **Production check:** `VELITE_STARTED=1 pnpm build` (to coexist with a running dev server) generates 61 pages. Every page is 200 in PT and EN, and `/dev/*` is 404. The sitemap has 32 URLs, plus robots and OG images.
+- **Known for Phase 6:**
+  - An unknown `/newsletter/<slug>` renders the not-found UI with `noindex` but HTTP 200. That's PPR streaming; a true 404 needs the proxy to reject unknown slugs.
+  - The OG images are dynamic (ƒ) instead of static.
+  - Ask the league to confirm Sobre's "Grupos de estudo" / "Pesquisa" activity descriptions; they're generic, not sourced.
+  - The SEO agent left temp files at `node_modules/.og-tmp/` and `node_modules/.og-run.mjs`. They're harmless and gitignored.
 
 ## Phase 5 — English version (localhost)
 

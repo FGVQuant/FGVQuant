@@ -1,1 +1,68 @@
-{}
+{
+  "Newsletter": {
+    "meta": {
+      "title": "Newsletter",
+      "description": "FGV Quant Insights: a newsletter mensal da liga, com personalidade da área, radar de estratégias, notícias, recomendação cultural e oportunidades."
+    },
+    "intro": {
+      "eyebrow": "FGV Quant Insights",
+      "title": "A newsletter mensal da <em>liga</em>",
+      "description": "Todo mês, a FGV Quant reúne em uma edição o que acompanhamos de mais relevante em finanças quantitativas, no LinkedIn e aqui no site.",
+      "subscribe": "Assinar no LinkedIn",
+      "enNote": "As edições são publicadas apenas em português."
+    },
+    "format": {
+      "eyebrow": "O formato",
+      "title": "Cinco seções, uma <em>edição</em> por mês",
+      "description": "Cada edição segue uma estrutura recorrente.",
+      "sections": {
+        "personality": {
+          "title": "Personalidade da Área",
+          "body": "Um nome que marcou as finanças quantitativas."
+        },
+        "radar": {
+          "title": "Radar de Estratégias",
+          "body": "Uma estratégia sistemática em destaque."
+        },
+        "news": {
+          "title": "Notícias",
+          "body": "O que aconteceu no mercado e vale a leitura."
+        },
+        "culture": {
+          "title": "Recomendação Cultural",
+          "body": "Livro, filme ou série para fora das planilhas."
+        },
+        "jobs": {
+          "title": "Oportunidades de Estágio e Vagas",
+          "body": "Chances de entrar na área."
+        }
+      }
+    },
+    "featured": {
+      "eyebrow": "Última edição"
+    },
+    "archive": {
+      "eyebrow": "Arquivo",
+      "title": "Todas as <em>edições</em>",
+      "filterLabel": "Filtrar por tema",
+      "all": "Todas",
+      "empty": "Nenhuma edição com este tema.",
+      "read": "Ler edição"
+    },
+    "issue": {
+      "back": "Todas as edições",
+      "enNote": "Esta edição foi publicada apenas em português.",
+      "summaryTitle": "Resumo da edição",
+      "summaryBody": "Resumo da edição. Leia a edição completa no LinkedIn.",
+      "readFull": "Ler a edição completa no LinkedIn",
+      "originally": "Publicado originalmente no LinkedIn",
+      "personality": "Personalidade da área",
+      "prev": "Edição anterior",
+      "next": "Próxima edição",
+      "subscribeTitle": "Receba a próxima edição",
+      "subscribeBody": "Assine a FGV Quant Insights no LinkedIn e acompanhe todo mês.",
+      "subscribe": "Assinar no LinkedIn"
+    },
+    "issueNavLabel": "Navegação entre edições"
+  }
+}

@@ -1,1 +1,70 @@
-{}
+{
+  "About": {
+    "metaTitle": "Sobre",
+    "metaDescription": "Quem somos: a Liga de Finanças Quantitativas da FGV-SP, fundada em 2021. Matemática, estatística e programação aplicadas ao mercado.",
+    "eyebrow": "Sobre a liga",
+    "title": "Matemática, estatística e código para <em>entender</em> o mercado.",
+    "lead": "O FGV Quant é a liga estudantil de finanças quantitativas da FGV-SP. Desde {year}, cerca de {members} membros estudam, pesquisam e constroem estratégias sistemáticas.",
+    "mission": {
+      "eyebrow": "Missão",
+      "title": "Aprender <em>fazendo</em>, com rigor.",
+      "p1": "Produzimos conteúdo e aprofundamos o estudo de finanças quantitativas, aplicando matemática, estatística e programação a problemas reais de mercado.",
+      "p2": "Nossa metodologia é o PBL (Problem Based Learning): aprendemos resolvendo problemas, de derivativos e machine learning a trading algorítmico e Python."
+    },
+    "areas": {
+      "eyebrow": "Áreas de atuação",
+      "title": "Onde concentramos o <em>estudo</em>.",
+      "description": "Cinco frentes que combinam teoria, dados e implementação."
+    },
+    "how": {
+      "eyebrow": "Como trabalhamos",
+      "title": "Da teoria à <em>prática</em>.",
+      "description": "Um ciclo contínuo de estudo, pesquisa e exposição ao mercado.",
+      "study": {
+        "title": "Grupos de estudo",
+        "body": "Encontros para aprofundar tópicos de finanças quantitativas, com problemas para resolver em grupo."
+      },
+      "research": {
+        "title": "Pesquisa",
+        "body": "Leitura crítica de literatura acadêmica e desenvolvimento de estratégias e modelos próprios."
+      },
+      "newsletter": {
+        "title": "Newsletter",
+        "body": "A FGV Quant Insights, mensal, reúne análises, estratégias e notícias da área.",
+        "cta": "Ver edições"
+      },
+      "fund": {
+        "title": "Fundo simulado",
+        "body": "O FGV Quant Capital é um fundo fictício, com fins educacionais, para testar estratégias.",
+        "cta": "Conhecer o fundo"
+      },
+      "competitions": {
+        "title": "Competições",
+        "body": "Times da liga participam de desafios quantitativos e de investimento.",
+        "cta": "Ver competições"
+      },
+      "events": {
+        "title": "Eventos",
+        "body": "Encontros, palestras e atividades abertas à comunidade.",
+        "cta": "Ver eventos"
+      }
+    },
+    "numbers": {
+      "eyebrow": "Liga em números",
+      "title": "A liga em <em>números</em>.",
+      "members": "Membros",
+      "issues": "Edições da newsletter",
+      "teams": "Times ranqueados",
+      "fund": "Retorno acumulado",
+      "note": "Membros: {asOf}. Times ranqueados conforme informado pela liga."
+    },
+    "equationCaption": "Movimento browniano geométrico, o ponto de partida de boa parte da área",
+    "structurePending": "A estrutura organizacional e a liderança atual serão publicadas quando a liga confirmar.",
+    "cta": {
+      "title": "Quer fazer parte da <em>liga</em>?",
+      "body": "Acompanhe o processo seletivo e saiba como entrar.",
+      "button": "Processo seletivo",
+      "team": "Conhecer o time"
+    }
+  }
+}

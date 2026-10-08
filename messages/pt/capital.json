@@ -1,1 +1,56 @@
-{}
+{
+  "Capital": {
+    "meta": {
+      "title": "FGV Quant Capital — fundo fictício",
+      "description": "FGV Quant Capital é a carteira simulada da liga: um fundo fictício, com fins educacionais, para praticar construção de portfólio e gestão de risco."
+    },
+    "eyebrow": "FGV Quant Capital · Fundo fictício",
+    "title": "Uma carteira <em>simulada</em>, para aprender fazendo",
+    "description": "O FGV Quant Capital é a carteira simulada da liga. Não é um fundo real: serve para os membros praticarem, com método e prestação de contas, o que estudam.",
+    "disclaimer": {
+      "title": "Aviso importante",
+      "simulated": "Fundo fictício, com fins exclusivamente educacionais. Não é um fundo de investimento real.",
+      "noMoney": "Não há dinheiro real envolvido: nada aqui capta, administra ou recebe recursos de terceiros.",
+      "past": "Rentabilidade passada (simulada) não é indicação de resultados futuros.",
+      "advice": "Nada neste site constitui recomendação de investimento."
+    },
+    "results": {
+      "eyebrow": "Resultados simulados",
+      "title": "O que a liga reportou até agora",
+      "cumulative": "Retorno acumulado (fundo fictício)",
+      "asOf": "Em {date}",
+      "monthly": "Retornos mensais reportados (fundo fictício)",
+      "chartLabel": "Gráfico de barras dos retornos mensais reportados do fundo fictício: {summary}.",
+      "tableCaption": "Retornos mensais reportados do fundo fictício",
+      "month": "Mês",
+      "return": "Retorno",
+      "pendingNote": "O histórico mensal completo e a metodologia serão publicados assim que fornecidos pela liga. Por ora, exibimos apenas os meses já reportados."
+    },
+    "how": {
+      "eyebrow": "Como funciona",
+      "title": "Um laboratório de <em>prática</em>",
+      "description": "O FGV Quant Capital existe para que os membros exercitem, em ambiente simulado, o ciclo completo de uma gestão.",
+      "items": {
+        "construction": {
+          "title": "Construção de portfólio",
+          "body": "Praticar a montagem de uma carteira a partir do que se aprende em pesquisa quantitativa."
+        },
+        "risk": {
+          "title": "Gestão de risco",
+          "body": "Acompanhar e discutir o risco da carteira como parte da rotina, não como pós-fato."
+        },
+        "reporting": {
+          "title": "Relatório mensal",
+          "body": "Prestar contas todo mês, treinando comunicação clara de resultados."
+        }
+      }
+    },
+    "reports": {
+      "eyebrow": "Relatórios",
+      "title": "Relatórios mensais no LinkedIn",
+      "description": "Os relatórios mensais do fundo fictício são publicados na página da liga no LinkedIn.",
+      "cta": "Ver no LinkedIn",
+      "source": "Fonte: página da FGV Quant no LinkedIn."
+    }
+  }
+}

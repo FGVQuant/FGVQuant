@@ -39,7 +39,9 @@
     "contact": "Contact",
     "subscribe": "Subscribe to the newsletter",
     "rights": "© {year} FGV Quant – Student League. All rights reserved.",
-    "disclaimer": "FGV Quant Capital is a simulated fund for educational purposes. Nothing on this site is investment advice."
+    "disclaimer": "FGV Quant Capital is a simulated fund for educational purposes. Nothing on this site is investment advice.",
+    "emailPending": "Email to be confirmed",
+    "allChannels": "All channels"
   },
   "NotFound": {
     "title": "Page not found",
@@ -54,6 +56,14 @@
     "pending": "To be confirmed by the league",
     "soon": "Coming soon",
     "source": "Source",
-    "simulated": "Simulated fund"
+    "simulated": "Simulated fund",
+    "kinds": {
+      "event": "Event",
+      "competition": "Competition",
+      "class": "Class",
+      "visit": "Visit",
+      "milestone": "Milestone"
+    },
+    "timelineLabel": "Activities timeline"
   }
 }

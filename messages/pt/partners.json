@@ -1,1 +1,70 @@
-{}
+{
+  "Partners": {
+    "meta": {
+      "title": "Parceiros e contato",
+      "description": "Parceiros da FGV Quant e como falar com a liga."
+    },
+    "intro": {
+      "eyebrow": "Parceiros e contato",
+      "title": "Conecte-se com a <em>liga</em>",
+      "description": "Empresas que colaboram com a FGV Quant e os canais para falar com a gente."
+    },
+    "list": {
+      "eyebrow": "Parceiros",
+      "title": "Quem constrói <em>junto</em>",
+      "description": "Mostramos nomes e logos apenas com a confirmação de cada organização.",
+      "pending": "Os nomes e logos dos parceiros serão exibidos aqui assim que forem confirmados.",
+      "marqueeLabel": "Logos dos parceiros"
+    },
+    "pitch": {
+      "eyebrow": "Seja parceiro",
+      "title": "Fale com quem <em>pensa</em> quant",
+      "description": "Se a sua empresa quer colaborar com a liga, estas são algumas formas de fazer isso:",
+      "items": {
+        "talent": {
+          "title": "Contato com estudantes",
+          "body": "Aproximação com estudantes apaixonados por finanças quantitativas."
+        },
+        "talks": {
+          "title": "Palestras e aulas",
+          "body": "Espaço para apresentar temas, ferramentas e a rotina da sua equipe."
+        },
+        "challenges": {
+          "title": "Desafios",
+          "body": "Propor problemas reais para os membros trabalharem."
+        },
+        "newsletter": {
+          "title": "Visibilidade na newsletter",
+          "body": "Presença na FGV Quant Insights, a newsletter mensal da liga."
+        }
+      },
+      "cta": "Propor parceria por e-mail",
+      "ctaLinkedin": "Propor parceria no LinkedIn"
+    },
+    "contact": {
+      "eyebrow": "Contato",
+      "title": "Fale com a <em>gente</em>",
+      "description": "Escolha o canal que preferir.",
+      "instagram": {
+        "title": "Instagram",
+        "body": "Novidades e bastidores da liga.",
+        "cta": "Abrir @fgvquant"
+      },
+      "linkedin": {
+        "title": "LinkedIn",
+        "body": "Página oficial, com notícias e oportunidades.",
+        "cta": "Abrir página"
+      },
+      "newsletter": {
+        "title": "Newsletter",
+        "body": "FGV Quant Insights, mensal, no LinkedIn.",
+        "cta": "Assinar"
+      },
+      "email": {
+        "title": "E-mail",
+        "body": "Contato direto com a liga.",
+        "pending": "O e-mail de contato ainda não foi divulgado. Por enquanto, fale conosco pelo LinkedIn ou Instagram."
+      }
+    }
+  }
+}

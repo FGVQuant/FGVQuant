@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/site-url";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipLink } from "@/components/layout/skip-link";
@@ -29,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: { default: t("title"), template: `%s · FGV Quant` },
     description: t("description"),
-    metadataBase: new URL("http://localhost:3000"), // replaced with the real domain in Phase 7
+    metadataBase: new URL(SITE_URL), // NEXT_PUBLIC_SITE_URL in Phase 7; localhost until then
     alternates: { languages: { pt: "/", en: "/en" } },
   };
 }

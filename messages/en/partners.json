@@ -1,1 +1,70 @@
-{}
+{
+  "Partners": {
+    "meta": {
+      "title": "Partners and contact",
+      "description": "FGV Quant's partners and how to get in touch with the league."
+    },
+    "intro": {
+      "eyebrow": "Partners and contact",
+      "title": "Get in touch with the <em>league</em>",
+      "description": "Companies that collaborate with FGV Quant, and the channels to reach us."
+    },
+    "list": {
+      "eyebrow": "Partners",
+      "title": "Who builds <em>with us</em>",
+      "description": "We show names and logos only with each organization's confirmation.",
+      "pending": "Partner names and logos will be shown here once they are confirmed.",
+      "marqueeLabel": "Partner logos"
+    },
+    "pitch": {
+      "eyebrow": "Become a partner",
+      "title": "Talk to people who <em>think</em> quant",
+      "description": "If your company wants to collaborate with the league, here are some ways to do it:",
+      "items": {
+        "talent": {
+          "title": "Contact with students",
+          "body": "A way to reach students passionate about quantitative finance."
+        },
+        "talks": {
+          "title": "Talks and classes",
+          "body": "Space to present topics, tools and your team's day-to-day."
+        },
+        "challenges": {
+          "title": "Challenges",
+          "body": "Propose real problems for members to work on."
+        },
+        "newsletter": {
+          "title": "Newsletter visibility",
+          "body": "Presence in FGV Quant Insights, the league's monthly newsletter."
+        }
+      },
+      "cta": "Propose a partnership by email",
+      "ctaLinkedin": "Propose a partnership on LinkedIn"
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Talk to <em>us</em>",
+      "description": "Pick the channel you prefer.",
+      "instagram": {
+        "title": "Instagram",
+        "body": "News and behind the scenes from the league.",
+        "cta": "Open @fgvquant"
+      },
+      "linkedin": {
+        "title": "LinkedIn",
+        "body": "Official page, with news and opportunities.",
+        "cta": "Open page"
+      },
+      "newsletter": {
+        "title": "Newsletter",
+        "body": "FGV Quant Insights, monthly, on LinkedIn.",
+        "cta": "Subscribe"
+      },
+      "email": {
+        "title": "Email",
+        "body": "Direct contact with the league.",
+        "pending": "The contact email hasn't been published yet. For now, reach us through LinkedIn or Instagram."
+      }
+    }
+  }
+}

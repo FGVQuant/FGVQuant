@@ -1,1 +1,33 @@
-{}
+{
+  "Events": {
+    "meta": {
+      "title": "Eventos",
+      "description": "Aulas, visitas a empresas, competições e marcos da FGV Quant, a Liga de Finanças Quantitativas da FGV-SP."
+    },
+    "intro": {
+      "eyebrow": "Agenda e histórico",
+      "title": "Eventos e <em>marcos</em>",
+      "description": "Aulas, visitas a empresas, competições e oficinas: a linha do tempo do que a liga já fez, em ordem cronológica."
+    },
+    "timeline": {
+      "eyebrow": "Linha do tempo",
+      "title": "O que já <em>aconteceu</em>",
+      "description": "Datas aparecem apenas com a precisão que conhecemos: quando só sabemos o mês ou o semestre, é isso que mostramos.",
+      "ariaLabel": "Linha do tempo de eventos da FGV Quant",
+      "linkLabel": "ver mais"
+    },
+    "kinds": {
+      "event": "Evento",
+      "competition": "Competição",
+      "class": "Aula",
+      "visit": "Visita",
+      "milestone": "Marco"
+    },
+    "cta": {
+      "eyebrow": "Próximos eventos",
+      "title": "Acompanhe a <em>agenda</em>",
+      "description": "Os próximos eventos são anunciados no Instagram da liga.",
+      "button": "Seguir no Instagram"
+    }
+  }
+}

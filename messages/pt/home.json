@@ -1,1 +1,81 @@
-{}
+{
+  "Home": {
+    "metaTitle": "FGV Quant — Liga de Finanças Quantitativas",
+    "hero": {
+      "eyebrow": "Liga de Finanças Quantitativas · FGV-SP",
+      "titleA": "Finanças quantitativas,",
+      "titleEm": "com rigor",
+      "description": "Pesquisa, estratégias sistemáticas e formação técnica para a próxima geração de quants do Brasil.",
+      "join": "Processo seletivo",
+      "newsletter": "Ler a newsletter",
+      "legend": "N = 128 trajetórias · μ = 8% · σ = 24% · banda p5–p95 · simulação"
+    },
+    "stats": {
+      "members": "Membros",
+      "issues": "Edições da newsletter",
+      "ranked": "Times ranqueados · Desafio Quant AI",
+      "fund": "FGV Quant Capital",
+      "fundNote": "Fundo fictício · até {month}"
+    },
+    "about": {
+      "eyebrow": "Quem somos",
+      "titleA": "Matemática, estatística e código",
+      "titleEm": "aplicados ao mercado",
+      "body": "Fundada em 2021, a FGV Quant reúne estudantes da FGV-SP interessados em finanças quantitativas. Aprendemos resolvendo problemas reais (PBL): de derivativos e machine learning a trading algorítmico e Python.",
+      "cta": "Conheça a liga"
+    },
+    "terminal": {
+      "title": "fgvquant@liga: ~",
+      "introCommand": "cat missao.txt",
+      "intro1": "A FGV Quant é a Liga de Finanças Quantitativas da FGV-SP, fundada em 2021.",
+      "intro2": "Aplicamos matemática, estatística e programação aos mercados financeiros —",
+      "intro3": "derivativos, machine learning, trading algorítmico e Python — com aprendizado baseado em problemas.",
+      "hint": "Digite /help para ver os comandos.",
+      "helpHeading": "Comandos disponíveis:",
+      "notFound": "comando não encontrado: {cmd}",
+      "navigating": "abrindo {path}…",
+      "inputLabel": "Comando do terminal",
+      "chipsLabel": "Comandos rápidos",
+      "cmdJoin": "como entrar na liga",
+      "cmdNewsletter": "FGV Quant Insights, mensal",
+      "cmdCapital": "nosso fundo fictício",
+      "cmdTeam": "quem faz a liga",
+      "cmdAbout": "missão e história",
+      "cmdMotto": "nosso lema"
+    },
+    "areas": {
+      "eyebrow": "Áreas de atuação",
+      "titleA": "Cinco frentes,",
+      "titleEm": "um mesmo rigor",
+      "description": "Cada frente combina teoria, dados e código."
+    },
+    "newsletter": {
+      "eyebrow": "FGV Quant Insights",
+      "titleA": "A newsletter",
+      "titleEm": "mensal",
+      "description": "Personalidades, estratégias, notícias e oportunidades do mundo quant — todo mês no LinkedIn.",
+      "all": "Ver todas as edições",
+      "read": "Ler resumo"
+    },
+    "activities": {
+      "eyebrow": "Atividades",
+      "titleA": "Aulas, visitas e",
+      "titleEm": "competições",
+      "all": "Ver todos os eventos"
+    },
+    "capital": {
+      "eyebrow": "FGV Quant Capital",
+      "title": "Nosso portfólio simulado",
+      "body": "Os membros praticam construção de portfólio, gestão de risco e reporte mensal em um fundo fictício.",
+      "label": "Retorno acumulado desde o início",
+      "asOf": "até {month}",
+      "cta": "Ver o FGV Quant Capital"
+    },
+    "join": {
+      "eyebrow": "Processo seletivo",
+      "title": "Quer fazer parte da FGV Quant?",
+      "body": "Acompanhe nossas redes para saber quando as inscrições abrirem.",
+      "cta": "Saiba como entrar"
+    }
+  }
+}
