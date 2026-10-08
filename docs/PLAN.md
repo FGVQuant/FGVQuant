@@ -173,13 +173,27 @@ Pages 4.2–4.9 can run as parallel subagents because each owns its own route fo
   - Ask the league to confirm Sobre's "Grupos de estudo" / "Pesquisa" activity descriptions; they're generic, not sourced.
   - The SEO agent left temp files at `node_modules/.og-tmp/` and `node_modules/.og-run.mjs`. They're harmless and gitignored.
 
-## Phase 5 — English version (localhost)
+## Phase 5 — English version (localhost) ✅ done 2026-10-09 — awaiting your EN review (5.3)
 
 | #   | Task                                                                                                 | Who     |
 | --- | ---------------------------------------------------------------------------------------------------- | ------- |
 | 5.1 | Extract all UI strings to `messages/pt.json`                                                         | 🟢      |
 | 5.2 | Translate into `messages/en.json` and add EN page copy. Newsletter stays PT with an explanatory note | 🟣      |
 | 5.3 | Review the EN tone (finance terminology)                                                             | 🧑 + 🤖 |
+
+**Phase 5 notes:**
+
+- **Parity checker:** `pnpm check:messages` (`scripts/check-messages.mjs`) verifies PT/EN key parity, `{placeholder}` parity and non-empty strings. Currently 359/359 keys.
+- **Hardcoded-string audit (Haiku, read-only):** no hardcoded PT shows on `/en`.
+  - `DriftTimeline`'s Portuguese default kind labels were a latent risk, so `kindLabels` is now required. That immediately caught one caller.
+  - The OG alt text is intentionally bilingual.
+- **EN copy pass (Sonnet, `messages/en/*` only):** 61 strings changed for American spelling, finance terminology ("simulated fund", "cumulative return since inception", PBL), emphasis pairs, and consistent "Recruitment process" CTAs. All disclaimers are kept at least as strong as the PT.
+- **PT strings it flagged, now fixed by Claude:**
+  - The duplicated "em números" eyebrow.
+  - The About fund KPI was missing its "(fictício)" label.
+  - The Capital risk wording.
+  - The Join newsletter item.
+- **Reminder:** the newsletter content stays Portuguese by design, and `/en` says so.
 
 ## Phase 6 — QA & sign-off (localhost production build)
 

@@ -50,12 +50,12 @@
       }
     },
     "numbers": {
-      "eyebrow": "Liga em números",
+      "eyebrow": "Em números",
       "title": "A liga em <em>números</em>.",
       "members": "Membros",
       "issues": "Edições da newsletter",
       "teams": "Times ranqueados",
-      "fund": "Retorno acumulado",
+      "fund": "Retorno acumulado (fictício)",
       "note": "Membros: {asOf}. Times ranqueados conforme informado pela liga."
     },
     "equationCaption": "Movimento browniano geométrico, o ponto de partida de boa parte da área",

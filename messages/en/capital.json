@@ -2,16 +2,16 @@
   "Capital": {
     "meta": {
       "title": "FGV Quant Capital — simulated fund",
-      "description": "FGV Quant Capital is the league's simulated portfolio: a fictional, educational fund for practising portfolio construction and risk management."
+      "description": "FGV Quant Capital is the league's simulated portfolio: a simulated, educational fund for practicing portfolio construction and risk management."
     },
     "eyebrow": "FGV Quant Capital · Simulated fund",
     "title": "A <em>simulated</em> portfolio, to learn by doing",
-    "description": "FGV Quant Capital is the league's simulated portfolio. It is not a real fund: members use it to practise, with method and accountability, what they study.",
+    "description": "FGV Quant Capital is the league's simulated portfolio. It is not a real fund: members use it to practice, with method and accountability, what they study.",
     "disclaimer": {
       "title": "Important notice",
       "simulated": "Simulated fund, for educational purposes only. It is not a real investment fund.",
-      "noMoney": "No real money is involved: nothing here raises, manages or receives third-party funds.",
-      "past": "Past (simulated) performance is not an indication of future results.",
+      "noMoney": "No real money is involved: nothing here raises, manages or receives funds from third parties.",
+      "past": "Past performance (simulated) is not an indication of future results.",
       "advice": "Nothing on this site constitutes investment advice."
     },
     "results": {
@@ -29,19 +29,19 @@
     "how": {
       "eyebrow": "How it works",
       "title": "A <em>practice</em> lab",
-      "description": "FGV Quant Capital exists so members can exercise, in a simulated setting, the full cycle of portfolio management.",
+      "description": "FGV Quant Capital exists so members can practice, in a simulated setting, the full cycle of portfolio management.",
       "items": {
         "construction": {
           "title": "Portfolio construction",
-          "body": "Practising building a portfolio from what is learned in quantitative research."
+          "body": "Practicing how to assemble a portfolio from what is learned in quantitative research."
         },
         "risk": {
           "title": "Risk management",
-          "body": "Tracking and discussing the portfolio's risk as routine, not as an afterthought."
+          "body": "Monitoring and discussing portfolio risk continuously, not only after the results come in."
         },
         "reporting": {
           "title": "Monthly reporting",
-          "body": "Reporting every month, training clear communication of results."
+          "body": "Reporting every month, to practice communicating results clearly."
         }
       }
     },

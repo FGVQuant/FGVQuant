@@ -7,14 +7,14 @@
     "lead": "FGV Quant is the quantitative finance student league at FGV-SP. Since {year}, about {members} members have studied, researched and built systematic strategies.",
     "mission": {
       "eyebrow": "Mission",
-      "title": "Learn by <em>doing</em>, with rigour.",
+      "title": "Learn by <em>doing</em>, with rigor.",
       "p1": "We produce content and go deeper into quantitative finance, applying mathematics, statistics and programming to real market problems.",
-      "p2": "Our method is PBL (Problem Based Learning): we learn by solving problems, from derivatives and machine learning to algorithmic trading and Python."
+      "p2": "Our method is problem-based learning (PBL): we learn by solving problems, from derivatives and machine learning to algorithmic trading and Python."
     },
     "areas": {
       "eyebrow": "Focus areas",
       "title": "Where we focus our <em>study</em>.",
-      "description": "Five fronts that combine theory, data and implementation."
+      "description": "Five areas that combine theory, data and implementation."
     },
     "how": {
       "eyebrow": "How we work",
@@ -22,7 +22,7 @@
       "description": "A continuous cycle of study, research and market exposure.",
       "study": {
         "title": "Study groups",
-        "body": "Sessions to go deeper into quantitative finance topics, with problems to solve together."
+        "body": "Sessions that go deeper into quantitative finance topics, with problems to solve as a group."
       },
       "research": {
         "title": "Research",
@@ -30,17 +30,17 @@
       },
       "newsletter": {
         "title": "Newsletter",
-        "body": "FGV Quant Insights, monthly, gathers analysis, strategies and news from the field.",
+        "body": "FGV Quant Insights, our monthly newsletter, brings together analysis, strategies and news from the field.",
         "cta": "Browse issues"
       },
       "fund": {
         "title": "Simulated fund",
         "body": "FGV Quant Capital is a simulated, educational fund used to test strategies.",
-        "cta": "Meet the fund"
+        "cta": "About the fund"
       },
       "competitions": {
         "title": "Competitions",
-        "body": "League teams take part in quantitative and investment challenges.",
+        "body": "League teams take part in quantitative finance and investment competitions.",
         "cta": "See competitions"
       },
       "events": {
@@ -50,20 +50,20 @@
       }
     },
     "numbers": {
-      "eyebrow": "League in numbers",
+      "eyebrow": "By the numbers",
       "title": "The league in <em>numbers</em>.",
       "members": "Members",
       "issues": "Newsletter issues",
       "teams": "Ranked teams",
-      "fund": "Cumulative return",
+      "fund": "Cumulative return (simulated)",
       "note": "Members: {asOf}. Ranked teams as reported by the league."
     },
     "equationCaption": "Geometric Brownian motion, the starting point of much of the field",
-    "structurePending": "The organisational structure and current leadership will be published once the league confirms them.",
+    "structurePending": "The organizational structure and current leadership will be published once the league confirms them.",
     "cta": {
       "title": "Want to join the <em>league</em>?",
-      "body": "Follow the selection process and learn how to apply.",
-      "button": "Selection process",
+      "body": "Follow the recruitment process and learn how to apply.",
+      "button": "Recruitment process",
       "team": "Meet the team"
     }
   }

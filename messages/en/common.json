@@ -1,7 +1,7 @@
 {
   "Metadata": {
     "title": "FGV Quant — Quantitative Finance League",
-    "description": "FGV-SP's Quantitative Finance League. Quant research, systematic strategies, machine learning and the monthly FGV Quant Insights newsletter."
+    "description": "FGV-SP's Quantitative Finance League. Quantitative research, systematic strategies, machine learning and FGV Quant Insights, our monthly newsletter."
   },
   "Brand": {
     "name": "FGV Quant",
@@ -45,11 +45,11 @@
   },
   "NotFound": {
     "title": "Page not found",
-    "description": "The path you tried doesn't exist — call it an outlier.",
+    "description": "The page you tried to reach doesn't exist — perhaps an outlier.",
     "back": "Back to home"
   },
   "Home": {
-    "placeholderTitle": "Quantitative finance, done rigorously.",
+    "placeholderTitle": "Quantitative finance, with rigor.",
     "placeholderBody": "Site under construction — phase 1 (foundations)."
   },
   "Common": {

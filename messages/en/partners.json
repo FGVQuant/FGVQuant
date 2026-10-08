@@ -27,7 +27,7 @@
         },
         "talks": {
           "title": "Talks and classes",
-          "body": "Space to present topics, tools and your team's day-to-day."
+          "body": "Space to present topics, tools and your team's day-to-day work."
         },
         "challenges": {
           "title": "Challenges",
@@ -47,13 +47,13 @@
       "description": "Pick the channel you prefer.",
       "instagram": {
         "title": "Instagram",
-        "body": "News and behind the scenes from the league.",
+        "body": "News and behind-the-scenes from the league.",
         "cta": "Open @fgvquant"
       },
       "linkedin": {
         "title": "LinkedIn",
         "body": "Official page, with news and opportunities.",
-        "cta": "Open page"
+        "cta": "Open LinkedIn page"
       },
       "newsletter": {
         "title": "Newsletter",

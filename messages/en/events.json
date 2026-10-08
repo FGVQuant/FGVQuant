@@ -12,7 +12,7 @@
     "timeline": {
       "eyebrow": "Timeline",
       "title": "What has <em>happened</em>",
-      "description": "Dates are shown only at the precision we know: when we only know the month or semester, that's what we show.",
+      "description": "Dates are shown only at the precision we know: if we only know the month or semester, that is what we show.",
       "ariaLabel": "FGV Quant events timeline",
       "linkLabel": "read more"
     },

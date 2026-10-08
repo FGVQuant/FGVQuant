@@ -6,8 +6,8 @@
     },
     "intro": {
       "eyebrow": "FGV Quant Insights",
-      "title": "The <em>league's</em> monthly newsletter",
-      "description": "Every month, FGV Quant gathers what we follow most closely in quantitative finance into one issue, on LinkedIn and here on the site.",
+      "title": "The league's <em>monthly</em> newsletter",
+      "description": "Every month, FGV Quant brings together in one issue the most relevant things we follow in quantitative finance, on LinkedIn and here on the site.",
       "subscribe": "Subscribe on LinkedIn",
       "enNote": "Issues are published in Portuguese only."
     },
@@ -17,23 +17,23 @@
       "description": "Every issue follows a recurring structure.",
       "sections": {
         "personality": {
-          "title": "Field Personality",
+          "title": "Field Personality (Personalidade da Área)",
           "body": "A name that shaped quantitative finance."
         },
         "radar": {
-          "title": "Strategy Radar",
+          "title": "Strategy Radar (Radar de Estratégias)",
           "body": "One systematic strategy in the spotlight."
         },
         "news": {
-          "title": "News",
+          "title": "News (Notícias)",
           "body": "What happened in the market and is worth reading."
         },
         "culture": {
-          "title": "Cultural Pick",
+          "title": "Cultural Pick (Recomendação Cultural)",
           "body": "A book, film or series away from the spreadsheets."
         },
         "jobs": {
-          "title": "Internships and Openings",
+          "title": "Internships and Openings (Oportunidades de Estágio e Vagas)",
           "body": "Ways into the field."
         }
       }
@@ -46,7 +46,7 @@
       "title": "All <em>issues</em>",
       "filterLabel": "Filter by topic",
       "all": "All",
-      "empty": "No issues with this topic.",
+      "empty": "No issues on this topic.",
       "read": "Read issue"
     },
     "issue": {

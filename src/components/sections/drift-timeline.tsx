@@ -46,18 +46,10 @@ const KIND_ICON: Record<TimelineKind, LucideIcon> = {
   milestone: Sparkles,
 };
 
-const DEFAULT_KIND_LABELS: Record<TimelineKind, string> = {
-  event: "Evento",
-  competition: "Competição",
-  class: "Aula",
-  visit: "Visita",
-  milestone: "Marco",
-};
-
 type DriftTimelineProps = {
   items: TimelineItem[];
-  /** Localized badge text per kind; falls back to Portuguese defaults. */
-  kindLabels?: Partial<Record<TimelineKind, string>>;
+  /** Localized badge text per kind (required — e.g. from the `Common.kinds` messages). */
+  kindLabels: Record<TimelineKind, string>;
   /** Accessible name of the list. */
   ariaLabel?: string;
   /** Text for the link arrow's accessible hint, appended to the title. */
@@ -341,7 +333,7 @@ export function DriftTimeline({
     [geo, items.length],
   );
 
-  const labels = { ...DEFAULT_KIND_LABELS, ...kindLabels };
+  const labels = kindLabels;
 
   return (
     <div ref={sectionRef} className={cn("relative", className)}>

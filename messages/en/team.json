@@ -1,14 +1,14 @@
 {
   "Team": {
     "metaTitle": "Team",
-    "metaDescription": "Meet the structure and team of FGV Quant, FGV-SP's quantitative finance league.",
+    "metaDescription": "Meet FGV Quant's structure and team. FGV-SP's quantitative finance student league.",
     "eyebrow": "Team",
     "title": "The people behind the <em>model</em>.",
-    "lead": "FGV-SP students who come together to study, research and build quantitative finance.",
+    "lead": "FGV-SP students who come together to study, research and build in quantitative finance.",
     "leadership": {
       "eyebrow": "Leadership and areas",
       "title": "Who <em>leads</em> the league.",
-      "description": "Directorates and fronts of the league."
+      "description": "Directorates and focus areas of the league."
     },
     "linkedinLabel": "{name} on LinkedIn",
     "pending": "The team list will be published once the league confirms names and each person's consent.",
@@ -21,8 +21,8 @@
     },
     "cta": {
       "title": "Want to work with <em>us</em>?",
-      "body": "Learn about the selection process and join the league.",
-      "button": "Selection process"
+      "body": "Learn about the recruitment process and join the league.",
+      "button": "Recruitment process"
     }
   }
 }

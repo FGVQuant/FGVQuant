@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { locale as rootLocale } from "next/root-params";
+import { getTranslations } from "next-intl/server";
 import { devSamples } from "#site/content";
 import { routing, type Locale } from "@/i18n/routing";
 import { MdxContent } from "@/components/mdx/mdx-content";
@@ -25,6 +26,7 @@ export default async function ContentShowcase() {
     ? (raw as Locale)
     : "pt";
 
+  const tc = await getTranslations("Common");
   const stats = getStats();
   const fund = getFund();
   const featured = getFeaturedIssue();
@@ -77,7 +79,17 @@ export default async function ContentShowcase() {
         <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
           3 · getEvents() → DriftTimeline
         </p>
-        <DriftTimeline className="mt-6" items={toTimelineItems(getEvents(), locale)} />
+        <DriftTimeline
+          className="mt-6"
+          items={toTimelineItems(getEvents(), locale)}
+          kindLabels={{
+            event: tc("kinds.event"),
+            competition: tc("kinds.competition"),
+            class: tc("kinds.class"),
+            visit: tc("kinds.visit"),
+            milestone: tc("kinds.milestone"),
+          }}
+        />
       </section>
 
       <section className="container-page border-t border-border py-16">

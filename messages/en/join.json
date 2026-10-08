@@ -7,7 +7,7 @@
     "intro": {
       "eyebrow": "Join the league",
       "title": "Recruitment <em>process</em>",
-      "description": "FGV Quant brings together FGV students who want to learn quantitative finance by doing. Details of the next process haven't been announced yet — this page will be updated as soon as they are."
+      "description": "FGV Quant brings together FGV students who want to learn quantitative finance by doing. Details of the next recruitment process haven't been announced yet — this page will be updated as soon as they are."
     },
     "status": {
       "label": "Status",
@@ -15,7 +15,7 @@
       "closed": "Applications: closed",
       "tbd": "Applications: to be confirmed"
     },
-    "apply": "Apply now",
+    "apply": "Apply",
     "how": {
       "eyebrow": "Stages",
       "title": "How it <em>works</em>",
@@ -26,7 +26,7 @@
       "eyebrow": "Eligibility",
       "title": "Who can <em>take part</em>",
       "body": "The league is for FGV students interested in quantitative finance.",
-      "pending": "Eligibility requirements (programmes, semesters, prerequisites) haven't been announced yet."
+      "pending": "Eligibility requirements (programs, semesters, prerequisites) haven't been announced yet."
     },
     "build": {
       "eyebrow": "In practice",
@@ -44,11 +44,11 @@
       },
       "descriptions": {
         "derivatives": "Pricing, Greeks and implied volatility.",
-        "ml": "Machine-learning models applied to markets.",
+        "ml": "Machine learning models applied to markets.",
         "algo": "Systematic strategies and how to evaluate them.",
-        "python": "Programming and data as a research tool.",
+        "python": "Programming and data as research tools.",
         "research": "In-depth study of quantitative finance topics.",
-        "newsletter": "Monthly pieces for FGV Quant Insights.",
+        "newsletter": "Contributing to FGV Quant Insights, the league’s monthly newsletter.",
         "fund": "FGV Quant Capital, a simulated fund for educational purposes.",
         "competitions": "University quantitative finance challenges."
       },
