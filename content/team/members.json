@@ -1,0 +1,42 @@
+[
+  {
+    "id": "tbd-1",
+    "name": "A confirmar",
+    "role": {
+      "pt": "Presidência",
+      "en": "President"
+    },
+    "order": 1,
+    "placeholder": true
+  },
+  {
+    "id": "tbd-2",
+    "name": "A confirmar",
+    "role": {
+      "pt": "Diretoria de Pesquisa",
+      "en": "Head of Research"
+    },
+    "order": 2,
+    "placeholder": true
+  },
+  {
+    "id": "tbd-3",
+    "name": "A confirmar",
+    "role": {
+      "pt": "Diretoria de Trading",
+      "en": "Head of Trading"
+    },
+    "order": 3,
+    "placeholder": true
+  },
+  {
+    "id": "tbd-4",
+    "name": "A confirmar",
+    "role": {
+      "pt": "Diretoria de Conteúdo",
+      "en": "Head of Content"
+    },
+    "order": 4,
+    "placeholder": true
+  }
+]

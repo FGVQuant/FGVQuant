@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_BUILD } from "next/constants";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
@@ -17,4 +18,17 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+/**
+ * Phase-aware config so the Velite content layer (content/ -> .velite/) runs with Next:
+ * watch mode under `next dev`, a clean awaited build before `next build` compiles.
+ * (argv sniffing doesn't work in Next 16 — config is evaluated in a child process.)
+ */
+export default async function config(phase: string) {
+  const isDev = phase === PHASE_DEVELOPMENT_SERVER;
+  if (!process.env.VELITE_STARTED && (isDev || phase === PHASE_PRODUCTION_BUILD)) {
+    process.env.VELITE_STARTED = "1";
+    const { build } = await import("velite");
+    await build({ watch: isDev, clean: !isDev });
+  }
+  return withNextIntl(nextConfig);
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "desafio-quant-ai-2026",
+    "name": "Desafio Quant AI 2026",
+    "organizer": "Itaú Asset Management",
+    "year": 2026,
+    "summary": {
+      "pt": "7ª edição do desafio universitário da Itaú Asset, em que estudantes constroem robôs de investimento.",
+      "en": "The 7th edition of Itaú Asset's university challenge, where students build investment robots."
+    },
+    "teams": [
+      {
+        "name": "Augur",
+        "result": {
+          "pt": "2º lugar",
+          "en": "2nd place"
+        },
+        "members": ["Hugo Villanova"]
+      },
+      {
+        "name": "Alpha Helix",
+        "result": {
+          "pt": "Top 10",
+          "en": "Top 10"
+        }
+      },
+      {
+        "name": "El Dorado",
+        "result": {
+          "pt": "Top 10",
+          "en": "Top 10"
+        }
+      }
+    ],
+    "source": "https://www.itau.com.br/media/dam/m/21da905a9b2584c6/original/itau-asset-abre-inscricao-para-desafio-universitario-no-setor-financeiro-4-maio-2026.pdf",
+    "selfReported": true
+  }
+]

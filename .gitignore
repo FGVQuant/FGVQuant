@@ -45,3 +45,6 @@ next-env.d.ts
 
 # python
 __pycache__/
+
+# velite copied assets
+public/static

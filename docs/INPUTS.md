@@ -1,0 +1,24 @@
+# Inputs tracker (Phase 0)
+
+This file tracks what the site still needs from the league. Every gap shows on the site as a marked placeholder, so nothing is invented.
+
+Where each input goes when it arrives:
+
+- Content files: `content/` (validated by `velite.config.ts`).
+- Brand files: `assets/brand/`.
+
+Legend: ✅ received · ⏳ pending · ⚠️ partially known
+
+| #    | Input                                                                                      | Status | Where it lands                                                          | Notes                                                                                                                                                             |
+| ---- | ------------------------------------------------------------------------------------------ | ------ | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0.1  | League approval and who signs off                                                          | ⏳     | —                                                                       | Needed before Phase 6 sign-off.                                                                                                                                   |
+| 0.2  | Logo, colours, font                                                                        | ✅     | `assets/brand/`                                                         | The traced SVG still needs league approval.                                                                                                                       |
+| 0.3  | Contact email                                                                              | ⏳     | `content/site.json` → `email`                                           | Footer shows "TBD".                                                                                                                                               |
+| 0.4  | Projeto AvantGarde PDF and what it is                                                      | ⏳     | TBD                                                                     | Linked from the Linktree.                                                                                                                                         |
+| 0.5  | Recruitment: open/closed, dates, stages, eligibility, form link, FAQ                       | ⏳     | `content/site.json` → `recruitment` + Join page copy                    | Page ships as a placeholder until this arrives.                                                                                                                   |
+| 0.6  | Team: names, roles, areas, photos, LinkedIn, consent to publish                            | ⏳     | `content/team/members.json` (`placeholder: false` once confirmed)       | 4 placeholder seats exist now. Hugo Villanova is publicly a _former_ president.                                                                                   |
+| 0.7  | Newsletter: permission to republish, plus the text of each issue                           | ⚠️     | `content/newsletter/*.mdx` (`status: full`)                             | The 7 issues are published as **summaries in our own words** and link to LinkedIn. Issue numbers are unknown (is March #1?). April and March have no summary yet. |
+| 0.8  | FGV Quant Capital: full monthly return series, inception month, methodology, OK to publish | ⚠️     | `content/fund.json`                                                     | Known so far: Jul/26 +0.29%, Aug/26 +3.84%, +18.34% since inception (as of Aug/26). There's no full series yet, so the chart shows only reported months.          |
+| 0.9  | Partner logos and permission (Itaú Asset, Vault Capital, GVTech)                           | ⏳     | `content/partners.json` (`permission: true`) + `public/brand/partners/` | Partners stay hidden on the site until `permission: true`.                                                                                                        |
+| 0.10 | Competition details and photos; exact event dates                                          | ⚠️     | `content/competitions.json`, `content/events.json`                      | The Desafio Quant AI result comes from the league's own posts (`selfReported: true`). The GVTech class date is known only to the semester (2026.2).               |
+| —    | Confirm the "Merton" in the Sep/26 issue (Robert C. Merton?)                               | ⏳     | `content/newsletter/2026-09-setembro.mdx`                               | Kept as just "Merton" until confirmed.                                                                                                                            |

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "founding",
+    "date": "2021-01-01",
+    "datePrecision": "year",
+    "period": "2021",
+    "kind": "milestone",
+    "title": {
+      "pt": "Fundação da FGV Quant",
+      "en": "FGV Quant is founded"
+    },
+    "description": {
+      "pt": "Nasce a Liga de Finanças Quantitativas da FGV-SP.",
+      "en": "FGV-SP's Quantitative Finance League is founded."
+    },
+    "source": "https://www.linkedin.com/company/fgvquant"
+  },
+  {
+    "id": "desafio-quant-ai-2026",
+    "date": "2026-01-01",
+    "datePrecision": "year",
+    "period": "2026.1",
+    "kind": "competition",
+    "title": {
+      "pt": "Desafio Quant AI 2026 — 2º lugar",
+      "en": "Desafio Quant AI 2026 — 2nd place"
+    },
+    "description": {
+      "pt": "No desafio universitário da Itaú Asset, a estratégia Augur ficou em 2º lugar e os times Alpha Helix e El Dorado chegaram ao top 10.",
+      "en": "In Itaú Asset's university challenge, the Augur strategy placed 2nd and the Alpha Helix and El Dorado teams reached the top 10."
+    },
+    "href": "/competicoes",
+    "partners": ["itau-asset"]
+  },
+  {
+    "id": "vault-capital-visit",
+    "date": "2026-08-01",
+    "datePrecision": "month",
+    "period": "2026.2",
+    "kind": "visit",
+    "title": {
+      "pt": "Visita à Vault Capital",
+      "en": "Visit to Vault Capital"
+    },
+    "description": {
+      "pt": "Visita técnica à gestora de criptoativos, com apresentação de um desafio aos membros.",
+      "en": "Company visit to the crypto asset manager, including a challenge presented to members."
+    },
+    "partners": ["vault-capital"]
+  },
+  {
+    "id": "gvtech-ai-class",
+    "date": "2026-08-01",
+    "datePrecision": "semester",
+    "period": "2026.2",
+    "kind": "class",
+    "title": {
+      "pt": "Aula de IA aplicada a Finanças Quantitativas",
+      "en": "AI applied to Quantitative Finance class"
+    },
+    "description": {
+      "pt": "Aula especial com Rodrigo Togneri, em parceria com a GVTech.",
+      "en": "Special class with Rodrigo Togneri, in partnership with GVTech."
+    },
+    "partners": ["gvtech"]
+  }
+]

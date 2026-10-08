@@ -1,0 +1,17 @@
+{
+  "name": "FGV Quant Capital",
+  "simulated": true,
+  "cumulativeReturn": 18.34,
+  "cumulativeAsOf": "2026-08",
+  "monthly": [
+    {
+      "month": "2026-07",
+      "return": 0.29
+    },
+    {
+      "month": "2026-08",
+      "return": 3.84
+    }
+  ],
+  "source": "https://www.linkedin.com/company/fgvquant"
+}

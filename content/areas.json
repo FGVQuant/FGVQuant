@@ -1,0 +1,62 @@
+[
+  {
+    "id": "derivatives",
+    "order": 1,
+    "title": {
+      "pt": "Derivativos",
+      "en": "Derivatives"
+    },
+    "description": {
+      "pt": "Precificação, gregas e volatilidade implícita aplicadas a opções e outros derivativos.",
+      "en": "Pricing, Greeks and implied volatility applied to options and other derivatives."
+    }
+  },
+  {
+    "id": "ml",
+    "order": 2,
+    "title": {
+      "pt": "Machine Learning",
+      "en": "Machine Learning"
+    },
+    "description": {
+      "pt": "Modelos estatísticos e de aprendizado de máquina — de regressões a LLMs — aplicados ao mercado.",
+      "en": "Statistical and machine-learning models — from regressions to LLMs — applied to markets."
+    }
+  },
+  {
+    "id": "algo",
+    "order": 3,
+    "title": {
+      "pt": "Trading Algorítmico",
+      "en": "Algorithmic Trading"
+    },
+    "description": {
+      "pt": "Estratégias sistemáticas, backtests e robôs de investimento.",
+      "en": "Systematic strategies, backtests and trading bots."
+    }
+  },
+  {
+    "id": "research",
+    "order": 4,
+    "title": {
+      "pt": "Pesquisa Quantitativa",
+      "en": "Quantitative Research"
+    },
+    "description": {
+      "pt": "Factor investing, risco e leitura crítica da literatura acadêmica.",
+      "en": "Factor investing, risk and critical reading of the academic literature."
+    }
+  },
+  {
+    "id": "python",
+    "order": 5,
+    "title": {
+      "pt": "Python & Dados",
+      "en": "Python & Data"
+    },
+    "description": {
+      "pt": "Formação técnica em programação e dados, com aprendizado baseado em problemas (PBL).",
+      "en": "Technical training in programming and data, through problem-based learning (PBL)."
+    }
+  }
+]

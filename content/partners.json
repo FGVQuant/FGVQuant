@@ -1,0 +1,29 @@
+[
+  {
+    "id": "itau-asset",
+    "name": "Itaú Asset Management",
+    "relation": {
+      "pt": "Organizadora do Desafio Quant AI",
+      "en": "Organizer of the Desafio Quant AI"
+    },
+    "permission": false
+  },
+  {
+    "id": "vault-capital",
+    "name": "Vault Capital",
+    "relation": {
+      "pt": "Visita técnica e coluna convidada na newsletter",
+      "en": "Company visit and guest newsletter column"
+    },
+    "permission": false
+  },
+  {
+    "id": "gvtech",
+    "name": "GVTech",
+    "relation": {
+      "pt": "Aula de IA em parceria",
+      "en": "Partner on the AI class"
+    },
+    "permission": false
+  }
+]
