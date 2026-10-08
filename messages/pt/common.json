@@ -49,5 +49,11 @@
   "Home": {
     "placeholderTitle": "Finanças quantitativas, com rigor.",
     "placeholderBody": "Site em construção — fase 1 (fundações)."
+  },
+  "Common": {
+    "pending": "A confirmar com a liga",
+    "soon": "Em breve",
+    "source": "Fonte",
+    "simulated": "Fundo fictício"
   }
 }

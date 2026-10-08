@@ -49,5 +49,11 @@
   "Home": {
     "placeholderTitle": "Quantitative finance, done rigorously.",
     "placeholderBody": "Site under construction — phase 1 (foundations)."
+  },
+  "Common": {
+    "pending": "To be confirmed by the league",
+    "soon": "Coming soon",
+    "source": "Source",
+    "simulated": "Simulated fund"
   }
 }
