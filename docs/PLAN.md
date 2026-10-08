@@ -62,7 +62,7 @@ Legend:
 - **OG image:** deferred to 4.10, so it can use the final hero design.
 - **Desktop nav breakpoint:** the nav appears at `xl` (1280px). Below that it's the menu button plus the Join CTA, because the 7 nav items don't fit at 1024px.
 
-## Phase 2 — Design system & signature components (localhost) ✅ built 2026-10-08 — awaiting your review (2.8)
+## Phase 2 — Design system & signature components (localhost) ✅ built and reviewed 2026-10-08
 
 | #   | Task                                                                                                                                   | Who |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------- | --- |
@@ -94,6 +94,10 @@ Legend:
 - **Showcase (Haiku):** I fixed the sample fund value (it showed 118.34 instead of +18.34%).
 - **Header changes:** it is more opaque when scrolled, and the Join CTA is hidden below `sm`, where it's in the menu panel instead.
 - **Known dev-only warning:** next-themes' inline script triggers React 19's "script tag" warning. It's harmless.
+- **Your review (2.8):**
+  - **Approved as is:** hero speed, and bull size on desktop and at 507×909.
+  - **Fixed: skip at the end of the fan.** The fan now interpolates its last segment, and the bull nodes launch from each path's current tip instead of its final endpoint.
+  - **Fixed: "com rigor" receded instead of standing out.** Emphasis now uses Lora italic with a luminous gradient (`text-emphasis`): white to `#b99bff` with a glow in dark, `#230042` to `#6b3fc4` in light.
 
 ## Phase 3 — Content model & data (localhost)
 
