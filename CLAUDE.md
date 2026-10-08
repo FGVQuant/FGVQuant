@@ -16,6 +16,7 @@ Website for **FGV Quant**, the Liga de Finanças Quantitativas da FGV-SP. Planni
 3. **Next.js 16.4 has breaking changes.** Read `node_modules/next/dist/docs/` before using an API you're unsure of. See AGENTS.md.
 4. **Label FGV Quant Capital as simulated** ("Fundo Fictício / Simulated fund") on every page that shows returns.
 5. **No invented facts.** Missing league data (team, recruitment, email) gets clearly marked placeholders and is tracked in `docs/PLAN.md` Phase 0.
+6. **One dev server per checkout.** Before starting a preview, check whether something is already serving port 3000 (`lsof -iTCP:3000 -sTCP:LISTEN`). If the user's `npm run dev` is up, use it and don't start another. Two `next dev` processes in this folder race on `.next/dev/*.json` and corrupt the cache, which shows up as a JSON.parse 500 on every page. To repair it, truncate the broken manifest to its valid JSON; don't delete the cache.
 
 ## Stack
 
