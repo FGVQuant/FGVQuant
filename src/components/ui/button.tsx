@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentProps, ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { cva, type VariantProps } from "class-variance-authority";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -87,8 +88,11 @@ export function ButtonAnchor({
   children,
   target = "_blank",
   rel = "noopener noreferrer",
+  newTabLabel,
   ...props
-}: BaseProps & AnchorHTMLAttributes<HTMLAnchorElement>) {
+}: BaseProps & AnchorHTMLAttributes<HTMLAnchorElement> & { newTabLabel?: string }) {
+  const t = useTranslations("Common");
+  newTabLabel ??= t("newTab");
   return (
     <a
       target={target}
@@ -98,6 +102,7 @@ export function ButtonAnchor({
     >
       {children}
       {arrow ? <Arrow /> : null}
+      {target === "_blank" ? <span className="sr-only">{newTabLabel}</span> : null}
     </a>
   );
 }

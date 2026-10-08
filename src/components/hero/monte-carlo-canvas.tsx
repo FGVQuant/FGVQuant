@@ -134,247 +134,309 @@ export function MonteCarloCanvas({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const sim = simulateGbm({ paths, steps, mu, sigma, horizon: 1, s0: 100, seed });
-    // Work in log-prices: precompute once.
-    const toLog = (q: Float64Array) => q.map((v) => Math.log(v));
-    const logPaths = sim.paths.map(toLog);
-    const logP05 = toLog(sim.p05);
-    const logP50 = toLog(sim.p50);
-    const logP95 = toLog(sim.p95);
-    const logMin = Math.log(sim.min);
-    const logMax = Math.log(sim.max);
-    // Pair each bull vertex with a path it launches from.
-    const pairing = BULL_KEYS.map((_, i) => Math.floor(((i + 0.5) * paths) / BULL_KEYS.length));
+    // Save-Data users get the static final frame, like reduced motion.
+    const saveData =
+      (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData ===
+      true;
+    const staticOnly = reduced || saveData;
 
-    let layout = computeLayout(1, 1);
-    let colors = readColors(canvas);
-    let samples: number[] = [];
-    let tBull = steps; // step at which the fan passes the bull's centre
-    let dpr = 1;
-    let raf = 0;
-    let start = 0;
-    let visible = true;
-    let done = false;
+    // Defer the simulation + first draw off the hydration critical path.
+    let cleanup: (() => void) | undefined;
+    const idle =
+      window.requestIdleCallback ??
+      ((cb: () => void) => window.setTimeout(cb, 1) as unknown as number);
+    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+    const idleHandle = idle(() => (cleanup = setup(canvas, ctx)), { timeout: 300 });
+    return () => {
+      cancelIdle(idleHandle);
+      cleanup?.();
+    };
 
-    const a = (v: number) => v * layout.fanAlpha;
+    function setup(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+      const sim = simulateGbm({ paths, steps, mu, sigma, horizon: 1, s0: 100, seed });
+      // Work in log-prices: precompute once.
+      const toLog = (q: Float64Array) => q.map((v) => Math.log(v));
+      const logPaths = sim.paths.map(toLog);
+      const logP05 = toLog(sim.p05);
+      const logP50 = toLog(sim.p50);
+      const logP95 = toLog(sim.p95);
+      const logMin = Math.log(sim.min);
+      const logMax = Math.log(sim.max);
+      // Pair each bull vertex with a path it launches from.
+      const pairing = BULL_KEYS.map((_, i) => Math.floor(((i + 0.5) * paths) / BULL_KEYS.length));
 
-    /** Push a point out of the bull's ellipse with a smooth, far-decaying displacement. */
-    function deflect(x: number, y: number): Vertex {
-      const L = layout;
-      const dx = (x - L.cx) / L.rx;
-      let dy = (y - L.cy) / L.ry;
-      if (Math.abs(dx) < 1e-6 && Math.abs(dy) < 1e-6) dy = 1e-6;
-      const rho = Math.hypot(dx, dy);
-      const f = Math.pow(Math.pow(rho, FLOW_P) + 1, 1 / FLOW_P) / rho;
-      return [L.cx + dx * f * L.rx, L.cy + dy * f * L.ry];
-    }
+      let layout = computeLayout(1, 1);
+      let colors = readColors(canvas);
+      let samples: number[] = [];
+      let tBull = steps; // step at which the fan passes the bull's centre
+      let dpr = 1;
+      let raf = 0;
+      let timer = 0;
+      let start = 0;
+      /** finished fan, rendered once at device resolution — later frames just blit it */
+      let fanCache: HTMLCanvasElement | null = null;
+      let visible = true;
+      let done = false;
 
-    /** Screen position of log-price `v` at fractional step `t`. */
-    function map(t: number, v: number): Vertex {
-      const L = layout;
-      const k = (v - logMin) / (logMax - logMin);
-      const x = (t / steps) * L.w;
-      const y = L.yBottom - k * (L.yBottom - L.yTop);
-      return L.mode === "flow" ? deflect(x, y) : [x, y];
-    }
+      const a = (v: number) => v * layout.fanAlpha;
 
-    /** Log-price of a series at fractional step t (linear interpolation in log space). */
-    function valueAt(q: Float64Array, t: number) {
-      const i = Math.min(Math.floor(t), steps);
-      const f = t - i;
-      return i < steps ? q[i] + (q[i + 1] - q[i]) * f : q[i];
-    }
+      /** Push a point out of the bull's ellipse with a smooth, far-decaying displacement. */
+      function deflect(x: number, y: number): Vertex {
+        const L = layout;
+        const dx = (x - L.cx) / L.rx;
+        let dy = (y - L.cy) / L.ry;
+        if (Math.abs(dx) < 1e-6 && Math.abs(dy) < 1e-6) dy = 1e-6;
+        const rho = Math.hypot(dx, dy);
+        const f = Math.pow(Math.pow(rho, FLOW_P) + 1, 1 / FLOW_P) / rho;
+        return [L.cx + dx * f * L.rx, L.cy + dy * f * L.ry];
+      }
 
-    const pointAt = (q: Float64Array, t: number) => map(t, valueAt(q, t));
-
-    function rebuildSamples() {
-      const L = layout;
-      tBull = L.mode === "flow" ? (L.cx / L.w) * steps : steps;
-      // denser sampling where paths bend around the bull
-      const near = (t: number) => {
-        if (L.mode !== "flow") return false;
+      /** Screen position of log-price `v` at fractional step `t`. */
+      function map(t: number, v: number): Vertex {
+        const L = layout;
+        const k = (v - logMin) / (logMax - logMin);
         const x = (t / steps) * L.w;
-        return Math.abs(x - L.cx) < L.rx * 2.5;
-      };
-      samples = [];
-      for (let t = 0; t <= steps; t++) {
-        if (t > 0 && near(t)) {
-          for (let k = FLOW_SUBSTEPS - 1; k >= 1; k--) samples.push(t - k / FLOW_SUBSTEPS);
+        const y = L.yBottom - k * (L.yBottom - L.yTop);
+        return L.mode === "flow" ? deflect(x, y) : [x, y];
+      }
+
+      /** Log-price of a series at fractional step t (linear interpolation in log space). */
+      function valueAt(q: Float64Array, t: number) {
+        const i = Math.min(Math.floor(t), steps);
+        const f = t - i;
+        return i < steps ? q[i] + (q[i + 1] - q[i]) * f : q[i];
+      }
+
+      const pointAt = (q: Float64Array, t: number) => map(t, valueAt(q, t));
+
+      function rebuildSamples() {
+        const L = layout;
+        tBull = L.mode === "flow" ? (L.cx / L.w) * steps : steps;
+        // denser sampling where paths bend around the bull
+        const near = (t: number) => {
+          if (L.mode !== "flow") return false;
+          const x = (t / steps) * L.w;
+          return Math.abs(x - L.cx) < L.rx * 2.5;
+        };
+        samples = [];
+        for (let t = 0; t <= steps; t++) {
+          if (t > 0 && near(t)) {
+            for (let k = FLOW_SUBSTEPS - 1; k >= 1; k--) samples.push(t - k / FLOW_SUBSTEPS);
+          }
+          samples.push(t);
         }
-        samples.push(t);
       }
-    }
 
-    /** Trace q from 0 up to the fractional `head` — smooth leading edge. */
-    function trace(c: CanvasRenderingContext2D, q: Float64Array, head: number) {
-      const [x0, y0] = pointAt(q, 0);
-      c.moveTo(x0, y0);
-      for (const s of samples) {
-        if (s <= 0) continue;
-        if (s >= head) break;
-        const [x, y] = pointAt(q, s);
-        c.lineTo(x, y);
+      /** Trace q from 0 up to the fractional `head` — smooth leading edge. */
+      function trace(c: CanvasRenderingContext2D, q: Float64Array, head: number) {
+        const [x0, y0] = pointAt(q, 0);
+        c.moveTo(x0, y0);
+        for (const s of samples) {
+          if (s <= 0) continue;
+          if (s >= head) break;
+          const [x, y] = pointAt(q, s);
+          c.lineTo(x, y);
+        }
+        const [x1, y1] = pointAt(q, head);
+        c.lineTo(x1, y1);
       }
-      const [x1, y1] = pointAt(q, head);
-      c.lineTo(x1, y1);
-    }
 
-    function drawFan(head: number) {
-      const c = ctx!;
-      const L = layout;
-      c.save();
-      if (L.mode === "flow") {
-        // Clip to everything OUTSIDE the bull's ellipse: guarantees clean purple behind the mark,
-        // even where the p5–p95 band wraps around it.
+      function drawFan(head: number) {
+        const c = ctx!;
+        const L = layout;
+        c.save();
+        if (L.mode === "flow") {
+          // Clip to everything OUTSIDE the bull's ellipse: guarantees clean purple behind the mark,
+          // even where the p5–p95 band wraps around it.
+          c.beginPath();
+          c.rect(0, 0, L.w, L.h);
+          c.ellipse(L.cx, L.cy, L.rx, L.ry, 0, 0, Math.PI * 2);
+          c.clip("evenodd");
+        }
+
+        c.strokeStyle = colors.highlight;
+        c.fillStyle = colors.highlight;
+        // individual paths
+        c.lineWidth = 1;
+        c.globalAlpha = a(0.09);
         c.beginPath();
-        c.rect(0, 0, L.w, L.h);
-        c.ellipse(L.cx, L.cy, L.rx, L.ry, 0, 0, Math.PI * 2);
-        c.clip("evenodd");
-      }
-
-      c.strokeStyle = colors.highlight;
-      c.fillStyle = colors.highlight;
-      // individual paths
-      c.lineWidth = 1;
-      c.globalAlpha = a(0.09);
-      c.beginPath();
-      for (const p of logPaths) trace(c, p, head);
-      c.stroke();
-      // p5–p95 band: forward along p95, back along p05
-      c.globalAlpha = a(0.1);
-      c.beginPath();
-      trace(c, logP95, head);
-      const back = [head, ...samples.filter((s) => s > 0 && s < head).reverse(), 0];
-      for (const s of back) {
-        const [x, y] = pointAt(logP05, s);
-        c.lineTo(x, y);
-      }
-      c.closePath();
-      c.fill();
-      // dashed band edges
-      c.globalAlpha = a(0.45);
-      c.setLineDash([3, 5]);
-      c.beginPath();
-      trace(c, logP05, head);
-      trace(c, logP95, head);
-      c.stroke();
-      c.setLineDash([]);
-      // median + leading-edge dot
-      c.globalAlpha = a(0.95);
-      c.lineWidth = 1.5;
-      c.beginPath();
-      trace(c, logP50, head);
-      c.stroke();
-      if (head < steps) {
-        const [mx, my] = pointAt(logP50, head);
+        // narrow screens draw every other path (they're faint there anyway)
+        const stride = L.mode === "linear" ? 2 : 1;
+        for (let i = 0; i < logPaths.length; i += stride) trace(c, logPaths[i], head);
+        c.stroke();
+        // p5–p95 band: forward along p95, back along p05
+        c.globalAlpha = a(0.1);
         c.beginPath();
-        c.arc(mx, my, 2.5, 0, Math.PI * 2);
+        trace(c, logP95, head);
+        const back = [head, ...samples.filter((s) => s > 0 && s < head).reverse(), 0];
+        for (const s of back) {
+          const [x, y] = pointAt(logP05, s);
+          c.lineTo(x, y);
+        }
+        c.closePath();
         c.fill();
-      }
-      c.restore();
-    }
-
-    function drawBull(progress: number, head: number, time: number) {
-      if (!showBull || progress <= 0) return;
-      const c = ctx!;
-      const b = layout.bull;
-      const pos: Record<string, Vertex> = {};
-      BULL_KEYS.forEach((key, i) => {
-        // launch from where the path passes the bull (on the envelope), never ahead of the fan
-        const from = pointAt(logPaths[pairing[i]], Math.min(head, tBull));
-        const [nx, ny] = BULL_NODES[key];
-        const to: Vertex = [b.x + nx * b.w, b.y + ny * b.h];
-        // stagger vertices slightly so the mark "crystallises"
-        const local = easeOutExpo(clamp01((progress - (i / BULL_KEYS.length) * 0.35) / 0.65));
-        pos[key] = [from[0] + (to[0] - from[0]) * local, from[1] + (to[1] - from[1]) * local];
-      });
-      const settled = easeInOutCubic(clamp01((progress - 0.45) / 0.55));
-      const scale = b.w / 1010;
-
-      c.globalAlpha = b.alpha * (0.25 + 0.75 * settled);
-      c.strokeStyle = colors.foreground;
-      c.lineWidth = Math.max(1, 17 * scale);
-      c.lineCap = "round";
-      c.lineJoin = "round";
-      c.beginPath();
-      for (const [p, q] of BULL_EDGES) {
-        c.moveTo(pos[p][0], pos[p][1]);
-        c.lineTo(pos[q][0], pos[q][1]);
-      }
-      c.stroke();
-
-      for (const key of BULL_KEYS) {
-        const isDot = BULL_DOTS.has(key);
-        const twinkle = done && isDot ? 0.5 + 0.5 * Math.sin(time / 900 + key.length * 1.7) : 1;
-        c.globalAlpha = b.alpha * (isDot ? 0.65 + 0.35 * twinkle : 0.9);
-        c.fillStyle = isDot ? colors.highlight : colors.foreground;
+        // dashed band edges
+        c.globalAlpha = a(0.45);
+        c.setLineDash([3, 5]);
         c.beginPath();
-        c.arc(pos[key][0], pos[key][1], Math.max(1.5, (isDot ? 24 : 8.5) * scale), 0, Math.PI * 2);
-        c.fill();
+        trace(c, logP05, head);
+        trace(c, logP95, head);
+        c.stroke();
+        c.setLineDash([]);
+        // median + leading-edge dot
+        c.globalAlpha = a(0.95);
+        c.lineWidth = 1.5;
+        c.beginPath();
+        trace(c, logP50, head);
+        c.stroke();
+        if (head < steps) {
+          const [mx, my] = pointAt(logP50, head);
+          c.beginPath();
+          c.arc(mx, my, 2.5, 0, Math.PI * 2);
+          c.fill();
+        }
+        c.restore();
       }
-      c.globalAlpha = 1;
-    }
 
-    function resize() {
-      const rect = canvas!.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas!.width = Math.round(rect.width * dpr);
-      canvas!.height = Math.round(rect.height * dpr);
-      layout = computeLayout(rect.width, rect.height);
-      rebuildSamples();
-    }
+      function drawBull(progress: number, head: number, time: number) {
+        if (!showBull || progress <= 0) return;
+        const c = ctx!;
+        const b = layout.bull;
+        const pos: Record<string, Vertex> = {};
+        BULL_KEYS.forEach((key, i) => {
+          // launch from where the path passes the bull (on the envelope), never ahead of the fan
+          const from = pointAt(logPaths[pairing[i]], Math.min(head, tBull));
+          const [nx, ny] = BULL_NODES[key];
+          const to: Vertex = [b.x + nx * b.w, b.y + ny * b.h];
+          // stagger vertices slightly so the mark "crystallises"
+          const local = easeOutExpo(clamp01((progress - (i / BULL_KEYS.length) * 0.35) / 0.65));
+          pos[key] = [from[0] + (to[0] - from[0]) * local, from[1] + (to[1] - from[1]) * local];
+        });
+        const settled = easeInOutCubic(clamp01((progress - 0.45) / 0.55));
+        const scale = b.w / 1010;
 
-    function frame(now: number) {
-      if (!start) start = now;
-      const elapsed = reduced ? Infinity : now - start;
-      const fan = clamp01(elapsed / FAN_MS);
-      const bullP = clamp01((elapsed - BULL_DELAY_MS) / BULL_MS);
-      done = fan >= 1 && bullP >= 1;
+        c.globalAlpha = b.alpha * (0.25 + 0.75 * settled);
+        c.strokeStyle = colors.foreground;
+        c.lineWidth = Math.max(1, 17 * scale);
+        c.lineCap = "round";
+        c.lineJoin = "round";
+        c.beginPath();
+        for (const [p, q] of BULL_EDGES) {
+          c.moveTo(pos[p][0], pos[p][1]);
+          c.lineTo(pos[q][0], pos[q][1]);
+        }
+        c.stroke();
 
-      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx!.clearRect(0, 0, layout.w, layout.h);
-      const head = Math.max(0.001, easeInOutCubic(fan) * steps);
-      drawFan(head);
-      drawBull(bullP, head, now);
+        for (const key of BULL_KEYS) {
+          const isDot = BULL_DOTS.has(key);
+          const twinkle = done && isDot ? 0.5 + 0.5 * Math.sin(time / 900 + key.length * 1.7) : 1;
+          c.globalAlpha = b.alpha * (isDot ? 0.65 + 0.35 * twinkle : 0.9);
+          c.fillStyle = isDot ? colors.highlight : colors.foreground;
+          c.beginPath();
+          c.arc(
+            pos[key][0],
+            pos[key][1],
+            Math.max(1.5, (isDot ? 24 : 8.5) * scale),
+            0,
+            Math.PI * 2,
+          );
+          c.fill();
+        }
+        c.globalAlpha = 1;
+      }
 
-      // Keep animating while building; afterwards only the gentle node twinkle runs (when visible).
-      if (!reduced && visible) raf = requestAnimationFrame(frame);
-    }
+      function resize() {
+        const rect = canvas!.getBoundingClientRect();
+        const lowEnd = (navigator.hardwareConcurrency ?? 8) <= 4;
+        dpr = Math.min(window.devicePixelRatio || 1, lowEnd ? 1.5 : 2);
+        fanCache = null;
+        canvas!.width = Math.round(rect.width * dpr);
+        canvas!.height = Math.round(rect.height * dpr);
+        layout = computeLayout(rect.width, rect.height);
+        rebuildSamples();
+      }
 
-    function restartLoop() {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(frame);
-    }
+      function frame(now: number) {
+        if (!start) start = now;
+        const elapsed = staticOnly ? Infinity : now - start;
+        const fan = clamp01(elapsed / FAN_MS);
+        const bullP = clamp01((elapsed - BULL_DELAY_MS) / BULL_MS);
+        done = fan >= 1 && bullP >= 1;
+        const head = Math.max(0.001, easeInOutCubic(fan) * steps);
 
-    resize();
-    restartLoop();
+        const c = ctx!;
+        c.setTransform(dpr, 0, 0, dpr, 0, 0);
+        c.clearRect(0, 0, layout.w, layout.h);
+        if (fan >= 1) {
+          // The fan no longer changes: render it once off-screen, then just blit it.
+          if (!fanCache) {
+            fanCache = document.createElement("canvas");
+            fanCache.width = canvas.width;
+            fanCache.height = canvas.height;
+            const main = ctx;
+            ctx = fanCache.getContext("2d")!;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            drawFan(head);
+            ctx = main;
+          }
+          c.setTransform(1, 0, 0, 1, 0, 0);
+          c.drawImage(fanCache, 0, 0);
+          c.setTransform(dpr, 0, 0, dpr, 0, 0);
+        } else {
+          drawFan(head);
+        }
+        drawBull(bullP, head, now);
 
-    const ro = new ResizeObserver(() => {
+        if (staticOnly || !visible) return;
+        if (done) {
+          // Settled: only the node twinkle remains — ~15fps is plenty and saves battery.
+          timer = window.setTimeout(() => (raf = requestAnimationFrame(frame)), 66);
+        } else {
+          raf = requestAnimationFrame(frame);
+        }
+      }
+
+      function restartLoop() {
+        cancelAnimationFrame(raf);
+        window.clearTimeout(timer);
+        raf = requestAnimationFrame(frame);
+      }
+
       resize();
       restartLoop();
-    });
-    ro.observe(canvas);
 
-    const io = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      if (visible) restartLoop();
-      else cancelAnimationFrame(raf);
-    });
-    io.observe(canvas);
+      const ro = new ResizeObserver(() => {
+        resize();
+        restartLoop();
+      });
+      ro.observe(canvas);
 
-    // next-themes toggles a class on <html>; re-read the CSS variables when it changes.
-    const mo = new MutationObserver(() => {
-      colors = readColors(canvas);
-      restartLoop();
-    });
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+      const io = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) restartLoop();
+        else {
+          cancelAnimationFrame(raf);
+          window.clearTimeout(timer);
+        }
+      });
+      io.observe(canvas);
 
-    return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-      io.disconnect();
-      mo.disconnect();
-    };
+      // next-themes toggles a class on <html>; re-read the CSS variables when it changes.
+      const mo = new MutationObserver(() => {
+        colors = readColors(canvas);
+        fanCache = null;
+        restartLoop();
+      });
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+      return () => {
+        cancelAnimationFrame(raf);
+        window.clearTimeout(timer);
+        ro.disconnect();
+        io.disconnect();
+        mo.disconnect();
+      };
+    }
   }, [seed, paths, steps, mu, sigma, showBull, reduced]);
 
   return <canvas ref={canvasRef} aria-hidden className={cn("block size-full", className)} />;

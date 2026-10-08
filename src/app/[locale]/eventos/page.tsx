@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageAlternates } from "@/lib/seo";
 import { getTranslations } from "next-intl/server";
 import { DriftTimeline, type TimelineKind } from "@/components/sections/drift-timeline";
 import { PageIntro } from "@/components/layout/page-intro";
@@ -11,7 +12,11 @@ const KINDS: TimelineKind[] = ["event", "competition", "class", "visit", "milest
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Events.meta");
-  return { title: t("title"), description: t("description") };
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: await pageAlternates("/eventos"),
+  };
 }
 
 export default async function EventsPage() {

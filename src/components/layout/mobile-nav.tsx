@@ -40,6 +40,14 @@ export function MobileNav() {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     closeRef.current?.focus();
+    const inerted = [
+      document.getElementById("content"),
+      ...Array.from(document.querySelectorAll("body > header, body > footer, header, footer")),
+    ].filter(
+      (el, i, a): el is HTMLElement =>
+        !!el && a.indexOf(el) === i && !el.contains(panelRef.current),
+    );
+    inerted.forEach((el) => el.setAttribute("inert", ""));
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -65,6 +73,7 @@ export function MobileNav() {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
+      inerted.forEach((el) => el.removeAttribute("inert"));
       button?.focus();
     };
   }, [open]);
@@ -114,8 +123,6 @@ export function MobileNav() {
                     ref={closeRef}
                     type="button"
                     onClick={() => setOpenKey(null)}
-                    aria-expanded={open}
-                    aria-controls={PANEL_ID}
                     aria-label={t("closeMenu")}
                     className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground"
                   >

@@ -1,8 +1,7 @@
-"use client";
-
-import type { PointerEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { BentoGlow } from "./bento-glow";
 
 /** Responsive bento layout: 1 column on mobile, 6 columns with 18rem rows on lg. */
 export function BentoGrid({ className, children }: { className?: string; children: ReactNode }) {
@@ -45,13 +44,6 @@ export function BentoCard({
   background,
   children,
 }: BentoCardProps) {
-  function onPointerMove(e: PointerEvent<HTMLDivElement>) {
-    const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    el.style.setProperty("--my", `${e.clientY - r.top}px`);
-  }
-
   const heading = (
     <h3 className="font-display text-xl leading-tight text-foreground sm:text-2xl">{title}</h3>
   );
@@ -60,7 +52,6 @@ export function BentoCard({
 
   return (
     <div
-      onPointerMove={onPointerMove}
       className={cn(
         "group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl border border-border bg-card/60 p-6 transition-colors duration-300 hover:border-border-strong",
         className,
@@ -74,14 +65,7 @@ export function BentoCard({
           {background}
         </div>
       ) : null}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 motion-reduce:hidden"
-        style={{
-          background:
-            "radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 70%)",
-        }}
-      />
+      <BentoGlow />
 
       <div className="relative z-10 flex items-end justify-between gap-4">
         <div className="min-w-0">
@@ -255,6 +239,22 @@ export function CandlesBg({ className }: { className?: string }) {
 }
 
 /** Large faint monospaced formula. */
+const EQ_W = 300;
+const EQ_FONT = 44;
+const EQ_LINE = 50;
+
+/** Greedy word wrap into lines of at most `max` characters (keeps the formula's natural breaks). */
+function wrapWords(text: string, max: number) {
+  const lines: string[] = [];
+  for (const word of text.split(" ")) {
+    const last = lines[lines.length - 1];
+    if (last !== undefined && (last + " " + word).length <= max)
+      lines[lines.length - 1] = `${last} ${word}`;
+    else lines.push(word);
+  }
+  return lines;
+}
+
 export function EquationBg({
   tex = "dS = μS dt + σS dW",
   className,
@@ -262,13 +262,32 @@ export function EquationBg({
   tex?: string;
   className?: string;
 }) {
+  const lines = wrapWords(tex, 11);
   return (
     <div
+      aria-hidden
       className={cn("flex h-full w-full items-start justify-end overflow-hidden p-6", className)}
     >
-      <span className="font-mono text-4xl leading-tight font-medium whitespace-pre-wrap opacity-[0.14] select-none sm:text-5xl">
-        {tex}
-      </span>
+      {/* Rendered as SVG text: it's pure decoration, and contrast checkers (axe) evaluate HTML
+          text even when aria-hidden — SVG keeps the faint look without a false contrast failure. */}
+      <svg
+        viewBox={`0 0 ${EQ_W} ${lines.length * EQ_LINE + 8}`}
+        className="h-auto w-[min(100%,20rem)] opacity-[0.14] select-none sm:w-[min(100%,24rem)]"
+      >
+        <text
+          x={EQ_W}
+          textAnchor="end"
+          className="fill-current font-mono"
+          fontSize={EQ_FONT}
+          fontWeight={500}
+        >
+          {lines.map((line, i) => (
+            <tspan key={i} x={EQ_W} dy={i === 0 ? EQ_FONT : EQ_LINE}>
+              {line}
+            </tspan>
+          ))}
+        </text>
+      </svg>
     </div>
   );
 }

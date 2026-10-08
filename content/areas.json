@@ -15,8 +15,8 @@
     "id": "ml",
     "order": 2,
     "title": {
-      "pt": "Machine Learning",
-      "en": "Machine Learning"
+      "pt": "Machine learning",
+      "en": "Machine learning"
     },
     "description": {
       "pt": "Modelos estatísticos e de aprendizado de máquina — de regressões a LLMs — aplicados ao mercado.",
@@ -27,8 +27,8 @@
     "id": "algo",
     "order": 3,
     "title": {
-      "pt": "Trading Algorítmico",
-      "en": "Algorithmic Trading"
+      "pt": "Trading algorítmico",
+      "en": "Algorithmic trading"
     },
     "description": {
       "pt": "Estratégias sistemáticas, backtests e robôs de investimento.",
@@ -39,8 +39,8 @@
     "id": "research",
     "order": 4,
     "title": {
-      "pt": "Pesquisa Quantitativa",
-      "en": "Quantitative Research"
+      "pt": "Pesquisa quantitativa",
+      "en": "Quantitative research"
     },
     "description": {
       "pt": "Factor investing, risco e leitura crítica da literatura acadêmica.",
@@ -51,8 +51,8 @@
     "id": "python",
     "order": 5,
     "title": {
-      "pt": "Python & Dados",
-      "en": "Python & Data"
+      "pt": "Python & dados",
+      "en": "Python & data"
     },
     "description": {
       "pt": "Formação técnica em programação e dados, com aprendizado baseado em problemas (PBL).",

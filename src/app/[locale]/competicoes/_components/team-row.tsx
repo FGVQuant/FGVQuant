@@ -25,7 +25,7 @@ export function TeamRow({ name, result, members, rank, membersLabel }: TeamRowDa
         className={cn("size-2 rounded-full", top ? "bg-highlight" : "bg-border-strong")}
       />
       <div className="min-w-0 flex-1">
-        <h4 className="font-display text-2xl">{name}</h4>
+        <h3 className="font-display text-2xl">{name}</h3>
         {members && members.length > 0 ? (
           <p className="mt-1 text-sm text-muted-foreground">
             {membersLabel}: {members.join(", ")}

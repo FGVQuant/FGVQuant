@@ -7,6 +7,7 @@ import { LogoMarquee } from "@/components/sections/logo-marquee";
 import { ButtonAnchor } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { Em, SectionHeader } from "@/components/ui/section-header";
+import { pageAlternates } from "@/lib/seo";
 import { getPageLocale } from "@/lib/locale";
 import { getPartners, getSite, tr } from "@/lib/content";
 import { InstagramIcon, LinkedinIcon } from "./_components/brand-icons";
@@ -20,7 +21,11 @@ const PITCH: { key: string; icon: LucideIcon }[] = [
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Partners.meta");
-  return { title: t("title"), description: t("description") };
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: await pageAlternates("/parceiros"),
+  };
 }
 
 const cardCls =
@@ -81,7 +86,14 @@ export default async function PartnersPage() {
                 href: p.url,
                 logo: p.logo ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={p.logo} alt={p.name} className="h-8 w-auto" />
+                  <img
+                    src={p.logo}
+                    alt={p.name}
+                    width={160}
+                    height={32}
+                    loading="lazy"
+                    className="h-8 w-auto"
+                  />
                 ) : undefined,
               }))}
             />

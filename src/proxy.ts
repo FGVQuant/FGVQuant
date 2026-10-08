@@ -1,8 +1,34 @@
+import { NextResponse, type NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
+import { getIssues } from "@/lib/content";
 import { routing } from "./i18n/routing";
 
-// Next 16 renamed middleware.ts -> proxy.ts. Rewrites "/x" to "/pt/x" and serves "/en/x" as-is.
-export default createMiddleware(routing);
+// Next 16 renamed middleware.ts -> proxy.ts. next-intl rewrites "/x" to "/pt/x" and serves "/en/x" as-is.
+const intl = createMiddleware(routing);
+
+// Unknown newsletter slugs: with PPR, notFound() inside the page streams after a 200 status.
+// Reject them here instead by rewriting to a path no route matches, which yields a real 404
+// rendered by app/global-not-found.tsx.
+const ISSUE_SLUGS = new Set(getIssues().map((issue) => issue.slug));
+const ISSUE_PATH = /^(?:\/(pt|en))?\/newsletter\/([^/]+)\/?$/;
+
+function isKnownSlug(raw: string) {
+  try {
+    return ISSUE_SLUGS.has(decodeURIComponent(raw));
+  } catch {
+    return false; // malformed escape (e.g. "%E0") → treat as unknown, never a 500
+  }
+}
+
+export default function proxy(request: NextRequest) {
+  const match = request.nextUrl.pathname.match(ISSUE_PATH);
+  if (match && !isKnownSlug(match[2])) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${match[1] ?? routing.defaultLocale}/__not-found`;
+    return NextResponse.rewrite(url, { status: 404 });
+  }
+  return intl(request);
+}
 
 export const config = {
   // Skip Next internals, API routes and any path with a file extension (icons, brand assets).

@@ -48,7 +48,8 @@ const team = defineCollection({
     name: s.string(),
     role: localized,
     area: s.string().optional(),
-    photo: s.string().optional(),
+    /** local image under content/ (e.g. "./photos/ana.jpg") → { src, width, height, blurDataURL } */
+    photo: s.image().optional(),
     linkedin: s.string().url().optional(),
     order: s.number().default(100),
     /** true until the league confirms name/role and consent to publish */
@@ -102,6 +103,8 @@ const competitions = defineCollection({
           result: localized,
           strategy: s.string().optional(),
           members: s.array(s.string()).default([]),
+          /** true for placed/ranked results (podium, top-10); counted in the KPI strip */
+          ranked: s.boolean().default(false),
         }),
       )
       .default([]),

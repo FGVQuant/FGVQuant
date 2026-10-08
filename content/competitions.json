@@ -11,6 +11,7 @@
     "teams": [
       {
         "name": "Augur",
+        "ranked": true,
         "result": {
           "pt": "2º lugar",
           "en": "2nd place"
@@ -19,6 +20,7 @@
       },
       {
         "name": "Alpha Helix",
+        "ranked": true,
         "result": {
           "pt": "Top 10",
           "en": "Top 10"
@@ -26,6 +28,7 @@
       },
       {
         "name": "El Dorado",
+        "ranked": true,
         "result": {
           "pt": "Top 10",
           "en": "Top 10"

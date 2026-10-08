@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
 import { cn } from "@/lib/utils";
 import type { IssueCardData } from "../_lib/issues";
@@ -13,6 +14,7 @@ type Props = {
 
 /** Archive grid with in-place tag filtering (no URL change, keeps the page static). */
 export function IssueArchive({ issues, tags, labels }: Props) {
+  const t = useTranslations("Newsletter.archive");
   const [active, setActive] = useState<string | null>(null);
   const visible = active ? issues.filter((i) => i.tags.includes(active)) : issues;
 
@@ -49,6 +51,10 @@ export function IssueArchive({ issues, tags, labels }: Props) {
           ))}
         </div>
       ) : null}
+
+      <p aria-live="polite" role="status" className="sr-only">
+        {visible.length > 0 ? t("results", { count: visible.length }) : labels.empty}
+      </p>
 
       {visible.length > 0 ? (
         <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

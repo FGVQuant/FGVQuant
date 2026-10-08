@@ -47,7 +47,8 @@
       "filterLabel": "Filtrar por tema",
       "all": "Todas",
       "empty": "Nenhuma edição com este tema.",
-      "read": "Ler edição"
+      "read": "Ler edição",
+      "results": "{count, plural, one {# edição encontrada} other {# edições encontradas}}"
     },
     "issue": {
       "back": "Todas as edições",

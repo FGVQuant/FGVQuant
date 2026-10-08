@@ -7,11 +7,16 @@ import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
 import { getCompetitions, tr } from "@/lib/content";
+import { pageAlternates } from "@/lib/seo";
 import { TeamRow } from "./_components/team-row";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Competitions");
-  return { title: t("meta.title"), description: t("meta.description") };
+  return {
+    title: t("meta.title"),
+    description: t("meta.description"),
+    alternates: await pageAlternates("/competicoes"),
+  };
 }
 
 export default async function CompetitionsPage() {
@@ -41,15 +46,17 @@ export default async function CompetitionsPage() {
                   title={<span id={`comp-${c.id}`}>{c.name}</span>}
                   description={tr(c.summary, locale)}
                   action={
-                    <ButtonAnchor href={c.source} variant="outline" arrow>
-                      {t("source")}
-                    </ButtonAnchor>
+                    c.source ? (
+                      <ButtonAnchor href={c.source} variant="outline" arrow>
+                        {t("source")}
+                      </ButtonAnchor>
+                    ) : undefined
                   }
                 />
                 <ol className="mt-10 grid gap-3">
                   {c.teams.map((team, i) => (
                     <TeamRow
-                      key={team.name}
+                      key={`${team.name}-${i}`}
                       name={team.name}
                       result={tr(team.result, locale)}
                       members={team.members}

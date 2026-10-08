@@ -3,22 +3,22 @@
     "metaTitle": "About",
     "metaDescription": "Who we are: FGV-SP's quantitative finance student league, founded in 2021. Math, statistics and programming applied to markets.",
     "eyebrow": "About the league",
-    "title": "Math, statistics and code to <em>understand</em> markets.",
+    "title": "Math, statistics and code to <em>understand</em> markets",
     "lead": "FGV Quant is the quantitative finance student league at FGV-SP. Since {year}, about {members} members have studied, researched and built systematic strategies.",
     "mission": {
       "eyebrow": "Mission",
-      "title": "Learn by <em>doing</em>, with rigor.",
+      "title": "Learn by <em>doing</em>, with rigor",
       "p1": "We produce content and go deeper into quantitative finance, applying mathematics, statistics and programming to real market problems.",
       "p2": "Our method is problem-based learning (PBL): we learn by solving problems, from derivatives and machine learning to algorithmic trading and Python."
     },
     "areas": {
       "eyebrow": "Focus areas",
-      "title": "Where we focus our <em>study</em>.",
+      "title": "Where we focus our <em>study</em>",
       "description": "Five areas that combine theory, data and implementation."
     },
     "how": {
       "eyebrow": "How we work",
-      "title": "From theory to <em>practice</em>.",
+      "title": "From theory to <em>practice</em>",
       "description": "A continuous cycle of study, research and market exposure.",
       "study": {
         "title": "Study groups",
@@ -51,7 +51,7 @@
     },
     "numbers": {
       "eyebrow": "By the numbers",
-      "title": "The league in <em>numbers</em>.",
+      "title": "The league in <em>numbers</em>",
       "members": "Members",
       "issues": "Newsletter issues",
       "teams": "Ranked teams",
@@ -65,6 +65,7 @@
       "body": "Follow the recruitment process and learn how to apply.",
       "button": "Recruitment process",
       "team": "Meet the team"
-    }
+    },
+    "equationLabel": "Geometric Brownian motion equation (scroll horizontally if needed)"
   }
 }

@@ -12,14 +12,22 @@ import { SkipLink } from "@/components/layout/skip-link";
 import { ThemeProvider } from "@/components/theme-provider";
 import "../globals.css";
 
+// latin covers Portuguese (À–ÿ); latin-ext only added weight. Italic stays preloaded: the hero
+// headline emphasis ("com rigor") is above the fold.
 const lora = Lora({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   style: ["normal", "italic"],
   variable: "--font-lora",
   display: "swap",
 });
-const geistSans = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist-sans" });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
+// Mono only styles small eyebrows/data: no preload, swap in when ready.
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  preload: false,
+  display: "swap",
+});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -31,7 +39,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: t("title"), template: `%s · FGV Quant` },
     description: t("description"),
     metadataBase: new URL(SITE_URL), // NEXT_PUBLIC_SITE_URL in Phase 7; localhost until then
-    alternates: { languages: { pt: "/", en: "/en" } },
   };
 }
 

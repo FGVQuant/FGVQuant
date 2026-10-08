@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { ImageResponse } from "next/og";
 import { routing } from "@/i18n/routing";
@@ -15,6 +15,13 @@ export function generateStaticParams() {
 }
 
 const copy = { pt: ptCommon.Brand, en: enCommon.Brand };
+
+// Fonts are read synchronously at module load: under cacheComponents, async fs I/O inside the
+// handler counts as uncached I/O and forces this route to render on demand (ƒ) instead of static.
+const fontFile = (name: string) =>
+  readFileSync(path.join(process.cwd(), "node_modules/@fontsource/lora/files", name));
+const lora = fontFile("lora-latin-400-normal.woff");
+const loraBold = fontFile("lora-latin-700-normal.woff");
 const [, , vw, vh] = geometry.viewBox;
 const nodes = geometry.nodes as Record<string, number[]>;
 
@@ -29,12 +36,6 @@ const point = (name: string) => {
 export default async function Image({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = copy[locale === "en" ? "en" : "pt"];
-  const lora = await readFile(
-    path.join(process.cwd(), "node_modules/@fontsource/lora/files/lora-latin-400-normal.woff"),
-  );
-  const loraBold = await readFile(
-    path.join(process.cwd(), "node_modules/@fontsource/lora/files/lora-latin-700-normal.woff"),
-  );
 
   return new ImageResponse(
     <div

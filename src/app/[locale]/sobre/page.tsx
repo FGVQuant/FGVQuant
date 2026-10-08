@@ -11,7 +11,8 @@ import {
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { getPageLocale } from "@/lib/locale";
-import { getAreas, getSite, getStats, tr } from "@/lib/content";
+import { getAreas, getSite, getStats, intlLocale, tr } from "@/lib/content";
+import { pageAlternates } from "@/lib/seo";
 import { PageIntro } from "@/components/layout/page-intro";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
@@ -28,7 +29,11 @@ import { Equation } from "./_components/equation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("About");
-  return { title: t("metaTitle"), description: t("metaDescription") };
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: await pageAlternates("/sobre"),
+  };
 }
 
 const AREA_LAYOUT: Record<string, { span: string; bg: "graph" | "candles" | "eq" | null }> = {
@@ -153,7 +158,7 @@ export default async function AboutPage() {
           />
           <KpiStrip
             className="mt-12"
-            locale={locale}
+            locale={intlLocale(locale)}
             items={[
               { label: t("numbers.members"), value: stats.members },
               { label: t("numbers.issues"), value: stats.issues },
@@ -161,7 +166,8 @@ export default async function AboutPage() {
               {
                 label: t("numbers.fund"),
                 value: stats.fundCumulative,
-                decimals: 1,
+                decimals: 2,
+                prefix: stats.fundCumulative > 0 ? "+" : "",
                 suffix: "%",
                 note: tCommon("simulated"),
               },
@@ -174,7 +180,7 @@ export default async function AboutPage() {
       </section>
 
       <section className="container-page py-20 md:py-24">
-        <Equation caption={t("equationCaption")} />
+        <Equation caption={t("equationCaption")} label={t("equationLabel")} />
         <PlaceholderNote label={tCommon("pending")} className="mt-10">
           {t("structurePending")}
         </PlaceholderNote>

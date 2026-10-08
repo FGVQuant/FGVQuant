@@ -18,6 +18,7 @@ import { NumberTicker } from "@/components/data/number-ticker";
 import { ButtonLink } from "@/components/ui/button";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
+import { pageAlternates } from "@/lib/seo";
 import {
   formatEdition,
   formatEditionShort,
@@ -26,13 +27,14 @@ import {
   getFeaturedIssue,
   getIssues,
   getStats,
+  intlLocale,
   toTimelineItems,
   tr,
 } from "@/lib/content";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Home");
-  return { title: { absolute: t("metaTitle") } };
+  return { title: { absolute: t("metaTitle") }, alternates: await pageAlternates("/") };
 }
 
 /** Visual treatment per focus area (ids from content/areas.json). */
@@ -48,12 +50,12 @@ export default async function HomePage() {
   const locale = await getPageLocale();
   const t = await getTranslations("Home");
   const tc = await getTranslations("Common");
-  const intlLocale = locale === "pt" ? "pt-BR" : "en-US";
+  const intl = intlLocale(locale);
 
   const stats = getStats();
   const featured = getFeaturedIssue();
   const recent = getIssues()
-    .filter((i) => i.slug !== featured.slug)
+    .filter((i) => i.slug !== featured?.slug)
     .slice(0, 2);
   const fundMonth = formatEdition(stats.fundAsOf, locale);
 
@@ -82,7 +84,7 @@ export default async function HomePage() {
 
       <section className="container-page">
         <KpiStrip
-          locale={intlLocale}
+          locale={intl}
           items={[
             { label: t("stats.members"), value: stats.members },
             { label: t("stats.issues"), value: stats.issues },
@@ -90,7 +92,7 @@ export default async function HomePage() {
             {
               label: t("stats.fund"),
               value: stats.fundCumulative,
-              prefix: "+",
+              prefix: stats.fundCumulative > 0 ? "+" : "",
               suffix: "%",
               decimals: 2,
               note: t("stats.fundNote", { month: fundMonth }),
@@ -190,16 +192,18 @@ export default async function HomePage() {
             }
           />
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            <NewsletterCard
-              featured
-              className="lg:col-span-3"
-              href={`/newsletter/${featured.slug}`}
-              title={featured.title}
-              dateLabel={formatEditionShort(featured.edition, locale)}
-              excerpt={featured.excerpt}
-              tags={featured.tags}
-              readLabel={t("newsletter.read")}
-            />
+            {featured ? (
+              <NewsletterCard
+                featured
+                className="lg:col-span-3"
+                href={`/newsletter/${featured.slug}`}
+                title={featured.title}
+                dateLabel={formatEditionShort(featured.edition, locale)}
+                excerpt={featured.excerpt}
+                tags={featured.tags}
+                readLabel={t("newsletter.read")}
+              />
+            ) : null}
             {recent.map((issue) => (
               <NewsletterCard
                 key={issue.slug}
@@ -221,7 +225,7 @@ export default async function HomePage() {
               simulated={tc("simulated")}
               cta={t("capital.cta")}
               value={stats.fundCumulative}
-              locale={intlLocale}
+              locale={intl}
             />
           </div>
         </div>
@@ -308,7 +312,7 @@ function CapitalTeaser(props: {
         </p>
         <NumberTicker
           value={props.value}
-          prefix="+"
+          prefix={props.value > 0 ? "+" : ""}
           suffix="%"
           decimals={2}
           locale={props.locale}

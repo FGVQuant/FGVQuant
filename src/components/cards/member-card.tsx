@@ -6,7 +6,7 @@ type MemberCardProps = {
   name: string;
   role: string;
   area?: string;
-  photo?: { src: string; alt: string };
+  photo?: { src: string; alt: string; width: number; height: number; blurDataURL?: string };
   /** LinkedIn profile URL. */
   linkedin?: string;
   /** Accessible label for the LinkedIn link, e.g. "Ana Silva no LinkedIn". */
@@ -56,9 +56,12 @@ export function MemberCard({
           <Image
             src={photo.src}
             alt={photo.alt}
-            fill
+            width={photo.width}
+            height={photo.height}
+            placeholder={photo.blurDataURL ? "blur" : "empty"}
+            blurDataURL={photo.blurDataURL}
             sizes="(min-width: 1024px) 280px, (min-width: 640px) 33vw, 50vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+            className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
           />
         ) : (
           <div

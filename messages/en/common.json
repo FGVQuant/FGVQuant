@@ -48,10 +48,6 @@
     "description": "The page you tried to reach doesn't exist — perhaps an outlier.",
     "back": "Back to home"
   },
-  "Home": {
-    "placeholderTitle": "Quantitative finance, with rigor.",
-    "placeholderBody": "Site under construction — phase 1 (foundations)."
-  },
   "Common": {
     "pending": "To be confirmed by the league",
     "soon": "Coming soon",
@@ -64,6 +60,9 @@
       "visit": "Visit",
       "milestone": "Milestone"
     },
-    "timelineLabel": "Activities timeline"
+    "timelineLabel": "Activities timeline",
+    "newTab": "(opens in a new tab)",
+    "marqueePause": "Pause",
+    "marqueePlay": "Resume"
   }
 }

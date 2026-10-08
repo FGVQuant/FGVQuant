@@ -20,6 +20,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export type TimelineKind = "event" | "competition" | "class" | "visit" | "milestone";
 
@@ -54,6 +55,8 @@ type DriftTimelineProps = {
   ariaLabel?: string;
   /** Text for the link arrow's accessible hint, appended to the title. */
   linkLabel?: string;
+  /** Screen-reader hint appended to external links. Default "(abre em nova aba)". */
+  newTabLabel?: string;
   className?: string;
 };
 
@@ -136,9 +139,8 @@ function Node({
   fraction: number | null;
   reduced: boolean;
 }) {
-  const [value, setValue] = useState(0);
-  useMotionValueEvent(progress, "change", setValue);
-  const passed = fraction !== null && value >= fraction;
+  const [passed, setPassed] = useState(false);
+  useMotionValueEvent(progress, "change", (v) => setPassed(fraction !== null && v >= fraction));
   const lit = reduced || passed;
 
   return (
@@ -168,11 +170,15 @@ function Card({
   item,
   kindLabel,
   linkLabel,
+  newTabLabel,
+  external,
   reduced,
 }: {
   item: TimelineItem;
   kindLabel: string;
   linkLabel?: string;
+  newTabLabel: string;
+  external: boolean;
   reduced: boolean;
 }) {
   const Icon = KIND_ICON[item.kind];
@@ -197,6 +203,12 @@ function Card({
       </div>
       <h3 className="mt-3 font-display text-lg leading-snug font-semibold text-foreground md:text-xl">
         {item.title}
+        {item.href && (linkLabel || external) ? (
+          <span className="sr-only">
+            {" "}
+            {[linkLabel, external ? newTabLabel : null].filter(Boolean).join(" ")}
+          </span>
+        ) : null}
         {item.href ? (
           <span
             aria-hidden="true"
@@ -215,17 +227,16 @@ function Card({
   const cls = "group/card block rounded-2xl p-5 transition-colors md:p-6 glass";
 
   const linkCls = cn(cls, "hover:border-border-strong hover:bg-accent");
-  const linkAria = linkLabel ? `${item.title} — ${linkLabel}` : undefined;
   // internal paths go through next-intl's Link so they keep the current locale
   const inner = item.href ? (
     item.href.startsWith("/") ? (
-      <Link href={item.href} aria-label={linkAria} className={linkCls}>
+      <Link href={item.href} className={linkCls}>
         {body}
       </Link>
     ) : (
       <a
         href={item.href}
-        aria-label={linkAria}
+
         className={linkCls}
         target="_blank"
         rel="noopener noreferrer"
@@ -266,8 +277,11 @@ export function DriftTimeline({
   kindLabels,
   ariaLabel,
   linkLabel,
+  newTabLabel,
   className,
 }: DriftTimelineProps) {
+  const t = useTranslations("Common");
+  newTabLabel ??= t("newTab");
   const reduced = useReducedMotion() ?? false;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [geo, setGeo] = useState<Geometry | null>(null);
@@ -399,6 +413,8 @@ export function DriftTimeline({
                         item={item}
                         kindLabel={labels[item.kind]}
                         linkLabel={linkLabel}
+                        newTabLabel={newTabLabel}
+                        external={!!item.href && !item.href.startsWith("/")}
                         reduced={reduced}
                       />
                     </div>

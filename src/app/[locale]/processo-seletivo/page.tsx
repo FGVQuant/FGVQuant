@@ -19,6 +19,7 @@ import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { Link } from "@/i18n/navigation";
 import { getSite } from "@/lib/content";
+import { pageAlternates } from "@/lib/seo";
 import { Faq, type FaqItem } from "./_components/faq";
 
 type Build = { key: string; icon: LucideIcon; href?: string };
@@ -36,7 +37,11 @@ const BUILD: Build[] = [
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Join.meta");
-  return { title: t("title"), description: t("description") };
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: await pageAlternates("/processo-seletivo"),
+  };
 }
 
 /** Wraps the text between <em> tags in <Em>. */
@@ -50,6 +55,7 @@ export default async function JoinPage() {
 
   const statusKey =
     recruitment.open === true ? "open" : recruitment.open === false ? "closed" : "tbd";
+  const canApply = recruitment.open !== false && Boolean(recruitment.formUrl);
   const faq = t.raw("faq.items") as FaqItem[];
 
   return (
@@ -64,7 +70,7 @@ export default async function JoinPage() {
             <span className="sr-only">{t("status.label")}: </span>
             {t(`status.${statusKey}`)}
           </Badge>
-          {recruitment.formUrl ? (
+          {canApply && recruitment.formUrl ? (
             <ButtonAnchor href={recruitment.formUrl} size="lg" arrow>
               {t("apply")}
             </ButtonAnchor>
@@ -79,9 +85,11 @@ export default async function JoinPage() {
             title={rich(t, "how.title")}
             description={t("how.description")}
           />
-          <PlaceholderNote label={tCommon("pending")} className="mt-8">
-            {t("how.pending")}
-          </PlaceholderNote>
+          {recruitment.placeholder ? (
+            <PlaceholderNote label={tCommon("pending")} className="mt-8">
+              {t("how.pending")}
+            </PlaceholderNote>
+          ) : null}
         </div>
         <div>
           <SectionHeader
@@ -89,9 +97,11 @@ export default async function JoinPage() {
             title={rich(t, "who.title")}
             description={t("who.body")}
           />
-          <PlaceholderNote label={tCommon("pending")} className="mt-8">
-            {t("who.pending")}
-          </PlaceholderNote>
+          {recruitment.placeholder ? (
+            <PlaceholderNote label={tCommon("pending")} className="mt-8">
+              {t("who.pending")}
+            </PlaceholderNote>
+          ) : null}
         </div>
       </section>
 
@@ -153,7 +163,7 @@ export default async function JoinPage() {
               <ButtonAnchor href={linkedin} variant="outline" size="lg" arrow>
                 {t("notify.linkedin")}
               </ButtonAnchor>
-              {recruitment.formUrl ? (
+              {canApply && recruitment.formUrl ? (
                 <ButtonAnchor href={recruitment.formUrl} variant="ghost" size="lg">
                   {t("apply")}
                 </ButtonAnchor>

@@ -11,15 +11,17 @@ async function getYear() {
 }
 
 const linkClass =
-  "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground";
+  "inline-flex items-center gap-1 py-1 text-sm text-muted-foreground transition-colors hover:text-foreground";
 
 export async function SiteFooter() {
-  const [t, nav, brand, year] = await Promise.all([
+  const [t, nav, brand, common, year] = await Promise.all([
     getTranslations("Footer"),
     getTranslations("Nav"),
     getTranslations("Brand"),
+    getTranslations("Common"),
     getYear(),
   ]);
+  const newTabLabel = common("newTab");
   const site = getSite();
   const follow = [
     { label: "Instagram", href: site.instagram },
@@ -45,7 +47,7 @@ export async function SiteFooter() {
             <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
               {t("explore")}
             </h2>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-4 space-y-1">
               {navItems.map(({ key, href }) => (
                 <li key={key}>
                   <Link href={href} className={linkClass}>
@@ -65,12 +67,13 @@ export async function SiteFooter() {
             <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
               {t("follow")}
             </h2>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-4 space-y-1">
               {follow.map(({ label, href }) => (
                 <li key={href}>
                   <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
                     {label}
                     <ArrowUpRight className="size-3.5" aria-hidden />
+                    <span className="sr-only">{newTabLabel}</span>
                   </a>
                 </li>
               ))}

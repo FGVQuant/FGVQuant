@@ -230,11 +230,12 @@ export function TerminalPanel({
             line={{ id: -1, kind: lines.length === 0 ? "cmd" : "out", text: typing }}
             prompt={prompt}
             caret
+            hidden
           />
         ) : null}
 
         {booted ? (
-          <div className="mt-1 flex items-center gap-2">
+          <div className="mt-1 flex items-center gap-2 rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
             <span aria-hidden className="text-highlight select-none">
               {prompt}
             </span>
@@ -250,7 +251,7 @@ export function TerminalPanel({
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              className="min-w-0 flex-1 bg-transparent text-foreground caret-highlight outline-none placeholder:text-muted-foreground/60"
+              className="min-w-0 flex-1 bg-transparent text-foreground caret-highlight outline-none placeholder:text-muted-foreground"
               placeholder="/help"
             />
           </div>
@@ -267,12 +268,13 @@ export function TerminalPanel({
           <button
             key={c.name}
             type="button"
-            disabled={!booted}
+            aria-disabled={!booted || undefined}
             onClick={(e) => {
               e.stopPropagation();
+              if (!booted) return;
               run(`/${c.name}`);
             }}
-            className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground disabled:opacity-40"
+            className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground aria-disabled:cursor-wait"
           >
             /{c.name}
           </button>
@@ -282,9 +284,20 @@ export function TerminalPanel({
   );
 }
 
-function TermLine({ line, prompt, caret }: { line: Line; prompt: string; caret?: boolean }) {
+function TermLine({
+  line,
+  prompt,
+  caret,
+  hidden,
+}: {
+  line: Line;
+  prompt: string;
+  caret?: boolean;
+  hidden?: boolean;
+}) {
   return (
     <p
+      aria-hidden={hidden || undefined}
       className={cn(
         "break-words whitespace-pre-wrap",
         line.kind === "cmd" && "mt-2 text-foreground first:mt-0",

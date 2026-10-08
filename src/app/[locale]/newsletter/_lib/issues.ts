@@ -1,4 +1,4 @@
-import { formatEdition, formatEditionShort, getIssues } from "@/lib/content";
+import { formatEditionShort, getIssues } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
 
 export type IssueCardData = {
@@ -19,5 +19,3 @@ export function toCardData(issue: ReturnType<typeof getIssues>[number], locale: 
     tags: issue.tags,
   } satisfies IssueCardData;
 }
-
-export { formatEdition };

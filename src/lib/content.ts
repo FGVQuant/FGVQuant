@@ -21,7 +21,8 @@ import type { TimelineItem } from "@/components/sections/drift-timeline";
 export type Localized = { pt: string; en: string };
 export const tr = (value: Localized, locale: Locale) => value[locale];
 
-const intlLocale = (locale: Locale) => (locale === "pt" ? "pt-BR" : "en-US");
+/** BCP-47 tag used for Intl formatting. */
+export const intlLocale = (locale: Locale) => (locale === "pt" ? "pt-BR" : "en-US");
 
 /** Content dates are calendar dates: format in UTC so they never shift a day. */
 function fmt(iso: string, locale: Locale, opts: Intl.DateTimeFormatOptions) {
@@ -37,11 +38,16 @@ export function formatEdition(edition: string, locale: Locale) {
   return capitalize(fmt(`${edition}-01`, locale, { month: "long", year: "numeric" }));
 }
 
-/** Short label for cards, e.g. "Set 2026" / "Sep 2026". */
+/** Short label for cards, e.g. "Set 2026" / "Sep 2026" (short month without trailing "." + year). */
 export function formatEditionShort(edition: string, locale: Locale) {
-  return capitalize(
-    fmt(`${edition}-01`, locale, { month: "short", year: "numeric" }).replace(".", ""),
-  );
+  const parts = new Intl.DateTimeFormat(intlLocale(locale), {
+    timeZone: "UTC",
+    month: "short",
+    year: "numeric",
+  }).formatToParts(new Date(`${edition}-01`));
+  const month = (parts.find((p) => p.type === "month")?.value ?? "").replace(/\.$/, "");
+  const year = parts.find((p) => p.type === "year")?.value ?? "";
+  return `${capitalize(month)} ${year}`.trim();
 }
 
 /** Event date honouring its precision (never shows a day we don't actually know). */
@@ -119,8 +125,8 @@ export function getStats() {
   return {
     members: site.members,
     issues: newsletter.length,
-    /** teams listed in competitions are ranked placements (e.g. top-10) */
-    rankedTeams: competitions.reduce((n, c) => n + c.teams.length, 0),
+    /** only teams flagged `ranked` (podium / top-10 placements) are counted */
+    rankedTeams: competitions.reduce((n, c) => n + c.teams.filter((t) => t.ranked).length, 0),
     fundCumulative: fund.cumulativeReturn,
     fundAsOf: fund.cumulativeAsOf,
   };

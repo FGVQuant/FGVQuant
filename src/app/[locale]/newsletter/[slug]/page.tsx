@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
+import { pageAlternates } from "@/lib/seo";
 import { formatEdition, getIssue, getIssues, getSite } from "@/lib/content";
 import { getPageLocale } from "@/lib/locale";
 
@@ -19,7 +20,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const { slug } = await props.params;
   const issue = getIssue(slug);
   if (!issue) return {};
-  return { title: issue.title, description: issue.excerpt };
+  return {
+    title: issue.title,
+    description: issue.excerpt,
+    alternates: await pageAlternates(`/newsletter/${slug}`),
+  };
 }
 
 export default async function IssuePage(props: Props) {

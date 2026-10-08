@@ -24,7 +24,8 @@
       "tableCaption": "Retornos mensais reportados do fundo fictício",
       "month": "Mês",
       "return": "Retorno",
-      "pendingNote": "O histórico mensal completo e a metodologia serão publicados assim que fornecidos pela liga. Por ora, exibimos apenas os meses já reportados."
+      "pendingNote": "O histórico mensal completo e a metodologia serão publicados assim que fornecidos pela liga. Por ora, exibimos apenas os meses já reportados.",
+      "methodologyTitle": "Metodologia"
     },
     "how": {
       "eyebrow": "Como funciona",

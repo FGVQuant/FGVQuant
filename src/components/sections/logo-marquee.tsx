@@ -1,5 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { MarqueeToggle } from "./logo-marquee-toggle";
 
 export interface LogoMarqueeItem {
   name: string;
@@ -17,15 +19,23 @@ export interface LogoMarqueeProps {
   className?: string;
   /** Accessible label for the list. */
   label?: string;
+  /** Pause button label. Default "Pausar". */
+  pauseLabel?: string;
+  /** Play button label. Default "Retomar". */
+  playLabel?: string;
+  /** Screen-reader hint on external links. Default "(abre em nova aba)". */
+  newTabLabel?: string;
 }
 
 const CSS = `
 @keyframes fq-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .fq-marquee { -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
 .fq-marquee-track { animation: fq-marquee var(--fq-speed, 40s) linear infinite; animation-direction: var(--fq-dir, normal); }
+.fq-marquee[data-paused="true"] .fq-marquee-track { animation-play-state: paused; }
 .fq-marquee[data-pause="true"]:hover .fq-marquee-track,
 .fq-marquee[data-pause="true"]:focus-within .fq-marquee-track { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
+  .fq-marquee-toggle { display: none; }
   .fq-marquee { -webkit-mask-image: none; mask-image: none; }
   .fq-marquee-track { animation: none !important; width: auto; flex-wrap: wrap; justify-content: center; }
   .fq-marquee-copy { flex-wrap: wrap; justify-content: center; padding-right: 0 !important; }
@@ -33,7 +43,13 @@ const CSS = `
 }
 `;
 
-function Item({ name, logo, href, hidden }: LogoMarqueeItem & { hidden?: boolean }) {
+function Item({
+  name,
+  logo,
+  href,
+  hidden,
+  newTabLabel,
+}: LogoMarqueeItem & { hidden?: boolean; newTabLabel: string }) {
   const cls =
     "inline-flex items-center rounded-lg opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 focus-visible:opacity-100 focus-visible:grayscale-0";
   const content = logo ?? (
@@ -53,11 +69,10 @@ function Item({ name, logo, href, hidden }: LogoMarqueeItem & { hidden?: boolean
           className={cls}
         >
           {content}
+          <span className="sr-only">{newTabLabel}</span>
         </a>
       ) : (
-        <span className={cls} aria-label={logo ? name : undefined}>
-          {content}
-        </span>
+        <span className={cls}>{content}</span>
       )}
     </li>
   );
@@ -74,34 +89,49 @@ export function LogoMarquee({
   pauseOnHover = true,
   className,
   label,
+  pauseLabel,
+  playLabel,
+  newTabLabel,
 }: LogoMarqueeProps) {
+  const t = useTranslations("Common");
+  newTabLabel ??= t("newTab");
+  pauseLabel ??= t("marqueePause");
+  playLabel ??= t("marqueePlay");
   const style = {
     "--fq-speed": `${speed}s`,
     "--fq-dir": reverse ? "reverse" : "normal",
   } as CSSProperties;
 
   return (
-    <div
-      role="group"
-      aria-label={label}
-      data-pause={pauseOnHover}
-      style={style}
-      className={cn("fq-marquee relative w-full overflow-hidden", className)}
-    >
-      <style>{CSS}</style>
-      <div className="fq-marquee-track flex w-max">
-        {[false, true].map((hidden) => (
-          <ul
-            key={String(hidden)}
-            aria-hidden={hidden || undefined}
-            className="fq-marquee-copy flex shrink-0 items-center gap-10 pr-10"
-          >
-            {items.map((item) => (
-              <Item key={item.name} {...item} hidden={hidden} />
-            ))}
-          </ul>
-        ))}
+    <div className={cn("w-full", className)}>
+      <div
+        role="group"
+        aria-label={label}
+        data-pause={pauseOnHover}
+        style={style}
+        className="fq-marquee relative w-full overflow-hidden"
+      >
+        <style>{CSS}</style>
+        <div className="fq-marquee-track flex w-max">
+          {[false, true].map((hidden) => (
+            <ul
+              key={String(hidden)}
+              aria-hidden={hidden || undefined}
+              className="fq-marquee-copy flex shrink-0 items-center gap-10 pr-10"
+            >
+              {items.map((item, i) => (
+                <Item
+                  key={`${item.name}-${i}`}
+                  {...item}
+                  hidden={hidden}
+                  newTabLabel={newTabLabel}
+                />
+              ))}
+            </ul>
+          ))}
+        </div>
       </div>
+      <MarqueeToggle pauseLabel={pauseLabel} playLabel={playLabel} />
     </div>
   );
 }

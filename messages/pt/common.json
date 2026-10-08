@@ -48,10 +48,6 @@
     "description": "O caminho que você tentou não existe — talvez um outlier.",
     "back": "Voltar ao início"
   },
-  "Home": {
-    "placeholderTitle": "Finanças quantitativas, com rigor.",
-    "placeholderBody": "Site em construção — fase 1 (fundações)."
-  },
   "Common": {
     "pending": "A confirmar com a liga",
     "soon": "Em breve",
@@ -64,6 +60,9 @@
       "visit": "Visita",
       "milestone": "Marco"
     },
-    "timelineLabel": "Linha do tempo de atividades"
+    "timelineLabel": "Linha do tempo de atividades",
+    "newTab": "(abre em nova aba)",
+    "marqueePause": "Pausar",
+    "marqueePlay": "Retomar"
   }
 }

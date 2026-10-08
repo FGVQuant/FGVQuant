@@ -8,13 +8,18 @@ import { ButtonAnchor } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
-import { formatEdition, formatEditionShort, getFund, getSite } from "@/lib/content";
+import { formatEdition, formatEditionShort, getFund, getSite, intlLocale, tr } from "@/lib/content";
+import { pageAlternates } from "@/lib/seo";
 import { Disclaimer } from "./_components/disclaimer";
 import { MonthlyBars } from "./_components/monthly-bars";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Capital");
-  return { title: t("meta.title"), description: t("meta.description") };
+  return {
+    title: t("meta.title"),
+    description: t("meta.description"),
+    alternates: await pageAlternates("/capital"),
+  };
 }
 
 export default async function CapitalPage() {
@@ -23,7 +28,7 @@ export default async function CapitalPage() {
   const tCommon = await getTranslations("Common");
   const fund = getFund();
   const site = getSite();
-  const intl = locale === "pt" ? "pt-BR" : "en-US";
+  const intl = intlLocale(locale);
 
   const pct = (n: number) =>
     `${n > 0 ? "+" : ""}${new Intl.NumberFormat(intl, {
@@ -74,7 +79,7 @@ export default async function CapitalPage() {
               <NumberTicker
                 value={fund.cumulativeReturn}
                 decimals={2}
-                prefix="+"
+                prefix={fund.cumulativeReturn > 0 ? "+" : ""}
                 suffix="%"
                 locale={intl}
                 className="text-5xl text-foreground sm:text-6xl"
@@ -104,9 +109,20 @@ export default async function CapitalPage() {
             </div>
           </div>
         </div>
-        <PlaceholderNote label={tCommon("pending")} className="mt-6">
-          {t("results.pendingNote")}
-        </PlaceholderNote>
+        {fund.methodology ? (
+          <div className="mt-6 rounded-2xl border border-border bg-card p-6 sm:p-8">
+            <h3 className="font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
+              {t("results.methodologyTitle")}
+            </h3>
+            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+              {tr(fund.methodology, locale)}
+            </p>
+          </div>
+        ) : (
+          <PlaceholderNote label={tCommon("pending")} className="mt-6">
+            {t("results.pendingNote")}
+          </PlaceholderNote>
+        )}
       </section>
 
       <section className="border-t border-border">
@@ -143,7 +159,18 @@ export default async function CapitalPage() {
           <Disclaimer title={t("disclaimer.title")} items={disclaimerItems} />
           <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
             <ArrowUpRight aria-hidden className="size-3.5" />
-            {t("reports.source")}
+            {fund.source ? (
+              <a
+                href={fund.source}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-sm underline underline-offset-4 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              >
+                {t("reports.source")}
+              </a>
+            ) : (
+              t("reports.source")
+            )}
           </p>
         </div>
       </section>

@@ -7,12 +7,17 @@ import { ButtonAnchor } from "@/components/ui/button";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { getFeaturedIssue, getIssues, getIssueTags, getSite } from "@/lib/content";
 import { getPageLocale } from "@/lib/locale";
+import { pageAlternates } from "@/lib/seo";
 import { IssueArchive } from "./_components/issue-archive";
 import { toCardData } from "./_lib/issues";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Newsletter.meta");
-  return { title: t("title"), description: t("description") };
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: await pageAlternates("/newsletter"),
+  };
 }
 
 const SECTIONS = [

@@ -195,7 +195,7 @@ Pages 4.2–4.9 can run as parallel subagents because each owns its own route fo
   - The Join newsletter item.
 - **Reminder:** the newsletter content stays Portuguese by design, and `/en` says so.
 
-## Phase 6 — QA & sign-off (localhost production build)
+## Phase 6 — QA & sign-off (localhost production build) 🔶 QA done 2026-10-09 — awaiting league walkthrough (6.7) and your sign-off (6.8)
 
 | #   | Task                                                                                         | Who                   |
 | --- | -------------------------------------------------------------------------------------------- | --------------------- |
@@ -207,6 +207,61 @@ Pages 4.2–4.9 can run as parallel subagents because each owns its own route fo
 | 6.6 | Code review of the full codebase                                                             | 🟣 (code-reviewer)    |
 | 6.7 | **League walkthrough on localhost** (screen share or your machine). Collect fixes            | 🧑                    |
 | 6.8 | Apply fixes, then get final sign-off: "approved to deploy"                                   | 🤖 fixes, 🧑 approves |
+
+**Phase 6 notes:**
+
+- **Audits.** Four read-only audits ran in parallel against a local production server on :3001:
+  - Accessibility (Sonnet): axe in both themes at 375 and 1280px, plus contrast maths.
+  - Performance (Sonnet): Lighthouse plus bundle analysis.
+  - Links and proofreading (Haiku).
+  - Code review (code-reviewer).
+- **Fixes.** Applied in three batches with disjoint files:
+  - **A, Claude (performance core).** Hero canvas:
+    - Deferred to idle.
+    - The finished fan is cached to an offscreen canvas and blitted.
+    - The twinkle is throttled to about 15fps after it settles.
+    - Save-Data gets the static frame.
+    - Half the paths on narrow screens, and a DPR cap on low-core devices.
+
+    Also:
+    - Fonts trimmed to the `latin` subset; Geist Mono isn't preloaded.
+    - No `NEXT_LOCALE` cookie.
+    - Modern browserslist.
+    - The OG image fonts are read synchronously, so the route builds static (●).
+    - Proxy-level real 404 for unknown newsletter slugs, safe against malformed escapes.
+    - Branded bilingual `app/global-not-found.tsx` (`experimental.globalNotFound`). Unmatched URLs previously got Next's unstyled default.
+    - Sobre's equation is native MathML, so no render-blocking KaTeX CSS there.
+    - The decorative formula is SVG text, so there's no false contrast failure.
+
+  - **B, Sonnet (pages and data):**
+    - Sign-aware fund returns.
+    - Placeholder notes gated on real data flags.
+    - An explicit `ranked` flag for competition teams.
+    - Local team photos via `s.image()`, with area labels.
+    - The bar chart handles 12–36 months. Claude also fixed edge-label clipping, verified with a 24-month test series that was then reverted.
+    - Per-page canonical and hreflang (`src/lib/seo.ts`).
+    - `h3` heading order, a keyboard-reachable equation, an archive live region, partner logo dimensions, and a zero-issue guard.
+  - **C, Sonnet (shared components):**
+    - Terminal focus ring and contrast, `aria-disabled` chips.
+    - Bento split into a server component with a client glow island.
+    - Marquee pause control (WCAG 2.2.2).
+    - Timeline: no per-frame re-renders, accessible names that keep the visible text.
+    - The ticker server-renders its final value.
+    - Mobile menu uses `inert`.
+    - Footer target sizes, a darker light-theme red.
+    - Localized "opens in a new tab" hints. Claude made these fall back to `Common` messages, so no call sites need changes.
+- **Proofreading fixes:** "Fundo fictício" used consistently, sentence-case area titles, punctuation, unused keys removed.
+- **Results** (Lighthouse, production build):
+
+  |                              | Performance       | Accessibility | Best Practices | SEO |
+  | ---------------------------- | ----------------- | ------------- | -------------- | --- |
+  | Desktop, all 5 audited pages | 100               | 100           | 100            | 100 |
+  | Mobile                       | 90–92 (was 81–89) | 100           | 100            | 100 |
+
+  Home mobile blocking time went from 170ms to 10ms. SEO 100 needs `NEXT_PUBLIC_SITE_URL` to match the serving origin. That's set in Phase 7; locally the canonical defaults to localhost:3000.
+
+- **Links:** every internal target is 200 in both locales, no `/en` page links to a PT path, and the `#contato` anchor resolves.
+- **League walkthrough:** the checklist is in [WALKTHROUGH.md](WALKTHROUGH.md).
 
 ## Phase 7 — Deployment (first time anything leaves localhost)
 

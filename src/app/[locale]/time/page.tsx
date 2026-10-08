@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getPageLocale } from "@/lib/locale";
-import { getTeam, tr } from "@/lib/content";
+import { getAreas, getTeam, tr } from "@/lib/content";
+import { pageAlternates } from "@/lib/seo";
 import { PageIntro } from "@/components/layout/page-intro";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
@@ -10,7 +11,11 @@ import { MemberCard } from "@/components/cards/member-card";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Team");
-  return { title: t("metaTitle"), description: t("metaDescription") };
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: await pageAlternates("/time"),
+  };
 }
 
 export default async function TeamPage() {
@@ -18,6 +23,7 @@ export default async function TeamPage() {
   const t = await getTranslations("Team");
   const tCommon = await getTranslations("Common");
   const members = getTeam();
+  const areaLabels = new Map(getAreas().map((a) => [a.id, tr(a.title, locale)]));
 
   return (
     <main id="content">
@@ -40,17 +46,19 @@ export default async function TeamPage() {
                 name={m.placeholder ? tCommon("pending") : m.name}
                 initials={m.placeholder ? "?" : undefined}
                 role={tr(m.role, locale)}
-                area={m.area}
-                photo={m.photo ? { src: m.photo, alt: m.name } : undefined}
+                area={m.area ? (areaLabels.get(m.area) ?? m.area) : undefined}
+                photo={m.photo ? { ...m.photo, alt: m.name } : undefined}
                 linkedin={m.linkedin}
                 linkedinLabel={t("linkedinLabel", { name: m.name })}
               />
             </li>
           ))}
         </ul>
-        <PlaceholderNote label={tCommon("pending")} className="mt-12">
-          {t("pending")}
-        </PlaceholderNote>
+        {members.some((m) => m.placeholder) ? (
+          <PlaceholderNote label={tCommon("pending")} className="mt-12">
+            {t("pending")}
+          </PlaceholderNote>
+        ) : null}
       </section>
 
       <section className="container-page border-t border-border py-20 md:py-24">

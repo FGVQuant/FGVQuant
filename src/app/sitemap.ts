@@ -15,7 +15,7 @@ const STATIC_PATHS = [
 ];
 
 const url = (locale: "pt" | "en", path: string) =>
-  `${SITE_URL}${locale === "en" ? "/en" : ""}${path}` || SITE_URL;
+  `${SITE_URL}${locale === "en" ? "/en" : ""}${path}`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: { path: string; lastModified?: Date }[] = [

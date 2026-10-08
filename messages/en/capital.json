@@ -24,7 +24,8 @@
       "tableCaption": "Reported monthly returns of the simulated fund",
       "month": "Month",
       "return": "Return",
-      "pendingNote": "The full monthly history and methodology will be published once provided by the league. For now we only show the months already reported."
+      "pendingNote": "The full monthly history and methodology will be published once provided by the league. For now we only show the months already reported.",
+      "methodologyTitle": "Methodology"
     },
     "how": {
       "eyebrow": "How it works",

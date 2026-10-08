@@ -47,7 +47,8 @@
       "filterLabel": "Filter by topic",
       "all": "All",
       "empty": "No issues on this topic.",
-      "read": "Read issue"
+      "read": "Read issue",
+      "results": "{count, plural, one {# issue found} other {# issues found}}"
     },
     "issue": {
       "back": "All issues",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { animate, useInView, useReducedMotion } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -20,9 +20,9 @@ type NumberTickerProps = {
 };
 
 /**
- * Animates from 0 to `value` with a spring the first time it scrolls into view.
- * Renders the final value statically under reduced motion; the final value is
- * always exposed to screen readers.
+ * Server-renders the final value; after mount, animates from 0 to `value` with a spring the first
+ * time it scrolls into view (skipped under reduced motion). The final value is always exposed to
+ * screen readers.
  */
 export function NumberTicker({
   value,
@@ -36,11 +36,15 @@ export function NumberTicker({
   const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
   const reduced = useReducedMotion();
 
-  const format = (n: number) =>
-    `${prefix}${new Intl.NumberFormat(locale, {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    }).format(n)}${suffix}`;
+  const nf = useMemo(
+    () =>
+      new Intl.NumberFormat(locale, {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      }),
+    [locale, decimals],
+  );
+  const format = (n: number) => `${prefix}${nf.format(n)}${suffix}`;
 
   useEffect(() => {
     const el = ref.current;
@@ -65,8 +69,13 @@ export function NumberTicker({
   return (
     <>
       <span className="sr-only">{format(value)}</span>
-      <span ref={ref} aria-hidden="true" className={cn("font-mono tabular-nums", className)}>
-        {format(reduced ? value : 0)}
+      <span
+        ref={ref}
+        aria-hidden="true"
+        suppressHydrationWarning
+        className={cn("font-mono tabular-nums", className)}
+      >
+        {format(value)}
       </span>
     </>
   );
