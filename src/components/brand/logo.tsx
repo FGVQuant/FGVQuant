@@ -84,7 +84,9 @@ export function Logo({ className, tagline, markOnly = false }: LogoProps) {
         <span className="sr-only">FGV Quant</span>
       ) : (
         <span className="flex flex-col leading-none">
-          <span className="font-display text-lg font-semibold tracking-wide whitespace-nowrap">FGV QUANT</span>
+          <span className="font-display text-lg font-semibold tracking-wide whitespace-nowrap">
+            FGV QUANT
+          </span>
           {tagline ? (
             <span className="mt-1.5 font-mono text-[0.65rem] tracking-wide text-muted-foreground uppercase">
               {tagline}

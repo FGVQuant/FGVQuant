@@ -26,7 +26,9 @@ export function SiteHeader() {
     <header
       className={cn(
         "sticky top-0 z-40 w-full border-b transition-[background-color,border-color,backdrop-filter] duration-300",
-        scrolled ? "border-border glass" : "border-transparent bg-transparent",
+        scrolled
+          ? "border-border bg-background/80 backdrop-blur-xl backdrop-saturate-150"
+          : "border-transparent bg-transparent",
       )}
     >
       <div className="container-page flex h-16 items-center justify-between gap-6">
@@ -69,7 +71,7 @@ export function SiteHeader() {
           </div>
           <Link
             href={JOIN_HREF}
-            className="inline-flex h-9 items-center whitespace-nowrap rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+            className="hidden h-9 items-center rounded-full bg-primary px-4 text-sm font-medium whitespace-nowrap text-primary-foreground transition-opacity hover:opacity-90 sm:inline-flex"
           >
             {t("join")}
           </Link>

@@ -62,7 +62,7 @@ Legend:
 - **OG image:** deferred to 4.10, so it can use the final hero design.
 - **Desktop nav breakpoint:** the nav appears at `xl` (1280px). Below that it's the menu button plus the Join CTA, because the 7 nav items don't fit at 1024px.
 
-## Phase 2 — Design system & signature components (localhost)
+## Phase 2 — Design system & signature components (localhost) ✅ built 2026-10-08 — awaiting your review (2.8)
 
 | #   | Task                                                                                                                                   | Who |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------- | --- |
@@ -76,6 +76,24 @@ Legend:
 | 2.8 | Review the components on localhost and give visual feedback                                                                            | 🧑  |
 
 **Exit:** all components render on the showcase page in both themes, mobile through desktop.
+
+**Phase 2 notes:**
+- **Showcase:** http://localhost:3000/dev/components. It returns 404 in production builds.
+- **Monte Carlo hero:**
+  - Paths are seeded (seed 2021) and the hero runs N=128, μ=8%, σ=24%.
+  - The path endpoints assemble into the bull, drawn from `bull-geometry.json`.
+  - It pauses when off-screen, re-reads the theme colors when the theme changes, and shows a static final frame under reduced motion.
+  - On narrow screens the fan is faded and sits lower.
+- **Terminal:** `/help`, `/clear`, Tab autocomplete and command history. Navigation commands use next-intl routing. It has clickable command chips for mouse users.
+- **Built by subagents (Sonnet), reviewed and fixed by Claude:**
+  - Fixed: the KpiStrip/NumberTicker/Sparkline sparkline label was hardcoded PT.
+  - DriftTimeline needed no fixes.
+  - Fixed: BentoGrid/BentoCard took an icon prop that wasn't serializable.
+  - Fixed: the LogoMarquee duplicate copy was tabbable.
+  - Button/Badge/SectionHeader and the cards needed no fixes.
+- **Showcase (Haiku):** I fixed the sample fund value (it showed 118.34 instead of +18.34%).
+- **Header changes:** it is more opaque when scrolled, and the Join CTA is hidden below `sm`, where it's in the menu panel instead.
+- **Known dev-only warning:** next-themes' inline script triggers React 19's "script tag" warning. It's harmless.
 
 ## Phase 3 — Content model & data (localhost)
 
