@@ -5,6 +5,9 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SkipLink } from "@/components/layout/skip-link";
 import { ThemeProvider } from "@/components/theme-provider";
 import "../globals.css";
 
@@ -43,7 +46,12 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
     >
       <body className="flex min-h-dvh flex-col">
         <ThemeProvider>
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            <SkipLink />
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

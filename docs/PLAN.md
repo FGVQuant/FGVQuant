@@ -40,7 +40,7 @@ Legend:
 | 0.10 | Get competition details and photos (Desafio Quant AI 2026), events list and photos                                                                                                            | 🧑  |
 | 0.11 | Turn the inputs above into a checklist in `docs/INPUTS.md` and track what has arrived                                                                                                         | 🤖  |
 
-## Phase 1 — Scaffold & foundations (localhost)
+## Phase 1 — Scaffold & foundations (localhost) ✅ done 2026-10-08
 
 | #    | Task                                                                                                                                                       | Who                    |
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
@@ -53,6 +53,14 @@ Legend:
 | 1.6  | Optional: create a **private** GitHub repo for backup. Pushing code is not deploying; no hosting is connected                                              | 🧑 decides, 🤖 sets up |
 
 **Exit:** `pnpm dev` serves an empty, themed shell in PT and EN on localhost:3000, and `pnpm build` passes.
+
+**Phase 1 notes:**
+- **Stack versions:** Next **16.4** (`cacheComponents`, `proxy.ts` instead of middleware, `next/root-params` for the locale), React 19.3, next-intl 4.14 with `localePrefix: "as-needed"`.
+- **Fonts:** Lora, Geist and Geist Mono are self-hosted through `next/font`. Lora replaces Instrument Serif.
+- **Tokens:** follow shadcn naming. The brand lavender is `--highlight`. `components.json` is ready for `shadcn add`, with the Magic UI registry configured.
+- **Velite:** installed but not wired yet; it gets configured with the real collections in 3.1.
+- **OG image:** deferred to 4.10, so it can use the final hero design.
+- **Desktop nav breakpoint:** the nav appears at `xl` (1280px). Below that it's the menu button plus the Join CTA, because the 7 nav items don't fit at 1024px.
 
 ## Phase 2 — Design system & signature components (localhost)
 
