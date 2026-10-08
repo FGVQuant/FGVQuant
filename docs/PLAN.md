@@ -98,13 +98,14 @@ Legend:
   - **Approved as is:** hero speed, and bull size on desktop and at 507×909.
   - **Fixed: skip at the end of the fan.** The fan now interpolates its last segment, and the bull nodes launch from each path's current tip instead of its final endpoint.
   - **Fixed: "com rigor" receded instead of standing out.** Emphasis now uses Lora italic with a luminous gradient (`text-emphasis`): white to `#b99bff` with a glow in dark, `#230042` to `#6b3fc4` in light.
-  - **Follow-up change: desktop "orbit" layout.** The fan used to stop at a hard vertical cut. It now runs along the lower hero and bends into a counter-clockwise orbit around the bull:
-    - It enters at the bottom and sweeps 300°.
-    - A clear disc keeps the bull on plain purple.
-    - The tail fades out with a conic gradient.
-    - The bull assembles from the orbiting tips.
-    - The ring stays clear of the header.
-    - The bull went from 34% to 30% of viewport width, so the ring fits at 1024–1440px.
+  - **Follow-ups on the desktop hero.**
+    - First I tried an "orbit" ring around the bull, which you rejected.
+    - Final version is a "flow" layout. The fan sweeps the full width and flows around the bull like a current around an obstacle:
+      - Each point is pushed out of an ellipse fitted to the bull's nodes by ρ' = (ρ^2.2 + 1)^(1/2.2).
+      - Everything is clipped to outside that ellipse, so the space behind the bull stays clean purple.
+      - The paths rejoin and continue past the bull to the right edge.
+      - The bull assembles from the points where the paths pass it.
+    - The bull is 30% of viewport width (was 34%), centred at ≤74% of the width so the flow past it stays visible.
     - Mobile is unchanged.
 
 ## Phase 3 — Content model & data (localhost)
