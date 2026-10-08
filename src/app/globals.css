@@ -52,6 +52,10 @@
   --input: rgb(35 0 66 / 0.18);
   --ring: #6b4fa0;
   --highlight: #6b4fa0; /* AA on --background */
+  /* headline emphasis: must out-contrast surrounding text, not recede */
+  --emphasis-from: #230042;
+  --emphasis-to: #6b3fc4;
+  --emphasis-glow: transparent;
   --surface: rgb(255 255 255 / 0.7);
   --glow: rgb(174 148 214 / 0.35);
   --grid-line: rgb(35 0 66 / 0.06);
@@ -80,6 +84,9 @@
   --input: rgb(174 148 214 / 0.2);
   --ring: #ae94d6;
   --highlight: #ae94d6;
+  --emphasis-from: #ffffff;
+  --emphasis-to: #b99bff;
+  --emphasis-glow: rgb(174 148 214 / 0.55);
   --surface: rgb(84 70 131 / 0.14);
   --glow: rgb(110 60 190 / 0.45);
   --grid-line: rgb(174 148 214 / 0.06);
@@ -202,4 +209,16 @@
   @media (width >= 48rem) {
     padding-inline: 2rem;
   }
+}
+
+/* Headline emphasis (one word per headline, Instagram-style): Lora italic with a luminous
+   gradient that is at least as bright as the surrounding text, plus a soft glow in dark mode. */
+@utility text-emphasis {
+  font-style: italic;
+  background: linear-gradient(100deg, var(--emphasis-from) 0%, var(--emphasis-to) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 0.35em var(--emphasis-glow));
+  padding-inline-end: 0.03em; /* italic overhang would otherwise be clipped by background-clip */
 }

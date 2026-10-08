@@ -143,8 +143,27 @@ export function MonteCarloCanvas({
       layout = computeLayout(rect.width, rect.height);
     }
 
-    function drawFan(progress: number) {
-      const upto = Math.max(1, Math.floor(progress * steps));
+    /** Point on a series at fractional step `head` (interpolates the partial last segment). */
+    const pointAt = (q: ArrayLike<number>, head: number): Vertex => {
+      const i = Math.min(Math.floor(head), steps);
+      const f = head - i;
+      const y0 = yAt(q[i]);
+      const y1 = i < steps ? yAt(q[i + 1]) : y0;
+      return [xAt(head), y0 + (y1 - y0) * f];
+    };
+
+    /** Trace a series from step 0 up to the fractional `head` — smooth leading edge, no step jumps. */
+    const trace = (c: CanvasRenderingContext2D, q: ArrayLike<number>, head: number) => {
+      c.moveTo(xAt(0), yAt(q[0]));
+      const whole = Math.floor(head);
+      for (let t = 1; t <= whole; t++) c.lineTo(xAt(t), yAt(q[t]));
+      if (head > whole) {
+        const [x, y] = pointAt(q, head);
+        c.lineTo(x, y);
+      }
+    };
+
+    function drawFan(head: number) {
       const c = ctx!;
       // individual paths
       c.lineWidth = 1;
@@ -152,17 +171,17 @@ export function MonteCarloCanvas({
       c.globalAlpha = a(0.09);
       for (const p of sim.paths) {
         c.beginPath();
-        c.moveTo(xAt(0), yAt(p[0]));
-        for (let t = 1; t <= upto; t++) c.lineTo(xAt(t), yAt(p[t]));
+        trace(c, p, head);
         c.stroke();
       }
-      // p5–p95 band
+      // p5–p95 band: forward along p95, back along p05
       c.globalAlpha = a(0.1);
       c.fillStyle = colors.highlight;
       c.beginPath();
-      c.moveTo(xAt(0), yAt(sim.p95[0]));
-      for (let t = 1; t <= upto; t++) c.lineTo(xAt(t), yAt(sim.p95[t]));
-      for (let t = upto; t >= 0; t--) c.lineTo(xAt(t), yAt(sim.p05[t]));
+      trace(c, sim.p95, head);
+      const [hx, hy] = pointAt(sim.p05, head);
+      c.lineTo(hx, hy);
+      for (let t = Math.floor(head); t >= 0; t--) c.lineTo(xAt(t), yAt(sim.p05[t]));
       c.closePath();
       c.fill();
       // band edges (dashed) and median
@@ -170,33 +189,32 @@ export function MonteCarloCanvas({
       c.setLineDash([3, 5]);
       for (const q of [sim.p05, sim.p95]) {
         c.beginPath();
-        c.moveTo(xAt(0), yAt(q[0]));
-        for (let t = 1; t <= upto; t++) c.lineTo(xAt(t), yAt(q[t]));
+        trace(c, q, head);
         c.stroke();
       }
       c.setLineDash([]);
       c.globalAlpha = a(0.95);
       c.lineWidth = 1.5;
       c.beginPath();
-      c.moveTo(xAt(0), yAt(sim.p50[0]));
-      for (let t = 1; t <= upto; t++) c.lineTo(xAt(t), yAt(sim.p50[t]));
+      trace(c, sim.p50, head);
       c.stroke();
       // leading-edge dot on the median
+      const [mx, my] = pointAt(sim.p50, head);
       c.beginPath();
-      c.arc(xAt(upto), yAt(sim.p50[upto]), 2.5, 0, Math.PI * 2);
+      c.arc(mx, my, 2.5, 0, Math.PI * 2);
       c.fillStyle = colors.highlight;
       c.fill();
       c.globalAlpha = 1;
     }
 
-    function drawBull(progress: number, time: number) {
+    function drawBull(progress: number, head: number, time: number) {
       if (!showBull || progress <= 0) return;
       const c = ctx!;
       const b = layout.bull;
       const pos: Record<string, Vertex> = {};
       BULL_KEYS.forEach((key, i) => {
-        const path = sim.paths[pairing[i]];
-        const from: Vertex = [xAt(steps), yAt(path[steps])];
+        // launch from the path's current tip, so nodes never appear ahead of the drawn fan
+        const from = pointAt(sim.paths[pairing[i]], head);
         const to = bullPoint(key);
         // stagger vertices slightly so the mark "crystallises"
         const local = easeOutExpo(clamp01((progress - (i / BULL_KEYS.length) * 0.35) / 0.65));
@@ -238,8 +256,9 @@ export function MonteCarloCanvas({
 
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx!.clearRect(0, 0, layout.w, layout.h);
-      drawFan(easeInOutCubic(fan));
-      drawBull(bullP, now);
+      const head = Math.max(0.001, easeInOutCubic(fan) * steps);
+      drawFan(head);
+      drawBull(bullP, head, now);
 
       // Keep animating while building; afterwards only the gentle node twinkle runs (when visible).
       if (!reduced && visible) raf = requestAnimationFrame(frame);

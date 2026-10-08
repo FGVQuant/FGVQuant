@@ -11,7 +11,12 @@ import { SkipLink } from "@/components/layout/skip-link";
 import { ThemeProvider } from "@/components/theme-provider";
 import "../globals.css";
 
-const lora = Lora({ subsets: ["latin", "latin-ext"], variable: "--font-lora", display: "swap" });
+const lora = Lora({
+  subsets: ["latin", "latin-ext"],
+  style: ["normal", "italic"],
+  variable: "--font-lora",
+  display: "swap",
+});
 const geistSans = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist-sans" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 

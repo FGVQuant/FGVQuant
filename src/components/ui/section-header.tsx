@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 type SectionHeaderProps = {
   eyebrow?: string;
-  /** Headline; wrap one word in `<Em>` for the lavender accent. */
+  /** Headline; wrap one word in `<Em>` for emphasis. */
   title: ReactNode;
   description?: ReactNode;
   align?: "left" | "center";
@@ -14,9 +14,9 @@ type SectionHeaderProps = {
   className?: string;
 };
 
-/** Lavender emphasis for a single word inside a headline. */
+/** Emphasis for a single word/phrase inside a headline: Lora italic + luminous gradient (see `text-emphasis`). */
 export function Em({ children }: { children: ReactNode }) {
-  return <em className="font-[inherit] text-highlight not-italic">{children}</em>;
+  return <em className="text-emphasis">{children}</em>;
 }
 
 /** Section intro: node-dot eyebrow, serif headline, muted description. */
