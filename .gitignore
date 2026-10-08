@@ -48,3 +48,6 @@ __pycache__/
 
 # velite copied assets
 public/static
+
+# shareable local-preview package (regenerated from git, see docs/entregas)
+docs/entregas/*.zip
