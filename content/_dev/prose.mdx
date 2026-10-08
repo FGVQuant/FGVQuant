@@ -1,0 +1,39 @@
+---
+title: "Amostra de prosa (dev)"
+---
+
+Texto corrido com um [link interno](/newsletter), um [link externo](https://www.linkedin.com/company/fgvquant), `código inline` e matemática inline: a volatilidade escala com $\sigma\sqrt{t}$.
+
+## Movimento browniano geométrico
+
+O preço segue
+
+$$
+dS_t = \mu S_t\,dt + \sigma S_t\,dW_t
+$$
+
+cuja solução é $S_t = S_0 \exp\left((\mu - \tfrac{\sigma^2}{2})t + \sigma W_t\right)$.
+
+### Lista
+
+- Value at Risk (VaR)
+- Expected Shortfall (ES)
+- EWMA vs. FHS-GARCH
+
+> Risco é uma estimativa, não um número.
+
+| Métrica | Janela | Nível |
+| ------- | ------ | ----- |
+| VaR     | 250 d  | 99%   |
+| ES      | 250 d  | 97,5% |
+
+<Callout tone="note">Nota: este é um fixture de desenvolvimento.</Callout>
+
+<Callout tone="warning">Aviso: o FGV Quant Capital é um fundo fictício.</Callout>
+
+---
+
+```python
+import numpy as np
+paths = s0 * np.exp(np.cumsum(drift + vol * z, axis=1))
+```

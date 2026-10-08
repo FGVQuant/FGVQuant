@@ -166,6 +166,13 @@ const site = defineCollection({
   }),
 });
 
+/** Dev-only MDX fixtures for /dev/content (prose + KaTeX check). Never linked in production. */
+const devSamples = defineCollection({
+  name: "DevSample",
+  pattern: "_dev/*.mdx",
+  schema: s.object({ title: s.string(), path: s.path(), body: s.mdx() }),
+});
+
 export default defineConfig({
   root: "content",
   output: {
@@ -175,7 +182,7 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { newsletter, team, areas, events, competitions, partners, fund, site },
+  collections: { newsletter, team, areas, events, competitions, partners, fund, site, devSamples },
   mdx: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],

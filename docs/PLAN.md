@@ -55,6 +55,7 @@ Legend:
 **Exit:** `pnpm dev` serves an empty, themed shell in PT and EN on localhost:3000, and `pnpm build` passes.
 
 **Phase 1 notes:**
+
 - **Stack versions:** Next **16.4** (`cacheComponents`, `proxy.ts` instead of middleware, `next/root-params` for the locale), React 19.3, next-intl 4.14 with `localePrefix: "as-needed"`.
 - **Fonts:** Lora, Geist and Geist Mono are self-hosted through `next/font`. Lora replaces Instrument Serif.
 - **Tokens:** follow shadcn naming. The brand lavender is `--highlight`. `components.json` is ready for `shadcn add`, with the Magic UI registry configured.
@@ -78,6 +79,7 @@ Legend:
 **Exit:** all components render on the showcase page in both themes, mobile through desktop.
 
 **Phase 2 notes:**
+
 - **Showcase:** http://localhost:3000/dev/components. It returns 404 in production builds.
 - **Monte Carlo hero:**
   - Paths are seeded (seed 2021) and the hero runs N=128, μ=8%, σ=24%.
@@ -108,7 +110,7 @@ Legend:
     - The bull is 30% of viewport width (was 34%), centred at ≤74% of the width so the flow past it stays visible.
     - Mobile is unchanged.
 
-## Phase 3 — Content model & data (localhost)
+## Phase 3 — Content model & data (localhost) ✅ done 2026-10-08 (real content pending Phase 0 inputs)
 
 | #   | Task                                                                                                                                                           | Who                      |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
@@ -117,6 +119,23 @@ Legend:
 | 3.3 | Populate team, events, competitions, partners and fund JSON from Phase 0 inputs. Use clearly marked placeholders where inputs are missing                      | 🟢                       |
 | 3.4 | Optimize and rename images and logos into `/public`                                                                                                            | 🟢                       |
 | 3.5 | Validate the schema build and spot-check the transcriptions against the sources                                                                                | 🤖                       |
+
+**Phase 3 notes:**
+
+- **Velite collections:**
+  - `newsletter` (MDX, `status: summary|full`)
+  - `team`, `areas`, `events` (date precision day/month/semester/year), `competitions`, `partners` (`permission` gate), `fund` (simulated, reported months only), `site`
+  - `devSamples`: a dev-only fixture
+- **Typed helpers:** `src/lib/content.ts`.
+- **MDX rendering:** `MdxContent` (Sonnet), with KaTeX, Callout, heading anchors, locale-aware links and `.prose-fq` styles. Verified in the browser at `/dev/content`.
+- **Next integration:** `next.config.ts` is now a phase-aware function. Velite watches under `next dev` and runs an awaited clean build before `next build`. The argv approach didn't work in Next 16.
+- **Content written by Claude (facts only):**
+  - The 7 issues are our own summaries with LinkedIn links. March and April have no summary yet.
+  - The team has 4 placeholder seats.
+  - Partners are hidden until permission arrives.
+  - The fund has only Jul and Aug 2026, plus the +18.34% cumulative figure.
+- **Still pending:** every remaining league input is listed in [INPUTS.md](INPUTS.md).
+- **Writing display math:** put `$$` on its own lines. A single-line `$$…$$` renders inline.
 
 ## Phase 4 — Pages (localhost)
 

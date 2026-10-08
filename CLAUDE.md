@@ -25,7 +25,7 @@ Website for **FGV Quant**, the Liga de Finanças Quantitativas da FGV-SP. Planni
 - `next-intl`: `pt` is the default (no prefix) and `en` lives at `/en`. Messages are in `messages/{pt,en}.json`.
 - `next-themes`: dark by default, with a light theme.
 - `motion` for animation and `lucide-react` for icons.
-- `velite` for MDX/JSON content, and KaTeX for formulas.
+- `velite` for MDX/JSON content, and KaTeX for formulas (remark-math + rehype-katex). See Content below.
 - shadcn-style primitives in `src/components/ui`. Free registries only (Magic UI, Motion Primitives, Aceternity free, 21st.dev copy prompts); no 21st.dev MCP.
 - pnpm.
 
@@ -38,6 +38,18 @@ Website for **FGV Quant**, the Liga de Finanças Quantitativas da FGV-SP. Planni
 | `pnpm lint`                | ESLint                       |
 | `pnpm typecheck`           | `tsc --noEmit`               |
 | `pnpm format`              | Prettier                     |
+
+## Content (Velite)
+
+- **Source and validation:** source lives in `content/` and is validated by `velite.config.ts`. Output goes to `.velite/` (gitignored), imported as `#site/content`.
+- **Read through helpers only:** pages read content through `src/lib/content.ts`, which handles sorting, `tr()` localisation and precision-aware dates. Don't import `#site/content` directly in pages.
+- **Build wiring:** Velite runs inside Next through a phase-aware `next.config.ts`: watch under `next dev`, a clean awaited build before `next build`. `pnpm content` runs it standalone.
+- **No invented facts:**
+  - Unknowns use `placeholder: true`.
+  - Partners stay hidden until `permission: true`.
+  - Fund `monthly` lists only months the league reported.
+  - Newsletter issues are `status: summary` (our own words, linking to LinkedIn) until the league provides the text.
+- **Open inputs:** tracked in [docs/INPUTS.md](docs/INPUTS.md).
 
 ## Brand
 

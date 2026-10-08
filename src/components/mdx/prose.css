@@ -1,0 +1,141 @@
+@reference "../../app/globals.css";
+
+/* Editorial article style for MDX bodies (newsletter issues, posts). */
+.prose-fq {
+  @apply mx-auto max-w-[68ch] font-sans text-foreground;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  p,
+  ul,
+  ol,
+  figure,
+  pre,
+  .overflow-x-auto {
+    margin-block: 1.25em;
+  }
+
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-medium tracking-tight text-foreground;
+    text-wrap: balance;
+  }
+  h2 {
+    margin-top: 2.75em;
+    margin-bottom: 0.7em;
+    font-size: 1.75rem;
+    line-height: 1.25;
+  }
+  h3 {
+    margin-top: 2.1em;
+    margin-bottom: 0.55em;
+    font-size: 1.3rem;
+    line-height: 1.35;
+  }
+  h4 {
+    margin-top: 1.8em;
+    margin-bottom: 0.5em;
+    font-size: 1.1rem;
+  }
+
+  strong {
+    @apply font-semibold text-foreground;
+  }
+  em {
+    font-style: italic;
+  }
+
+  a:not([data-anchor]) {
+    @apply text-highlight underline decoration-highlight/40 underline-offset-4 transition-colors hover:decoration-highlight;
+  }
+
+  ul {
+    list-style: disc;
+    padding-left: 1.5em;
+  }
+  ol {
+    list-style: decimal;
+    padding-left: 1.5em;
+  }
+  li {
+    margin-block: 0.45em;
+    padding-left: 0.25em;
+  }
+  li::marker {
+    @apply text-highlight;
+  }
+  li > ul,
+  li > ol {
+    margin-block: 0.45em;
+  }
+
+  hr {
+    @apply my-12 border-0 border-t border-border;
+  }
+
+  blockquote {
+    @apply my-8 border-l-2 border-highlight text-muted-foreground italic;
+    padding-left: 1.25em;
+  }
+  blockquote > p {
+    margin-block: 0.75em;
+  }
+
+  figure img {
+    @apply mx-auto h-auto max-w-full rounded-xl border border-border;
+  }
+  figcaption {
+    @apply mt-3 text-center text-sm text-muted-foreground;
+  }
+
+  /* inline code chip */
+  :not(pre) > code {
+    @apply rounded-md border border-border bg-card font-mono text-foreground;
+    padding: 0.12em 0.4em;
+    font-size: 0.88em;
+  }
+  pre {
+    @apply overflow-x-auto rounded-xl border border-border bg-card font-mono;
+    padding: 1rem 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+  pre code {
+    @apply bg-transparent font-mono;
+    font-size: inherit;
+    padding: 0;
+    border: 0;
+  }
+
+  table {
+    @apply w-full border-collapse text-left;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+  }
+  th {
+    @apply border-b border-border-strong font-semibold text-foreground;
+    padding: 0.6em 0.8em;
+  }
+  td {
+    @apply border-b border-border;
+    padding: 0.6em 0.8em;
+  }
+
+  /* math */
+  .katex {
+    font-size: 1.08em;
+  }
+  .katex-display {
+    @apply overflow-x-auto overflow-y-hidden;
+    margin: 1.75em 0;
+    padding: 0.5em 0.25em;
+  }
+  .katex-display > .katex {
+    white-space: nowrap;
+  }
+}
