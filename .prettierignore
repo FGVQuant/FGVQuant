@@ -1,0 +1,6 @@
+node_modules
+.next
+.velite
+pnpm-lock.yaml
+assets/brand/*.svg
+public/brand

@@ -1,26 +1,205 @@
 @import "tailwindcss";
 
+/* Theme is driven by next-themes via a class on <html>; dark is the default. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Brand palette (see docs/BRAND.md). Static, theme-independent.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-brand-950: #130421;
+  --color-brand-900: #170537;
+  --color-brand-800: #230042; /* logo purple */
+  --color-brand-700: #2b1254;
+  --color-brand-600: #3d2470;
+  --color-brand-500: #544683;
+  --color-lavender-300: #d4c8de;
+  --color-lavender-400: #c3b0e6;
+  --color-lavender-500: #ae94d6;
+  --color-lavender-600: #8a6cbd;
+  --color-lavender-700: #6b4fa0;
+
+  --font-display: var(--font-lora), Georgia, serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------------
+   Semantic tokens — shadcn/ui naming so registry components drop in.
+   `highlight` = the brand lavender used for emphasised words, links, chart lines.
+   Light values on :root, dark overrides on .dark (dark is the default theme).
+   ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f5fb;
+  --foreground: #1a0033;
+  --card: #ffffff;
+  --card-foreground: #1a0033;
+  --popover: #ffffff;
+  --popover-foreground: #1a0033;
+  --primary: #230042;
+  --primary-foreground: #ffffff;
+  --secondary: #ece6f5;
+  --secondary-foreground: #230042;
+  --muted: #ece6f5;
+  --muted-foreground: #5a4c70;
+  --accent: #efe9f8;
+  --accent-foreground: #230042;
+  --destructive: #d93d42;
+  --border: rgb(35 0 66 / 0.12);
+  --border-strong: rgb(35 0 66 / 0.22);
+  --input: rgb(35 0 66 / 0.18);
+  --ring: #6b4fa0;
+  --highlight: #6b4fa0; /* AA on --background */
+  --surface: rgb(255 255 255 / 0.7);
+  --glow: rgb(174 148 214 / 0.35);
+  --grid-line: rgb(35 0 66 / 0.06);
+  --radius: 0.75rem;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #130421;
+  --foreground: #f4f0fa;
+  --card: #1b0836;
+  --card-foreground: #f4f0fa;
+  --popover: #1b0836;
+  --popover-foreground: #f4f0fa;
+  --primary: #ae94d6;
+  --primary-foreground: #130421;
+  --secondary: #221040;
+  --secondary-foreground: #f4f0fa;
+  --muted: #221040;
+  --muted-foreground: #b7a9cc;
+  --accent: rgb(174 148 214 / 0.1);
+  --accent-foreground: #f4f0fa;
+  --destructive: #ff6369;
+  --border: rgb(174 148 214 / 0.14);
+  --border-strong: rgb(174 148 214 / 0.28);
+  --input: rgb(174 148 214 / 0.2);
+  --ring: #ae94d6;
+  --highlight: #ae94d6;
+  --surface: rgb(84 70 131 / 0.14);
+  --glow: rgb(110 60 190 / 0.45);
+  --grid-line: rgb(174 148 214 / 0.06);
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-highlight: var(--highlight);
+  --color-surface: var(--surface);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--highlight);
+    color: var(--background);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ------------------------------------------------------------------
+   Signature textures
+   ------------------------------------------------------------------ */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility bg-dot-grid {
+  background-image: radial-gradient(var(--grid-line) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+/* Radial brand glow, like the Instagram post backgrounds */
+@utility bg-glow {
+  background-image:
+    radial-gradient(60% 50% at 50% 0%, var(--glow), transparent 70%),
+    radial-gradient(40% 40% at 85% 30%, rgb(84 70 131 / 0.25), transparent 70%);
+}
+
+/* SVG fractal noise overlay; apply on an absolutely positioned layer */
+@utility bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+}
+
+/* Glass card echoing the 3D glass objects in their posts */
+@utility glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+@utility text-gradient {
+  background: linear-gradient(180deg, var(--foreground) 30%, var(--highlight));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 76rem;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
 }

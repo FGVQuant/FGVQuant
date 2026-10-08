@@ -1,0 +1,53 @@
+{
+  "Metadata": {
+    "title": "FGV Quant — Liga de Finanças Quantitativas",
+    "description": "A Liga de Finanças Quantitativas da FGV-SP. Pesquisa quantitativa, estratégias sistemáticas, machine learning e a newsletter mensal FGV Quant Insights."
+  },
+  "Brand": {
+    "name": "FGV Quant",
+    "tagline": "Liga de Finanças Quantitativas",
+    "motto": "Excelência. Inovação. Precisão."
+  },
+  "Nav": {
+    "label": "Navegação principal",
+    "about": "Sobre",
+    "newsletter": "Newsletter",
+    "team": "Time",
+    "capital": "Capital",
+    "competitions": "Competições",
+    "events": "Eventos",
+    "partners": "Parceiros",
+    "join": "Processo seletivo",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "skipToContent": "Pular para o conteúdo"
+  },
+  "Theme": {
+    "toggle": "Alternar tema",
+    "light": "Tema claro",
+    "dark": "Tema escuro"
+  },
+  "Locale": {
+    "switch": "Idioma",
+    "pt": "Português",
+    "en": "English"
+  },
+  "Footer": {
+    "about": "A Liga de Finanças Quantitativas da FGV-SP, desde 2021.",
+    "explore": "Explorar",
+    "follow": "Acompanhe",
+    "contact": "Contato",
+    "subscribe": "Assinar a newsletter",
+    "rights": "© {year} FGV Quant – Liga Estudantil. Todos os direitos reservados.",
+    "disclaimer": "O FGV Quant Capital é um fundo fictício com fins educacionais. Nada neste site é recomendação de investimento."
+  },
+  "NotFound": {
+    "title": "Página não encontrada",
+    "description": "O caminho que você tentou não existe — talvez um outlier.",
+    "back": "Voltar ao início"
+  },
+  "Home": {
+    "placeholderTitle": "Finanças quantitativas, com rigor.",
+    "placeholderBody": "Site em construção — fase 1 (fundações)."
+  }
+}

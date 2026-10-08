@@ -1,0 +1,53 @@
+{
+  "Metadata": {
+    "title": "FGV Quant — Quantitative Finance League",
+    "description": "FGV-SP's Quantitative Finance League. Quant research, systematic strategies, machine learning and the monthly FGV Quant Insights newsletter."
+  },
+  "Brand": {
+    "name": "FGV Quant",
+    "tagline": "Quantitative Finance League",
+    "motto": "Excellence. Innovation. Precision."
+  },
+  "Nav": {
+    "label": "Main navigation",
+    "about": "About",
+    "newsletter": "Newsletter",
+    "team": "Team",
+    "capital": "Capital",
+    "competitions": "Competitions",
+    "events": "Events",
+    "partners": "Partners",
+    "join": "Join us",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content"
+  },
+  "Theme": {
+    "toggle": "Toggle theme",
+    "light": "Light theme",
+    "dark": "Dark theme"
+  },
+  "Locale": {
+    "switch": "Language",
+    "pt": "Português",
+    "en": "English"
+  },
+  "Footer": {
+    "about": "FGV-SP's Quantitative Finance League, since 2021.",
+    "explore": "Explore",
+    "follow": "Follow",
+    "contact": "Contact",
+    "subscribe": "Subscribe to the newsletter",
+    "rights": "© {year} FGV Quant – Student League. All rights reserved.",
+    "disclaimer": "FGV Quant Capital is a simulated fund for educational purposes. Nothing on this site is investment advice."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The path you tried doesn't exist — call it an outlier.",
+    "back": "Back to home"
+  },
+  "Home": {
+    "placeholderTitle": "Quantitative finance, done rigorously.",
+    "placeholderBody": "Site under construction — phase 1 (foundations)."
+  }
+}
