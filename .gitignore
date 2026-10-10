@@ -51,3 +51,18 @@ public/static
 
 # shareable local-preview package (regenerated from git, see docs/entregas)
 docs/entregas/*.zip
+
+# python bytecode
+*.py[cod]
+
+# logs
+*.log
+
+# editors / OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+
+# local-only Claude Code settings
+.claude/settings.local.json
