@@ -6,13 +6,8 @@ import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
 import { TerminalPanel } from "@/components/terminal/terminal-panel";
 import { KpiStrip } from "@/components/sections/kpi-strip";
 import { DriftTimeline } from "@/components/sections/drift-timeline";
-import {
-  BentoCard,
-  BentoGrid,
-  CandlesBg,
-  EquationBg,
-  NodeGraphBg,
-} from "@/components/sections/bento-grid";
+import { BentoCard, BentoGrid } from "@/components/sections/bento-grid";
+import { AreaBackground } from "@/components/sections/area-backgrounds";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
 import { NewsletterRow } from "@/components/cards/newsletter-row";
 import { NumberTicker } from "@/components/data/number-ticker";
@@ -41,11 +36,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /** Visual treatment per focus area (ids from content/areas.json). */
-const AREA_STYLE: Record<string, { icon: ReactNode; span: string; bg?: ReactNode }> = {
-  derivatives: { icon: <Sigma />, span: "lg:col-span-4", bg: <CandlesBg /> },
-  ml: { icon: <BrainCircuit />, span: "lg:col-span-2", bg: <NodeGraphBg /> },
+const AREA_STYLE: Record<string, { icon: ReactNode; span: string }> = {
+  derivatives: { icon: <Sigma />, span: "lg:col-span-4" },
+  ml: { icon: <BrainCircuit />, span: "lg:col-span-2" },
   algo: { icon: <LineChart />, span: "lg:col-span-2" },
-  research: { icon: <FlaskConical />, span: "lg:col-span-2", bg: <EquationBg /> },
+  research: { icon: <FlaskConical />, span: "lg:col-span-2" },
   python: { icon: <Code2 />, span: "lg:col-span-2" },
 };
 
@@ -179,7 +174,7 @@ export default async function HomePage() {
                   title={tr(area.title, locale)}
                   description={tr(area.description, locale)}
                   icon={style?.icon}
-                  background={style?.bg}
+                  background={<AreaBackground id={area.id} />}
                   className={style?.span}
                 />
               );

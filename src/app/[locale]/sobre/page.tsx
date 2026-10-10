@@ -16,13 +16,8 @@ import { pageAlternates } from "@/lib/seo";
 import { PageIntro } from "@/components/layout/page-intro";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
-import {
-  BentoCard,
-  BentoGrid,
-  CandlesBg,
-  EquationBg,
-  NodeGraphBg,
-} from "@/components/sections/bento-grid";
+import { BentoCard, BentoGrid } from "@/components/sections/bento-grid";
+import { AreaBackground } from "@/components/sections/area-backgrounds";
 import { KpiStrip } from "@/components/sections/kpi-strip";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -34,12 +29,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const AREA_LAYOUT: Record<string, { span: string; bg: "graph" | "candles" | "eq" | null }> = {
-  derivatives: { span: "lg:col-span-4", bg: "eq" },
-  ml: { span: "lg:col-span-2", bg: "graph" },
-  algo: { span: "lg:col-span-2", bg: "candles" },
-  research: { span: "lg:col-span-2", bg: null },
-  python: { span: "lg:col-span-2", bg: "graph" },
+const AREA_SPAN: Record<string, string> = {
+  derivatives: "lg:col-span-4",
+  ml: "lg:col-span-2",
+  algo: "lg:col-span-2",
+  research: "lg:col-span-2",
+  python: "lg:col-span-2",
 };
 
 const WAYS: { key: string; href: string; Icon: LucideIcon }[] = [
@@ -109,27 +104,16 @@ export default async function AboutPage() {
           description={t("areas.description")}
         />
         <BentoGrid className="mt-12">
-          {areas.map((a, i) => {
-            const layout = AREA_LAYOUT[a.id] ?? { span: "lg:col-span-2", bg: null };
-            const background =
-              layout.bg === "graph" ? (
-                <NodeGraphBg />
-              ) : layout.bg === "candles" ? (
-                <CandlesBg />
-              ) : layout.bg === "eq" ? (
-                <EquationBg />
-              ) : undefined;
-            return (
-              <BentoCard
-                key={a.id}
-                eyebrow={String(i + 1).padStart(2, "0")}
-                title={tr(a.title, locale)}
-                description={tr(a.description, locale)}
-                className={layout.span}
-                background={background}
-              />
-            );
-          })}
+          {areas.map((a, i) => (
+            <BentoCard
+              key={a.id}
+              eyebrow={String(i + 1).padStart(2, "0")}
+              title={tr(a.title, locale)}
+              description={tr(a.description, locale)}
+              className={AREA_SPAN[a.id] ?? "lg:col-span-2"}
+              background={<AreaBackground id={a.id} />}
+            />
+          ))}
         </BentoGrid>
       </section>
 
