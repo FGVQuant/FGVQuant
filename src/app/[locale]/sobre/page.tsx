@@ -67,16 +67,40 @@ export default async function AboutPage() {
         eyebrow={t("eyebrow")}
         title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
         description={t("lead", { year: site.founded, members: site.members })}
-      />
+      >
+        <ButtonLink href="/parceiros" size="lg" arrow>
+          {t("partnerCta")}
+        </ButtonLink>
+      </PageIntro>
 
-      <section className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.2fr]">
-        <SectionHeader
-          eyebrow={t("mission.eyebrow")}
-          title={t.rich("mission.title", { em: (chunks) => chunks })}
-        />
-        <div className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-          <p>{t("mission.p1")}</p>
-          <p>{t("mission.p2")}</p>
+      {/* Partner-facing first: identity, evidence, expertise. Then the student-facing half:
+          how we learn, what members do, and how to join. */}
+      <section className="section-y">
+        <div className="container-page">
+          <SectionHeader
+            eyebrow={t("numbers.eyebrow")}
+            title={t.rich("numbers.title", { em: (chunks) => chunks })}
+          />
+          <KpiStrip
+            className="mt-12"
+            locale={intlLocale(locale)}
+            items={[
+              { label: t("numbers.members"), value: stats.members },
+              { label: t("numbers.issues"), value: stats.issues },
+              { label: t("numbers.teams"), value: stats.rankedTeams },
+              {
+                label: t("numbers.fund"),
+                value: stats.fundCumulative,
+                decimals: 2,
+                prefix: stats.fundCumulative > 0 ? "+" : "",
+                suffix: "%",
+                note: tCommon("simulated"),
+              },
+            ]}
+          />
+          <p className="mt-4 font-mono text-xs text-muted-foreground">
+            {t("numbers.note", { asOf: site.membersAsOf })}
+          </p>
         </div>
       </section>
 
@@ -109,6 +133,17 @@ export default async function AboutPage() {
             );
           })}
         </BentoGrid>
+      </section>
+
+      <section className="container-page grid gap-12 border-t border-border section-y lg:grid-cols-[1fr_1.2fr]">
+        <SectionHeader
+          eyebrow={t("mission.eyebrow")}
+          title={t.rich("mission.title", { em: (chunks) => chunks })}
+        />
+        <div className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p>{t("mission.p1")}</p>
+          <p>{t("mission.p2")}</p>
+        </div>
       </section>
 
       <section className="container-page border-t border-border section-y">
@@ -149,35 +184,6 @@ export default async function AboutPage() {
             );
           })}
         </ul>
-      </section>
-
-      <section className="border-t border-border section-y">
-        <div className="container-page">
-          <SectionHeader
-            eyebrow={t("numbers.eyebrow")}
-            title={t.rich("numbers.title", { em: (chunks) => chunks })}
-          />
-          <KpiStrip
-            className="mt-12"
-            locale={intlLocale(locale)}
-            items={[
-              { label: t("numbers.members"), value: stats.members },
-              { label: t("numbers.issues"), value: stats.issues },
-              { label: t("numbers.teams"), value: stats.rankedTeams },
-              {
-                label: t("numbers.fund"),
-                value: stats.fundCumulative,
-                decimals: 2,
-                prefix: stats.fundCumulative > 0 ? "+" : "",
-                suffix: "%",
-                note: tCommon("simulated"),
-              },
-            ]}
-          />
-          <p className="mt-4 font-mono text-xs text-muted-foreground">
-            {t("numbers.note", { asOf: site.membersAsOf })}
-          </p>
-        </div>
       </section>
 
       <section className="container-page section-y">
