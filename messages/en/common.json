@@ -1,6 +1,6 @@
 {
   "Metadata": {
-    "title": "FGV Quant — Quantitative Finance League",
+    "title": "FGV Quant · Quantitative Finance League",
     "description": "FGV-SP's Quantitative Finance League. Quantitative research, systematic strategies, machine learning and FGV Quant Insights, our monthly newsletter."
   },
   "Brand": {
@@ -45,7 +45,7 @@
   },
   "NotFound": {
     "title": "Page not found",
-    "description": "The page you tried to reach doesn't exist — perhaps an outlier.",
+    "description": "The page you tried to reach doesn't exist. Perhaps an outlier.",
     "back": "Back to home"
   },
   "Common": {

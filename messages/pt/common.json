@@ -1,6 +1,6 @@
 {
   "Metadata": {
-    "title": "FGV Quant — Liga de Finanças Quantitativas",
+    "title": "FGV Quant · Liga de Finanças Quantitativas",
     "description": "A Liga de Finanças Quantitativas da FGV-SP. Pesquisa quantitativa, estratégias sistemáticas, machine learning e a newsletter mensal FGV Quant Insights."
   },
   "Brand": {
@@ -45,7 +45,7 @@
   },
   "NotFound": {
     "title": "Página não encontrada",
-    "description": "O caminho que você tentou não existe — talvez um outlier.",
+    "description": "O caminho que você tentou não existe. Talvez um outlier.",
     "back": "Voltar ao início"
   },
   "Common": {

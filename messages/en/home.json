@@ -1,6 +1,6 @@
 {
   "Home": {
-    "metaTitle": "FGV Quant — Quantitative Finance League",
+    "metaTitle": "FGV Quant · Quantitative Finance League",
     "hero": {
       "eyebrow": "Quantitative Finance League · FGV-SP",
       "titleA": "Quantitative finance,",
@@ -36,8 +36,8 @@
       "title": "fgvquant@league: ~",
       "introCommand": "cat mission.txt",
       "intro1": "FGV Quant is FGV-SP's Quantitative Finance League, founded in 2021.",
-      "intro2": "We apply mathematics, statistics and programming to financial markets —",
-      "intro3": "derivatives, machine learning, algorithmic trading and Python — through problem-based learning.",
+      "intro2": "We apply mathematics, statistics and programming to financial markets:",
+      "intro3": "derivatives, machine learning, algorithmic trading and Python, through problem-based learning.",
       "hint": "Type /help to list the commands.",
       "helpHeading": "Available commands:",
       "notFound": "command not found: {cmd}",
@@ -61,7 +61,7 @@
       "eyebrow": "FGV Quant Insights",
       "titleA": "The",
       "titleEm": "monthly newsletter",
-      "description": "People, strategies, news and opportunities from the quant world — every month on LinkedIn (in Portuguese).",
+      "description": "People, strategies, news and opportunities from the quant world, every month on LinkedIn (in Portuguese).",
       "all": "See all issues"
     },
     "activities": {

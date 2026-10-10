@@ -57,9 +57,9 @@ export default function GlobalNotFound() {
             </span>
           </h1>
           <p className="mt-6 max-w-prose text-muted-foreground">
-            O caminho que você tentou não existe — talvez um outlier.{" "}
+            O caminho que você tentou não existe. Talvez um outlier.{" "}
             <span lang="en">
-              The page you tried to reach doesn&apos;t exist — perhaps an outlier.
+              The page you tried to reach doesn&apos;t exist. Perhaps an outlier.
             </span>
           </p>
           <div className="mt-10 flex flex-wrap gap-3">

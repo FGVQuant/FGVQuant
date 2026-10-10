@@ -1,6 +1,6 @@
 {
   "Home": {
-    "metaTitle": "FGV Quant — Liga de Finanças Quantitativas",
+    "metaTitle": "FGV Quant · Liga de Finanças Quantitativas",
     "hero": {
       "eyebrow": "Liga de Finanças Quantitativas · FGV-SP",
       "titleA": "Finanças quantitativas,",
@@ -36,8 +36,8 @@
       "title": "fgvquant@liga: ~",
       "introCommand": "cat missao.txt",
       "intro1": "A FGV Quant é a Liga de Finanças Quantitativas da FGV-SP, fundada em 2021.",
-      "intro2": "Aplicamos matemática, estatística e programação aos mercados financeiros —",
-      "intro3": "derivativos, machine learning, trading algorítmico e Python — com aprendizado baseado em problemas.",
+      "intro2": "Aplicamos matemática, estatística e programação aos mercados financeiros:",
+      "intro3": "derivativos, machine learning, trading algorítmico e Python, com aprendizado baseado em problemas.",
       "hint": "Digite /help para ver os comandos.",
       "helpHeading": "Comandos disponíveis:",
       "notFound": "comando não encontrado: {cmd}",
@@ -61,7 +61,7 @@
       "eyebrow": "FGV Quant Insights",
       "titleA": "A newsletter",
       "titleEm": "mensal",
-      "description": "Personalidades, estratégias, notícias e oportunidades do mundo quant — todo mês no LinkedIn.",
+      "description": "Personalidades, estratégias, notícias e oportunidades do mundo quant, todo mês no LinkedIn.",
       "all": "Ver todas as edições"
     },
     "activities": {
