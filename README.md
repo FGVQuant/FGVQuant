@@ -102,3 +102,7 @@ More context for AI agents is in [CLAUDE.md](CLAUDE.md) and [AGENTS.md](AGENTS.m
   The lockup text is outlined Lora, produced by `outline.mjs` (uses `opentype.js` and `@fontsource/lora`). Copies used by the site are `public/brand/*.svg`, `src/app/icon.svg`, `apple-icon.png` and `favicon.ico`.
 
 Full details are in [docs/BRAND.md](docs/BRAND.md).
+
+## License
+
+The source code is released under the [MIT License](LICENSE). The FGV Quant name, logo and brand assets (`assets/brand/`, `public/brand/`, the site icons), the site content in `content/` and the documents in `docs/entregas/` are **not** covered: they belong to the league and/or FGV. See the exclusions in [LICENSE](LICENSE).
