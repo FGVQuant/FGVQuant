@@ -217,6 +217,25 @@
   }
 }
 
+/* Site-wide film grain: a fixed, static noise layer behind all content so the flat base has some
+   texture. No blend mode (cheap to composite); slightly stronger on the dark theme. */
+@utility bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.025;
+  :where(.dark) & {
+    opacity: 0.045;
+  }
+}
+
+/* Alternating tone for long pages: a slightly lighter, translucent band with the dot grid.
+   Put it on a full-width element (not a container-page box) so the band runs edge to edge. */
+@utility section-tone {
+  background-color: color-mix(in srgb, var(--card) 45%, transparent);
+  background-image: radial-gradient(var(--grid-line) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
 @utility container-page {
   margin-inline: auto;
   width: 100%;

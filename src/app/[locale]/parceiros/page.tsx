@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { BookOpenText, Mail, Mic, Puzzle, Users, type LucideIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PageIntro } from "@/components/layout/page-intro";
+import { ConnectionMotif } from "@/components/layout/intro-motifs";
 import { LogoMarquee } from "@/components/sections/logo-marquee";
 import { ButtonAnchor } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
@@ -64,6 +65,7 @@ export default async function PartnersPage() {
   return (
     <main id="content">
       <PageIntro
+        motif={<ConnectionMotif />}
         eyebrow={t("intro.eyebrow")}
         title={t.rich("intro.title", em)}
         description={t("intro.description")}

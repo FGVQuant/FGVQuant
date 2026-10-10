@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PageIntro } from "@/components/layout/page-intro";
+import { ConvergingPathsMotif } from "@/components/layout/intro-motifs";
 import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
@@ -66,6 +67,7 @@ export default async function JoinPage() {
   return (
     <main id="content">
       <PageIntro
+        motif={<ConvergingPathsMotif />}
         eyebrow={t("intro.eyebrow")}
         title={rich(t, "intro.title")}
         description={t("intro.description")}
@@ -110,7 +112,7 @@ export default async function JoinPage() {
         </div>
       </section>
 
-      <section className="border-t border-border">
+      <section className="border-t border-border section-tone">
         <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("build.eyebrow")}

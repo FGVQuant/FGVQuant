@@ -3,6 +3,7 @@ import { pageAlternates } from "@/lib/seo";
 import { getTranslations } from "next-intl/server";
 import { DriftTimeline, type TimelineKind } from "@/components/sections/drift-timeline";
 import { PageIntro } from "@/components/layout/page-intro";
+import { MilestonesMotif } from "@/components/layout/intro-motifs";
 import { ButtonAnchor } from "@/components/ui/button";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { getEvents, getSite, toTimelineItems } from "@/lib/content";
@@ -25,6 +26,7 @@ export default async function EventsPage() {
   const plain = { em: (chunks: React.ReactNode) => chunks };
 
   const items = toTimelineItems(getEvents(), locale);
+  const eventDates = getEvents().map((e) => e.date);
   const kindLabels = Object.fromEntries(KINDS.map((k) => [k, t(`kinds.${k}`)])) as Record<
     TimelineKind,
     string
@@ -33,6 +35,7 @@ export default async function EventsPage() {
   return (
     <main id="content">
       <PageIntro
+        motif={<MilestonesMotif dates={eventDates} />}
         eyebrow={t("intro.eyebrow")}
         title={t.rich("intro.title", em)}
         description={t("intro.description")}

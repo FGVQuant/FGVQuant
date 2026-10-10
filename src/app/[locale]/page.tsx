@@ -154,8 +154,8 @@ export default async function HomePage() {
       </section>
 
       {/* Áreas */}
-      <section className="border-t border-border section-y">
-        <div className="container-page">
+      <section className="border-t border-border section-tone">
+        <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("areas.eyebrow")}
             title={
@@ -252,8 +252,8 @@ export default async function HomePage() {
       </section>
 
       {/* Atividades */}
-      <section className="border-t border-border section-y">
-        <div className="container-page">
+      <section className="border-t border-border section-tone">
+        <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("activities.eyebrow")}
             title={

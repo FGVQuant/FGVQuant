@@ -14,6 +14,7 @@ import { getPageLocale } from "@/lib/locale";
 import { getAreas, getSite, getStats, intlLocale, tr } from "@/lib/content";
 import { pageAlternates } from "@/lib/seo";
 import { PageIntro } from "@/components/layout/page-intro";
+import { BullMotif } from "@/components/layout/intro-motifs";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
 import { BentoCard, BentoGrid } from "@/components/sections/bento-grid";
@@ -57,6 +58,7 @@ export default async function AboutPage() {
   return (
     <main id="content">
       <PageIntro
+        motif={<BullMotif />}
         eyebrow={t("eyebrow")}
         title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
         description={t("lead", { year: site.founded, members: site.members })}
@@ -97,24 +99,26 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="container-page border-t border-border section-y">
-        <SectionHeader
-          eyebrow={t("areas.eyebrow")}
-          title={t.rich("areas.title", { em: (chunks) => chunks })}
-          description={t("areas.description")}
-        />
-        <BentoGrid className="mt-12">
-          {areas.map((a, i) => (
-            <BentoCard
-              key={a.id}
-              eyebrow={String(i + 1).padStart(2, "0")}
-              title={tr(a.title, locale)}
-              description={tr(a.description, locale)}
-              className={AREA_SPAN[a.id] ?? "lg:col-span-2"}
-              background={<AreaBackground id={a.id} />}
-            />
-          ))}
-        </BentoGrid>
+      <section className="border-t border-border section-tone">
+        <div className="container-page section-y">
+          <SectionHeader
+            eyebrow={t("areas.eyebrow")}
+            title={t.rich("areas.title", { em: (chunks) => chunks })}
+            description={t("areas.description")}
+          />
+          <BentoGrid className="mt-12">
+            {areas.map((a, i) => (
+              <BentoCard
+                key={a.id}
+                eyebrow={String(i + 1).padStart(2, "0")}
+                title={tr(a.title, locale)}
+                description={tr(a.description, locale)}
+                className={AREA_SPAN[a.id] ?? "lg:col-span-2"}
+                background={<AreaBackground id={a.id} />}
+              />
+            ))}
+          </BentoGrid>
+        </div>
       </section>
 
       <section className="container-page grid gap-12 border-t border-border section-y lg:grid-cols-[1fr_1.2fr]">
@@ -128,58 +132,65 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="container-page border-t border-border section-y">
-        <SectionHeader
-          eyebrow={t("how.eyebrow")}
-          title={t.rich("how.title", { em: (chunks) => chunks })}
-          description={t("how.description")}
-        />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {WAYS.map(({ key, href, Icon }) => {
-            const linked = key !== "study" && key !== "research";
-            const body = (
-              <>
-                <Icon aria-hidden className="size-6 stroke-[1.5] text-highlight" />
-                <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-foreground">
-                  {t(`how.${key}.title`)}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground">{t(`how.${key}.body`)}</p>
-                {linked ? (
-                  <span className="mt-4 inline-block font-mono text-xs text-highlight">
-                    {t(`how.${key}.cta`)} →
-                  </span>
-                ) : null}
-              </>
-            );
-            const cls =
-              "block h-full rounded-2xl border border-border bg-card p-6 transition-colors";
-            return (
-              <li key={key}>
-                {linked ? (
-                  <Link href={href} className={`${cls} hover:border-border-strong`}>
-                    {body}
-                  </Link>
-                ) : (
-                  <div className={cls}>{body}</div>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+      <section className="border-t border-border section-tone">
+        <div className="container-page section-y">
+          <SectionHeader
+            eyebrow={t("how.eyebrow")}
+            title={t.rich("how.title", { em: (chunks) => chunks })}
+            description={t("how.description")}
+          />
+          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {WAYS.map(({ key, href, Icon }) => {
+              const linked = key !== "study" && key !== "research";
+              const body = (
+                <>
+                  <Icon aria-hidden className="size-6 stroke-[1.5] text-highlight" />
+                  <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-foreground">
+                    {t(`how.${key}.title`)}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{t(`how.${key}.body`)}</p>
+                  {linked ? (
+                    <span className="mt-4 inline-block font-mono text-xs text-highlight">
+                      {t(`how.${key}.cta`)} →
+                    </span>
+                  ) : null}
+                </>
+              );
+              const cls =
+                "block h-full rounded-2xl border border-border bg-card p-6 transition-colors";
+              return (
+                <li key={key}>
+                  {linked ? (
+                    <Link href={href} className={`${cls} hover:border-border-strong`}>
+                      {body}
+                    </Link>
+                  ) : (
+                    <div className={cls}>{body}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </section>
 
-      <section className="container-page border-t border-border section-y text-center">
-        <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
-          {t.rich("cta.title", { em: (chunks) => chunks })}
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
-        <div className="mt-8 flex justify-center gap-3">
-          <ButtonLink href="/processo-seletivo" size="lg" arrow>
-            {t("cta.button")}
-          </ButtonLink>
-          <ButtonLink href="/time" variant="outline" size="lg">
-            {t("cta.team")}
-          </ButtonLink>
+      <section className="border-t border-border">
+        <div className="container-page section-y">
+          <div className="relative isolate overflow-hidden rounded-3xl border border-border-strong p-8 text-center md:p-14">
+            <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
+            <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
+              {t.rich("cta.title", { em: (chunks) => chunks })}
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <ButtonLink href="/processo-seletivo" size="lg" arrow>
+                {t("cta.button")}
+              </ButtonLink>
+              <ButtonLink href="/time" variant="outline" size="lg">
+                {t("cta.team")}
+              </ButtonLink>
+            </div>
+          </div>
         </div>
       </section>
     </main>

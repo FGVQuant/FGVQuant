@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { ArrowUpRight } from "lucide-react";
 import { NumberTicker } from "@/components/data/number-ticker";
 import { PageIntro } from "@/components/layout/page-intro";
+import { SimulationFanMotif } from "@/components/layout/intro-motifs";
 import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
@@ -62,6 +63,7 @@ export default async function CapitalPage() {
   return (
     <main id="content">
       <PageIntro
+        motif={<SimulationFanMotif />}
         eyebrow={t("eyebrow")}
         title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
         description={t("description")}
