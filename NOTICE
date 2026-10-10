@@ -1,0 +1,17 @@
+FGV Quant website
+
+The MIT License in LICENSE covers the source code of this repository only.
+
+It does not cover, and grants no rights to, the following, which belong to FGV Quant (Liga de
+Finanças Quantitativas da FGV-SP) and/or Fundação Getulio Vargas:
+
+  - The "FGV Quant" name, the bull logo and all brand assets, including
+    everything under assets/brand/ and public/brand/, and the site icons
+    src/app/icon.svg, src/app/apple-icon.png and src/app/favicon.ico.
+  - The site content under content/ (league information, member data,
+    newsletter summaries, fund figures, events, competitions and partners)
+    and the handoff documents under docs/entregas/.
+  - Third-party names and logos of partners, sponsors and institutions.
+
+Reusing this code for another project? Replace these with your own brand
+and content.

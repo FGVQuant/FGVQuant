@@ -105,4 +105,4 @@ Full details are in [docs/BRAND.md](docs/BRAND.md).
 
 ## License
 
-The source code is released under the [MIT License](LICENSE). The FGV Quant name, logo and brand assets (`assets/brand/`, `public/brand/`, the site icons), the site content in `content/` and the documents in `docs/entregas/` are **not** covered: they belong to the league and/or FGV. See the exclusions in [LICENSE](LICENSE).
+The source code is released under the [MIT License](LICENSE). The FGV Quant name, logo and brand assets (`assets/brand/`, `public/brand/`, the site icons), the site content in `content/` and the documents in `docs/entregas/` are **not** covered: they belong to the league and/or FGV. See [NOTICE](NOTICE).
