@@ -47,7 +47,6 @@
       "filterLabel": "Filter by topic",
       "all": "All",
       "empty": "No issues on this topic.",
-      "read": "Read issue",
       "results": "{count, plural, one {# issue found} other {# issues found}}"
     },
     "issue": {
@@ -64,6 +63,15 @@
       "subscribeBody": "Subscribe to FGV Quant Insights on LinkedIn and follow along every month.",
       "subscribe": "Subscribe on LinkedIn"
     },
-    "issueNavLabel": "Issue navigation"
+    "issueNavLabel": "Issue navigation",
+    "status": {
+      "summary": "Summary",
+      "full": "Full issue"
+    },
+    "read": {
+      "summary": "Read summary",
+      "full": "Read issue"
+    },
+    "language": "In Portuguese"
   }
 }

@@ -172,14 +172,12 @@ function Card({
   linkLabel,
   newTabLabel,
   external,
-  reduced,
 }: {
   item: TimelineItem;
   kindLabel: string;
   linkLabel?: string;
   newTabLabel: string;
   external: boolean;
-  reduced: boolean;
 }) {
   const Icon = KIND_ICON[item.kind];
   const body = (
@@ -191,17 +189,17 @@ function Card({
         >
           {item.dateLabel}
         </time>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-border-strong px-2.5 py-0.5 font-mono text-[0.65rem] tracking-wide text-highlight uppercase">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-border-strong px-2.5 py-0.5 font-mono text-xs tracking-wide text-highlight uppercase">
           <Icon className="size-3" aria-hidden="true" />
           {kindLabel}
         </span>
         {item.tag ? (
-          <span className="font-mono text-[0.65rem] tracking-wide text-muted-foreground uppercase">
+          <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
             {item.tag}
           </span>
         ) : null}
       </div>
-      <h3 className="mt-3 font-display text-lg leading-snug font-semibold text-foreground md:text-xl">
+      <h3 className="mt-3 font-sans text-lg leading-snug font-semibold tracking-tight text-foreground md:text-xl">
         {item.title}
         {item.href && (linkLabel || external) ? (
           <span className="sr-only">
@@ -248,17 +246,8 @@ function Card({
     <div className={cls}>{body}</div>
   );
 
-  if (reduced) return inner;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {inner}
-    </motion.div>
-  );
+  // visible by default: no hidden entrance state, so SSR, print and no-JS output are complete
+  return inner;
 }
 
 /* ------------------------------------------------------------------ */
@@ -415,7 +404,6 @@ export function DriftTimeline({
                         linkLabel={linkLabel}
                         newTabLabel={newTabLabel}
                         external={!!item.href && !item.href.startsWith("/")}
-                        reduced={reduced}
                       />
                     </div>
                   </li>

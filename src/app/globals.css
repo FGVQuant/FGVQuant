@@ -86,7 +86,7 @@
   --highlight: #ae94d6;
   --emphasis-from: #ffffff;
   --emphasis-to: #b99bff;
-  --emphasis-glow: rgb(174 148 214 / 0.55);
+  --emphasis-glow: rgb(174 148 214 / 0.3);
   --surface: rgb(84 70 131 / 0.14);
   --glow: rgb(110 60 190 / 0.45);
   --grid-line: rgb(174 148 214 / 0.06);
@@ -199,6 +199,22 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Vertical rhythm for top-level page sections: one standard step and one tight step
+   (follow-on blocks such as notices). Use instead of ad-hoc py-* on <section>. */
+@utility section-y {
+  padding-block: 4rem;
+  @media (width >= 48rem) {
+    padding-block: 6rem;
+  }
+}
+
+@utility section-y-tight {
+  padding-block: 2.5rem;
+  @media (width >= 48rem) {
+    padding-block: 4rem;
+  }
 }
 
 @utility container-page {

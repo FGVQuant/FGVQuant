@@ -13,6 +13,8 @@ export type MonteCarloHeroProps = {
   actions?: ReactNode;
   /** Small mono caption describing the simulation, e.g. "N = 128 · μ = 8% · σ = 24%". */
   legend?: ReactNode;
+  /** Shorter caption shown below `sm`, where the full legend is hidden. */
+  legendShort?: ReactNode;
   className?: string;
 };
 
@@ -22,12 +24,13 @@ export function MonteCarloHero({
   description,
   actions,
   legend,
+  legendShort,
   className,
 }: MonteCarloHeroProps) {
   return (
     <section
       className={cn(
-        "relative isolate -mt-16 flex min-h-[min(100svh,56rem)] items-center overflow-hidden pt-16",
+        "relative isolate -mt-16 flex min-h-[min(100svh,56rem)] items-start overflow-hidden pt-16 xl:items-center",
         className,
       )}
     >
@@ -39,7 +42,7 @@ export function MonteCarloHero({
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_right,rgb(0_0_0/0.16),rgb(0_0_0/0.45)_35%,black_52%)] max-lg:[mask-image:linear-gradient(to_bottom,rgb(0_0_0/0.5),black_70%)]"
+        className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,black_70%,rgb(0_0_0/0.5))] xl:[mask-image:linear-gradient(to_right,rgb(0_0_0/0.16),rgb(0_0_0/0.45)_35%,black_52%)]"
       >
         <MonteCarloCanvas />
       </div>
@@ -49,7 +52,7 @@ export function MonteCarloHero({
         className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-background to-transparent"
       />
 
-      <div className="relative container-page py-24 max-lg:pt-56 md:py-32 max-lg:md:pt-72">
+      <div className="relative container-page pt-[152px] pb-24 sm:pt-48 md:pb-32 xl:pt-32">
         <div className="max-w-2xl">
           {eyebrow ? (
             <p className="flex items-center gap-2 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
@@ -69,6 +72,11 @@ export function MonteCarloHero({
         </div>
       </div>
 
+      {legendShort ? (
+        <p className="absolute right-5 bottom-6 font-mono text-[0.68rem] tracking-wide text-muted-foreground sm:hidden">
+          {legendShort}
+        </p>
+      ) : null}
       {legend ? (
         <p className="absolute right-5 bottom-6 hidden font-mono text-[0.68rem] tracking-wide text-muted-foreground sm:block md:right-8">
           {legend}

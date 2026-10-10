@@ -59,10 +59,54 @@ export default async function NewsletterPage() {
         </div>
       </PageIntro>
 
-      <section className="container-page py-16 md:py-20">
+      {featuredData ? (
+        <section className="container-page border-t border-border section-y">
+          <p className="mb-6 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+            {t("featured.eyebrow")}
+          </p>
+          <NewsletterCard
+            featured
+            href={`/newsletter/${featuredData.slug}`}
+            title={featuredData.title}
+            dateLabel={featuredData.dateLabel}
+            excerpt={featuredData.excerpt}
+            tags={featuredData.tags}
+            coverText={{
+              month: featuredData.month,
+              year: featuredData.year,
+              series: t("intro.eyebrow"),
+            }}
+            statusLabel={t(`status.${featuredData.status}`)}
+            languageLabel={locale === "en" ? t("language") : undefined}
+            readLabel={t(`read.${featuredData.status}`)}
+          />
+        </section>
+      ) : null}
+
+      {rest.length > 0 ? (
+        <section className="container-page border-t border-border section-y">
+          <SectionHeader
+            eyebrow={t("archive.eyebrow")}
+            title={t.rich("archive.title", { em: (chunks) => chunks })}
+          />
+          <div className="mt-10">
+            <IssueArchive
+              issues={rest}
+              tags={tags}
+              labels={{
+                filter: t("archive.filterLabel"),
+                all: t("archive.all"),
+                empty: t("archive.empty"),
+              }}
+            />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="container-page border-t border-border section-y">
         <SectionHeader
           eyebrow={t("format.eyebrow")}
-          title={t.rich("format.title", { em })}
+          title={t.rich("format.title", { em: (chunks) => chunks })}
           description={t("format.description")}
         />
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -74,7 +118,7 @@ export default async function NewsletterPage() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </div>
-              <h3 className="mt-4 font-display text-lg leading-snug">
+              <h3 className="mt-4 font-sans text-lg leading-snug font-semibold tracking-tight">
                 {t(`format.sections.${key}.title`)}
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -84,41 +128,6 @@ export default async function NewsletterPage() {
           ))}
         </ul>
       </section>
-
-      {featuredData ? (
-        <section className="container-page border-t border-border py-16 md:py-20">
-          <p className="mb-6 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
-            {t("featured.eyebrow")}
-          </p>
-          <NewsletterCard
-            featured
-            href={`/newsletter/${featuredData.slug}`}
-            title={featuredData.title}
-            dateLabel={featuredData.dateLabel}
-            excerpt={featuredData.excerpt}
-            tags={featuredData.tags}
-            readLabel={t("archive.read")}
-          />
-        </section>
-      ) : null}
-
-      {rest.length > 0 ? (
-        <section className="container-page border-t border-border py-16 md:py-20">
-          <SectionHeader eyebrow={t("archive.eyebrow")} title={t.rich("archive.title", { em })} />
-          <div className="mt-10">
-            <IssueArchive
-              issues={rest}
-              tags={tags}
-              labels={{
-                filter: t("archive.filterLabel"),
-                all: t("archive.all"),
-                empty: t("archive.empty"),
-                read: t("archive.read"),
-              }}
-            />
-          </div>
-        </section>
-      ) : null}
     </main>
   );
 }

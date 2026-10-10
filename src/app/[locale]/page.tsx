@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { BrainCircuit, Code2, FlaskConical, LineChart, Sigma } from "lucide-react";
+import { ArrowUpRight, BrainCircuit, Code2, FlaskConical, LineChart, Sigma } from "lucide-react";
 import type { ReactNode } from "react";
 import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
 import { TerminalPanel } from "@/components/terminal/terminal-panel";
@@ -14,6 +14,7 @@ import {
   NodeGraphBg,
 } from "@/components/sections/bento-grid";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
+import { NewsletterRow } from "@/components/cards/newsletter-row";
 import { NumberTicker } from "@/components/data/number-ticker";
 import { ButtonLink } from "@/components/ui/button";
 import { Em, SectionHeader } from "@/components/ui/section-header";
@@ -21,8 +22,10 @@ import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
 import {
   formatEdition,
+  formatEditionParts,
   formatEditionShort,
   getAreas,
+  getCompetitions,
   getEvents,
   getFeaturedIssue,
   getIssues,
@@ -50,6 +53,8 @@ export default async function HomePage() {
   const locale = await getPageLocale();
   const t = await getTranslations("Home");
   const tc = await getTranslations("Common");
+  const tn = await getTranslations("Newsletter");
+  const tcp = await getTranslations("Competitions");
   const intl = intlLocale(locale);
 
   const stats = getStats();
@@ -57,6 +62,21 @@ export default async function HomePage() {
   const recent = getIssues()
     .filter((i) => i.slug !== featured?.slug)
     .slice(0, 2);
+  // Most recent competition: first ranked team is the focal result, the rest are secondary.
+  const latest = getCompetitions()[0];
+  const ranked = latest?.teams.filter((x) => x.ranked) ?? [];
+  const competition =
+    latest && ranked.length > 0
+      ? {
+          name: latest.name,
+          organizer: latest.organizer,
+          year: latest.year,
+          source: latest.source,
+          selfReported: latest.selfReported,
+          lead: { team: ranked[0].name, result: tr(ranked[0].result, locale) },
+          others: ranked.slice(1).map((x) => ({ team: x.name, result: tr(x.result, locale) })),
+        }
+      : null;
   const fundMonth = formatEdition(stats.fundAsOf, locale);
 
   return (
@@ -74,12 +94,13 @@ export default async function HomePage() {
             <ButtonLink href="/processo-seletivo" size="lg" arrow>
               {t("hero.join")}
             </ButtonLink>
-            <ButtonLink href="/newsletter" size="lg" variant="outline">
-              {t("hero.newsletter")}
+            <ButtonLink href="/parceiros" size="lg" variant="outline">
+              {t("hero.partner")}
             </ButtonLink>
           </>
         }
         legend={t("hero.legend")}
+        legendShort={t("hero.legendShort")}
       />
 
       <section className="container-page">
@@ -101,8 +122,8 @@ export default async function HomePage() {
         />
       </section>
 
-      {/* Quem somos + terminal */}
-      <section className="container-page grid items-center gap-12 py-24 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+      {/* Quem somos + destaque em competição */}
+      <section className="container-page grid items-center gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeader
             eyebrow={t("about.eyebrow")}
@@ -117,35 +138,28 @@ export default async function HomePage() {
             {t("about.cta")}
           </ButtonLink>
         </div>
-        <TerminalPanel
-          title={t("terminal.title")}
-          introCommand={t("terminal.introCommand")}
-          introLines={[t("terminal.intro1"), t("terminal.intro2"), t("terminal.intro3")]}
-          commands={[
-            { name: "join", description: t("terminal.cmdJoin"), href: "/processo-seletivo" },
-            { name: "newsletter", description: t("terminal.cmdNewsletter"), href: "/newsletter" },
-            { name: "capital", description: t("terminal.cmdCapital"), href: "/capital" },
-            { name: "team", description: t("terminal.cmdTeam"), href: "/time" },
-            { name: "about", description: t("terminal.cmdAbout"), href: "/sobre" },
-            {
-              name: "motto",
-              description: t("terminal.cmdMotto"),
-              output: [(await getTranslations("Brand"))("motto")],
-            },
-          ]}
-          labels={{
-            hint: t("terminal.hint"),
-            helpHeading: t("terminal.helpHeading"),
-            notFound: t.raw("terminal.notFound") as string, // {cmd} filled in by the terminal
-            navigating: t.raw("terminal.navigating") as string, // {path} filled in by the terminal
-            inputLabel: t("terminal.inputLabel"),
-            chipsLabel: t("terminal.chipsLabel"),
-          }}
-        />
+        {competition ? (
+          <CompetitionHighlight
+            eyebrow={t("about.competition.eyebrow")}
+            name={competition.name}
+            meta={`${competition.organizer} · ${competition.year}`}
+            lead={competition.lead}
+            others={competition.others}
+            selfReported={
+              competition.selfReported
+                ? { badge: tcp("selfReportedBadge"), note: tcp("selfReported") }
+                : undefined
+            }
+            source={competition.source}
+            sourceText={t("about.competition.source")}
+            sourceLabel={t("about.competition.sourceLabel", { organizer: competition.organizer })}
+            cta={t("about.competition.cta")}
+          />
+        ) : null}
       </section>
 
       {/* Áreas */}
-      <section className="border-t border-border py-24">
+      <section className="border-t border-border section-y">
         <div className="container-page">
           <SectionHeader
             eyebrow={t("areas.eyebrow")}
@@ -175,7 +189,7 @@ export default async function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="border-t border-border py-24">
+      <section className="border-t border-border section-y">
         <div className="container-page">
           <SectionHeader
             eyebrow={t("newsletter.eyebrow")}
@@ -199,23 +213,34 @@ export default async function HomePage() {
                 href={`/newsletter/${featured.slug}`}
                 title={featured.title}
                 dateLabel={formatEditionShort(featured.edition, locale)}
+                coverText={{
+                  ...formatEditionParts(featured.edition, locale),
+                  series: tn("intro.eyebrow"),
+                }}
                 excerpt={featured.excerpt}
                 tags={featured.tags}
-                readLabel={t("newsletter.read")}
+                statusLabel={tn(`status.${featured.status}`)}
+                languageLabel={locale === "en" ? tn("language") : undefined}
+                readLabel={tn(`read.${featured.status}`)}
               />
             ) : null}
-            {recent.map((issue) => (
-              <NewsletterCard
-                key={issue.slug}
-                className="lg:col-span-1"
-                href={`/newsletter/${issue.slug}`}
-                title={issue.title}
-                dateLabel={formatEditionShort(issue.edition, locale)}
-                excerpt={issue.excerpt}
-                tags={issue.tags}
-                readLabel={t("newsletter.read")}
-              />
-            ))}
+            {recent.length > 0 ? (
+              <ul className="flex flex-col gap-3 lg:col-span-3">
+                {recent.map((issue) => (
+                  <li key={issue.slug}>
+                    <NewsletterRow
+                      href={`/newsletter/${issue.slug}`}
+                      title={issue.title}
+                      dateLabel={formatEditionShort(issue.edition, locale)}
+                      excerpt={issue.excerpt}
+                      tags={issue.tags}
+                      statusLabel={tn(`status.${issue.status}`)}
+                      languageLabel={locale === "en" ? tn("language") : undefined}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             <CapitalTeaser
               eyebrow={t("capital.eyebrow")}
               title={t("capital.title")}
@@ -232,7 +257,7 @@ export default async function HomePage() {
       </section>
 
       {/* Atividades */}
-      <section className="border-t border-border py-24">
+      <section className="border-t border-border section-y">
         <div className="container-page">
           <SectionHeader
             eyebrow={t("activities.eyebrow")}
@@ -262,6 +287,48 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Terminal (opcional) */}
+      <section className="border-t border-border section-y">
+        <div className="container-page">
+          <SectionHeader
+            eyebrow={t("terminalSection.eyebrow")}
+            title={t("terminalSection.title")}
+            description={t("terminalSection.description")}
+          />
+          <div className="mt-12 max-w-3xl">
+            <TerminalPanel
+              title={t("terminal.title")}
+              introCommand={t("terminal.introCommand")}
+              introLines={[t("terminal.intro1"), t("terminal.intro2"), t("terminal.intro3")]}
+              commands={[
+                { name: "join", description: t("terminal.cmdJoin"), href: "/processo-seletivo" },
+                {
+                  name: "newsletter",
+                  description: t("terminal.cmdNewsletter"),
+                  href: "/newsletter",
+                },
+                { name: "capital", description: t("terminal.cmdCapital"), href: "/capital" },
+                { name: "team", description: t("terminal.cmdTeam"), href: "/time" },
+                { name: "about", description: t("terminal.cmdAbout"), href: "/sobre" },
+                {
+                  name: "motto",
+                  description: t("terminal.cmdMotto"),
+                  output: [(await getTranslations("Brand"))("motto")],
+                },
+              ]}
+              labels={{
+                hint: t("terminal.hint"),
+                helpHeading: t("terminal.helpHeading"),
+                notFound: t.raw("terminal.notFound") as string, // {cmd} filled in by the terminal
+                navigating: t.raw("terminal.navigating") as string, // {path} filled in by the terminal
+                inputLabel: t("terminal.inputLabel"),
+                chipsLabel: t("terminal.chipsLabel"),
+              }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Join CTA */}
       <section className="relative isolate overflow-hidden border-t border-border">
         <div aria-hidden className="absolute inset-0 -z-10 bg-glow" />
@@ -269,7 +336,7 @@ export default async function HomePage() {
           aria-hidden
           className="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_60%_80%_at_50%_100%,black,transparent_75%)]"
         />
-        <div className="container-page flex flex-col items-center py-28 text-center">
+        <div className="container-page flex flex-col items-center section-y text-center">
           <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">
             {t("join.eyebrow")}
           </p>
@@ -298,16 +365,16 @@ function CapitalTeaser(props: {
   locale: string;
 }) {
   return (
-    <div className="flex flex-col justify-between gap-8 rounded-2xl p-6 glass lg:col-span-1">
-      <div>
+    <div className="flex flex-col justify-between gap-8 rounded-2xl border border-border bg-card p-6 lg:col-span-3 lg:flex-row lg:items-end lg:gap-12 lg:p-8">
+      <div className="lg:max-w-xl">
         <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">
           {props.eyebrow}
         </p>
-        <h3 className="mt-3 font-display text-2xl">{props.title}</h3>
+        <h3 className="mt-3 font-sans text-xl font-semibold tracking-tight">{props.title}</h3>
         <p className="mt-3 text-sm text-muted-foreground">{props.body}</p>
       </div>
-      <div>
-        <p className="font-mono text-[0.7rem] tracking-wide text-muted-foreground uppercase">
+      <div className="lg:shrink-0">
+        <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
           {props.label}
         </p>
         <NumberTicker
@@ -326,5 +393,76 @@ function CapitalTeaser(props: {
         </ButtonLink>
       </div>
     </div>
+  );
+}
+
+/** Compact, sourced achievement card: the lead result is the focal point. */
+function CompetitionHighlight(props: {
+  eyebrow: string;
+  name: string;
+  meta: string;
+  lead: { team: string; result: string };
+  others: { team: string; result: string }[];
+  /** Shown only for results the league reported itself (`selfReported` in content). */
+  selfReported?: { badge: string; note: string };
+  source?: string;
+  sourceText: string;
+  sourceLabel: string;
+  cta: string;
+}) {
+  return (
+    <article className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 sm:p-8">
+      <div>
+        <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+          {props.eyebrow}
+        </p>
+        <h3 className="mt-3 font-sans text-xl font-semibold tracking-tight">{props.name}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{props.meta}</p>
+      </div>
+      <div>
+        <p className="font-display text-5xl text-balance sm:text-6xl">{props.lead.result}</p>
+        <p className="mt-2 font-mono text-sm break-words text-highlight">{props.lead.team}</p>
+      </div>
+      {props.others.length > 0 ? (
+        <ul className="flex flex-wrap gap-2">
+          {props.others.map((o) => (
+            <li
+              key={o.team}
+              className="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted-foreground"
+            >
+              <span className="text-foreground">{o.team}</span> · {o.result}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      <p className="text-xs text-muted-foreground">
+        {props.selfReported ? (
+          <>
+            <span className="mr-2 inline-block rounded-full border border-border px-2 py-0.5 font-mono text-xs tracking-wide uppercase">
+              {props.selfReported.badge}
+            </span>
+            {props.selfReported.note}
+          </>
+        ) : null}
+        {props.source ? (
+          <>
+            {" "}
+            <a
+              href={props.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={props.sourceLabel}
+              className="inline-flex items-center gap-0.5 rounded-sm underline underline-offset-4 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            >
+              {props.sourceText}
+              <ArrowUpRight aria-hidden className="size-3" />
+            </a>
+          </>
+        ) : null}
+      </p>
+      <ButtonLink href="/competicoes" variant="link" arrow className="self-start px-0">
+        {props.cta}
+      </ButtonLink>
+    </article>
   );
 }

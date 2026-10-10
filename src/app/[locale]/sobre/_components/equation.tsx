@@ -14,7 +14,7 @@ export function Equation({ caption, label }: { caption: string; label: string })
     throwOnError: false,
   });
   return (
-    <figure className="relative overflow-hidden rounded-2xl border border-border px-6 py-12 text-center glass sm:py-16">
+    <figure className="relative overflow-hidden rounded-2xl border border-border bg-card px-6 py-12 text-center sm:py-16">
       <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
       <div
         tabIndex={0}

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 /** Shared button styling. Use directly for custom elements. */
 export const buttonVariants = cva(
-  "group/btn inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-medium transition-[background-color,color,border-color,opacity] duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0",
+  "group/btn inline-flex max-w-full items-center justify-center gap-2 whitespace-normal text-center font-medium transition-[background-color,color,border-color,opacity] duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -18,13 +18,13 @@ export const buttonVariants = cva(
         link: "rounded-sm text-highlight underline-offset-4 hover:underline",
       },
       size: {
-        sm: "h-9 px-4 text-sm",
-        md: "h-11 px-6 text-sm",
-        lg: "h-12 px-8 text-base",
+        sm: "min-h-9 px-4 py-1.5 text-sm",
+        md: "min-h-11 px-6 py-2 text-sm",
+        lg: "min-h-12 px-8 py-2.5 text-base",
         icon: "size-10",
       },
     },
-    compoundVariants: [{ variant: "link", className: "h-auto px-0" }],
+    compoundVariants: [{ variant: "link", className: "min-h-0 px-0 py-0" }],
     defaultVariants: { variant: "primary", size: "md" },
   },
 );

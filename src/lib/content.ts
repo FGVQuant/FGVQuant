@@ -38,6 +38,19 @@ export function formatEdition(edition: string, locale: Locale) {
   return capitalize(fmt(`${edition}-01`, locale, { month: "long", year: "numeric" }));
 }
 
+/** Month name and year apart, for typographic covers: "2026-09" → { month: "Setembro", year: "2026" }. */
+export function formatEditionParts(edition: string, locale: Locale) {
+  const parts = new Intl.DateTimeFormat(intlLocale(locale), {
+    timeZone: "UTC",
+    month: "long",
+    year: "numeric",
+  }).formatToParts(new Date(`${edition}-01`));
+  return {
+    month: capitalize(parts.find((p) => p.type === "month")?.value ?? ""),
+    year: parts.find((p) => p.type === "year")?.value ?? "",
+  };
+}
+
 /** Short label for cards, e.g. "Set 2026" / "Sep 2026" (short month without trailing "." + year). */
 export function formatEditionShort(edition: string, locale: Locale) {
   const parts = new Intl.DateTimeFormat(intlLocale(locale), {

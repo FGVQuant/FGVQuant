@@ -22,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function EventsPage() {
   const [t, locale] = await Promise.all([getTranslations("Events"), getPageLocale()]);
   const em = { em: (chunks: React.ReactNode) => <Em>{chunks}</Em> };
+  const plain = { em: (chunks: React.ReactNode) => chunks };
 
   const items = toTimelineItems(getEvents(), locale);
   const kindLabels = Object.fromEntries(KINDS.map((k) => [k, t(`kinds.${k}`)])) as Record<
@@ -37,10 +38,10 @@ export default async function EventsPage() {
         description={t("intro.description")}
       />
 
-      <section className="container-page py-20 md:py-28">
+      <section className="container-page section-y">
         <SectionHeader
           eyebrow={t("timeline.eyebrow")}
-          title={t.rich("timeline.title", em)}
+          title={t.rich("timeline.title", plain)}
           description={t("timeline.description")}
         />
         <DriftTimeline
@@ -53,12 +54,12 @@ export default async function EventsPage() {
       </section>
 
       <section className="border-t border-border">
-        <div className="container-page py-20 md:py-28">
+        <div className="container-page section-y">
           <div className="relative isolate overflow-hidden rounded-3xl border border-border-strong p-8 md:p-14">
             <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
             <SectionHeader
               eyebrow={t("cta.eyebrow")}
-              title={t.rich("cta.title", em)}
+              title={t.rich("cta.title", plain)}
               description={t("cta.description")}
             />
             <div className="mt-8">

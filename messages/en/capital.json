@@ -22,6 +22,7 @@
       "monthly": "Reported monthly returns (simulated fund)",
       "chartLabel": "Bar chart of the simulated fund's reported monthly returns: {summary}.",
       "tableCaption": "Reported monthly returns of the simulated fund",
+      "coverage": "{count, plural, one {# month reported} other {# months reported}} · {range}",
       "month": "Month",
       "return": "Return",
       "pendingNote": "The full monthly history and methodology will be published once provided by the league. For now we only show the months already reported.",

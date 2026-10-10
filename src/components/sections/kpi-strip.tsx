@@ -43,7 +43,7 @@ export function KpiStrip({ items, locale, className }: KpiStripProps) {
             i >= 2 && "border-t border-border lg:border-t-0",
           )}
         >
-          <span className="font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
+          <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
             {item.label}
           </span>
           <NumberTicker
@@ -58,7 +58,7 @@ export function KpiStrip({ items, locale, className }: KpiStripProps) {
             <Sparkline data={item.spark} area label={item.sparkLabel ?? item.label} />
           )}
           {item.note && (
-            <span className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
+            <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
               * {item.note}
             </span>
           )}

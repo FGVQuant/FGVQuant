@@ -33,7 +33,7 @@ export default async function CompetitionsPage() {
         description={t("description")}
       />
 
-      <section className="container-page py-16 md:py-24">
+      <section className="container-page section-y">
         {competitions.length === 0 ? (
           <PlaceholderNote label={tCommon("pending")}>{t("empty")}</PlaceholderNote>
         ) : (
@@ -78,10 +78,10 @@ export default async function CompetitionsPage() {
       </section>
 
       <section className="border-t border-border">
-        <div className="container-page py-16 md:py-24">
+        <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("next.eyebrow")}
-            title={t.rich("next.title", { em: (c) => <Em>{c}</Em> })}
+            title={t.rich("next.title", { em: (c) => c })}
             description={t("next.description")}
             action={
               <ButtonLink href="/processo-seletivo" arrow>

@@ -1,12 +1,7 @@
-"use client";
-
-import { useEffect, useMemo, useRef } from "react";
-import { animate, useInView, useReducedMotion } from "motion/react";
-
 import { cn } from "@/lib/utils";
 
 type NumberTickerProps = {
-  /** Final value to count up to. */
+  /** Final value to display. */
   value: number;
   /** Fixed number of decimal places. */
   decimals?: number;
@@ -20,9 +15,9 @@ type NumberTickerProps = {
 };
 
 /**
- * Server-renders the final value; after mount, animates from 0 to `value` with a spring the first
- * time it scrolls into view (skipped under reduced motion). The final value is always exposed to
- * screen readers.
+ * Renders the final formatted value, static. Factual figures (stats, simulated-fund returns) are
+ * never animated or hidden: no count-up through wrong intermediate numbers, and no fade that could
+ * leave a blank in print, screenshots or when an in-view trigger never fires.
  */
 export function NumberTicker({
   value,
@@ -32,51 +27,13 @@ export function NumberTicker({
   locale = "pt-BR",
   className,
 }: NumberTickerProps) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
-  const reduced = useReducedMotion();
-
-  const nf = useMemo(
-    () =>
-      new Intl.NumberFormat(locale, {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-      }),
-    [locale, decimals],
-  );
-  const format = (n: number) => `${prefix}${nf.format(n)}${suffix}`;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || reduced || !inView) return;
-    const controls = animate(0, value, {
-      type: "spring",
-      stiffness: 60,
-      damping: 20,
-      mass: 1,
-      restDelta: 10 ** -(decimals + 1),
-      onUpdate: (latest) => {
-        el.textContent = format(latest);
-      },
-      onComplete: () => {
-        el.textContent = format(value);
-      },
-    });
-    return () => controls.stop();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView, reduced, value, decimals, prefix, suffix, locale]);
-
+  const nf = new Intl.NumberFormat(locale, {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
   return (
-    <>
-      <span className="sr-only">{format(value)}</span>
-      <span
-        ref={ref}
-        aria-hidden="true"
-        suppressHydrationWarning
-        className={cn("font-mono tabular-nums", className)}
-      >
-        {format(value)}
-      </span>
-    </>
+    <span className={cn("font-mono tabular-nums", className)}>
+      {`${prefix}${nf.format(value)}${suffix}`}
+    </span>
   );
 }

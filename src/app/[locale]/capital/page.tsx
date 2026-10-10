@@ -44,6 +44,11 @@ export default async function CapitalPage() {
       value: m.return,
       valueLabel: pct(m.return),
     }));
+  const coverage = t("results.coverage", {
+    count: bars.length,
+    range:
+      bars.length > 1 ? `${bars[0].label}–${bars[bars.length - 1].label}` : (bars[0]?.label ?? ""),
+  });
   const asOf = formatEdition(fund.cumulativeAsOf, locale);
   const summary = bars.map((b) => `${b.label} ${b.valueLabel}`).join(", ");
   const disclaimerItems = [
@@ -68,11 +73,11 @@ export default async function CapitalPage() {
         <Disclaimer title={t("disclaimer.title")} items={disclaimerItems} />
       </section>
 
-      <section className="container-page py-16 md:py-24">
+      <section className="container-page section-y">
         <SectionHeader eyebrow={t("results.eyebrow")} title={t("results.title")} />
         <div className="mt-12 grid gap-6 lg:grid-cols-5">
           <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 lg:col-span-2">
-            <p className="font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
+            <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
               {t("results.cumulative")}
             </p>
             <p className="mt-4">
@@ -93,7 +98,7 @@ export default async function CapitalPage() {
 
           <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 lg:col-span-3">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
+              <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
                 {t("results.monthly")}
               </h3>
               <Badge variant="highlight">{tCommon("simulated")}</Badge>
@@ -105,13 +110,14 @@ export default async function CapitalPage() {
                 tableCaption={t("results.tableCaption")}
                 monthHeader={t("results.month")}
                 returnHeader={t("results.return")}
+                coverage={coverage}
               />
             </div>
           </div>
         </div>
         {fund.methodology ? (
           <div className="mt-6 rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <h3 className="font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
+            <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
               {t("results.methodologyTitle")}
             </h3>
             <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
@@ -126,17 +132,19 @@ export default async function CapitalPage() {
       </section>
 
       <section className="border-t border-border">
-        <div className="container-page py-16 md:py-24">
+        <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("how.eyebrow")}
-            title={t.rich("how.title", { em: (c) => <Em>{c}</Em> })}
+            title={t.rich("how.title", { em: (c) => c })}
             description={t("how.description")}
           />
           <ul className="mt-12 grid gap-4 md:grid-cols-3">
             {purposes.map((key, i) => (
               <li key={key} className="rounded-2xl border border-border bg-card p-6">
                 <span className="font-mono text-xs text-highlight">0{i + 1}</span>
-                <h3 className="mt-3 font-display text-xl">{t(`how.items.${key}.title`)}</h3>
+                <h3 className="mt-3 font-sans text-xl font-semibold tracking-tight">
+                  {t(`how.items.${key}.title`)}
+                </h3>
                 <p className="mt-2 text-sm text-muted-foreground">{t(`how.items.${key}.body`)}</p>
               </li>
             ))}
@@ -145,7 +153,7 @@ export default async function CapitalPage() {
       </section>
 
       <section className="border-t border-border">
-        <div className="container-page flex flex-col gap-8 py-16 md:py-24">
+        <div className="container-page flex flex-col gap-8 section-y">
           <SectionHeader
             eyebrow={t("reports.eyebrow")}
             title={t("reports.title")}

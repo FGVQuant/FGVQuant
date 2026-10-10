@@ -22,6 +22,7 @@
       "monthly": "Retornos mensais reportados (fundo fictício)",
       "chartLabel": "Gráfico de barras dos retornos mensais reportados do fundo fictício: {summary}.",
       "tableCaption": "Retornos mensais reportados do fundo fictício",
+      "coverage": "{count, plural, one {# mês reportado} other {# meses reportados}} · {range}",
       "month": "Mês",
       "return": "Retorno",
       "pendingNote": "O histórico mensal completo e a metodologia serão publicados assim que fornecidos pela liga. Por ora, exibimos apenas os meses já reportados.",
