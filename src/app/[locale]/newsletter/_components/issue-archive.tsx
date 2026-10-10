@@ -1,20 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { NewsletterCard } from "@/components/cards/newsletter-card";
+import { useLocale, useTranslations } from "next-intl";
+import { NewsletterRow } from "@/components/cards/newsletter-row";
 import { cn } from "@/lib/utils";
 import type { IssueCardData } from "../_lib/issues";
 
 type Props = {
   issues: IssueCardData[];
   tags: string[];
-  labels: { filter: string; all: string; empty: string; read: string };
+  labels: { filter: string; all: string; empty: string };
 };
 
-/** Archive grid with in-place tag filtering (no URL change, keeps the page static). */
+/** Archive rows with in-place tag filtering (no URL change, keeps the page static). */
 export function IssueArchive({ issues, tags, labels }: Props) {
   const t = useTranslations("Newsletter.archive");
+  const tn = useTranslations("Newsletter");
+  const showLanguage = useLocale() === "en";
   const [active, setActive] = useState<string | null>(null);
   const visible = active ? issues.filter((i) => i.tags.includes(active)) : issues;
 
@@ -57,17 +59,17 @@ export function IssueArchive({ issues, tags, labels }: Props) {
       </p>
 
       {visible.length > 0 ? (
-        <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-8 flex flex-col gap-3">
           {visible.map((issue) => (
-            <li key={issue.slug} className="flex">
-              <NewsletterCard
-                className="w-full"
+            <li key={issue.slug}>
+              <NewsletterRow
                 href={`/newsletter/${issue.slug}`}
                 title={issue.title}
                 dateLabel={issue.dateLabel}
                 excerpt={issue.excerpt}
                 tags={issue.tags}
-                readLabel={labels.read}
+                statusLabel={tn(`status.${issue.status}`)}
+                languageLabel={showLanguage ? tn("language") : undefined}
               />
             </li>
           ))}

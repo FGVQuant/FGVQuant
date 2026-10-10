@@ -1,6 +1,6 @@
 {
   "Home": {
-    "metaTitle": "FGV Quant — Liga de Finanças Quantitativas",
+    "metaTitle": "FGV Quant · Liga de Finanças Quantitativas",
     "hero": {
       "eyebrow": "Liga de Finanças Quantitativas · FGV-SP",
       "titleA": "Finanças quantitativas,",
@@ -8,7 +8,9 @@
       "description": "Pesquisa, estratégias sistemáticas e formação técnica para a próxima geração de quants do Brasil.",
       "join": "Processo seletivo",
       "newsletter": "Ler a newsletter",
-      "legend": "N = 128 trajetórias · μ = 8% · σ = 24% · banda p5–p95 · simulação"
+      "partner": "Seja parceiro",
+      "legend": "N = 128 trajetórias · μ = 8% · σ = 24% · banda p5–p95 · simulação",
+      "legendShort": "Simulação ilustrativa"
     },
     "stats": {
       "members": "Membros",
@@ -22,14 +24,20 @@
       "titleA": "Matemática, estatística e código",
       "titleEm": "aplicados ao mercado",
       "body": "Fundada em 2021, a FGV Quant reúne estudantes da FGV-SP interessados em finanças quantitativas. Aprendemos resolvendo problemas reais (PBL): de derivativos e machine learning a trading algorítmico e Python.",
-      "cta": "Conheça a liga"
+      "cta": "Conheça a liga",
+      "competition": {
+        "eyebrow": "Destaque em competição",
+        "sourceLabel": "Fonte: {organizer} (abre em nova aba)",
+        "source": "Fonte",
+        "cta": "Ver competições"
+      }
     },
     "terminal": {
       "title": "fgvquant@liga: ~",
       "introCommand": "cat missao.txt",
       "intro1": "A FGV Quant é a Liga de Finanças Quantitativas da FGV-SP, fundada em 2021.",
-      "intro2": "Aplicamos matemática, estatística e programação aos mercados financeiros —",
-      "intro3": "derivativos, machine learning, trading algorítmico e Python — com aprendizado baseado em problemas.",
+      "intro2": "Aplicamos matemática, estatística e programação aos mercados financeiros:",
+      "intro3": "derivativos, machine learning, trading algorítmico e Python, com aprendizado baseado em problemas.",
       "hint": "Digite /help para ver os comandos.",
       "helpHeading": "Comandos disponíveis:",
       "notFound": "comando não encontrado: {cmd}",
@@ -53,9 +61,8 @@
       "eyebrow": "FGV Quant Insights",
       "titleA": "A newsletter",
       "titleEm": "mensal",
-      "description": "Personalidades, estratégias, notícias e oportunidades do mundo quant — todo mês no LinkedIn.",
-      "all": "Ver todas as edições",
-      "read": "Ler resumo"
+      "description": "Personalidades, estratégias, notícias e oportunidades do mundo quant, todo mês no LinkedIn.",
+      "all": "Ver todas as edições"
     },
     "activities": {
       "eyebrow": "Atividades",
@@ -76,6 +83,11 @@
       "title": "Quer fazer parte da FGV Quant?",
       "body": "Acompanhe nossas redes para saber quando as inscrições abrirem.",
       "cta": "Saiba como entrar"
+    },
+    "terminalSection": {
+      "eyebrow": "Explore",
+      "title": "Navegue pelo terminal",
+      "description": "Opcional: use comandos como /help ou clique nos atalhos."
     }
   }
 }

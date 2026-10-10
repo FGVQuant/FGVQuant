@@ -58,14 +58,12 @@
       "fund": "Retorno acumulado (fictício)",
       "note": "Membros: {asOf}. Times ranqueados conforme informado pela liga."
     },
-    "equationCaption": "Movimento browniano geométrico, o ponto de partida de boa parte da área",
-    "structurePending": "A estrutura organizacional e a liderança atual serão publicadas quando a liga confirmar.",
     "cta": {
       "title": "Quer fazer parte da <em>liga</em>?",
       "body": "Acompanhe o processo seletivo e saiba como entrar.",
       "button": "Processo seletivo",
       "team": "Conhecer o time"
     },
-    "equationLabel": "Equação do movimento browniano geométrico (role horizontalmente se necessário)"
+    "partnerCta": "Seja parceiro"
   }
 }

@@ -22,7 +22,9 @@ export default async function TeamPage() {
   const locale = await getPageLocale();
   const t = await getTranslations("Team");
   const tCommon = await getTranslations("Common");
-  const members = getTeam();
+  const all = getTeam();
+  const members = all.filter((m) => !m.placeholder);
+  const pendingRoles = all.filter((m) => m.placeholder);
   const areaLabels = new Map(getAreas().map((a) => [a.id, tr(a.title, locale)]));
 
   return (
@@ -33,40 +35,67 @@ export default async function TeamPage() {
         description={t("lead")}
       />
 
-      <section className="container-page py-20 md:py-24">
+      <section className="container-page section-y">
         <SectionHeader
           eyebrow={t("leadership.eyebrow")}
-          title={t.rich("leadership.title", { em: (c) => <Em>{c}</Em> })}
+          title={t.rich("leadership.title", { em: (chunks) => chunks })}
           description={t("leadership.description")}
         />
-        <ul className="mt-12 grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
-          {members.map((m) => (
-            <li key={m.id}>
-              <MemberCard
-                name={m.placeholder ? tCommon("pending") : m.name}
-                initials={m.placeholder ? "?" : undefined}
-                role={tr(m.role, locale)}
-                area={m.area ? (areaLabels.get(m.area) ?? m.area) : undefined}
-                photo={m.photo ? { ...m.photo, alt: m.name } : undefined}
-                linkedin={m.linkedin}
-                linkedinLabel={t("linkedinLabel", { name: m.name })}
-              />
-            </li>
-          ))}
-        </ul>
-        {members.some((m) => m.placeholder) ? (
-          <PlaceholderNote label={tCommon("pending")} className="mt-12">
-            {t("pending")}
-          </PlaceholderNote>
+        {members.length > 0 ? (
+          <ul className="mt-12 grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
+            {members.map((m) => (
+              <li key={m.id}>
+                <MemberCard
+                  name={m.name}
+                  role={tr(m.role, locale)}
+                  area={m.area ? (areaLabels.get(m.area) ?? m.area) : undefined}
+                  photo={m.photo ? { ...m.photo, alt: m.name } : undefined}
+                  linkedin={m.linkedin}
+                  linkedinLabel={t("linkedinLabel", { name: m.name })}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        {pendingRoles.length > 0 ? (
+          <>
+            <ul
+              className={`max-w-3xl divide-y divide-border overflow-hidden rounded-2xl border border-border ${members.length > 0 ? "mt-12" : "mt-10"}`}
+            >
+              {pendingRoles.map((m) => (
+                <li
+                  key={m.id}
+                  className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-4"
+                >
+                  <div>
+                    <p className="font-sans text-lg font-semibold tracking-tight text-foreground">
+                      {tr(m.role, locale)}
+                    </p>
+                    {m.area ? (
+                      <p className="text-sm text-muted-foreground">
+                        {areaLabels.get(m.area) ?? m.area}
+                      </p>
+                    ) : null}
+                  </div>
+                  <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                    {t("nameTbd")}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <PlaceholderNote label={tCommon("pending")} className="mt-6 max-w-3xl">
+              {t("pending")}
+            </PlaceholderNote>
+          </>
         ) : null}
       </section>
 
-      <section className="container-page border-t border-border py-20 md:py-24">
+      <section className="container-page border-t border-border section-y">
         <SectionHeader
           eyebrow={t("alumni.eyebrow")}
-          title={t.rich("alumni.title", { em: (c) => <Em>{c}</Em> })}
+          title={t.rich("alumni.title", { em: (chunks) => chunks })}
         />
-        <div className="mt-12 max-w-3xl rounded-2xl border border-border p-6 glass sm:p-8">
+        <div className="mt-12 max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-8">
           <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
             {t("alumni.body")}
           </p>
@@ -77,9 +106,9 @@ export default async function TeamPage() {
         </div>
       </section>
 
-      <section className="container-page border-t border-border py-20 text-center md:py-24">
+      <section className="container-page border-t border-border section-y text-center">
         <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
-          {t.rich("cta.title", { em: (c) => <Em>{c}</Em> })}
+          {t.rich("cta.title", { em: (chunks) => chunks })}
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
         <div className="mt-8 flex justify-center">

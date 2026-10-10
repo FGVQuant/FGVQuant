@@ -47,7 +47,6 @@
       "filterLabel": "Filtrar por tema",
       "all": "Todas",
       "empty": "Nenhuma edição com este tema.",
-      "read": "Ler edição",
       "results": "{count, plural, one {# edição encontrada} other {# edições encontradas}}"
     },
     "issue": {
@@ -64,6 +63,15 @@
       "subscribeBody": "Assine a FGV Quant Insights no LinkedIn e acompanhe todo mês.",
       "subscribe": "Assinar no LinkedIn"
     },
-    "issueNavLabel": "Navegação entre edições"
+    "issueNavLabel": "Navegação entre edições",
+    "status": {
+      "summary": "Resumo",
+      "full": "Edição completa"
+    },
+    "read": {
+      "summary": "Ler resumo",
+      "full": "Ler edição"
+    },
+    "language": "Português"
   }
 }

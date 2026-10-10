@@ -3,7 +3,8 @@ export type MonthlyBar = { key: string; label: string; value: number; valueLabel
 /**
  * Accessible SVG bar chart of the reported monthly returns only (no interpolation).
  * Positive bars use the highlight colour, negative bars the destructive colour.
- * A visually-hidden table carries the same data for assistive tech.
+ * A compact visible table below the chart carries the same data (and the coverage line says
+ * exactly which months are reported).
  */
 export function MonthlyBars({
   bars,
@@ -11,12 +12,15 @@ export function MonthlyBars({
   tableCaption,
   monthHeader,
   returnHeader,
+  coverage,
 }: {
   bars: MonthlyBar[];
   ariaLabel: string;
   tableCaption: string;
   monthHeader: string;
   returnHeader: string;
+  /** e.g. "2 months reported · Jul 2026–Aug 2026", derived from the data by the caller */
+  coverage: string;
 }) {
   const W = 480;
   const H = 260;
@@ -64,6 +68,14 @@ export function MonthlyBars({
           strokeWidth={1}
           strokeDasharray="3 4"
         />
+        <text
+          x={2}
+          y={zeroY - 5}
+          textAnchor="start"
+          className="fill-muted-foreground font-mono text-[12px]"
+        >
+          0%
+        </text>
         {bars.map((b, i) => {
           const h = Math.max((Math.abs(b.value) / span) * plotH, 2);
           const x = padX + slot * i + (slot - barW) / 2;
@@ -106,9 +118,12 @@ export function MonthlyBars({
           );
         })}
       </svg>
-      <table className="sr-only">
-        <caption>{tableCaption}</caption>
-        <thead>
+      <p className="mt-3 font-mono text-xs text-muted-foreground">{coverage}</p>
+      <table className="mt-4 w-full border-collapse text-left text-sm">
+        <caption className="pb-2 text-left font-mono text-xs tracking-wide text-muted-foreground uppercase">
+          {tableCaption}
+        </caption>
+        <thead className="sr-only">
           <tr>
             <th scope="col">{monthHeader}</th>
             <th scope="col">{returnHeader}</th>
@@ -116,9 +131,11 @@ export function MonthlyBars({
         </thead>
         <tbody>
           {bars.map((b) => (
-            <tr key={b.key}>
-              <th scope="row">{b.label}</th>
-              <td>{b.valueLabel}</td>
+            <tr key={b.key} className="border-t border-border">
+              <th scope="row" className="py-2 pr-4 font-mono font-normal text-muted-foreground">
+                {b.label}
+              </th>
+              <td className="py-2 text-right font-mono tabular-nums">{b.valueLabel}</td>
             </tr>
           ))}
         </tbody>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
+import { IssueCover } from "@/components/cards/issue-cover";
 import { cn } from "@/lib/utils";
 
 type NewsletterCardProps = {
@@ -13,13 +14,19 @@ type NewsletterCardProps = {
   excerpt?: string;
   tags?: string[];
   cover?: { src: string; alt: string };
+  /** Typographic cover text, used when no `cover` image is given. */
+  coverText?: { month: string; year: string; series?: string; topic?: string };
+  /** "Resumo" / "Summary" / full-issue label, derived from the issue status. */
+  statusLabel?: string;
+  /** "Português" / "In Portuguese"; pass only where the UI is not Portuguese. */
+  languageLabel?: string;
   /** Larger horizontal layout on md+. */
   featured?: boolean;
   readLabel: string;
   className?: string;
 };
 
-/** Editorial newsletter card with cover or generated placeholder. */
+/** Editorial newsletter card: cover image, or a typographic cover when none is given. */
 export function NewsletterCard({
   href,
   title,
@@ -28,6 +35,9 @@ export function NewsletterCard({
   excerpt,
   tags,
   cover,
+  coverText,
+  statusLabel,
+  languageLabel,
   featured = false,
   readLabel,
   className,
@@ -40,8 +50,8 @@ export function NewsletterCard({
         className,
       )}
     >
-      <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border bg-secondary">
-        {cover ? (
+      {cover ? (
+        <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border bg-secondary">
           <Image
             src={cover.src}
             alt={cover.alt}
@@ -49,24 +59,19 @@ export function NewsletterCard({
             sizes={featured ? "(min-width: 768px) 560px, 100vw" : "(min-width: 768px) 360px, 100vw"}
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
           />
-        ) : (
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-br from-brand-600/60 via-brand-800 to-brand-950"
-          >
-            <div className="absolute inset-0 bg-grid opacity-70" />
-            <div className="absolute inset-0 bg-glow opacity-60" />
-            {issueLabel ? (
-              <span className="absolute bottom-3 left-4 font-mono text-3xl tracking-tight text-lavender-400 sm:text-4xl">
-                {issueLabel}
-              </span>
-            ) : null}
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <IssueCover
+          large={featured}
+          month={coverText?.month ?? dateLabel}
+          year={coverText?.year ?? ""}
+          series={coverText?.series ?? "FGV Quant Insights"}
+          topic={coverText?.topic ?? tags?.[0]}
+        />
+      )}
 
       <div className="flex flex-col gap-3">
-        <p className="flex flex-wrap items-center gap-x-3 font-mono text-xs tracking-wide text-muted-foreground uppercase">
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs tracking-wide text-muted-foreground uppercase">
           <span>{dateLabel}</span>
           {issueLabel ? (
             <>
@@ -74,10 +79,12 @@ export function NewsletterCard({
               <span className="text-highlight">{issueLabel}</span>
             </>
           ) : null}
+          {statusLabel ? <Badge variant="highlight">{statusLabel}</Badge> : null}
+          {languageLabel ? <Badge variant="outline">{languageLabel}</Badge> : null}
         </p>
         <h3
           className={cn(
-            "line-clamp-2 font-display text-xl leading-snug font-medium text-balance text-foreground",
+            "line-clamp-2 font-sans text-xl leading-snug font-semibold tracking-tight text-balance text-foreground",
             featured && "md:text-3xl",
           )}
         >

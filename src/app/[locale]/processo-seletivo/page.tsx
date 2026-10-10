@@ -49,6 +49,11 @@ function rich(t: Awaited<ReturnType<typeof getTranslations>>, key: string): Reac
   return t.rich(key, { em: (chunks) => <Em>{chunks}</Em> });
 }
 
+/** Section (h2) titles stay plain: gradient emphasis is reserved for the page h1. */
+function plain(t: Awaited<ReturnType<typeof getTranslations>>, key: string): ReactNode {
+  return t.rich(key, { em: (chunks) => chunks });
+}
+
 export default async function JoinPage() {
   const [t, tCommon] = await Promise.all([getTranslations("Join"), getTranslations("Common")]);
   const { recruitment, instagram, linkedin } = getSite();
@@ -78,11 +83,11 @@ export default async function JoinPage() {
         </div>
       </PageIntro>
 
-      <section className="container-page grid gap-12 py-20 md:grid-cols-2 md:gap-16 md:py-28">
+      <section className="container-page grid gap-12 section-y md:grid-cols-2 md:gap-16">
         <div>
           <SectionHeader
             eyebrow={t("how.eyebrow")}
-            title={rich(t, "how.title")}
+            title={plain(t, "how.title")}
             description={t("how.description")}
           />
           {recruitment.placeholder ? (
@@ -94,7 +99,7 @@ export default async function JoinPage() {
         <div>
           <SectionHeader
             eyebrow={t("who.eyebrow")}
-            title={rich(t, "who.title")}
+            title={plain(t, "who.title")}
             description={t("who.body")}
           />
           {recruitment.placeholder ? (
@@ -106,10 +111,10 @@ export default async function JoinPage() {
       </section>
 
       <section className="border-t border-border">
-        <div className="container-page py-20 md:py-28">
+        <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("build.eyebrow")}
-            title={rich(t, "build.title")}
+            title={plain(t, "build.title")}
             description={t("build.description")}
           />
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -119,7 +124,7 @@ export default async function JoinPage() {
                 className="relative flex flex-col rounded-2xl border border-border bg-card p-5 transition-colors hover:border-border-strong"
               >
                 <Icon aria-hidden className="size-5 text-highlight" />
-                <h3 className="mt-4 font-display text-lg font-medium text-foreground">
+                <h3 className="mt-4 font-sans text-lg font-semibold tracking-tight text-foreground">
                   {href ? (
                     <Link
                       href={href}
@@ -141,19 +146,19 @@ export default async function JoinPage() {
       </section>
 
       <section className="border-t border-border">
-        <div className="container-page grid gap-10 py-20 md:py-28 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeader eyebrow={t("faq.eyebrow")} title={rich(t, "faq.title")} />
+        <div className="container-page grid gap-10 section-y lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <SectionHeader eyebrow={t("faq.eyebrow")} title={plain(t, "faq.title")} />
           <Faq items={faq} />
         </div>
       </section>
 
       <section className="border-t border-border">
-        <div className="container-page py-20 md:py-28">
+        <div className="container-page section-y">
           <div className="relative isolate overflow-hidden rounded-3xl border border-border-strong p-8 md:p-14">
             <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
             <SectionHeader
               eyebrow={t("notify.eyebrow")}
-              title={rich(t, "notify.title")}
+              title={plain(t, "notify.title")}
               description={t("notify.description")}
             />
             <div className="mt-8 flex flex-wrap gap-3">

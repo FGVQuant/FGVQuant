@@ -53,7 +53,7 @@ export function EventCard({
       >
         <span className="text-xl leading-none font-medium text-foreground sm:text-2xl">{day}</span>
         {month ? (
-          <span className="mt-1 text-[0.7rem] leading-none tracking-wider text-highlight uppercase">
+          <span className="mt-1 text-xs leading-none tracking-wider text-highlight uppercase">
             {month}
           </span>
         ) : null}
@@ -61,7 +61,7 @@ export function EventCard({
 
       <div className="min-w-0 flex-1">
         <Badge variant="highlight">{kindLabel}</Badge>
-        <h3 className="mt-2.5 font-display text-lg leading-snug font-medium text-foreground">
+        <h3 className="mt-2.5 font-sans text-xl leading-snug font-semibold tracking-tight text-foreground">
           {href ? (
             <Link
               href={href}

@@ -16,7 +16,6 @@ import { pageAlternates } from "@/lib/seo";
 import { PageIntro } from "@/components/layout/page-intro";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
-import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import {
   BentoCard,
   BentoGrid,
@@ -25,7 +24,6 @@ import {
   NodeGraphBg,
 } from "@/components/sections/bento-grid";
 import { KpiStrip } from "@/components/sections/kpi-strip";
-import { Equation } from "./_components/equation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("About");
@@ -67,23 +65,47 @@ export default async function AboutPage() {
         eyebrow={t("eyebrow")}
         title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
         description={t("lead", { year: site.founded, members: site.members })}
-      />
+      >
+        <ButtonLink href="/parceiros" size="lg" arrow>
+          {t("partnerCta")}
+        </ButtonLink>
+      </PageIntro>
 
-      <section className="container-page grid gap-12 py-20 md:py-24 lg:grid-cols-[1fr_1.2fr]">
-        <SectionHeader
-          eyebrow={t("mission.eyebrow")}
-          title={t.rich("mission.title", { em: (c) => <Em>{c}</Em> })}
-        />
-        <div className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-          <p>{t("mission.p1")}</p>
-          <p>{t("mission.p2")}</p>
+      {/* Partner-facing first: identity, evidence, expertise. Then the student-facing half:
+          how we learn, what members do, and how to join. */}
+      <section className="section-y">
+        <div className="container-page">
+          <SectionHeader
+            eyebrow={t("numbers.eyebrow")}
+            title={t.rich("numbers.title", { em: (chunks) => chunks })}
+          />
+          <KpiStrip
+            className="mt-12"
+            locale={intlLocale(locale)}
+            items={[
+              { label: t("numbers.members"), value: stats.members },
+              { label: t("numbers.issues"), value: stats.issues },
+              { label: t("numbers.teams"), value: stats.rankedTeams },
+              {
+                label: t("numbers.fund"),
+                value: stats.fundCumulative,
+                decimals: 2,
+                prefix: stats.fundCumulative > 0 ? "+" : "",
+                suffix: "%",
+                note: tCommon("simulated"),
+              },
+            ]}
+          />
+          <p className="mt-4 font-mono text-xs text-muted-foreground">
+            {t("numbers.note", { asOf: site.membersAsOf })}
+          </p>
         </div>
       </section>
 
-      <section className="container-page border-t border-border py-20 md:py-24">
+      <section className="container-page border-t border-border section-y">
         <SectionHeader
           eyebrow={t("areas.eyebrow")}
-          title={t.rich("areas.title", { em: (c) => <Em>{c}</Em> })}
+          title={t.rich("areas.title", { em: (chunks) => chunks })}
           description={t("areas.description")}
         />
         <BentoGrid className="mt-12">
@@ -111,10 +133,21 @@ export default async function AboutPage() {
         </BentoGrid>
       </section>
 
-      <section className="container-page border-t border-border py-20 md:py-24">
+      <section className="container-page grid gap-12 border-t border-border section-y lg:grid-cols-[1fr_1.2fr]">
+        <SectionHeader
+          eyebrow={t("mission.eyebrow")}
+          title={t.rich("mission.title", { em: (chunks) => chunks })}
+        />
+        <div className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p>{t("mission.p1")}</p>
+          <p>{t("mission.p2")}</p>
+        </div>
+      </section>
+
+      <section className="container-page border-t border-border section-y">
         <SectionHeader
           eyebrow={t("how.eyebrow")}
-          title={t.rich("how.title", { em: (c) => <Em>{c}</Em> })}
+          title={t.rich("how.title", { em: (chunks) => chunks })}
           description={t("how.description")}
         />
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -123,7 +156,7 @@ export default async function AboutPage() {
             const body = (
               <>
                 <Icon aria-hidden className="size-6 stroke-[1.5] text-highlight" />
-                <h3 className="mt-4 font-display text-xl text-foreground">
+                <h3 className="mt-4 font-sans text-xl font-semibold tracking-tight text-foreground">
                   {t(`how.${key}.title`)}
                 </h3>
                 <p className="mt-2 text-sm text-muted-foreground">{t(`how.${key}.body`)}</p>
@@ -134,7 +167,8 @@ export default async function AboutPage() {
                 ) : null}
               </>
             );
-            const cls = "glass block h-full rounded-2xl border border-border p-6 transition-colors";
+            const cls =
+              "block h-full rounded-2xl border border-border bg-card p-6 transition-colors";
             return (
               <li key={key}>
                 {linked ? (
@@ -150,45 +184,9 @@ export default async function AboutPage() {
         </ul>
       </section>
 
-      <section className="border-t border-border py-20 md:py-24">
-        <div className="container-page">
-          <SectionHeader
-            eyebrow={t("numbers.eyebrow")}
-            title={t.rich("numbers.title", { em: (c) => <Em>{c}</Em> })}
-          />
-          <KpiStrip
-            className="mt-12"
-            locale={intlLocale(locale)}
-            items={[
-              { label: t("numbers.members"), value: stats.members },
-              { label: t("numbers.issues"), value: stats.issues },
-              { label: t("numbers.teams"), value: stats.rankedTeams },
-              {
-                label: t("numbers.fund"),
-                value: stats.fundCumulative,
-                decimals: 2,
-                prefix: stats.fundCumulative > 0 ? "+" : "",
-                suffix: "%",
-                note: tCommon("simulated"),
-              },
-            ]}
-          />
-          <p className="mt-4 font-mono text-xs text-muted-foreground">
-            {t("numbers.note", { asOf: site.membersAsOf })}
-          </p>
-        </div>
-      </section>
-
-      <section className="container-page py-20 md:py-24">
-        <Equation caption={t("equationCaption")} label={t("equationLabel")} />
-        <PlaceholderNote label={tCommon("pending")} className="mt-10">
-          {t("structurePending")}
-        </PlaceholderNote>
-      </section>
-
-      <section className="container-page border-t border-border py-20 text-center md:py-24">
+      <section className="container-page border-t border-border section-y text-center">
         <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
-          {t.rich("cta.title", { em: (c) => <Em>{c}</Em> })}
+          {t.rich("cta.title", { em: (chunks) => chunks })}
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
         <div className="mt-8 flex justify-center gap-3">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Info } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -27,8 +28,32 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   };
 }
 
-export default async function IssuePage(props: Props) {
-  const { slug } = await props.params;
+// params are URL data: awaiting them at the top of the page would block client navigations into an
+// issue, so the issue body resolves inside Suspense and the page shell renders instantly.
+// Unknown slugs are already rejected with a real 404 in proxy.ts, before this streams.
+export default function IssuePage(props: Props) {
+  return (
+    <main id="content">
+      <Suspense fallback={<IssueFallback />}>
+        <Issue params={props.params} />
+      </Suspense>
+    </main>
+  );
+}
+
+function IssueFallback() {
+  return (
+    <div aria-busy className="container-page max-w-3xl pt-16 pb-20 md:pt-24">
+      <div className="h-4 w-24 animate-pulse rounded bg-muted motion-reduce:animate-none" />
+      <div className="mt-12 h-4 w-40 animate-pulse rounded bg-muted motion-reduce:animate-none" />
+      <div className="mt-5 h-12 w-full max-w-xl animate-pulse rounded bg-muted motion-reduce:animate-none" />
+      <div className="mt-10 h-40 animate-pulse rounded-2xl bg-muted motion-reduce:animate-none" />
+    </div>
+  );
+}
+
+async function Issue({ params }: { params: Props["params"] }) {
+  const { slug } = await params;
   const issue = getIssue(slug);
   if (!issue) notFound();
 
@@ -42,7 +67,7 @@ export default async function IssuePage(props: Props) {
   const older = idx < all.length - 1 ? all[idx + 1] : undefined;
 
   return (
-    <main id="content">
+    <>
       <article className="container-page max-w-3xl pt-16 pb-8 md:pt-24">
         <Link
           href="/newsletter"
@@ -163,6 +188,6 @@ export default async function IssuePage(props: Props) {
           </ButtonAnchor>
         </section>
       </footer>
-    </main>
+    </>
   );
 }

@@ -8,7 +8,7 @@ import enCommon from "../../../messages/en/common.json";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "FGV Quant — Liga de Finanças Quantitativas / Quantitative Finance League";
+export const alt = "FGV Quant · Liga de Finanças Quantitativas / Quantitative Finance League";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

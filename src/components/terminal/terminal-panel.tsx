@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
-import { useInView, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 /**
- * Signature "terminal" panel: types out the league's mission, then accepts a few scoped
+ * Signature "terminal" panel: prints the league's mission, then accepts a few scoped
  * slash-commands (/join, /newsletter, /capital, /team …). Navigation commands route via
  * next-intl; others print output. All copy arrives via props.
  */
@@ -27,7 +27,7 @@ export type TerminalPanelProps = {
   prompt?: string;
   /** the command typed first, e.g. "cat missao.txt" */
   introCommand: string;
-  /** lines "printed" by the intro command (typed out character by character) */
+  /** lines "printed" by the intro command (printed immediately) */
   introLines: string[];
   commands: TerminalCommand[];
   labels: {
@@ -49,9 +49,6 @@ export type TerminalPanelProps = {
 
 type Line = { id: number; kind: "cmd" | "out" | "muted" | "error"; text: string };
 
-const TYPE_MS = 14;
-const LINE_PAUSE_MS = 220;
-
 export function TerminalPanel({
   title = "fgvquant@liga: ~",
   prompt = "$",
@@ -66,68 +63,25 @@ export function TerminalPanel({
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const inView = useInView(rootRef, { once: true, amount: 0.4 });
   const inputId = useId();
-  const nextId = useRef(0);
+  const nextId = useRef(introLines.length + 2);
 
-  const [lines, setLines] = useState<Line[]>([]);
-  const [typing, setTyping] = useState<string | null>(null);
-  const [booted, setBooted] = useState(false);
   const [value, setValue] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState(-1);
 
   const mk = (kind: Line["kind"], text: string): Line => ({ id: nextId.current++, kind, text });
 
-  // Boot sequence: type the intro command, then its output lines.
-  useEffect(() => {
-    if (!inView || booted) return;
-    const script: Line[] = [
-      mk("cmd", introCommand),
-      ...introLines.map((l) => mk("out", l)),
-      mk("muted", labels.hint),
-    ];
-    if (reduced) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot boot without animation
-      setLines(script);
-      setBooted(true);
-      return;
-    }
-    let cancelled = false;
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    const wait = (ms: number) => new Promise<void>((r) => timers.push(setTimeout(r, ms)));
-
-    (async () => {
-      for (const line of script) {
-        if (cancelled) return;
-        // output lines appear instantly-ish; the command line and mission text are typed
-        const typed = line.kind !== "muted";
-        if (typed) {
-          for (let i = 1; i <= line.text.length; i++) {
-            if (cancelled) return;
-            setTyping(line.text.slice(0, i));
-            await wait(line.kind === "cmd" ? TYPE_MS * 3 : TYPE_MS);
-          }
-        }
-        setTyping(null);
-        setLines((prev) => [...prev, line]);
-        await wait(LINE_PAUSE_MS);
-      }
-      if (!cancelled) setBooted(true);
-    })();
-
-    return () => {
-      cancelled = true;
-      timers.forEach(clearTimeout);
-    };
-    // script content is static per mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView, reduced]);
-
+  // The intro renders immediately: readable and usable on mount, no boot animation.
+  const [lines, setLines] = useState<Line[]>(() => [
+    { id: 0, kind: "cmd", text: introCommand },
+    ...introLines.map((text, i): Line => ({ id: i + 1, kind: "out", text })),
+    { id: introLines.length + 1, kind: "muted", text: labels.hint },
+  ]);
   // Keep the log scrolled to the bottom.
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
-  }, [lines, typing]);
+  }, [lines]);
 
   function run(raw: string) {
     const input = raw.trim();
@@ -201,7 +155,7 @@ export function TerminalPanel({
         "relative overflow-hidden rounded-2xl font-mono text-[0.8rem] leading-relaxed shadow-[0_30px_80px_-30px_rgb(35_0_66/0.6)] glass",
         className,
       )}
-      onClick={() => booted && inputRef.current?.focus({ preventScroll: true })}
+      onClick={() => inputRef.current?.focus({ preventScroll: true })}
     >
       {/* window chrome */}
       <div className="flex items-center gap-3 border-b border-border px-4 py-3">
@@ -225,16 +179,7 @@ export function TerminalPanel({
         {lines.map((l) => (
           <TermLine key={l.id} line={l} prompt={prompt} />
         ))}
-        {typing !== null ? (
-          <TermLine
-            line={{ id: -1, kind: lines.length === 0 ? "cmd" : "out", text: typing }}
-            prompt={prompt}
-            caret
-            hidden
-          />
-        ) : null}
-
-        {booted ? (
+        {
           <div className="mt-1 flex items-center gap-2 rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
             <span aria-hidden className="text-highlight select-none">
               {prompt}
@@ -255,7 +200,7 @@ export function TerminalPanel({
               placeholder="/help"
             />
           </div>
-        ) : null}
+        }
       </div>
 
       {/* clickable commands for pointer users */}
@@ -268,13 +213,11 @@ export function TerminalPanel({
           <button
             key={c.name}
             type="button"
-            aria-disabled={!booted || undefined}
             onClick={(e) => {
               e.stopPropagation();
-              if (!booted) return;
               run(`/${c.name}`);
             }}
-            className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground aria-disabled:cursor-wait"
+            className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground"
           >
             /{c.name}
           </button>

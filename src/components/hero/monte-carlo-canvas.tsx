@@ -13,9 +13,11 @@ import { cn } from "@/lib/utils";
  * bull like a current around an obstacle — paths split above and below an ellipse fitted to the
  * mark and rejoin behind it — so the bull always sits on clean purple. The bull then assembles
  * from the points where the paths pass it.
- * Narrow screens ("linear" layout): a faint straight fan with the bull as a watermark above.
+ * Below `xl` ("linear" layout): a faint straight fan behind the copy, with a compact bull above
+ * the text column (the copy would collide with a side-by-side bull between `md` and `xl`).
  *
  * Deterministic (seeded), pauses off-screen, re-reads theme colors, static under reduced motion.
+ * After the intro the final frame is drawn once and the animation loop stops.
  */
 export type MonteCarloCanvasProps = {
   className?: string;
@@ -67,15 +69,25 @@ type Layout = {
   ry: number;
 };
 
+/** Matches Tailwind's `xl` / `sm` breakpoints, so canvas and CSS layouts switch together. */
+const FLOW_QUERY = "(min-width: 80rem)";
+const SM_QUERY = "(min-width: 40rem)";
+/** Hero text column (`max-w-2xl`) and the `container-page` geometry it sits in. */
+const TEXT_W = 672;
+const CONTAINER_MAX = 1216;
+
 function computeLayout(w: number, h: number): Layout {
-  if (w >= 1024) {
-    const bw = Math.min(w * 0.3, 480);
+  if (window.matchMedia(FLOW_QUERY).matches) {
+    // keep the mark (and its horns) clear of the text column's right edge
+    const textRight = Math.max(0, (w - CONTAINER_MAX) / 2) + 32 + TEXT_W;
+    const clearX = textRight + 32;
+    const bw = Math.min(w * 0.3, 480, (w - clearX) * 0.8);
     const bh = bw / BULL_ASPECT;
     const pad = 1.1; // breathing room between the mark and the paths
     const rx = (bw / 2) * BULL_ELLIPSE_K * pad;
     const ry = (bh / 2) * BULL_ELLIPSE_K * pad;
     // leave room on the right so the paths visibly rejoin and carry on past the bull
-    const cx = Math.min(w * 0.74, w - rx - w * 0.07);
+    const cx = Math.max(clearX + bw / 2, Math.min(w * 0.74, w - rx - w * 0.07));
     const cy = h * 0.5 + 8; // hero content sits slightly below centre (64px header)
     return {
       mode: "flow",
@@ -91,16 +103,19 @@ function computeLayout(w: number, h: number): Layout {
       ry,
     };
   }
-  const bw = Math.min(w * 0.62, 340);
-  const bh = bw / BULL_ASPECT;
+  // Stacked: compact bull just under the 64px header, left-aligned with the copy; the hero
+  // reserves matching top padding (see monte-carlo-hero.tsx).
+  const bh = window.matchMedia(SM_QUERY).matches ? 144 : 112;
+  const bw = bh * BULL_ASPECT;
+  const left = Math.max(0, (w - CONTAINER_MAX) / 2) + (w >= 768 ? 32 : 20);
   return {
     mode: "linear",
     w,
     h,
     yTop: h * 0.55,
     yBottom: h * 0.98,
-    bull: { x: w / 2 - bw / 2, y: h * 0.1, w: bw, h: bh, alpha: 0.22 },
-    fanAlpha: 0.5,
+    bull: { x: left, y: 72, w: bw, h: bh, alpha: 1 },
+    fanAlpha: 0.4,
     cx: 0,
     cy: 0,
     rx: 0,
@@ -171,12 +186,10 @@ export function MonteCarloCanvas({
       let tBull = steps; // step at which the fan passes the bull's centre
       let dpr = 1;
       let raf = 0;
-      let timer = 0;
       let start = 0;
       /** finished fan, rendered once at device resolution — later frames just blit it */
       let fanCache: HTMLCanvasElement | null = null;
       let visible = true;
-      let done = false;
 
       const a = (v: number) => v * layout.fanAlpha;
 
@@ -298,7 +311,7 @@ export function MonteCarloCanvas({
         c.restore();
       }
 
-      function drawBull(progress: number, head: number, time: number) {
+      function drawBull(progress: number, head: number) {
         if (!showBull || progress <= 0) return;
         const c = ctx!;
         const b = layout.bull;
@@ -329,8 +342,7 @@ export function MonteCarloCanvas({
 
         for (const key of BULL_KEYS) {
           const isDot = BULL_DOTS.has(key);
-          const twinkle = done && isDot ? 0.5 + 0.5 * Math.sin(time / 900 + key.length * 1.7) : 1;
-          c.globalAlpha = b.alpha * (isDot ? 0.65 + 0.35 * twinkle : 0.9);
+          c.globalAlpha = b.alpha * (isDot ? 1 : 0.9);
           c.fillStyle = isDot ? colors.highlight : colors.foreground;
           c.beginPath();
           c.arc(
@@ -361,7 +373,7 @@ export function MonteCarloCanvas({
         const elapsed = staticOnly ? Infinity : now - start;
         const fan = clamp01(elapsed / FAN_MS);
         const bullP = clamp01((elapsed - BULL_DELAY_MS) / BULL_MS);
-        done = fan >= 1 && bullP >= 1;
+        const done = fan >= 1 && bullP >= 1;
         const head = Math.max(0.001, easeInOutCubic(fan) * steps);
 
         const c = ctx!;
@@ -385,20 +397,16 @@ export function MonteCarloCanvas({
         } else {
           drawFan(head);
         }
-        drawBull(bullP, head, now);
+        drawBull(bullP, head);
 
-        if (staticOnly || !visible) return;
-        if (done) {
-          // Settled: only the node twinkle remains — ~15fps is plenty and saves battery.
-          timer = window.setTimeout(() => (raf = requestAnimationFrame(frame)), 66);
-        } else {
-          raf = requestAnimationFrame(frame);
-        }
+        // Settled: the final frame is on screen, so stop the loop (resize, theme change and
+        // scrolling back into view each restart it for one more redraw).
+        if (staticOnly || !visible || done) return;
+        raf = requestAnimationFrame(frame);
       }
 
       function restartLoop() {
         cancelAnimationFrame(raf);
-        window.clearTimeout(timer);
         raf = requestAnimationFrame(frame);
       }
 
@@ -416,7 +424,6 @@ export function MonteCarloCanvas({
         if (visible) restartLoop();
         else {
           cancelAnimationFrame(raf);
-          window.clearTimeout(timer);
         }
       });
       io.observe(canvas);
@@ -431,7 +438,6 @@ export function MonteCarloCanvas({
 
       return () => {
         cancelAnimationFrame(raf);
-        window.clearTimeout(timer);
         ro.disconnect();
         io.disconnect();
         mo.disconnect();
