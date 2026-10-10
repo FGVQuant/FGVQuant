@@ -58,15 +58,12 @@
       "fund": "Cumulative return (simulated)",
       "note": "Members: {asOf}. Ranked teams as reported by the league."
     },
-    "equationCaption": "Geometric Brownian motion, the starting point of much of the field",
-    "structurePending": "The organizational structure and current leadership will be published once the league confirms them.",
     "cta": {
       "title": "Want to join the <em>league</em>?",
       "body": "Follow the recruitment process and learn how to apply.",
       "button": "Recruitment process",
       "team": "Meet the team"
     },
-    "equationLabel": "Geometric Brownian motion equation (scroll horizontally if needed)",
     "partnerCta": "Partner with us"
   }
 }

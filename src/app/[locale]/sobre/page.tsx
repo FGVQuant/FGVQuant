@@ -16,7 +16,6 @@ import { pageAlternates } from "@/lib/seo";
 import { PageIntro } from "@/components/layout/page-intro";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
-import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import {
   BentoCard,
   BentoGrid,
@@ -25,7 +24,6 @@ import {
   NodeGraphBg,
 } from "@/components/sections/bento-grid";
 import { KpiStrip } from "@/components/sections/kpi-strip";
-import { Equation } from "./_components/equation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("About");
@@ -184,13 +182,6 @@ export default async function AboutPage() {
             );
           })}
         </ul>
-      </section>
-
-      <section className="container-page section-y">
-        <Equation caption={t("equationCaption")} label={t("equationLabel")} />
-        <PlaceholderNote label={tCommon("pending")} className="mt-10">
-          {t("structurePending")}
-        </PlaceholderNote>
       </section>
 
       <section className="container-page border-t border-border section-y text-center">
