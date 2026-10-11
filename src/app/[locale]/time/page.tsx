@@ -106,15 +106,20 @@ export default async function TeamPage() {
         </div>
       </section>
 
-      <section className="container-page border-t border-border section-y text-center">
-        <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
-          {t.rich("cta.title", { em: (chunks) => chunks })}
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
-        <div className="mt-8 flex justify-center">
-          <ButtonLink href="/processo-seletivo" size="lg" arrow>
-            {t("cta.button")}
-          </ButtonLink>
+      <section className="border-t border-border">
+        <div className="container-page section-y">
+          <div className="relative isolate overflow-hidden rounded-3xl border border-border-strong p-8 text-center md:p-14">
+            <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
+            <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
+              {t.rich("cta.title", { em: (chunks) => chunks })}
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <ButtonLink href="/processo-seletivo" size="lg" arrow>
+                {t("cta.button")}
+              </ButtonLink>
+            </div>
+          </div>
         </div>
       </section>
     </main>

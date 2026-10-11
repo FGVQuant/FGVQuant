@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { PageIntro } from "@/components/layout/page-intro";
+import { PodiumMotif } from "@/components/layout/intro-motifs";
 import { ButtonAnchor, ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
@@ -24,10 +25,16 @@ export default async function CompetitionsPage() {
   const t = await getTranslations("Competitions");
   const tCommon = await getTranslations("Common");
   const competitions = getCompetitions();
+  // Highlight the podium step of the first ranked team of the latest competition ("2º lugar" → 2).
+  const topRank = Number(
+    competitions[0]?.teams.find((team) => team.ranked)?.result.pt.match(/^\d/)?.[0],
+  );
+  const podium = topRank === 1 || topRank === 2 || topRank === 3 ? topRank : undefined;
 
   return (
     <main id="content">
       <PageIntro
+        motif={<PodiumMotif highlight={podium} />}
         eyebrow={t("eyebrow")}
         title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
         description={t("description")}
@@ -79,16 +86,19 @@ export default async function CompetitionsPage() {
 
       <section className="border-t border-border">
         <div className="container-page section-y">
-          <SectionHeader
-            eyebrow={t("next.eyebrow")}
-            title={t.rich("next.title", { em: (c) => c })}
-            description={t("next.description")}
-            action={
-              <ButtonLink href="/processo-seletivo" arrow>
-                {t("next.cta")}
-              </ButtonLink>
-            }
-          />
+          <div className="relative isolate overflow-hidden rounded-3xl border border-border-strong p-8 md:p-14">
+            <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
+            <SectionHeader
+              eyebrow={t("next.eyebrow")}
+              title={t.rich("next.title", { em: (c) => c })}
+              description={t("next.description")}
+              action={
+                <ButtonLink href="/processo-seletivo" arrow>
+                  {t("next.cta")}
+                </ButtonLink>
+              }
+            />
+          </div>
         </div>
       </section>
     </main>

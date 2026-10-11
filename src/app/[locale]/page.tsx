@@ -154,8 +154,8 @@ export default async function HomePage() {
       </section>
 
       {/* Áreas */}
-      <section className="border-t border-border section-y">
-        <div className="container-page">
+      <section className="border-t border-border section-tone">
+        <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("areas.eyebrow")}
             title={
@@ -252,8 +252,8 @@ export default async function HomePage() {
       </section>
 
       {/* Atividades */}
-      <section className="border-t border-border section-y">
-        <div className="container-page">
+      <section className="border-t border-border section-tone">
+        <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("activities.eyebrow")}
             title={
@@ -329,7 +329,7 @@ export default async function HomePage() {
         <div aria-hidden className="absolute inset-0 -z-10 bg-glow" />
         <div
           aria-hidden
-          className="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_60%_80%_at_50%_100%,black,transparent_75%)]"
+          className="absolute inset-0 -z-10 bg-dots-strong [mask-image:radial-gradient(ellipse_60%_80%_at_50%_100%,black,transparent_75%)]"
         />
         <div className="container-page flex flex-col items-center section-y text-center">
           <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">

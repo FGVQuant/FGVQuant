@@ -110,7 +110,7 @@ export default async function JoinPage() {
         </div>
       </section>
 
-      <section className="border-t border-border">
+      <section className="border-t border-border section-tone">
         <div className="container-page section-y">
           <SectionHeader
             eyebrow={t("build.eyebrow")}

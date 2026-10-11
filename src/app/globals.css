@@ -59,6 +59,10 @@
   --surface: rgb(255 255 255 / 0.7);
   --glow: rgb(174 148 214 / 0.35);
   --grid-line: rgb(35 0 66 / 0.06);
+  --dot: rgb(35 0 66 / 0.07);
+  --dot-strong: rgb(35 0 66 / 0.2);
+  --intro-glow: rgb(174 148 214 / 0.22);
+  --glow-2: rgb(174 148 214 / 0.18);
   --radius: 0.75rem;
   color-scheme: light;
 }
@@ -90,6 +94,10 @@
   --surface: rgb(84 70 131 / 0.14);
   --glow: rgb(110 60 190 / 0.45);
   --grid-line: rgb(174 148 214 / 0.06);
+  --dot: rgb(174 148 214 / 0.1);
+  --dot-strong: rgb(174 148 214 / 0.32);
+  --intro-glow: rgb(84 70 131 / 0.28);
+  --glow-2: rgb(84 70 131 / 0.25);
   color-scheme: dark;
 }
 
@@ -176,7 +184,7 @@
 @utility bg-glow {
   background-image:
     radial-gradient(60% 50% at 50% 0%, var(--glow), transparent 70%),
-    radial-gradient(40% 40% at 85% 30%, rgb(84 70 131 / 0.25), transparent 70%);
+    radial-gradient(40% 40% at 85% 30%, var(--glow-2), transparent 70%);
 }
 
 /* SVG fractal noise overlay; apply on an absolutely positioned layer */
@@ -215,6 +223,37 @@
   @media (width >= 48rem) {
     padding-block: 4rem;
   }
+}
+
+/* Site-wide film grain: a fixed, static noise layer behind all content so the flat base has some
+   texture. No blend mode (cheap to composite); slightly stronger on the dark theme. */
+@utility bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.025;
+  :where(.dark) & {
+    opacity: 0.045;
+  }
+}
+
+/* Alternating tone for long pages: a slightly lighter, translucent band (the site-wide dots show
+   through). Put it on a full-width element (not a container-page box) so it runs edge to edge. */
+@utility section-tone {
+  background-color: color-mix(in srgb, var(--card) 45%, transparent);
+}
+
+/* Site-wide soft dot pattern, and a brighter variant for spotlights. Both are anchored to the
+   viewport (the base is a fixed layer, the spotlight uses background-attachment: fixed), so the
+   spotlight's dots always land exactly on the base dots whatever the layout above them. */
+@utility bg-dots {
+  background-image: radial-gradient(circle, var(--dot) 1.2px, transparent 1.6px);
+  background-size: 28px 28px;
+}
+
+@utility bg-dots-strong {
+  background-image: radial-gradient(circle, var(--dot-strong) 1.3px, transparent 1.7px);
+  background-size: 28px 28px;
+  background-attachment: fixed;
 }
 
 @utility container-page {

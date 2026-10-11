@@ -58,6 +58,8 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
       suppressHydrationWarning
     >
       <body className="flex min-h-dvh flex-col">
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-dots" />
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-grain" />
         <ThemeProvider>
           <NextIntlClientProvider>
             <SkipLink />

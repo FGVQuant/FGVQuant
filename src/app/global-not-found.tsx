@@ -41,7 +41,7 @@ export default function GlobalNotFound() {
         <div aria-hidden className="absolute inset-0 -z-10 bg-glow" />
         <div
           aria-hidden
-          className="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]"
+          className="absolute inset-0 -z-10 bg-dots-strong [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]"
         />
         <header className="container-page flex h-16 items-center">
           <Link href={HOME_PT} aria-label="FGV Quant" className="rounded-md">
