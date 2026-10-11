@@ -4,7 +4,6 @@ import { getPageLocale } from "@/lib/locale";
 import { getAreas, getTeam, tr } from "@/lib/content";
 import { pageAlternates } from "@/lib/seo";
 import { PageIntro } from "@/components/layout/page-intro";
-import { OrgChartMotif } from "@/components/layout/intro-motifs";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
@@ -31,7 +30,6 @@ export default async function TeamPage() {
   return (
     <main id="content">
       <PageIntro
-        motif={<OrgChartMotif seats={all.length} />}
         eyebrow={t("eyebrow")}
         title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
         description={t("lead")}

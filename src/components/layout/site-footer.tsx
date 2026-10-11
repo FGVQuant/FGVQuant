@@ -33,7 +33,7 @@ export async function SiteFooter() {
     <footer className="relative isolate mt-24 overflow-hidden border-t border-border">
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent_80%)]"
+        className="absolute inset-0 -z-10 bg-dots-strong [mask-image:linear-gradient(to_bottom,black,transparent_80%)] opacity-60"
       />
       <div className="container-page py-16">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">

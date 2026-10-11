@@ -25,15 +25,24 @@ export function PageIntro({
   return (
     <section className={cn("relative isolate overflow-hidden border-b border-border", className)}>
       <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-70" />
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_70%_80%_at_30%_0%,black,transparent_75%)]"
-      />
+      {!motif ? (
+        <>
+          {/* No motif: a spotlight of brighter dots (on the site-wide grid) fills the right half. */}
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 [background:radial-gradient(45%_70%_at_78%_45%,var(--intro-glow),transparent_70%)]"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 bg-dots-strong [mask-image:radial-gradient(50%_85%_at_78%_45%,black,transparent_75%)] max-lg:[mask-image:radial-gradient(70%_60%_at_85%_20%,black,transparent_75%)]"
+          />
+        </>
+      ) : null}
       {motif ? (
         <>
           <div
             aria-hidden
-            className="absolute inset-0 -z-10 [background:radial-gradient(45%_70%_at_75%_50%,rgb(84_70_131/0.28),transparent_70%)]"
+            className="absolute inset-0 -z-10 [background:radial-gradient(45%_70%_at_75%_50%,var(--intro-glow),transparent_70%)]"
           />
           <div aria-hidden className="pointer-events-none absolute inset-0 container-page">
             <div className="absolute top-6 right-0 h-40 w-3/5 text-highlight opacity-35 sm:h-52 lg:inset-y-0 lg:my-auto lg:h-[72%] lg:max-h-80 lg:w-[45%] lg:[mask-image:linear-gradient(to_right,transparent,black_35%)] lg:opacity-100">

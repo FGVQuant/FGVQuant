@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { ArrowUpRight, Briefcase, Compass, Newspaper, Radar, Sparkles } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PageIntro } from "@/components/layout/page-intro";
-import { PublishedMonthsMotif } from "@/components/layout/intro-motifs";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
 import { ButtonAnchor } from "@/components/ui/button";
 import { Em, SectionHeader } from "@/components/ui/section-header";
@@ -36,11 +35,6 @@ export default async function NewsletterPage() {
 
   const site = getSite();
   const issues = getIssues();
-  const latestEdition = issues[0]?.edition ?? "";
-  const latestYear = Number(latestEdition.slice(0, 4));
-  const issueMonths = issues
-    .filter((i) => i.edition.startsWith(`${latestYear}-`))
-    .map((i) => Number(i.edition.slice(5, 7)));
   const featured = getFeaturedIssue();
   const rest = issues.filter((i) => i.slug !== featured?.slug).map((i) => toCardData(i, locale));
   const restTags = new Set(rest.flatMap((i) => i.tags));
@@ -50,15 +44,6 @@ export default async function NewsletterPage() {
   return (
     <main id="content">
       <PageIntro
-        motif={
-          issues.length > 0 ? (
-            <PublishedMonthsMotif
-              year={latestYear}
-              months={issueMonths}
-              latest={Number(latestEdition.slice(5, 7))}
-            />
-          ) : undefined
-        }
         eyebrow={t("intro.eyebrow")}
         title={t.rich("intro.title", { em })}
         description={t("intro.description")}
