@@ -13,9 +13,9 @@
       "legendShort": "Simulação ilustrativa"
     },
     "stats": {
-      "members": "Membros",
+      "members": "Membros e trainees",
       "issues": "Edições da newsletter",
-      "ranked": "Times ranqueados · Desafio Quant AI",
+      "ranked": "Times ranqueados no top 10 do Desafio Itaú Quant AI",
       "fund": "FGV Quant Capital",
       "fundNote": "Fundo fictício · até {month}"
     },

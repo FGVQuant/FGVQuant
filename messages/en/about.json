@@ -4,7 +4,7 @@
     "metaDescription": "Who we are: FGV-SP's quantitative finance student league, founded in 2021. Math, statistics and programming applied to markets.",
     "eyebrow": "About the league",
     "title": "Math, statistics and code to <em>understand</em> markets",
-    "lead": "FGV Quant is the quantitative finance student league at FGV-SP. Since {year}, about {members} members have studied, researched and built systematic strategies.",
+    "lead": "FGV Quant is the quantitative finance student league at FGV-SP. Since {year}, about {members} members and trainees have studied, researched and built systematic strategies.",
     "mission": {
       "eyebrow": "Mission",
       "title": "Learn by <em>doing</em>, with rigor",
@@ -52,11 +52,11 @@
     "numbers": {
       "eyebrow": "By the numbers",
       "title": "The league in <em>numbers</em>",
-      "members": "Members",
+      "members": "Members and trainees",
       "issues": "Newsletter issues",
       "teams": "Ranked teams",
       "fund": "Cumulative return (simulated)",
-      "note": "Members: {asOf}. Ranked teams as reported by the league."
+      "note": "Members and trainees: reported by the league in {asOf}. Ranked teams as reported by the league."
     },
     "cta": {
       "title": "Want to join the <em>league</em>?",

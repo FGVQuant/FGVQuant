@@ -13,9 +13,9 @@
       "legendShort": "Illustrative simulation"
     },
     "stats": {
-      "members": "Members",
+      "members": "Members and trainees",
       "issues": "Newsletter issues",
-      "ranked": "Ranked teams · Desafio Quant AI",
+      "ranked": "Teams ranked in the top 10 of the Desafio Itaú Quant AI",
       "fund": "FGV Quant Capital",
       "fundNote": "Simulated fund · through {month}"
     },
