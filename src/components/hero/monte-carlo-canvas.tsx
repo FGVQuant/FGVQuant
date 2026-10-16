@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "motion/react";
 import bull from "@assets/brand/bull-geometry.json";
-import { simulateGbm } from "@/lib/quant/gbm";
+import { quantile, simulateGbm } from "@/lib/quant/gbm";
 import { cn } from "@/lib/utils";
 
 /**
@@ -48,6 +48,11 @@ const BULL_MS = 1500;
 const FLOW_P = 2.2;
 /** Extra samples per step near the bull, where the paths curve. */
 const FLOW_SUBSTEPS = 4;
+/**
+ * Vertical scale spans the RANGE_CLIP..1−RANGE_CLIP quantiles of all log-prices rather than the
+ * extremes, so the fan opens wide and the most extreme paths run off the edges.
+ */
+const RANGE_CLIP = 0.02;
 
 const easeOutExpo = (t: number) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
 const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -135,7 +140,7 @@ export function MonteCarloCanvas({
   className,
   seed = 2021, // founding year
   paths = 128,
-  steps = 120,
+  steps = 252, // trading days in a year: daily steps make the paths visibly jagged
   mu = 0.08,
   sigma = 0.24,
   showBull = true,
@@ -175,8 +180,9 @@ export function MonteCarloCanvas({
       const logP05 = toLog(sim.p05);
       const logP50 = toLog(sim.p50);
       const logP95 = toLog(sim.p95);
-      const logMin = Math.log(sim.min);
-      const logMax = Math.log(sim.max);
+      const allLog = Float64Array.from(logPaths.flatMap((p) => Array.from(p))).sort();
+      const logMin = quantile(allLog, RANGE_CLIP);
+      const logMax = quantile(allLog, 1 - RANGE_CLIP);
       // Pair each bull vertex with a path it launches from.
       const pairing = BULL_KEYS.map((_, i) => Math.floor(((i + 0.5) * paths) / BULL_KEYS.length));
 
