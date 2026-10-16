@@ -298,44 +298,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Terminal (opcional) */}
+      {/* Calculadora quant: a real, computing terminal (see terminal-panel.tsx) */}
       <section className="border-t border-border section-y">
-        <div className="container-page">
+        <div className="container-page grid items-start gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
           <SectionHeader
             title={t("terminalSection.title")}
             description={t("terminalSection.description")}
           />
-          <div className="mt-12 max-w-3xl">
-            <TerminalPanel
-              title={t("terminal.title")}
-              introCommand={t("terminal.introCommand")}
-              introLines={[t("terminal.intro1"), t("terminal.intro2"), t("terminal.intro3")]}
-              commands={[
-                { name: "join", description: t("terminal.cmdJoin"), href: "/processo-seletivo" },
-                {
-                  name: "newsletter",
-                  description: t("terminal.cmdNewsletter"),
-                  href: "/newsletter",
-                },
-                { name: "capital", description: t("terminal.cmdCapital"), href: "/capital" },
-                { name: "team", description: t("terminal.cmdTeam"), href: "/sobre#time" },
-                { name: "about", description: t("terminal.cmdAbout"), href: "/sobre" },
-                {
-                  name: "motto",
-                  description: t("terminal.cmdMotto"),
-                  output: [(await getTranslations("Brand"))("motto")],
-                },
-              ]}
-              labels={{
-                hint: t("terminal.hint"),
-                helpHeading: t("terminal.helpHeading"),
-                notFound: t.raw("terminal.notFound") as string, // {cmd} filled in by the terminal
-                navigating: t.raw("terminal.navigating") as string, // {path} filled in by the terminal
-                inputLabel: t("terminal.inputLabel"),
-                chipsLabel: t("terminal.chipsLabel"),
-              }}
-            />
-          </div>
+          <TerminalPanel />
         </div>
       </section>
 

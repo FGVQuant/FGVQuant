@@ -30,23 +30,35 @@
       }
     },
     "terminal": {
-      "title": "fgvquant@league: ~",
-      "introCommand": "cat mission.txt",
-      "intro1": "FGV Quant is FGV-SP's Quantitative Finance League, founded in 2021.",
-      "intro2": "We apply mathematics, statistics and programming to financial markets:",
-      "intro3": "derivatives, machine learning, algorithmic trading and Python, through problem-based learning.",
-      "hint": "Type /help to list the commands.",
-      "helpHeading": "Available commands:",
-      "notFound": "command not found: {cmd}",
-      "navigating": "opening {path}…",
-      "inputLabel": "Terminal command",
-      "chipsLabel": "Quick commands",
-      "cmdJoin": "how to join",
-      "cmdNewsletter": "FGV Quant Insights, monthly",
-      "cmdCapital": "our simulated fund",
-      "cmdTeam": "who runs the league",
-      "cmdAbout": "mission and history",
-      "cmdMotto": "our motto"
+      "title": "fgvquant@league: ~/calculator",
+      "intro": "Quant calculator: everything is computed here, in your browser.",
+      "hint": "Try the examples below or type help.",
+      "helpHeading": "Commands (vol and drift accept 24% or 0.24):",
+      "helpSim": "simulates R$100 over one year (GBM, n paths)",
+      "helpVar": "VaR and ES: normal vs. Student's t (df degrees of freedom)",
+      "helpStraddle": "long straddle price (Black-Scholes, r = 0), T in years",
+      "helpClear": "clears the screen",
+      "notFound": "command not found: {cmd}. Type help.",
+      "usageSim": "usage: sim [vol, up to 200%] [drift] [n between 100 and 50000]",
+      "usageVar": "usage: var [level, e.g. 95 or 99] [df > 2]",
+      "usageStraddle": "usage: straddle [S] [K] [vol] [T in years]",
+      "simHeader": "{n} paths · R$100 · drift {mu} · vol {sigma} · 1 year",
+      "simLoss": "probability of ending below R$100: {p}",
+      "simNote": "illustrative simulation (fixed seed), not a forecast",
+      "varHeader": "level {level} · losses in standard deviations (variance 1)",
+      "normal": "normal",
+      "studentT": "t, {nu} df",
+      "varNote": "same variance, different tails: compare VaR and ES",
+      "straddleHeader": "S = {s} · K = {k} · vol {sigma} · T = {years} year(s)",
+      "straddlePrice": "price (call + put): {price}",
+      "straddleBreakeven": "profit at expiry if S < {low} or S > {high}",
+      "straddleNote": "Black-Scholes with zero rates, for teaching purposes",
+      "inputLabel": "Calculator command",
+      "chipsLabel": "Examples",
+      "synSim": "sim [vol] [drift] [n]",
+      "synVar": "var [level] [df]",
+      "synStraddle": "straddle [S] [K] [vol] [T]",
+      "synClear": "clear"
     },
     "areas": {
       "titleA": "Five areas,",
@@ -78,8 +90,8 @@
       "cta": "How to join"
     },
     "terminalSection": {
-      "title": "Navigate by terminal",
-      "description": "Optional: try commands like /help or click the shortcuts."
+      "title": "Run the numbers",
+      "description": "A real terminal: simulate paths, compare VaR and ES under fat tails, or price a straddle."
     }
   }
 }
