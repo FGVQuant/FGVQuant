@@ -10,12 +10,8 @@
     margin-top: 0;
   }
 
-  p,
-  ul,
-  ol,
-  figure,
-  pre,
-  .overflow-x-auto {
+  /* Elements inside a `.not-prose` block (interactive figures) keep their own component styles. */
+  :is(p, ul, ol, figure, pre, .overflow-x-auto):not(.not-prose *) {
     margin-block: 1.25em;
   }
 
@@ -54,7 +50,7 @@
     @apply text-highlight underline decoration-highlight/40 underline-offset-4 transition-colors hover:decoration-highlight;
   }
 
-  ul {
+  ul:not(.not-prose *) {
     list-style: disc;
     padding-left: 1.5em;
   }
@@ -62,7 +58,7 @@
     list-style: decimal;
     padding-left: 1.5em;
   }
-  li {
+  li:not(.not-prose *) {
     margin-block: 0.45em;
     padding-left: 0.25em;
   }
@@ -89,7 +85,7 @@
   figure img {
     @apply mx-auto h-auto max-w-full rounded-xl border border-border;
   }
-  figcaption {
+  figcaption:not(.not-prose *) {
     @apply mt-3 text-center text-sm text-muted-foreground;
   }
 
@@ -112,16 +108,16 @@
     border: 0;
   }
 
-  table {
+  table:not(.not-prose *) {
     @apply w-full border-collapse text-left;
     font-size: 0.95rem;
     font-variant-numeric: tabular-nums;
   }
-  th {
+  th:not(.not-prose *) {
     @apply border-b border-border-strong font-semibold text-foreground;
     padding: 0.6em 0.8em;
   }
-  td {
+  td:not(.not-prose *) {
     @apply border-b border-border;
     padding: 0.6em 0.8em;
   }

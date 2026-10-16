@@ -71,6 +71,8 @@ export default async function NewsletterPage() {
               month: featuredData.month,
               year: featuredData.year,
               series: t("intro.eyebrow"),
+              figure: featuredData.figure,
+              figureNote: t("figureNote"),
             }}
             statusLabel={t(`status.${featuredData.status}`)}
             languageLabel={locale === "en" ? t("language") : undefined}

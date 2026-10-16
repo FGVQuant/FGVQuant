@@ -70,6 +70,20 @@
       "summary": "Read summary",
       "full": "Read issue"
     },
-    "language": "In Portuguese"
+    "language": "In Portuguese",
+    "figureNote": "Illustrative figure",
+    "tailRisk": {
+      "title": "VaR and Expected Shortfall under a fat-tailed distribution",
+      "levelLabel": "Confidence level",
+      "chartLabel": "Return densities, normal and Student's t, with VaR and ES at {level}",
+      "axis": "Return, in standard deviations (losses to the left)",
+      "legendT": "Student's t, 4 degrees of freedom",
+      "legendNormal": "Normal",
+      "distribution": "Distribution",
+      "tableCaption": "Loss in standard deviations at {level}",
+      "reading95": "At 95%, the fat-tailed distribution's VaR is even lower than the normal's, but ES, which looks at the whole tail, is already higher.",
+      "reading99": "At 99%, the t's VaR and ES both sit above the normal's, and the gap between the two widens for the t.",
+      "caption": "Illustrative figure made for the site, not the column's data: both distributions have variance 1; values are losses in standard deviations."
+    }
   }
 }

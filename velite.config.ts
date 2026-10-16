@@ -34,6 +34,13 @@ const newsletter = defineCollection({
        */
       status: s.enum(["summary", "full"]).default("summary"),
       featured: s.boolean().default(false),
+      /**
+       * Topic figure on the cover (src/components/cards/issue-figure.tsx). Illustrative, drawn from
+       * formulas or seeded simulations; set only when the issue's topic is known.
+       */
+      figure: s
+        .enum(["tail-risk", "straddle", "prediction-spread", "alt-data", "factors"])
+        .optional(),
       path: s.path(),
       body: s.mdx(),
     })

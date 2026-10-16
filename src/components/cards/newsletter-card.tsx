@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { IssueCover } from "@/components/cards/issue-cover";
+import type { IssueFigureKind } from "@/components/cards/issue-figure";
 import { cn } from "@/lib/utils";
 
 type NewsletterCardProps = {
@@ -15,7 +16,14 @@ type NewsletterCardProps = {
   tags?: string[];
   cover?: { src: string; alt: string };
   /** Typographic cover text, used when no `cover` image is given. */
-  coverText?: { month: string; year: string; series?: string; topic?: string };
+  coverText?: {
+    month: string;
+    year: string;
+    series?: string;
+    topic?: string;
+    figure?: IssueFigureKind;
+    figureNote?: string;
+  };
   /** "Resumo" / "Summary" / full-issue label, derived from the issue status. */
   statusLabel?: string;
   /** "Português" / "In Portuguese"; pass only where the UI is not Portuguese. */
@@ -67,6 +75,8 @@ export function NewsletterCard({
           year={coverText?.year ?? ""}
           series={coverText?.series ?? "FGV Quant Insights"}
           topic={coverText?.topic ?? tags?.[0]}
+          figure={coverText?.figure}
+          figureNote={coverText?.figureNote}
         />
       )}
 

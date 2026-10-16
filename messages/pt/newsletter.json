@@ -70,6 +70,20 @@
       "summary": "Ler resumo",
       "full": "Ler edição"
     },
-    "language": "Português"
+    "language": "Português",
+    "figureNote": "Figura ilustrativa",
+    "tailRisk": {
+      "title": "VaR e Expected Shortfall em uma distribuição de caudas pesadas",
+      "levelLabel": "Nível de confiança",
+      "chartLabel": "Densidades de retorno, normal e t de Student, com VaR e ES a {level}",
+      "axis": "Retorno, em desvios-padrão (perdas à esquerda)",
+      "legendT": "t de Student, 4 graus de liberdade",
+      "legendNormal": "Normal",
+      "distribution": "Distribuição",
+      "tableCaption": "Perda em desvios-padrão a {level}",
+      "reading95": "A 95%, o VaR da distribuição de caudas pesadas é até menor que o da normal, mas o ES, que olha a cauda inteira, já é maior.",
+      "reading99": "A 99%, o VaR e o ES da t ficam acima dos da normal, e a distância entre os dois, na t, aumenta.",
+      "caption": "Figura ilustrativa do site, não dados da coluna: ambas as distribuições têm variância 1; valores em desvios-padrão de perda."
+    }
   }
 }

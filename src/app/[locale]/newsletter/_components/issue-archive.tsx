@@ -68,6 +68,7 @@ export function IssueArchive({ issues, tags, labels }: Props) {
                 dateLabel={issue.dateLabel}
                 excerpt={issue.excerpt}
                 tags={issue.tags}
+                figure={issue.figure}
                 statusLabel={tn(`status.${issue.status}`)}
                 languageLabel={showLanguage ? tn("language") : undefined}
               />

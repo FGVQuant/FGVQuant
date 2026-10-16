@@ -216,6 +216,8 @@ export default async function HomePage() {
                 coverText={{
                   ...formatEditionParts(featured.edition, locale),
                   series: tn("intro.eyebrow"),
+                  figure: featured.figure,
+                  figureNote: tn("figureNote"),
                 }}
                 excerpt={featured.excerpt}
                 tags={featured.tags}
@@ -234,6 +236,7 @@ export default async function HomePage() {
                       dateLabel={formatEditionShort(issue.edition, locale)}
                       excerpt={issue.excerpt}
                       tags={issue.tags}
+                      figure={issue.figure}
                       statusLabel={tn(`status.${issue.status}`)}
                       languageLabel={locale === "en" ? tn("language") : undefined}
                     />
