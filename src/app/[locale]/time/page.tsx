@@ -4,7 +4,7 @@ import { getPageLocale } from "@/lib/locale";
 import { getAreas, getTeam, tr } from "@/lib/content";
 import { pageAlternates } from "@/lib/seo";
 import { PageIntro } from "@/components/layout/page-intro";
-import { Em, SectionHeader } from "@/components/ui/section-header";
+import { SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { MemberCard } from "@/components/cards/member-card";
@@ -31,13 +31,12 @@ export default async function TeamPage() {
     <main id="content">
       <PageIntro
         eyebrow={t("eyebrow")}
-        title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
+        title={t.rich("title", { em: (c) => c })}
         description={t("lead")}
       />
 
       <section className="container-page section-y">
         <SectionHeader
-          eyebrow={t("leadership.eyebrow")}
           title={t.rich("leadership.title", { em: (chunks) => chunks })}
           description={t("leadership.description")}
         />
@@ -91,10 +90,7 @@ export default async function TeamPage() {
       </section>
 
       <section className="container-page border-t border-border section-y">
-        <SectionHeader
-          eyebrow={t("alumni.eyebrow")}
-          title={t.rich("alumni.title", { em: (chunks) => chunks })}
-        />
+        <SectionHeader title={t.rich("alumni.title", { em: (chunks) => chunks })} />
         <div className="mt-12 max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-8">
           <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
             {t("alumni.body")}
@@ -108,8 +104,7 @@ export default async function TeamPage() {
 
       <section className="border-t border-border">
         <div className="container-page section-y">
-          <div className="relative isolate overflow-hidden rounded-3xl border border-border-strong p-8 text-center md:p-14">
-            <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
+          <div className="rounded-3xl bg-card p-8 text-center md:p-14">
             <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
               {t.rich("cta.title", { em: (chunks) => chunks })}
             </h2>

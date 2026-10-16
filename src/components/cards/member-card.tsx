@@ -69,7 +69,6 @@ export function MemberCard({
             className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-600/70 via-brand-800 to-brand-950"
           >
             <div className="absolute inset-0 bg-dot-grid" />
-            <div className="absolute inset-0 bg-glow opacity-50" />
             <span className="relative font-display text-5xl tracking-wide text-lavender-300">
               {initials ?? deriveInitials(name)}
             </span>

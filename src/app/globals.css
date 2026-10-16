@@ -52,16 +52,10 @@
   --input: rgb(35 0 66 / 0.18);
   --ring: #6b4fa0;
   --highlight: #6b4fa0; /* AA on --background */
-  /* headline emphasis: must out-contrast surrounding text, not recede */
-  --emphasis-from: #230042;
-  --emphasis-to: #6b3fc4;
-  --emphasis-glow: transparent;
   --surface: rgb(255 255 255 / 0.7);
   --glow: rgb(174 148 214 / 0.35);
   --grid-line: rgb(35 0 66 / 0.06);
   --dot: rgb(35 0 66 / 0.07);
-  --dot-strong: rgb(35 0 66 / 0.2);
-  --intro-glow: rgb(174 148 214 / 0.22);
   --glow-2: rgb(174 148 214 / 0.18);
   --radius: 0.75rem;
   color-scheme: light;
@@ -88,15 +82,10 @@
   --input: rgb(174 148 214 / 0.2);
   --ring: #ae94d6;
   --highlight: #ae94d6;
-  --emphasis-from: #ffffff;
-  --emphasis-to: #b99bff;
-  --emphasis-glow: rgb(174 148 214 / 0.3);
   --surface: rgb(84 70 131 / 0.14);
   --glow: rgb(110 60 190 / 0.45);
   --grid-line: rgb(174 148 214 / 0.06);
   --dot: rgb(174 148 214 / 0.1);
-  --dot-strong: rgb(174 148 214 / 0.32);
-  --intro-glow: rgb(84 70 131 / 0.28);
   --glow-2: rgb(84 70 131 / 0.25);
   color-scheme: dark;
 }
@@ -187,26 +176,12 @@
     radial-gradient(40% 40% at 85% 30%, var(--glow-2), transparent 70%);
 }
 
-/* SVG fractal noise overlay; apply on an absolutely positioned layer */
-@utility bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  opacity: 0.06;
-  mix-blend-mode: overlay;
-}
-
 /* Glass card echoing the 3D glass objects in their posts */
 @utility glass {
   background: var(--surface);
   border: 1px solid var(--border);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-
-@utility text-gradient {
-  background: linear-gradient(180deg, var(--foreground) 30%, var(--highlight));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 /* Vertical rhythm for top-level page sections: one standard step and one tight step
@@ -225,35 +200,16 @@
   }
 }
 
-/* Site-wide film grain: a fixed, static noise layer behind all content so the flat base has some
-   texture. No blend mode (cheap to composite); slightly stronger on the dark theme. */
-@utility bg-grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  opacity: 0.025;
-  :where(.dark) & {
-    opacity: 0.045;
-  }
-}
-
 /* Alternating tone for long pages: a slightly lighter, translucent band (the site-wide dots show
    through). Put it on a full-width element (not a container-page box) so it runs edge to edge. */
 @utility section-tone {
   background-color: color-mix(in srgb, var(--card) 45%, transparent);
 }
 
-/* Site-wide soft dot pattern, and a brighter variant for spotlights. Both are anchored to the
-   viewport (the base is a fixed layer, the spotlight uses background-attachment: fixed), so the
-   spotlight's dots always land exactly on the base dots whatever the layout above them. */
+/* Site-wide soft dot pattern on a fixed layer: quiet chart paper behind every page. */
 @utility bg-dots {
   background-image: radial-gradient(circle, var(--dot) 1.2px, transparent 1.6px);
   background-size: 28px 28px;
-}
-
-@utility bg-dots-strong {
-  background-image: radial-gradient(circle, var(--dot-strong) 1.3px, transparent 1.7px);
-  background-size: 28px 28px;
-  background-attachment: fixed;
 }
 
 @utility container-page {
@@ -266,14 +222,9 @@
   }
 }
 
-/* Headline emphasis (one word per headline, Instagram-style): Lora italic with a luminous
-   gradient that is at least as bright as the surrounding text, plus a soft glow in dark mode. */
+/* Headline emphasis, used once (the home hero): Lora italic in the accent. Flat colour, no
+   gradient or glow, so it reads as type rather than effect. */
 @utility text-emphasis {
   font-style: italic;
-  background: linear-gradient(100deg, var(--emphasis-from) 0%, var(--emphasis-to) 70%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 0.35em var(--emphasis-glow));
-  padding-inline-end: 0.03em; /* italic overhang would otherwise be clipped by background-clip */
+  color: var(--highlight);
 }

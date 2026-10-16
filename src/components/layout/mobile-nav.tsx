@@ -111,10 +111,6 @@ export function MobileNav() {
                 transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
                 className="fixed inset-0 z-50 flex h-dvh flex-col overflow-y-auto bg-background xl:hidden"
               >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-glow opacity-60"
-                />
                 <div className="relative container-page flex h-16 shrink-0 items-center justify-between">
                   <Link href="/" aria-label="FGV Quant">
                     <Logo />

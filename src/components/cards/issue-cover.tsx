@@ -30,7 +30,6 @@ export function IssueCover({
       )}
     >
       <div className="absolute inset-0 bg-grid opacity-40" />
-      <div className="absolute inset-0 bg-glow opacity-50" />
 
       <p className="relative font-mono text-xs tracking-[0.18em] text-lavender-400 uppercase">
         {series}

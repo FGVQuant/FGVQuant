@@ -12,7 +12,6 @@
       "enNote": "As edições são publicadas apenas em português."
     },
     "format": {
-      "eyebrow": "O formato",
       "title": "Cinco seções, uma <em>edição</em> por mês",
       "description": "Cada edição segue uma estrutura recorrente.",
       "sections": {
@@ -42,7 +41,6 @@
       "eyebrow": "Última edição"
     },
     "archive": {
-      "eyebrow": "Arquivo",
       "title": "Todas as <em>edições</em>",
       "filterLabel": "Filtrar por tema",
       "all": "Todas",

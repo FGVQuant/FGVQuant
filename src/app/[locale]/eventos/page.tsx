@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { DriftTimeline, type TimelineKind } from "@/components/sections/drift-timeline";
 import { PageIntro } from "@/components/layout/page-intro";
 import { ButtonAnchor } from "@/components/ui/button";
-import { Em, SectionHeader } from "@/components/ui/section-header";
+import { SectionHeader } from "@/components/ui/section-header";
 import { getEvents, getSite, toTimelineItems } from "@/lib/content";
 import { getPageLocale } from "@/lib/locale";
 
@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function EventsPage() {
   const [t, locale] = await Promise.all([getTranslations("Events"), getPageLocale()]);
-  const em = { em: (chunks: React.ReactNode) => <Em>{chunks}</Em> };
+  const em = { em: (chunks: React.ReactNode) => chunks };
   const plain = { em: (chunks: React.ReactNode) => chunks };
 
   const items = toTimelineItems(getEvents(), locale);
@@ -40,7 +40,6 @@ export default async function EventsPage() {
 
       <section className="container-page section-y">
         <SectionHeader
-          eyebrow={t("timeline.eyebrow")}
           title={t.rich("timeline.title", plain)}
           description={t("timeline.description")}
         />
@@ -55,13 +54,8 @@ export default async function EventsPage() {
 
       <section className="border-t border-border">
         <div className="container-page section-y">
-          <div className="relative isolate overflow-hidden rounded-3xl border border-border-strong p-8 md:p-14">
-            <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
-            <SectionHeader
-              eyebrow={t("cta.eyebrow")}
-              title={t.rich("cta.title", plain)}
-              description={t("cta.description")}
-            />
+          <div className="rounded-3xl bg-card p-8 md:p-14">
+            <SectionHeader title={t.rich("cta.title", plain)} description={t("cta.description")} />
             <div className="mt-8">
               <ButtonAnchor href={getSite().instagram} size="lg" arrow>
                 {t("cta.button")}

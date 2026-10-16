@@ -5,7 +5,7 @@ import { PodiumMotif } from "@/components/layout/intro-motifs";
 import { ButtonAnchor, ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
-import { Em, SectionHeader } from "@/components/ui/section-header";
+import { SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
 import { getCompetitions, tr } from "@/lib/content";
 import { pageAlternates } from "@/lib/seo";
@@ -36,7 +36,7 @@ export default async function CompetitionsPage() {
       <PageIntro
         motif={<PodiumMotif highlight={podium} />}
         eyebrow={t("eyebrow")}
-        title={t.rich("title", { em: (c) => <Em>{c}</Em> })}
+        title={t.rich("title", { em: (c) => c })}
         description={t("description")}
       />
 
@@ -49,9 +49,15 @@ export default async function CompetitionsPage() {
               <article key={c.id} aria-labelledby={`comp-${c.id}`}>
                 <SectionHeader
                   as="h2"
-                  eyebrow={`${c.organizer} · ${c.year}`}
                   title={<span id={`comp-${c.id}`}>{c.name}</span>}
-                  description={tr(c.summary, locale)}
+                  description={
+                    <>
+                      <span className="block text-sm text-foreground">
+                        {c.organizer} · {c.year}
+                      </span>
+                      <span className="mt-2 block">{tr(c.summary, locale)}</span>
+                    </>
+                  }
                   action={
                     c.source ? (
                       <ButtonAnchor href={c.source} variant="outline" arrow>
@@ -86,10 +92,8 @@ export default async function CompetitionsPage() {
 
       <section className="border-t border-border">
         <div className="container-page section-y">
-          <div className="relative isolate overflow-hidden rounded-3xl border border-border-strong p-8 md:p-14">
-            <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-60" />
+          <div className="rounded-3xl bg-card p-8 md:p-14">
             <SectionHeader
-              eyebrow={t("next.eyebrow")}
               title={t.rich("next.title", { em: (c) => c })}
               description={t("next.description")}
               action={

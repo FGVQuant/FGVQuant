@@ -15,12 +15,9 @@
     "stats": {
       "members": "Membros",
       "issues": "Edições da newsletter",
-      "ranked": "Times ranqueados · Desafio Quant AI",
-      "fund": "FGV Quant Capital",
-      "fundNote": "Fundo fictício · até {month}"
+      "ranked": "Times ranqueados · Desafio Quant AI"
     },
     "about": {
-      "eyebrow": "Quem somos",
       "titleA": "Matemática, estatística e código",
       "titleEm": "aplicados ao mercado",
       "body": "Fundada em 2021, a FGV Quant reúne estudantes da FGV-SP interessados em finanças quantitativas. Aprendemos resolvendo problemas reais (PBL): de derivativos e machine learning a trading algorítmico e Python.",
@@ -52,20 +49,17 @@
       "cmdMotto": "nosso lema"
     },
     "areas": {
-      "eyebrow": "Áreas de atuação",
       "titleA": "Cinco frentes,",
       "titleEm": "um mesmo rigor",
       "description": "Cada frente combina teoria, dados e código."
     },
     "newsletter": {
-      "eyebrow": "FGV Quant Insights",
       "titleA": "A newsletter",
       "titleEm": "mensal",
       "description": "Personalidades, estratégias, notícias e oportunidades do mundo quant, todo mês no LinkedIn.",
       "all": "Ver todas as edições"
     },
     "activities": {
-      "eyebrow": "Atividades",
       "titleA": "Aulas, visitas e",
       "titleEm": "competições",
       "all": "Ver todos os eventos"
@@ -79,13 +73,11 @@
       "cta": "Ver o FGV Quant Capital"
     },
     "join": {
-      "eyebrow": "Processo seletivo",
       "title": "Quer fazer parte da FGV Quant?",
       "body": "Acompanhe nossas redes para saber quando as inscrições abrirem.",
       "cta": "Saiba como entrar"
     },
     "terminalSection": {
-      "eyebrow": "Explore",
       "title": "Navegue pelo terminal",
       "description": "Opcional: use comandos como /help ou clique nos atalhos."
     }

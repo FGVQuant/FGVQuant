@@ -15,7 +15,6 @@
       "advice": "Nada neste site constitui recomendação de investimento."
     },
     "results": {
-      "eyebrow": "Resultados simulados",
       "title": "O que a liga reportou até agora",
       "cumulative": "Retorno acumulado (fundo fictício)",
       "asOf": "Em {date}",
@@ -29,7 +28,6 @@
       "methodologyTitle": "Metodologia"
     },
     "how": {
-      "eyebrow": "Como funciona",
       "title": "Um laboratório de <em>prática</em>",
       "description": "O FGV Quant Capital existe para que os membros exercitem, em ambiente simulado, o ciclo completo de uma gestão.",
       "items": {
@@ -48,7 +46,6 @@
       }
     },
     "reports": {
-      "eyebrow": "Relatórios",
       "title": "Relatórios mensais no LinkedIn",
       "description": "Os relatórios mensais do fundo fictício são publicados na página da liga no LinkedIn.",
       "cta": "Ver no LinkedIn",

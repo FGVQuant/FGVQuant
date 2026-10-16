@@ -15,7 +15,6 @@
       "advice": "Nothing on this site constitutes investment advice."
     },
     "results": {
-      "eyebrow": "Simulated results",
       "title": "What the league has reported so far",
       "cumulative": "Cumulative return (simulated fund)",
       "asOf": "As of {date}",
@@ -29,7 +28,6 @@
       "methodologyTitle": "Methodology"
     },
     "how": {
-      "eyebrow": "How it works",
       "title": "A <em>practice</em> lab",
       "description": "FGV Quant Capital exists so members can practice, in a simulated setting, the full cycle of portfolio management.",
       "items": {
@@ -48,7 +46,6 @@
       }
     },
     "reports": {
-      "eyebrow": "Reports",
       "title": "Monthly reports on LinkedIn",
       "description": "The simulated fund's monthly reports are published on the league's LinkedIn page.",
       "cta": "View on LinkedIn",

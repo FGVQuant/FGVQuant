@@ -17,45 +17,16 @@
     },
     "apply": "Apply",
     "how": {
-      "eyebrow": "Stages",
       "title": "How it <em>works</em>",
       "description": "Stages, deadlines and criteria will be published here once the league announces the process.",
       "pending": "The recruitment stages haven't been announced. Nothing here is an estimate: we'll publish only what the league confirms."
     },
     "who": {
-      "eyebrow": "Eligibility",
       "title": "Who can <em>take part</em>",
       "body": "The league is for FGV students interested in quantitative finance.",
       "pending": "Eligibility requirements (programs, semesters, prerequisites) haven't been announced yet."
     },
-    "build": {
-      "eyebrow": "In practice",
-      "title": "What you'll <em>build</em>",
-      "description": "Mathematics, statistics and programming applied to real problems, through problem-based learning (PBL).",
-      "items": {
-        "derivatives": "Derivatives",
-        "ml": "Machine learning",
-        "algo": "Algorithmic trading",
-        "python": "Python",
-        "research": "Quantitative research",
-        "newsletter": "Newsletter",
-        "fund": "Simulated fund",
-        "competitions": "Competitions"
-      },
-      "descriptions": {
-        "derivatives": "Pricing, Greeks and implied volatility.",
-        "ml": "Machine learning models applied to markets.",
-        "algo": "Systematic strategies and how to evaluate them.",
-        "python": "Programming and data as research tools.",
-        "research": "In-depth study of quantitative finance topics.",
-        "newsletter": "Contributing to FGV Quant Insights, the league's monthly newsletter.",
-        "fund": "FGV Quant Capital, a simulated fund for educational purposes.",
-        "competitions": "University quantitative finance challenges."
-      },
-      "explore": "Learn more"
-    },
     "faq": {
-      "eyebrow": "Questions",
       "title": "Frequently asked <em>questions</em>",
       "items": [
         {
@@ -77,7 +48,6 @@
       ]
     },
     "notify": {
-      "eyebrow": "Stay in the loop",
       "title": "Get notified when it <em>opens</em>",
       "description": "Follow the league to find out when the recruitment process is announced.",
       "instagram": "Follow on Instagram",

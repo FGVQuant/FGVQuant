@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { ArrowUpRight, BrainCircuit, Code2, FlaskConical, LineChart, Sigma } from "lucide-react";
-import type { ReactNode } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
 import { TerminalPanel } from "@/components/terminal/terminal-panel";
 import { KpiStrip } from "@/components/sections/kpi-strip";
@@ -24,6 +23,7 @@ import {
   getEvents,
   getFeaturedIssue,
   getIssues,
+  getSite,
   getStats,
   intlLocale,
   toTimelineItems,
@@ -35,13 +35,13 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: { absolute: t("metaTitle") }, alternates: await pageAlternates("/") };
 }
 
-/** Visual treatment per focus area (ids from content/areas.json). */
-const AREA_STYLE: Record<string, { icon: ReactNode; span: string }> = {
-  derivatives: { icon: <Sigma />, span: "lg:col-span-4" },
-  ml: { icon: <BrainCircuit />, span: "lg:col-span-2" },
-  algo: { icon: <LineChart />, span: "lg:col-span-2" },
-  research: { icon: <FlaskConical />, span: "lg:col-span-2" },
-  python: { icon: <Code2 />, span: "lg:col-span-2" },
+/** Bento span per focus area (ids from content/areas.json). The illustration names the area, so no icon. */
+const AREA_SPAN: Record<string, string> = {
+  derivatives: "lg:col-span-4",
+  ml: "lg:col-span-2",
+  algo: "lg:col-span-2",
+  research: "lg:col-span-2",
+  python: "lg:col-span-2",
 };
 
 export default async function HomePage() {
@@ -50,6 +50,7 @@ export default async function HomePage() {
   const tc = await getTranslations("Common");
   const tn = await getTranslations("Newsletter");
   const tcp = await getTranslations("Competitions");
+  const ta = await getTranslations("About");
   const intl = intlLocale(locale);
 
   const stats = getStats();
@@ -105,26 +106,20 @@ export default async function HomePage() {
             { label: t("stats.members"), value: stats.members },
             { label: t("stats.issues"), value: stats.issues },
             { label: t("stats.ranked"), value: stats.rankedTeams },
-            {
-              label: t("stats.fund"),
-              value: stats.fundCumulative,
-              prefix: stats.fundCumulative > 0 ? "+" : "",
-              suffix: "%",
-              decimals: 2,
-              note: t("stats.fundNote", { month: fundMonth }),
-            },
           ]}
         />
+        <p className="mt-4 text-xs text-muted-foreground">
+          {ta("numbers.note", { asOf: getSite().membersAsOf })}
+        </p>
       </section>
 
       {/* Quem somos + destaque em competição */}
       <section className="container-page grid items-center gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeader
-            eyebrow={t("about.eyebrow")}
             title={
               <>
-                {t("about.titleA")} <Em>{t("about.titleEm")}</Em>
+                {t("about.titleA")} {t("about.titleEm")}
               </>
             }
             description={t("about.body")}
@@ -157,25 +152,22 @@ export default async function HomePage() {
       <section className="border-t border-border section-tone">
         <div className="container-page section-y">
           <SectionHeader
-            eyebrow={t("areas.eyebrow")}
             title={
               <>
-                {t("areas.titleA")} <Em>{t("areas.titleEm")}</Em>.
+                {t("areas.titleA")} {t("areas.titleEm")}.
               </>
             }
             description={t("areas.description")}
           />
           <BentoGrid className="mt-12">
             {getAreas().map((area) => {
-              const style = AREA_STYLE[area.id];
               return (
                 <BentoCard
                   key={area.id}
                   title={tr(area.title, locale)}
                   description={tr(area.description, locale)}
-                  icon={style?.icon}
                   background={<AreaBackground id={area.id} />}
-                  className={style?.span}
+                  className={AREA_SPAN[area.id]}
                 />
               );
             })}
@@ -187,10 +179,9 @@ export default async function HomePage() {
       <section className="border-t border-border section-y">
         <div className="container-page">
           <SectionHeader
-            eyebrow={t("newsletter.eyebrow")}
             title={
               <>
-                {t("newsletter.titleA")} <Em>{t("newsletter.titleEm")}</Em>
+                {t("newsletter.titleA")} {t("newsletter.titleEm")}
               </>
             }
             description={t("newsletter.description")}
@@ -255,10 +246,9 @@ export default async function HomePage() {
       <section className="border-t border-border section-tone">
         <div className="container-page section-y">
           <SectionHeader
-            eyebrow={t("activities.eyebrow")}
             title={
               <>
-                {t("activities.titleA")} <Em>{t("activities.titleEm")}</Em>
+                {t("activities.titleA")} {t("activities.titleEm")}
               </>
             }
             action={
@@ -286,7 +276,6 @@ export default async function HomePage() {
       <section className="border-t border-border section-y">
         <div className="container-page">
           <SectionHeader
-            eyebrow={t("terminalSection.eyebrow")}
             title={t("terminalSection.title")}
             description={t("terminalSection.description")}
           />
@@ -325,17 +314,9 @@ export default async function HomePage() {
       </section>
 
       {/* Join CTA */}
-      <section className="relative isolate overflow-hidden border-t border-border">
-        <div aria-hidden className="absolute inset-0 -z-10 bg-glow" />
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-dots-strong [mask-image:radial-gradient(ellipse_60%_80%_at_50%_100%,black,transparent_75%)]"
-        />
+      <section className="border-t border-border section-tone">
         <div className="container-page flex flex-col items-center section-y text-center">
-          <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">
-            {t("join.eyebrow")}
-          </p>
-          <h2 className="mt-5 max-w-3xl font-display text-4xl text-balance md:text-6xl">
+          <h2 className="max-w-3xl font-display text-4xl text-balance md:text-6xl">
             {t("join.title")}
           </h2>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground">{t("join.body")}</p>

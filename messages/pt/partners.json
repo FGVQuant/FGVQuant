@@ -10,14 +10,12 @@
       "description": "Empresas que colaboram com a FGV Quant e os canais para falar com a gente."
     },
     "list": {
-      "eyebrow": "Parceiros",
       "title": "Quem constrói <em>junto</em>",
       "description": "Mostramos nomes e logos apenas com a confirmação de cada organização.",
       "pending": "Os nomes e logos dos parceiros serão exibidos aqui assim que forem confirmados.",
       "marqueeLabel": "Logos dos parceiros"
     },
     "pitch": {
-      "eyebrow": "Seja parceiro",
       "title": "Fale com quem <em>pensa</em> quant",
       "description": "Se a sua empresa quer colaborar com a liga, estas são algumas formas de fazer isso:",
       "items": {
@@ -42,7 +40,6 @@
       "ctaLinkedin": "Propor parceria no LinkedIn"
     },
     "contact": {
-      "eyebrow": "Contato",
       "title": "Fale com a <em>gente</em>",
       "description": "Escolha o canal que preferir.",
       "instagram": {

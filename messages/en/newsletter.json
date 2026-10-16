@@ -12,7 +12,6 @@
       "enNote": "Issues are published in Portuguese only."
     },
     "format": {
-      "eyebrow": "The format",
       "title": "Five sections, one <em>issue</em> a month",
       "description": "Every issue follows a recurring structure.",
       "sections": {
@@ -42,7 +41,6 @@
       "eyebrow": "Latest issue"
     },
     "archive": {
-      "eyebrow": "Archive",
       "title": "All <em>issues</em>",
       "filterLabel": "Filter by topic",
       "all": "All",

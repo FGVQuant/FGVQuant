@@ -17,45 +17,16 @@
     },
     "apply": "Inscreva-se",
     "how": {
-      "eyebrow": "Etapas",
       "title": "Como <em>funciona</em>",
       "description": "As etapas, prazos e critérios serão publicados aqui quando a liga divulgar o processo.",
       "pending": "As etapas do processo seletivo ainda não foram divulgadas. Nada aqui é uma estimativa: publicaremos apenas o que a liga confirmar."
     },
     "who": {
-      "eyebrow": "Elegibilidade",
       "title": "Quem pode <em>participar</em>",
       "body": "A liga é voltada a estudantes da FGV interessados em finanças quantitativas.",
       "pending": "Requisitos de elegibilidade (cursos, semestres, pré-requisitos) ainda não divulgados."
     },
-    "build": {
-      "eyebrow": "Na prática",
-      "title": "O que você vai <em>desenvolver</em>",
-      "description": "Matemática, estatística e programação aplicadas a problemas reais, com aprendizado baseado em problemas (PBL).",
-      "items": {
-        "derivatives": "Derivativos",
-        "ml": "Machine learning",
-        "algo": "Trading algorítmico",
-        "python": "Python",
-        "research": "Pesquisa quantitativa",
-        "newsletter": "Newsletter",
-        "fund": "Fundo fictício",
-        "competitions": "Competições"
-      },
-      "descriptions": {
-        "derivatives": "Precificação, gregas e volatilidade implícita.",
-        "ml": "Modelos de aprendizado de máquina aplicados a mercados.",
-        "algo": "Estratégias sistemáticas e sua avaliação.",
-        "python": "Programação e dados como ferramenta de pesquisa.",
-        "research": "Estudo aprofundado de temas de finanças quantitativas.",
-        "newsletter": "Participar da produção da FGV Quant Insights, a newsletter mensal da liga.",
-        "fund": "O FGV Quant Capital, um fundo fictício com fins educacionais.",
-        "competitions": "Desafios universitários de finanças quantitativas."
-      },
-      "explore": "Saiba mais"
-    },
     "faq": {
-      "eyebrow": "Dúvidas",
       "title": "Perguntas <em>frequentes</em>",
       "items": [
         {
@@ -77,7 +48,6 @@
       ]
     },
     "notify": {
-      "eyebrow": "Fique por dentro",
       "title": "Seja avisado quando <em>abrir</em>",
       "description": "Acompanhe a liga para saber quando o processo seletivo for divulgado.",
       "instagram": "Seguir no Instagram",

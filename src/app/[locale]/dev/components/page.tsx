@@ -140,12 +140,7 @@ export default async function ComponentsShowcase() {
       <section className={SECTION_CLASS}>
         <p className={LABEL_CLASS}>2.2 · SectionHeader · BentoGrid · BentoCard</p>
         <SectionHeader
-          eyebrow="Áreas de atuação"
-          title={
-            <>
-              Cinco frentes, <Em>um mesmo rigor</Em>.
-            </>
-          }
+          title="Cinco frentes, um mesmo rigor."
           description="Da modelagem de derivativos à programação de estratégias, cada frente combina matemática, estatística e código."
         />
         <div className="mt-12">

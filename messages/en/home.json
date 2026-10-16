@@ -15,12 +15,9 @@
     "stats": {
       "members": "Members",
       "issues": "Newsletter issues",
-      "ranked": "Ranked teams · Desafio Quant AI",
-      "fund": "FGV Quant Capital",
-      "fundNote": "Simulated fund · through {month}"
+      "ranked": "Ranked teams · Desafio Quant AI"
     },
     "about": {
-      "eyebrow": "Who we are",
       "titleA": "Mathematics, statistics and code",
       "titleEm": "applied to markets",
       "body": "Founded in 2021, FGV Quant brings together FGV-SP students interested in quantitative finance. We learn by solving real problems (problem-based learning, PBL): from derivatives and machine learning to algorithmic trading and Python.",
@@ -52,20 +49,17 @@
       "cmdMotto": "our motto"
     },
     "areas": {
-      "eyebrow": "Focus areas",
       "titleA": "Five areas,",
       "titleEm": "one standard of rigor",
       "description": "Each area combines theory, data and code."
     },
     "newsletter": {
-      "eyebrow": "FGV Quant Insights",
       "titleA": "The",
       "titleEm": "monthly newsletter",
       "description": "People, strategies, news and opportunities from the quant world, every month on LinkedIn (in Portuguese).",
       "all": "See all issues"
     },
     "activities": {
-      "eyebrow": "Activities",
       "titleA": "Classes, visits and",
       "titleEm": "competitions",
       "all": "See all events"
@@ -79,13 +73,11 @@
       "cta": "View FGV Quant Capital"
     },
     "join": {
-      "eyebrow": "Recruitment",
       "title": "Want to join FGV Quant?",
       "body": "Follow us to find out when applications open.",
       "cta": "How to join"
     },
     "terminalSection": {
-      "eyebrow": "Explore",
       "title": "Navigate by terminal",
       "description": "Optional: try commands like /help or click the shortcuts."
     }
