@@ -38,7 +38,7 @@ export function PageIntro({
       ) : null}
       <div className="container-page pt-20 pb-14 md:pt-28 md:pb-20">
         {eyebrow ? (
-          <p className="flex items-center gap-2 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+          <p className="flex items-center gap-2 text-sm font-medium text-highlight">
             <span aria-hidden className="size-1.5 rounded-full bg-highlight" />
             {eyebrow}
           </p>

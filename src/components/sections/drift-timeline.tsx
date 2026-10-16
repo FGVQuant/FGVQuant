@@ -189,15 +189,11 @@ function Card({
         >
           {item.dateLabel}
         </time>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-border-strong px-2.5 py-0.5 font-mono text-xs tracking-wide text-highlight uppercase">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-border-strong px-2.5 py-0.5 text-xs font-medium text-highlight">
           <Icon className="size-3" aria-hidden="true" />
           {kindLabel}
         </span>
-        {item.tag ? (
-          <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-            {item.tag}
-          </span>
-        ) : null}
+        {item.tag ? <span className="text-sm text-muted-foreground">{item.tag}</span> : null}
       </div>
       <h3 className="mt-3 font-sans text-lg leading-snug font-semibold tracking-tight text-foreground md:text-xl">
         {item.title}
@@ -222,9 +218,9 @@ function Card({
     </>
   );
 
-  const cls = "group/card block rounded-2xl p-5 transition-colors md:p-6 glass";
+  const cls = "group/card block rounded-2xl bg-card p-5 transition-colors md:p-6";
 
-  const linkCls = cn(cls, "hover:border-border-strong hover:bg-accent");
+  const linkCls = cn(cls, "hover:bg-secondary");
   // internal paths go through next-intl's Link so they keep the current locale
   const inner = item.href ? (
     item.href.startsWith("/") ? (

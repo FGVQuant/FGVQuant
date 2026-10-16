@@ -152,7 +152,7 @@ export function TerminalPanel({
     <div
       ref={rootRef}
       className={cn(
-        "relative overflow-hidden rounded-2xl font-mono text-[0.8rem] leading-relaxed shadow-[0_30px_80px_-30px_rgb(35_0_66/0.6)] glass",
+        "glass relative overflow-hidden rounded-2xl font-mono text-[0.8rem] leading-relaxed shadow-[0_30px_80px_-30px_rgb(35_0_66/0.6)]",
         className,
       )}
       onClick={() => inputRef.current?.focus({ preventScroll: true })}

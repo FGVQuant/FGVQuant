@@ -32,7 +32,7 @@
    Light values on :root, dark overrides on .dark (dark is the default theme).
    ------------------------------------------------------------------ */
 :root {
-  --background: #f7f5fb;
+  --background: #f3f0f8; /* one tone below the white --card, so cards read as a step up */
   --foreground: #1a0033;
   --card: #ffffff;
   --card-foreground: #1a0033;
@@ -52,7 +52,6 @@
   --input: rgb(35 0 66 / 0.18);
   --ring: #6b4fa0;
   --highlight: #6b4fa0; /* AA on --background */
-  --surface: rgb(255 255 255 / 0.7);
   --glow: rgb(174 148 214 / 0.35);
   --grid-line: rgb(35 0 66 / 0.06);
   --dot: rgb(35 0 66 / 0.07);
@@ -82,7 +81,6 @@
   --input: rgb(174 148 214 / 0.2);
   --ring: #ae94d6;
   --highlight: #ae94d6;
-  --surface: rgb(84 70 131 / 0.14);
   --glow: rgb(110 60 190 / 0.45);
   --grid-line: rgb(174 148 214 / 0.06);
   --dot: rgb(174 148 214 / 0.1);
@@ -111,7 +109,6 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-highlight: var(--highlight);
-  --color-surface: var(--surface);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -131,6 +128,11 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+  /* Running text never runs wider than a comfortable measure. :where() keeps this at zero
+     specificity, so any max-w-* utility still wins. */
+  :where(main) :where(p, dd, blockquote) {
+    max-width: 65ch;
   }
   ::selection {
     background: var(--highlight);
@@ -174,14 +176,6 @@
   background-image:
     radial-gradient(60% 50% at 50% 0%, var(--glow), transparent 70%),
     radial-gradient(40% 40% at 85% 30%, var(--glow-2), transparent 70%);
-}
-
-/* Glass card echoing the 3D glass objects in their posts */
-@utility glass {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
 
 /* Vertical rhythm for top-level page sections: one standard step and one tight step

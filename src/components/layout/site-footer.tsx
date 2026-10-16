@@ -36,13 +36,11 @@ export async function SiteFooter() {
           <div className="max-w-sm">
             <Logo tagline={brand("tagline")} />
             <p className="mt-6 text-sm text-muted-foreground">{t("about")}</p>
-            <p className="mt-4 font-mono text-xs text-highlight">{brand("motto")}</p>
+            <p className="mt-4 text-sm text-highlight">{brand("motto")}</p>
           </div>
 
           <div>
-            <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
-              {t("explore")}
-            </h2>
+            <h2 className="text-sm font-semibold text-foreground">{t("explore")}</h2>
             <ul className="mt-4 space-y-1">
               {navItems.map(({ key, href }) => (
                 <li key={key}>
@@ -60,9 +58,7 @@ export async function SiteFooter() {
           </div>
 
           <div>
-            <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
-              {t("follow")}
-            </h2>
+            <h2 className="text-sm font-semibold text-foreground">{t("follow")}</h2>
             <ul className="mt-4 space-y-1">
               {follow.map(({ label, href }) => (
                 <li key={href}>
@@ -77,16 +73,14 @@ export async function SiteFooter() {
           </div>
 
           <div>
-            <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
-              {t("contact")}
-            </h2>
+            <h2 className="text-sm font-semibold text-foreground">{t("contact")}</h2>
             {site.email ? (
               <a href={`mailto:${site.email}`} className={`mt-4 ${linkClass}`}>
                 {site.email}
               </a>
             ) : (
               // email pending from the league (docs/INPUTS.md 0.3) — shown honestly as TBD
-              <p className="mt-4 inline-block rounded-md border border-dashed border-border-strong px-2 py-1 font-mono text-xs text-muted-foreground">
+              <p className="mt-4 w-fit rounded-md border border-dashed border-border-strong px-2 py-1 text-xs text-muted-foreground">
                 {t("emailPending")}
               </p>
             )}

@@ -45,13 +45,13 @@ export function NewsletterCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col gap-5 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-border-strong",
+        "group relative flex flex-col gap-5 rounded-2xl bg-card p-4 transition-colors hover:bg-secondary",
         featured && "md:grid md:grid-cols-2 md:items-center md:gap-8 md:p-6",
         className,
       )}
     >
       {cover ? (
-        <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border bg-secondary">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-secondary">
           <Image
             src={cover.src}
             alt={cover.alt}
@@ -71,7 +71,7 @@ export function NewsletterCard({
       )}
 
       <div className="flex flex-col gap-3">
-        <p className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs tracking-wide text-muted-foreground uppercase">
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
           <span>{dateLabel}</span>
           {issueLabel ? (
             <>

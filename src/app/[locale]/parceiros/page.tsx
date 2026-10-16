@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const cardCls =
-  "relative flex flex-col rounded-2xl border border-border bg-card p-6 transition-colors hover:border-border-strong";
+  "relative flex flex-col rounded-2xl bg-card p-6 transition-colors hover:bg-secondary";
 
 export default async function PartnersPage() {
   const [t, tCommon, locale] = await Promise.all([

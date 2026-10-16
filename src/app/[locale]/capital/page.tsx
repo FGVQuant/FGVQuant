@@ -10,7 +10,14 @@ import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { SectionHeader } from "@/components/ui/section-header";
 import { ItemList } from "@/components/ui/item-list";
 import { getPageLocale } from "@/lib/locale";
-import { formatEdition, formatEditionShort, getFund, getSite, intlLocale, tr } from "@/lib/content";
+import {
+  formatEditionInline,
+  formatEditionShort,
+  getFund,
+  getSite,
+  intlLocale,
+  tr,
+} from "@/lib/content";
 import { pageAlternates } from "@/lib/seo";
 import { Disclaimer } from "./_components/disclaimer";
 import { MonthlyBars } from "./_components/monthly-bars";
@@ -51,7 +58,7 @@ export default async function CapitalPage() {
     range:
       bars.length > 1 ? `${bars[0].label}–${bars[bars.length - 1].label}` : (bars[0]?.label ?? ""),
   });
-  const asOf = formatEdition(fund.cumulativeAsOf, locale);
+  const asOf = formatEditionInline(fund.cumulativeAsOf, locale);
   const summary = bars.map((b) => `${b.label} ${b.valueLabel}`).join(", ");
   const disclaimerItems = [
     t("disclaimer.simulated"),
@@ -79,10 +86,8 @@ export default async function CapitalPage() {
       <section className="container-page section-y">
         <SectionHeader title={t("results.title")} />
         <div className="mt-12 grid gap-6 lg:grid-cols-5">
-          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 lg:col-span-2">
-            <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-              {t("results.cumulative")}
-            </p>
+          <div className="rounded-2xl bg-card p-6 sm:p-8 lg:col-span-2">
+            <p className="text-sm text-muted-foreground">{t("results.cumulative")}</p>
             <p className="mt-4">
               <NumberTicker
                 value={fund.cumulativeReturn}
@@ -99,11 +104,9 @@ export default async function CapitalPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 lg:col-span-3">
+          <div className="rounded-2xl bg-card p-6 sm:p-8 lg:col-span-3">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                {t("results.monthly")}
-              </h3>
+              <h3 className="text-sm text-muted-foreground">{t("results.monthly")}</h3>
               <Badge variant="highlight">{tCommon("simulated")}</Badge>
             </div>
             <div className="mt-6">
@@ -119,10 +122,8 @@ export default async function CapitalPage() {
           </div>
         </div>
         {fund.methodology ? (
-          <div className="mt-6 rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-              {t("results.methodologyTitle")}
-            </h3>
+          <div className="mt-6 rounded-2xl bg-card p-6 sm:p-8">
+            <h3 className="text-sm text-muted-foreground">{t("results.methodologyTitle")}</h3>
             <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
               {tr(fund.methodology, locale)}
             </p>

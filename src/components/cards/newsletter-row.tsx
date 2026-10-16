@@ -25,10 +25,8 @@ export function NewsletterRow({
   languageLabel,
 }: NewsletterRowProps) {
   return (
-    <article className="group relative grid gap-x-6 gap-y-2 rounded-2xl border border-border bg-card px-4 py-4 transition-colors hover:border-border-strong has-[a:focus-visible]:border-highlight sm:grid-cols-[6.5rem_1fr_auto] sm:items-start sm:px-5">
-      <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase sm:pt-1.5">
-        {dateLabel}
-      </p>
+    <article className="group relative grid gap-x-6 gap-y-2 rounded-2xl bg-card px-4 py-4 transition-colors hover:bg-secondary has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-ring sm:grid-cols-[6.5rem_1fr_auto] sm:items-start sm:px-5">
+      <p className="text-sm text-muted-foreground sm:pt-1.5">{dateLabel}</p>
       <div className="flex min-w-0 flex-col gap-2">
         <h3 className="font-sans text-lg leading-snug font-semibold tracking-tight text-balance text-foreground">
           <Link

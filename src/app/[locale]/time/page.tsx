@@ -59,7 +59,7 @@ export default async function TeamPage() {
         {pendingRoles.length > 0 ? (
           <>
             <ul
-              className={`max-w-3xl divide-y divide-border overflow-hidden rounded-2xl border border-border ${members.length > 0 ? "mt-12" : "mt-10"}`}
+              className={`max-w-3xl divide-y divide-border overflow-hidden rounded-2xl bg-card ${members.length > 0 ? "mt-12" : "mt-10"}`}
             >
               {pendingRoles.map((m) => (
                 <li
@@ -76,9 +76,7 @@ export default async function TeamPage() {
                       </p>
                     ) : null}
                   </div>
-                  <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                    {t("nameTbd")}
-                  </span>
+                  <span className="text-sm text-muted-foreground">{t("nameTbd")}</span>
                 </li>
               ))}
             </ul>
@@ -91,11 +89,11 @@ export default async function TeamPage() {
 
       <section className="container-page border-t border-border section-y">
         <SectionHeader title={t.rich("alumni.title", { em: (chunks) => chunks })} />
-        <div className="mt-12 max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-8">
+        <div className="mt-12 max-w-3xl rounded-2xl bg-card p-6 sm:p-8">
           <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
             {t("alumni.body")}
           </p>
-          <p className="mt-4 font-mono text-xs text-muted-foreground">{t("alumni.selfReported")}</p>
+          <p className="mt-4 text-sm text-muted-foreground">{t("alumni.selfReported")}</p>
           <ButtonLink href="/competicoes" variant="outline" className="mt-6" arrow>
             {t("alumni.cta")}
           </ButtonLink>

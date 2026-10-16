@@ -51,7 +51,7 @@ export function MemberCard({
 }: MemberCardProps) {
   return (
     <article className={cn("group flex flex-col gap-4", className)}>
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border bg-secondary">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-secondary">
         {photo ? (
           <Image
             src={photo.src}

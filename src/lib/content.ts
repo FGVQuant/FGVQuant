@@ -35,7 +35,12 @@ const capitalize = (s: string) => s.charAt(0).toLocaleUpperCase() + s.slice(1);
 
 /** "2026-09" → "Setembro de 2026" / "September 2026" */
 export function formatEdition(edition: string, locale: Locale) {
-  return capitalize(fmt(`${edition}-01`, locale, { month: "long", year: "numeric" }));
+  return capitalize(formatEditionInline(edition, locale));
+}
+
+/** Same as `formatEdition` but in the locale's own case, for use mid-sentence ("até agosto de 2026"). */
+export function formatEditionInline(edition: string, locale: Locale) {
+  return fmt(`${edition}-01`, locale, { month: "long", year: "numeric" });
 }
 
 /** Month name and year apart, for typographic covers: "2026-09" → { month: "Setembro", year: "2026" }. */

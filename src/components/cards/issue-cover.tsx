@@ -25,15 +25,13 @@ export function IssueCover({
     <div
       aria-hidden
       className={cn(
-        "relative flex aspect-[16/9] flex-col justify-between overflow-hidden rounded-xl border border-border bg-brand-950 p-4 sm:p-5",
+        "relative flex aspect-[16/9] flex-col justify-between overflow-hidden rounded-xl bg-brand-950 p-4 sm:p-5",
         className,
       )}
     >
       <div className="absolute inset-0 bg-grid opacity-40" />
 
-      <p className="relative font-mono text-xs tracking-[0.18em] text-lavender-400 uppercase">
-        {series}
-      </p>
+      <p className="relative text-sm font-medium text-lavender-400">{series}</p>
 
       <div className="relative">
         {/* Hairline with a single node: the one graphic accent. */}
@@ -52,11 +50,7 @@ export function IssueCover({
             {year}
           </span>
         </p>
-        {topic ? (
-          <p className="mt-2 truncate font-mono text-xs tracking-wide text-muted-foreground uppercase">
-            {topic}
-          </p>
-        ) : null}
+        {topic ? <p className="mt-2 truncate text-sm text-muted-foreground">{topic}</p> : null}
       </div>
     </div>
   );

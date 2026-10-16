@@ -53,7 +53,7 @@ export function BentoCard({
   return (
     <div
       className={cn(
-        "group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl border border-border bg-card/60 p-6 transition-colors duration-300 hover:border-border-strong",
+        "group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-card p-6 transition-colors duration-300 hover:bg-secondary",
         className,
       )}
     >
@@ -77,11 +77,7 @@ export function BentoCard({
               {icon}
             </span>
           ) : null}
-          {eyebrow ? (
-            <p className="mb-2 font-mono text-xs tracking-wide text-muted-foreground uppercase">
-              {eyebrow}
-            </p>
-          ) : null}
+          {eyebrow ? <p className="mb-2 text-sm text-muted-foreground">{eyebrow}</p> : null}
           {href ? (
             href.startsWith("http") ? (
               <a href={href} target="_blank" rel="noreferrer noopener" className={linkClass}>

@@ -15,7 +15,7 @@ import { Em, SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
 import {
-  formatEdition,
+  formatEditionInline,
   formatEditionParts,
   formatEditionShort,
   getAreas,
@@ -73,7 +73,7 @@ export default async function HomePage() {
           others: ranked.slice(1).map((x) => ({ team: x.name, result: tr(x.result, locale) })),
         }
       : null;
-  const fundMonth = formatEdition(stats.fundAsOf, locale);
+  const fundMonth = formatEditionInline(stats.fundAsOf, locale);
 
   return (
     <main id="content">
@@ -341,27 +341,23 @@ function CapitalTeaser(props: {
   locale: string;
 }) {
   return (
-    <div className="flex flex-col justify-between gap-8 rounded-2xl border border-border bg-card p-6 lg:col-span-3 lg:flex-row lg:items-end lg:gap-12 lg:p-8">
+    <div className="flex flex-col justify-between gap-8 rounded-2xl bg-card p-6 lg:col-span-3 lg:flex-row lg:items-end lg:gap-12 lg:p-8">
       <div className="lg:max-w-xl">
-        <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">
-          {props.eyebrow}
-        </p>
+        <p className="text-sm font-medium text-highlight">{props.eyebrow}</p>
         <h3 className="mt-3 font-sans text-xl font-semibold tracking-tight">{props.title}</h3>
         <p className="mt-3 text-sm text-muted-foreground">{props.body}</p>
       </div>
       <div className="lg:shrink-0">
-        <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-          {props.label}
-        </p>
+        <p className="text-sm text-muted-foreground">{props.label}</p>
         <NumberTicker
           value={props.value}
           prefix={props.value > 0 ? "+" : ""}
           suffix="%"
           decimals={2}
           locale={props.locale}
-          className="mt-1 block font-mono text-5xl text-foreground"
+          className="mt-1 block text-5xl text-foreground"
         />
-        <p className="mt-2 font-mono text-xs text-highlight">
+        <p className="mt-2 text-sm text-highlight">
           {props.simulated} · {props.asOf}
         </p>
         <ButtonLink href="/capital" variant="link" arrow className="mt-4 px-0">
@@ -387,24 +383,22 @@ function CompetitionHighlight(props: {
   cta: string;
 }) {
   return (
-    <article className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 sm:p-8">
+    <article className="flex flex-col gap-6 rounded-2xl bg-card p-6 sm:p-8">
       <div>
-        <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">
-          {props.eyebrow}
-        </p>
+        <p className="text-sm font-medium text-highlight">{props.eyebrow}</p>
         <h3 className="mt-3 font-sans text-xl font-semibold tracking-tight">{props.name}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{props.meta}</p>
       </div>
       <div>
         <p className="font-display text-5xl text-balance sm:text-6xl">{props.lead.result}</p>
-        <p className="mt-2 font-mono text-sm break-words text-highlight">{props.lead.team}</p>
+        <p className="mt-2 text-sm break-words text-highlight">{props.lead.team}</p>
       </div>
       {props.others.length > 0 ? (
         <ul className="flex flex-wrap gap-2">
           {props.others.map((o) => (
             <li
               key={o.team}
-              className="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted-foreground"
+              className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
             >
               <span className="text-foreground">{o.team}</span> · {o.result}
             </li>
@@ -414,7 +408,7 @@ function CompetitionHighlight(props: {
       <p className="text-xs text-muted-foreground">
         {props.selfReported ? (
           <>
-            <span className="mr-2 inline-block rounded-full border border-border px-2 py-0.5 font-mono text-xs tracking-wide uppercase">
+            <span className="mr-2 inline-block rounded-full border border-border px-2 py-0.5 text-xs">
               {props.selfReported.badge}
             </span>
             {props.selfReported.note}

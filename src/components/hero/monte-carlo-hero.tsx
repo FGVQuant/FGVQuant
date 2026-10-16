@@ -54,7 +54,7 @@ export function MonteCarloHero({
       <div className="relative container-page pt-[152px] pb-24 sm:pt-48 md:pb-32 xl:pt-32">
         <div className="max-w-2xl">
           {eyebrow ? (
-            <p className="flex items-center gap-2 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+            <p className="flex items-center gap-2 text-sm font-medium text-highlight">
               <span aria-hidden className="size-1.5 rounded-full bg-highlight" />
               {eyebrow}
             </p>
