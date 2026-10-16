@@ -93,7 +93,7 @@ export function EventCard({
             alt={image.alt}
             fill
             sizes="96px"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+            className="object-cover transition-[scale] duration-500 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
           />
         </div>
       ) : null}

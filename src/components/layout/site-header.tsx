@@ -73,7 +73,7 @@ export function SiteHeader({ recruitmentOpen }: { recruitmentOpen: boolean }) {
           </div>
           <Link
             href={cta.href}
-            className="hidden h-9 items-center rounded-full bg-primary px-4 text-sm font-medium whitespace-nowrap text-primary-foreground transition-opacity hover:opacity-90 sm:inline-flex"
+            className="hidden h-9 pressable items-center rounded-full bg-primary px-4 text-sm font-medium whitespace-nowrap text-primary-foreground hover:opacity-90 sm:inline-flex"
           >
             {cta.key === "join" ? t("join") : t("partnerCta")}
           </Link>

@@ -61,7 +61,7 @@ export function MemberCard({
             placeholder={photo.blurDataURL ? "blur" : "empty"}
             blurDataURL={photo.blurDataURL}
             sizes="(min-width: 1024px) 280px, (min-width: 640px) 33vw, 50vw"
-            className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+            className="absolute inset-0 size-full object-cover transition-[scale] duration-500 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
           />
         ) : (
           <div

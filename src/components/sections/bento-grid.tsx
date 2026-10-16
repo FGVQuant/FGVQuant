@@ -60,7 +60,7 @@ export function BentoCard({
       {background ? (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black_35%,transparent_92%)] text-highlight transition-transform duration-700 ease-out-expo group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black_35%,transparent_92%)] text-highlight transition-[scale] duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
         >
           {background}
         </div>
@@ -97,7 +97,7 @@ export function BentoCard({
         {href ? (
           <span
             aria-hidden
-            className="shrink-0 font-mono text-lg text-muted-foreground transition-all duration-300 group-hover:translate-x-1 group-hover:text-highlight motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+            className="shrink-0 font-mono text-lg text-muted-foreground transition-[translate,color] duration-200 ease-out group-hover:translate-x-1 group-hover:text-highlight motion-reduce:group-hover:translate-x-0"
           >
             →
           </span>

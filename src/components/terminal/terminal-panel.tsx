@@ -217,7 +217,7 @@ export function TerminalPanel({
               e.stopPropagation();
               run(`/${c.name}`);
             }}
-            className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground"
+            className="pressable rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:border-border-strong hover:bg-accent hover:text-foreground"
           >
             /{c.name}
           </button>

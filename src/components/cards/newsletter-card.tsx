@@ -57,7 +57,7 @@ export function NewsletterCard({
             alt={cover.alt}
             fill
             sizes={featured ? "(min-width: 768px) 560px, 100vw" : "(min-width: 768px) 360px, 100vw"}
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+            className="object-cover transition-[scale] duration-500 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
           />
         </div>
       ) : (
@@ -113,7 +113,7 @@ export function NewsletterCard({
           {readLabel}
           <ArrowRight
             aria-hidden
-            className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+            className="size-4 transition-[translate] duration-200 ease-out group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
           />
         </span>
       </div>

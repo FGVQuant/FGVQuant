@@ -206,7 +206,7 @@ function Card({
         {item.href ? (
           <span
             aria-hidden="true"
-            className="ml-1.5 inline-block text-highlight transition-transform group-hover/card:translate-x-0.5"
+            className="ml-1.5 inline-block text-highlight transition-[translate] duration-200 ease-out group-hover/card:translate-x-0.5 motion-reduce:group-hover/card:translate-x-0"
           >
             →
           </span>

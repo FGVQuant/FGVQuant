@@ -54,7 +54,7 @@ export function NewsletterRow({
         {languageLabel ? <Badge variant="outline">{languageLabel}</Badge> : null}
         <ArrowRight
           aria-hidden
-          className="size-4 text-highlight transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+          className="size-4 text-highlight transition-[translate] duration-200 ease-out group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
         />
       </div>
     </article>

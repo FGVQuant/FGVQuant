@@ -12,7 +12,7 @@ export function Faq({ items }: { items: FaqItem[] }) {
             {item.q}
             <ChevronDown
               aria-hidden
-              className="size-4 shrink-0 text-highlight transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
+              className="size-4 shrink-0 text-highlight transition-[rotate] duration-200 ease-out group-open:rotate-180"
             />
           </summary>
           <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground md:px-6 md:text-base">
