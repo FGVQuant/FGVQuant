@@ -7,7 +7,7 @@
     "intro": {
       "eyebrow": "Entre na liga",
       "title": "Processo <em>seletivo</em>",
-      "description": "A FGV Quant reúne estudantes da FGV que querem aprender finanças quantitativas fazendo. Os detalhes do próximo processo ainda não foram divulgados. Esta página será atualizada assim que forem."
+      "description": "A FGV Quant reúne estudantes da FGV-SP que querem aprender finanças quantitativas fazendo. Os detalhes do próximo processo ainda não foram divulgados. Esta página será atualizada assim que forem."
     },
     "status": {
       "label": "Status",
@@ -19,40 +19,48 @@
     "how": {
       "eyebrow": "Etapas",
       "title": "Como <em>funciona</em>",
-      "description": "As etapas, prazos e critérios serão publicados aqui quando a liga divulgar o processo.",
-      "pending": "As etapas do processo seletivo ainda não foram divulgadas. Nada aqui é uma estimativa: publicaremos apenas o que a liga confirmar."
+      "description": "As etapas, prazos e critérios serão publicados aqui quando a liga divulgar o processo."
     },
     "who": {
       "eyebrow": "Elegibilidade",
       "title": "Quem pode <em>participar</em>",
-      "body": "A liga é voltada a estudantes da FGV interessados em finanças quantitativas.",
-      "pending": "Requisitos de elegibilidade (cursos, semestres, pré-requisitos) ainda não divulgados."
+      "body": "A liga é voltada a estudantes da FGV-SP interessados em finanças quantitativas."
     },
     "build": {
-      "eyebrow": "Na prática",
-      "title": "O que você vai <em>desenvolver</em>",
-      "description": "Matemática, estatística e programação aplicadas a problemas reais, com aprendizado baseado em problemas (PBL).",
+      "eyebrow": "Programa de trainees",
+      "title": "O que você vai <em>aprender</em>",
+      "description": "Os trainees passam por um programa de formação com aulas presenciais e online, avaliações e um projeto final, cobrindo a base de finanças quantitativas.",
       "items": {
-        "derivatives": "Derivativos",
-        "ml": "Machine learning",
-        "algo": "Trading algorítmico",
-        "python": "Python",
-        "research": "Pesquisa quantitativa",
-        "newsletter": "Newsletter",
-        "fund": "Fundo fictício",
-        "competitions": "Competições"
+        "statistics": "Estatística",
+        "econometrics": "Econometria",
+        "strategies": "Estratégias quantitativas",
+        "portfolios": "Portfólios",
+        "fixedIncome": "Renda fixa",
+        "derivatives": "Derivativos"
       },
       "descriptions": {
-        "derivatives": "Precificação, gregas e volatilidade implícita.",
-        "ml": "Modelos de aprendizado de máquina aplicados a mercados.",
-        "algo": "Estratégias sistemáticas e sua avaliação.",
-        "python": "Programação e dados como ferramenta de pesquisa.",
-        "research": "Estudo aprofundado de temas de finanças quantitativas.",
-        "newsletter": "Participar da produção da FGV Quant Insights, a newsletter mensal da liga.",
-        "fund": "O FGV Quant Capital, um fundo fictício com fins educacionais.",
-        "competitions": "Desafios universitários de finanças quantitativas."
+        "statistics": "Probabilidade e inferência como base para analisar dados financeiros.",
+        "econometrics": "Modelos para estimar relações e testar hipóteses com dados de mercado.",
+        "strategies": "Como estratégias sistemáticas são construídas e avaliadas.",
+        "portfolios": "Construção de carteiras e o equilíbrio entre risco e retorno.",
+        "fixedIncome": "Títulos, taxas de juros e a estrutura a termo.",
+        "derivatives": "Opções, futuros e como precificá-los."
       },
-      "explore": "Saiba mais"
+      "formatTitle": "Como funciona",
+      "format": {
+        "classes": {
+          "title": "Aulas",
+          "body": "Encontros presenciais e online, um tema por aula."
+        },
+        "assessments": {
+          "title": "Avaliações",
+          "body": "Listas de exercícios e provas para consolidar o conteúdo."
+        },
+        "project": {
+          "title": "Projeto final",
+          "body": "Desenvolvido ao longo do programa, com entregas parciais e uma apresentação no encerramento."
+        }
+      }
     },
     "faq": {
       "eyebrow": "Dúvidas",
@@ -64,11 +72,11 @@
         },
         {
           "q": "Quem pode participar?",
-          "a": "A liga é voltada a estudantes da FGV. Os requisitos de elegibilidade serão publicados junto com os detalhes do processo."
+          "a": "A liga é voltada a estudantes da FGV-SP. Os requisitos de elegibilidade serão publicados junto com os detalhes do processo."
         },
         {
           "q": "Preciso saber programar?",
-          "a": "Os pré-requisitos ainda não foram divulgados e serão publicados com o processo. O que podemos dizer é que a liga trabalha com aprendizado baseado em problemas (PBL), com formação técnica em programação e dados."
+          "a": "Não. O processo seletivo não tem pré-requisitos técnicos."
         },
         {
           "q": "Como fico sabendo quando as inscrições abrirem?",

@@ -1,39 +1,33 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import {
-  BrainCircuit,
-  Code2,
-  FlaskConical,
-  LineChart,
-  Mail,
+  ChartColumn,
+  ChartLine,
+  ChartPie,
+  ChartScatter,
+  Landmark,
   Sigma,
-  Trophy,
-  Wallet,
   type LucideIcon,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PageIntro } from "@/components/layout/page-intro";
 import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
-import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { Em, SectionHeader } from "@/components/ui/section-header";
-import { Link } from "@/i18n/navigation";
 import { getSite } from "@/lib/content";
 import { pageAlternates } from "@/lib/seo";
 import { Faq, type FaqItem } from "./_components/faq";
 
-type Build = { key: string; icon: LucideIcon; href?: string };
-
-const BUILD: Build[] = [
+/** Trainee program topics, in the order the classes run. */
+const TOPICS: { key: string; icon: LucideIcon }[] = [
+  { key: "statistics", icon: ChartColumn },
+  { key: "econometrics", icon: ChartScatter },
+  { key: "strategies", icon: ChartLine },
+  { key: "portfolios", icon: ChartPie },
+  { key: "fixedIncome", icon: Landmark },
   { key: "derivatives", icon: Sigma },
-  { key: "ml", icon: BrainCircuit },
-  { key: "algo", icon: LineChart },
-  { key: "python", icon: Code2 },
-  { key: "research", icon: FlaskConical, href: "/sobre" },
-  { key: "newsletter", icon: Mail, href: "/newsletter" },
-  { key: "fund", icon: Wallet, href: "/capital" },
-  { key: "competitions", icon: Trophy, href: "/competicoes" },
 ];
+const FORMAT = ["classes", "assessments", "project"] as const;
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Join.meta");
@@ -55,7 +49,7 @@ function plain(t: Awaited<ReturnType<typeof getTranslations>>, key: string): Rea
 }
 
 export default async function JoinPage() {
-  const [t, tCommon] = await Promise.all([getTranslations("Join"), getTranslations("Common")]);
+  const t = await getTranslations("Join");
   const { recruitment, instagram, linkedin } = getSite();
 
   const statusKey =
@@ -84,30 +78,16 @@ export default async function JoinPage() {
       </PageIntro>
 
       <section className="container-page grid gap-12 section-y md:grid-cols-2 md:gap-16">
-        <div>
-          <SectionHeader
-            eyebrow={t("how.eyebrow")}
-            title={plain(t, "how.title")}
-            description={t("how.description")}
-          />
-          {recruitment.placeholder ? (
-            <PlaceholderNote label={tCommon("pending")} className="mt-8">
-              {t("how.pending")}
-            </PlaceholderNote>
-          ) : null}
-        </div>
-        <div>
-          <SectionHeader
-            eyebrow={t("who.eyebrow")}
-            title={plain(t, "who.title")}
-            description={t("who.body")}
-          />
-          {recruitment.placeholder ? (
-            <PlaceholderNote label={tCommon("pending")} className="mt-8">
-              {t("who.pending")}
-            </PlaceholderNote>
-          ) : null}
-        </div>
+        <SectionHeader
+          eyebrow={t("how.eyebrow")}
+          title={plain(t, "how.title")}
+          description={t("how.description")}
+        />
+        <SectionHeader
+          eyebrow={t("who.eyebrow")}
+          title={plain(t, "who.title")}
+          description={t("who.body")}
+        />
       </section>
 
       <section className="border-t border-border section-tone">
@@ -117,24 +97,15 @@ export default async function JoinPage() {
             title={plain(t, "build.title")}
             description={t("build.description")}
           />
-          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {BUILD.map(({ key, icon: Icon, href }) => (
+          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {TOPICS.map(({ key, icon: Icon }) => (
               <li
                 key={key}
-                className="relative flex flex-col rounded-2xl border border-border bg-card p-5 transition-colors hover:border-border-strong"
+                className="flex flex-col rounded-2xl border border-border bg-card p-5 transition-colors hover:border-border-strong"
               >
                 <Icon aria-hidden className="size-5 text-highlight" />
                 <h3 className="mt-4 font-sans text-lg font-semibold tracking-tight text-foreground">
-                  {href ? (
-                    <Link
-                      href={href}
-                      className="rounded-sm after:absolute after:inset-0 after:rounded-2xl after:content-['']"
-                    >
-                      {t(`build.items.${key}`)}
-                    </Link>
-                  ) : (
-                    t(`build.items.${key}`)
-                  )}
+                  {t(`build.items.${key}`)}
                 </h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
                   {t(`build.descriptions.${key}`)}
@@ -142,6 +113,23 @@ export default async function JoinPage() {
               </li>
             ))}
           </ul>
+
+          <h3 className="mt-16 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+            {t("build.formatTitle")}
+          </h3>
+          <ol className="mt-6 grid gap-4 md:grid-cols-3">
+            {FORMAT.map((key, i) => (
+              <li key={key} className="rounded-2xl border border-border bg-card/60 p-5">
+                <span className="font-mono text-xs text-highlight">0{i + 1}</span>
+                <p className="mt-3 font-sans text-lg font-semibold tracking-tight text-foreground">
+                  {t(`build.format.${key}.title`)}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {t(`build.format.${key}.body`)}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 

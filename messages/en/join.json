@@ -7,7 +7,7 @@
     "intro": {
       "eyebrow": "Join the league",
       "title": "Recruitment <em>process</em>",
-      "description": "FGV Quant brings together FGV students who want to learn quantitative finance by doing. Details of the next recruitment process haven't been announced yet. This page will be updated as soon as they are."
+      "description": "FGV Quant brings together FGV-SP students who want to learn quantitative finance by doing. Details of the next recruitment process haven't been announced yet. This page will be updated as soon as they are."
     },
     "status": {
       "label": "Status",
@@ -19,40 +19,48 @@
     "how": {
       "eyebrow": "Stages",
       "title": "How it <em>works</em>",
-      "description": "Stages, deadlines and criteria will be published here once the league announces the process.",
-      "pending": "The recruitment stages haven't been announced. Nothing here is an estimate: we'll publish only what the league confirms."
+      "description": "Stages, deadlines and criteria will be published here once the league announces the process."
     },
     "who": {
       "eyebrow": "Eligibility",
       "title": "Who can <em>take part</em>",
-      "body": "The league is for FGV students interested in quantitative finance.",
-      "pending": "Eligibility requirements (programs, semesters, prerequisites) haven't been announced yet."
+      "body": "The league is for FGV-SP students interested in quantitative finance."
     },
     "build": {
-      "eyebrow": "In practice",
-      "title": "What you'll <em>build</em>",
-      "description": "Mathematics, statistics and programming applied to real problems, through problem-based learning (PBL).",
+      "eyebrow": "Trainee program",
+      "title": "What you will <em>learn</em>",
+      "description": "Trainees go through a training program with in-person and online classes, assessments and a final project, covering the foundations of quantitative finance.",
       "items": {
-        "derivatives": "Derivatives",
-        "ml": "Machine learning",
-        "algo": "Algorithmic trading",
-        "python": "Python",
-        "research": "Quantitative research",
-        "newsletter": "Newsletter",
-        "fund": "Simulated fund",
-        "competitions": "Competitions"
+        "statistics": "Statistics",
+        "econometrics": "Econometrics",
+        "strategies": "Quantitative strategies",
+        "portfolios": "Portfolios",
+        "fixedIncome": "Fixed income",
+        "derivatives": "Derivatives"
       },
       "descriptions": {
-        "derivatives": "Pricing, Greeks and implied volatility.",
-        "ml": "Machine learning models applied to markets.",
-        "algo": "Systematic strategies and how to evaluate them.",
-        "python": "Programming and data as research tools.",
-        "research": "In-depth study of quantitative finance topics.",
-        "newsletter": "Contributing to FGV Quant Insights, the league's monthly newsletter.",
-        "fund": "FGV Quant Capital, a simulated fund for educational purposes.",
-        "competitions": "University quantitative finance challenges."
+        "statistics": "Probability and inference as the basis for analyzing financial data.",
+        "econometrics": "Models to estimate relationships and test hypotheses with market data.",
+        "strategies": "How systematic strategies are built and evaluated.",
+        "portfolios": "Building portfolios and balancing risk and return.",
+        "fixedIncome": "Bonds, interest rates and the term structure.",
+        "derivatives": "Options, futures and how to price them."
       },
-      "explore": "Learn more"
+      "formatTitle": "How it works",
+      "format": {
+        "classes": {
+          "title": "Classes",
+          "body": "In-person and online sessions, one topic per class."
+        },
+        "assessments": {
+          "title": "Assessments",
+          "body": "Problem sets and exams to consolidate the material."
+        },
+        "project": {
+          "title": "Final project",
+          "body": "Built throughout the program, with partial deliveries and a presentation at the end."
+        }
+      }
     },
     "faq": {
       "eyebrow": "Questions",
@@ -64,11 +72,11 @@
         },
         {
           "q": "Who can take part?",
-          "a": "The league is for FGV students. Eligibility requirements will be published together with the process details."
+          "a": "The league is for FGV-SP students. Eligibility requirements will be published together with the process details."
         },
         {
           "q": "Do I need to know how to code?",
-          "a": "Prerequisites haven't been announced yet and will be published with the process. What we can say is that the league uses problem-based learning (PBL), with technical training in programming and data."
+          "a": "No. The recruitment process has no technical prerequisites."
         },
         {
           "q": "How will I know when applications open?",

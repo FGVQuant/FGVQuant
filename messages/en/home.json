@@ -23,7 +23,7 @@
       "eyebrow": "Who we are",
       "titleA": "Mathematics, statistics and code",
       "titleEm": "applied to markets",
-      "body": "Founded in 2021, FGV Quant brings together FGV-SP students interested in quantitative finance. We learn by solving real problems (problem-based learning, PBL): from derivatives and machine learning to algorithmic trading and Python.",
+      "body": "Founded in 2021, FGV Quant brings together FGV-SP students interested in quantitative finance, from derivatives and machine learning to algorithmic trading and Python.",
       "cta": "About the league",
       "competition": {
         "eyebrow": "Competition highlight",
@@ -37,7 +37,7 @@
       "introCommand": "cat mission.txt",
       "intro1": "FGV Quant is FGV-SP's Quantitative Finance League, founded in 2021.",
       "intro2": "We apply mathematics, statistics and programming to financial markets:",
-      "intro3": "derivatives, machine learning, algorithmic trading and Python, through problem-based learning.",
+      "intro3": "derivatives, machine learning, algorithmic trading and Python.",
       "hint": "Type /help to list the commands.",
       "helpHeading": "Available commands:",
       "notFound": "command not found: {cmd}",

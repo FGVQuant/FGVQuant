@@ -197,7 +197,7 @@ export default async function ComponentsShowcase() {
           introLines={[
             "A FGV Quant é a Liga de Finanças Quantitativas da FGV-SP, fundada em 2021.",
             "Aplicamos matemática, estatística e programação aos mercados financeiros —",
-            "derivativos, machine learning, trading algorítmico e Python — com aprendizado baseado em problemas.",
+            "derivativos, machine learning, trading algorítmico e Python.",
           ]}
           commands={[
             { name: "join", description: "como entrar na liga", href: "/processo-seletivo" },

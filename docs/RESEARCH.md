@@ -7,7 +7,8 @@ Research date: 2026-10-08. Gathered by two Sonnet 5.5 subagents. Items marked **
 - **Name and type:** "FGV Quant – Liga Estudantil", the Liga de Finanças Quantitativas da FGV-SP. It is an independent student entity.
 - **Founded:** 2021, in São Paulo. LinkedIn lists it under EAESP, but it seems open to all FGV students.
 - **Size:** about 33 members. LinkedIn has about 2,729 followers.
-- **Mission:** to produce content on and go deeper into quantitative finance. They use PBL (Problem Based Learning) and apply mathematics, statistics and programming. Topics include derivatives, ML, algorithmic trading and Python.
+- **Mission:** to produce content on and go deeper into quantitative finance, applying mathematics, statistics and programming. Topics include derivatives, ML, algorithmic trading and Python.
+  - **Correction (2026-10-16):** a league member confirmed that the league does **not** use PBL (Problem Based Learning). Don't describe its method as PBL or "learning by solving problems" anywhere on the site.
 - **Specialties:** Quantitative Research | Systematic Trading Strategies.
 - **No website.** Linktree is their only hub, so a site fills a real gap.
 - **Structure and leadership:** **[GAP]**. Hugo Villanova is a former president.
