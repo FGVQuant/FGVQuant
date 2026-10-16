@@ -144,6 +144,33 @@ const fund = defineCollection({
     cumulativeAsOf: s.string().regex(/^\d{4}-\d{2}$/),
     /** monthly returns in %, only months actually reported by the league */
     monthly: s.array(s.object({ month: s.string().regex(/^\d{4}-\d{2}$/), return: s.number() })),
+    /**
+     * "Panorama geral" from the latest monthly management report, since inception and as of
+     * `cumulativeAsOf`. All figures in % except sharpe, correlation and month counts.
+     */
+    overview: s
+      .object({
+        benchmark: s.string(),
+        benchmarkReturn: s.number(),
+        /** correlation between the two strategies' returns */
+        correlation: s.number(),
+        rows: s.array(
+          s.object({
+            id: s.enum(["pairs", "momentum", "fund", "benchmark"]),
+            totalReturn: s.number(),
+            volatility: s.number().optional(),
+            sharpe: s.number().optional(),
+            maxDrawdown: s.number().optional(),
+            positiveMonths: s.number().int(),
+            negativeMonths: s.number().int(),
+            monthsAboveBenchmark: s.number().int().optional(),
+            monthsBelowBenchmark: s.number().int().optional(),
+            bestMonth: s.number(),
+            worstMonth: s.number(),
+          }),
+        ),
+      })
+      .optional(),
     methodology: localized.optional(),
     source: s.string().url().optional(),
   }),

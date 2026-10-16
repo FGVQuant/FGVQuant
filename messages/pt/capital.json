@@ -2,11 +2,11 @@
   "Capital": {
     "meta": {
       "title": "FGV Quant Capital (fundo fictício)",
-      "description": "FGV Quant Capital é a carteira simulada da liga: um fundo fictício, com fins educacionais, para praticar construção de portfólio e gestão de risco."
+      "description": "FGV Quant Capital é o fundo quantitativo simulado da liga: Pairs Trading e Momentum em ações brasileiras, com regras explícitas, custos e relatório de gestão mensal contra o CDI."
     },
     "eyebrow": "FGV Quant Capital · Fundo fictício",
-    "title": "Uma carteira <em>simulada</em>, para aprender fazendo",
-    "description": "O FGV Quant Capital é a carteira simulada da liga. Não é um fundo real: serve para os membros praticarem, com método e prestação de contas, o que estudam.",
+    "title": "Um fundo quantitativo <em>simulado</em>",
+    "description": "O FGV Quant Capital é o fundo fictício da liga. Ele combina duas estratégias sistemáticas em ações brasileiras, Pairs Trading e Momentum, operadas com regras explícitas, custos de transação e um relatório de gestão mensal contra o CDI.",
     "disclaimer": {
       "title": "Aviso importante",
       "simulated": "Fundo fictício, com fins exclusivamente educacionais. Não é um fundo de investimento real.",
@@ -14,45 +14,192 @@
       "past": "Rentabilidade passada (simulada) não é indicação de resultados futuros.",
       "advice": "Nada neste site constitui recomendação de investimento."
     },
+    "snapshot": {
+      "eyebrow": "Panorama",
+      "title": "O fundo em <em>números</em>",
+      "description": "Desde o início, em {inception}, até {asOf}. Todos os resultados são simulados.",
+      "cumulative": "Retorno acumulado",
+      "vsBenchmark": "{benchmark} no período: {value}",
+      "volatility": "Volatilidade anualizada",
+      "volatilityNote": "Menor que a de cada estratégia isolada",
+      "sharpe": "Índice de Sharpe",
+      "sharpeNote": "Retorno acima do {benchmark} por unidade de risco",
+      "correlation": "Correlação entre estratégias",
+      "correlationNote": "Pairs Trading × Momentum",
+      "tableTitle": "Panorama por estratégia",
+      "tableCaption": "Desempenho simulado desde o início, por estratégia, fundo e {benchmark}, até {asOf}",
+      "metric": "Métrica",
+      "columns": {
+        "pairs": "Pairs Trading",
+        "momentum": "Momentum",
+        "fund": "Fundo",
+        "benchmark": "{benchmark}"
+      },
+      "rows": {
+        "totalReturn": "Rentabilidade total",
+        "volatility": "Volatilidade anualizada",
+        "sharpe": "Índice de Sharpe",
+        "maxDrawdown": "Drawdown máximo",
+        "positiveMonths": "Meses positivos",
+        "negativeMonths": "Meses negativos",
+        "monthsAboveBenchmark": "Meses acima do {benchmark}",
+        "monthsBelowBenchmark": "Meses abaixo do {benchmark}",
+        "bestMonth": "Melhor mês",
+        "worstMonth": "Pior mês"
+      },
+      "source": "Fonte: relatório de gestão da liga referente a {asOf}. Fundo fictício."
+    },
+    "pairs": {
+      "eyebrow": "Estratégia 01",
+      "title": "Pairs Trading",
+      "lead": "Uma estratégia de valor relativo: em vez de prever se o mercado sobe ou cai, ela aposta que a relação entre dois ativos parecidos volta ao normal.",
+      "steps": {
+        "universe": {
+          "title": "Universo de pares",
+          "body": "Partimos de ações líquidas e buscamos pares com cointegração estatisticamente significativa e baixo SSD (soma das distâncias quadráticas entre os preços normalizados): ativos que historicamente se movem juntos."
+        },
+        "signal": {
+          "title": "Sinal",
+          "body": "Para cada par, acompanhamos o spread entre os dois preços e o padronizamos em um z-score. Quanto mais longe de zero, maior o desvio em relação à relação histórica."
+        },
+        "trade": {
+          "title": "Entrada e saída",
+          "body": "A posição é aberta quando o z-score passa de cerca de 2 desvios-padrão: compramos o ativo relativamente barato e vendemos o caro. Ela é encerrada quando o spread volta para perto de 0,5 desvio."
+        },
+        "carry": {
+          "title": "Gestão das posições",
+          "body": "Posições abertas podem atravessar a virada do mês (carry-over), com limite de 42 pregões. Pares selecionados que não atingem o gatilho de entrada não são operados."
+        },
+        "costs": {
+          "title": "Custos",
+          "body": "A simulação desconta 2,5 bps por entrada e por saída e 2 bps por dia sobre as posições vendidas, como aproximação do custo de aluguel."
+        }
+      },
+      "formulaLabel": "Z-score do spread",
+      "formula": "z = (spread − média) ÷ desvio-padrão",
+      "chart": {
+        "title": "Ciclo de uma operação",
+        "aria": "Gráfico ilustrativo do z-score de um par ao longo do tempo, com faixas de entrada em mais e menos 2 desvios e de saída em mais e menos 0,5 desvio. A posição abre quando o z-score cruza a faixa de entrada e fecha quando volta à faixa de saída.",
+        "entry": "Entrada |z| ≥ 2",
+        "exit": "Saída |z| ≤ 0,5",
+        "open": "Posição aberta",
+        "note": "Série ilustrativa, gerada só para mostrar a regra. Não é uma operação real do fundo."
+      },
+      "outcomesTitle": "Como uma operação termina",
+      "outcomes": {
+        "converged": {
+          "title": "Convergência",
+          "body": "O spread volta à faixa de saída e a posição é encerrada."
+        },
+        "diverged": {
+          "title": "Divergência",
+          "body": "O spread se afasta em vez de convergir e a posição é encerrada."
+        },
+        "carry": {
+          "title": "Carry-over",
+          "body": "A posição segue aberta para o mês seguinte, dentro do limite de pregões."
+        }
+      }
+    },
+    "momentum": {
+      "eyebrow": "Estratégia 02",
+      "title": "Momentum",
+      "lead": "Uma estratégia de tendência: ela ordena as ações pela força do desempenho recente, compra as mais fortes e vende as mais fracas.",
+      "steps": {
+        "score": {
+          "title": "Ranking",
+          "body": "Todo mês, as ações do universo são ordenadas por um score de momentum, que mede a força do desempenho relativo recente."
+        },
+        "portfolio": {
+          "title": "Carteira long-short",
+          "body": "Compramos os papéis de maior score e vendemos os de menor. A configuração recente usa 15 papéis em cada ponta, 30 posições no total."
+        },
+        "weights": {
+          "title": "Pesos assimétricos",
+          "body": "A ponta comprada recebe 1,5x e a vendida 0,5x. O fundo fica líquido comprado no mercado, e a ponta vendida busca ganhar com a queda dos papéis mais fracos."
+        },
+        "rebalance": {
+          "title": "Rebalanceamento",
+          "body": "Todas as posições são refeitas no primeiro pregão do mês. O tamanho da carteira e os pesos são revisados periodicamente pela gestão."
+        }
+      },
+      "exposure": {
+        "title": "Exposição da carteira",
+        "long": "Long",
+        "short": "Short",
+        "gross": "Exposição bruta",
+        "net": "Exposição líquida",
+        "note": "Percentuais do patrimônio, na configuração recente da estratégia."
+      }
+    },
+    "risk": {
+      "eyebrow": "Risco",
+      "title": "Por que <em>combinar</em> as duas",
+      "p1": "As duas estratégias ganham por motivos diferentes: Pairs Trading depende da convergência de spreads, e Momentum, da persistência de tendências. Por isso, seus retornos praticamente não andam juntos: a correlação entre elas é de {correlation} desde o início.",
+      "p2": "O efeito aparece na volatilidade. Juntas, elas formam um fundo que oscila menos do que cada estratégia isolada.",
+      "volTitle": "Volatilidade anualizada",
+      "volAria": "Volatilidade anualizada desde o início: {summary}.",
+      "definitionsTitle": "Como ler as métricas",
+      "definitions": {
+        "volatility": {
+          "term": "Volatilidade anualizada",
+          "body": "Desvio-padrão dos retornos, em base anual. Mede o quanto o resultado oscila."
+        },
+        "sharpe": {
+          "term": "Índice de Sharpe",
+          "body": "Retorno acima do CDI dividido pela volatilidade: quanto o fundo entrega por unidade de risco."
+        },
+        "drawdown": {
+          "term": "Drawdown máximo",
+          "body": "Maior queda acumulada de um pico até o vale seguinte."
+        },
+        "correlation": {
+          "term": "Correlação",
+          "body": "Vai de −1 a 1. Perto de zero, indica estratégias que se movem de forma independente."
+        }
+      }
+    },
+    "process": {
+      "eyebrow": "Rotina",
+      "title": "Um ciclo de gestão <em>mensal</em>",
+      "description": "O fundo reproduz a rotina de uma gestora quantitativa, do estudo ao relatório.",
+      "steps": {
+        "research": {
+          "title": "Pesquisa e seleção",
+          "body": "Atualizar o universo de ativos, testar a qualidade estatística dos pares e recalcular os scores de momentum."
+        },
+        "execution": {
+          "title": "Execução simulada",
+          "body": "Abrir e fechar posições segundo as regras de cada estratégia, já descontando os custos de transação."
+        },
+        "monitoring": {
+          "title": "Monitoramento",
+          "body": "Acompanhar z-scores, volatilidade, drawdown e correlação, e avaliar ajustes incrementais nos parâmetros."
+        },
+        "report": {
+          "title": "Relatório de gestão",
+          "body": "Publicar o desempenho do mês contra o CDI, o detalhamento por estratégia e a atribuição de resultado por ativo."
+        }
+      }
+    },
     "results": {
-      "eyebrow": "Resultados simulados",
-      "title": "O que a liga reportou até agora",
-      "cumulative": "Retorno acumulado (fundo fictício)",
-      "asOf": "Em {date}",
+      "eyebrow": "Histórico",
+      "title": "Retornos mensais",
       "monthly": "Retornos mensais reportados (fundo fictício)",
       "chartLabel": "Gráfico de barras dos retornos mensais reportados do fundo fictício: {summary}.",
       "tableCaption": "Retornos mensais reportados do fundo fictício",
       "coverage": "{count, plural, one {# mês reportado} other {# meses reportados}} · {range}",
       "month": "Mês",
       "return": "Retorno",
-      "pendingNote": "O histórico mensal completo e a metodologia serão publicados assim que fornecidos pela liga. Por ora, exibimos apenas os meses já reportados.",
-      "methodologyTitle": "Metodologia"
-    },
-    "how": {
-      "eyebrow": "Como funciona",
-      "title": "Um laboratório de <em>prática</em>",
-      "description": "O FGV Quant Capital existe para que os membros exercitem, em ambiente simulado, o ciclo completo de uma gestão.",
-      "items": {
-        "construction": {
-          "title": "Construção de portfólio",
-          "body": "Praticar a montagem de uma carteira a partir do que se aprende em pesquisa quantitativa."
-        },
-        "risk": {
-          "title": "Gestão de risco",
-          "body": "Acompanhar e discutir o risco da carteira continuamente, e não só depois que os resultados aparecem."
-        },
-        "reporting": {
-          "title": "Relatório mensal",
-          "body": "Prestar contas todo mês, treinando comunicação clara de resultados."
-        }
-      }
+      "pendingNote": "Por enquanto, o gráfico mostra só os meses com retorno mensal publicado. A série completa desde {inception} será adicionada conforme os relatórios forem incorporados."
     },
     "reports": {
       "eyebrow": "Relatórios",
-      "title": "Relatórios mensais no LinkedIn",
-      "description": "Os relatórios mensais do fundo fictício são publicados na página da liga no LinkedIn.",
+      "title": "Relatórios de gestão no LinkedIn",
+      "description": "Todo mês, a liga publica o relatório de gestão do fundo fictício na página da FGV Quant no LinkedIn.",
       "cta": "Ver no LinkedIn",
-      "source": "Fonte: página da FGV Quant no LinkedIn."
+      "source": "Fonte: página da FGV Quant no LinkedIn.",
+      "legal": "O FGV Quant Capital é um projeto educacional fictício que busca simular com rigor as operações e rotinas de uma gestora quantitativa. Dados, premissas e resultados são simulados, podem divergir materialmente de condições efetivas de mercado e não constituem promessa de rentabilidade, oferta de investimento ou recomendação de compra ou venda de valores mobiliários."
     }
   }
 }
