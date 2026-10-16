@@ -8,14 +8,14 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
-import { JOIN_HREF, isActive, navItems } from "./nav-items";
+import { isActive, type NavItem } from "./nav-items";
 import { LocaleSwitch } from "./locale-switch";
 import { ThemeToggle } from "./theme-toggle";
 
 const noopSubscribe = () => () => {};
 const PANEL_ID = "mobile-nav-panel";
 
-export function MobileNav() {
+export function MobileNav({ items, cta }: { items: NavItem[]; cta: NavItem }) {
   const t = useTranslations("Nav");
   const locale = useLocale();
   const pathname = usePathname();
@@ -128,7 +128,7 @@ export function MobileNav() {
 
                 <nav aria-label={t("label")} className="relative container-page flex-1 py-8">
                   <ul className="flex flex-col">
-                    {navItems.map(({ key, href }, i) => {
+                    {items.map(({ key, href }, i) => {
                       const active = isActive(pathname, href);
                       return (
                         <motion.li
@@ -156,10 +156,10 @@ export function MobileNav() {
 
                 <div className="relative container-page flex flex-col gap-5 pb-8">
                   <Link
-                    href={JOIN_HREF}
+                    href={cta.href}
                     className="inline-flex h-12 items-center justify-center rounded-full bg-primary px-6 text-base font-medium text-primary-foreground"
                   >
-                    {t("join")}
+                    {cta.key === "join" ? t("join") : t("partnerCta")}
                   </Link>
                   <div className="flex items-center justify-between">
                     <LocaleSwitch />

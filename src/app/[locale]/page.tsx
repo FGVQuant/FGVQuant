@@ -4,13 +4,14 @@ import { ArrowUpRight } from "lucide-react";
 import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
 import { TerminalPanel } from "@/components/terminal/terminal-panel";
 import { KpiStrip } from "@/components/sections/kpi-strip";
-import { DriftTimeline } from "@/components/sections/drift-timeline";
 import { BentoCard, BentoGrid } from "@/components/sections/bento-grid";
 import { AreaBackground } from "@/components/sections/area-backgrounds";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
 import { NewsletterRow } from "@/components/cards/newsletter-row";
 import { NumberTicker } from "@/components/data/number-ticker";
 import { ButtonLink } from "@/components/ui/button";
+import { ItemList } from "@/components/ui/item-list";
+import { Link } from "@/i18n/navigation";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
@@ -74,6 +75,7 @@ export default async function HomePage() {
         }
       : null;
   const fundMonth = formatEditionInline(stats.fundAsOf, locale);
+  const recruitmentOpen = getSite().recruitment.open === true;
 
   return (
     <main id="content">
@@ -86,14 +88,26 @@ export default async function HomePage() {
         }
         description={t("hero.description")}
         actions={
-          <>
-            <ButtonLink href="/processo-seletivo" size="lg" arrow>
-              {t("hero.join")}
-            </ButtonLink>
-            <ButtonLink href="/parceiros" size="lg" variant="outline">
-              {t("hero.partner")}
-            </ButtonLink>
-          </>
+          // Partner-first until recruitment has dates; recruitment leads once it opens.
+          recruitmentOpen ? (
+            <>
+              <ButtonLink href="/processo-seletivo" size="lg" arrow>
+                {t("hero.join")}
+              </ButtonLink>
+              <ButtonLink href="/parceiros" size="lg" variant="outline">
+                {t("hero.partner")}
+              </ButtonLink>
+            </>
+          ) : (
+            <>
+              <ButtonLink href="/parceiros" size="lg" arrow>
+                {t("hero.partner")}
+              </ButtonLink>
+              <ButtonLink href="/processo-seletivo" size="lg" variant="outline">
+                {t("hero.join")}
+              </ButtonLink>
+            </>
+          )
         }
         legend={t("hero.legend")}
         legendShort={t("hero.legendShort")}
@@ -257,17 +271,26 @@ export default async function HomePage() {
               </ButtonLink>
             }
           />
-          <DriftTimeline
+          {/* Compact, newest first: the animated drift timeline lives on /eventos. */}
+          <ItemList
             className="mt-12"
-            items={toTimelineItems([...getEvents()].reverse(), locale)}
-            kindLabels={{
-              event: tc("kinds.event"),
-              competition: tc("kinds.competition"),
-              class: tc("kinds.class"),
-              visit: tc("kinds.visit"),
-              milestone: tc("kinds.milestone"),
-            }}
-            ariaLabel={tc("timelineLabel")}
+            items={toTimelineItems([...getEvents()].reverse(), locale).map((e) => ({
+              key: e.id,
+              marker: e.dateLabel,
+              title: e.href ? (
+                <Link href={e.href} className="rounded-sm underline-offset-4 hover:underline">
+                  {e.title}
+                </Link>
+              ) : (
+                e.title
+              ),
+              body: (
+                <>
+                  <span className="text-sm text-highlight">{tc(`kinds.${e.kind}`)}</span>
+                  {e.description ? <span className="mt-1 block">{e.description}</span> : null}
+                </>
+              ),
+            }))}
           />
         </div>
       </section>
@@ -292,7 +315,7 @@ export default async function HomePage() {
                   href: "/newsletter",
                 },
                 { name: "capital", description: t("terminal.cmdCapital"), href: "/capital" },
-                { name: "team", description: t("terminal.cmdTeam"), href: "/time" },
+                { name: "team", description: t("terminal.cmdTeam"), href: "/sobre#time" },
                 { name: "about", description: t("terminal.cmdAbout"), href: "/sobre" },
                 {
                   name: "motto",
@@ -430,7 +453,7 @@ function CompetitionHighlight(props: {
           </>
         ) : null}
       </p>
-      <ButtonLink href="/competicoes" variant="link" arrow className="self-start px-0">
+      <ButtonLink href="/eventos#competicoes" variant="link" arrow className="self-start px-0">
         {props.cta}
       </ButtonLink>
     </article>

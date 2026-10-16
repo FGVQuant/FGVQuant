@@ -1,13 +1,13 @@
 {
   "Events": {
     "meta": {
-      "title": "Events",
+      "title": "Events and competitions",
       "description": "Classes, company visits, competitions and milestones from FGV Quant, FGV-SP's Quantitative Finance League."
     },
     "intro": {
-      "eyebrow": "Agenda and history",
-      "title": "Events and <em>milestones</em>",
-      "description": "Classes, company visits, competitions and workshops: a chronological timeline of what the league has done."
+      "eyebrow": "Agenda, competitions and history",
+      "title": "Competitions, classes and <em>milestones</em>",
+      "description": "Competition results, classes, company visits and workshops: what the league has done, with sources and dates."
     },
     "timeline": {
       "title": "What has <em>happened</em>",

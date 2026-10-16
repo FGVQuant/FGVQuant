@@ -12,12 +12,11 @@
     "label": "Navegação principal",
     "about": "Sobre",
     "newsletter": "Newsletter",
-    "team": "Time",
     "capital": "Capital",
-    "competitions": "Competições",
     "events": "Eventos",
     "partners": "Parceiros",
     "join": "Processo seletivo",
+    "partnerCta": "Seja parceiro",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
     "skipToContent": "Pular para o conteúdo"
@@ -60,7 +59,6 @@
       "visit": "Visita",
       "milestone": "Marco"
     },
-    "timelineLabel": "Linha do tempo de atividades",
     "newTab": "(abre em nova aba)",
     "marqueePause": "Pausar",
     "marqueePlay": "Retomar"

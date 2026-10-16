@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
 import { getSite } from "@/lib/content";
-import { JOIN_HREF, navItems } from "./nav-items";
+import { allNavItems } from "./nav-items";
 
 async function getYear() {
   "use cache";
@@ -42,18 +42,13 @@ export async function SiteFooter() {
           <div>
             <h2 className="text-sm font-semibold text-foreground">{t("explore")}</h2>
             <ul className="mt-4 space-y-1">
-              {navItems.map(({ key, href }) => (
+              {allNavItems.map(({ key, href }) => (
                 <li key={key}>
                   <Link href={href} className={linkClass}>
                     {nav(key)}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href={JOIN_HREF} className={linkClass}>
-                  {nav("join")}
-                </Link>
-              </li>
             </ul>
           </div>
 

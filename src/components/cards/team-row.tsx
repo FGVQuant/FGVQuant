@@ -16,8 +16,8 @@ export function TeamRow({ name, result, members, rank, membersLabel }: TeamRowDa
   return (
     <li
       className={cn(
-        "flex flex-wrap items-center gap-4 rounded-2xl border bg-card p-5 sm:p-6",
-        top ? "border-highlight/50" : "border-border",
+        "flex flex-wrap items-center gap-4 rounded-2xl bg-card p-5 sm:p-6",
+        top && "ring-1 ring-highlight/50",
       )}
     >
       <span

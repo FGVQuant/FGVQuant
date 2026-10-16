@@ -6,6 +6,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site-url";
+import { getSite } from "@/lib/content";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipLink } from "@/components/layout/skip-link";
@@ -62,7 +63,7 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
         <ThemeProvider>
           <NextIntlClientProvider>
             <SkipLink />
-            <SiteHeader />
+            <SiteHeader recruitmentOpen={getSite().recruitment.open === true} />
             {children}
             <SiteFooter />
           </NextIntlClientProvider>
