@@ -53,9 +53,49 @@
     },
     "areas": {
       "eyebrow": "Áreas de atuação",
-      "titleA": "Cinco frentes,",
-      "titleEm": "um mesmo rigor",
-      "description": "Cada frente combina teoria, dados e código."
+      "titleA": "Os três",
+      "titleEm": "pilares",
+      "description": "Passe o mouse ou toque no diagrama para explorar cada área e suas interseções.",
+      "labels": {
+        "area": "Área",
+        "intersection": "Interseção",
+        "core": "Núcleo",
+        "diagram": "Diagrama de Venn: Tecnologia, Finanças e Modelagem. As interseções são Quant Dev, Data Science e Econometria; no centro das três, Quant.",
+        "explore": "Explorar regiões do diagrama"
+      },
+      "regions": {
+        "core": {
+          "name": "Quant",
+          "description": "A interseção das três: modelos rigorosos, implementados em código e aplicados ao mercado."
+        },
+        "tech": {
+          "name": "Tecnologia",
+          "description": "A infraestrutura que transforma ideias em sistemas que rodam: código, dados e automação.",
+          "items": ["Computação", "Programação", "Processos", "Automatização", "ETL"]
+        },
+        "finance": {
+          "name": "Finanças",
+          "description": "O contexto econômico que dá sentido aos modelos: mercados, preços e estratégias.",
+          "items": ["Trading", "Economia", "Fatores", "Preço", "Mercado"]
+        },
+        "model": {
+          "name": "Modelagem",
+          "description": "A linguagem para descrever incerteza e tomar decisões com base em dados.",
+          "items": ["Modelagem", "Estatística", "Otimização", "Matemática"]
+        },
+        "techFinance": {
+          "name": "Quant Dev",
+          "description": "Tecnologia aplicada ao mercado: sistemas de trading, dados de mercado e execução."
+        },
+        "techModel": {
+          "name": "Data Science",
+          "description": "Modelagem com código: extrair padrões e previsões de grandes volumes de dados."
+        },
+        "financeModel": {
+          "name": "Econometria",
+          "description": "Modelagem aplicada à economia e aos mercados: testar hipóteses com dados."
+        }
+      }
     },
     "newsletter": {
       "eyebrow": "FGV Quant Insights",

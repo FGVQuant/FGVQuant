@@ -53,9 +53,49 @@
     },
     "areas": {
       "eyebrow": "Focus areas",
-      "titleA": "Five areas,",
-      "titleEm": "one standard of rigor",
-      "description": "Each area combines theory, data and code."
+      "titleA": "The three",
+      "titleEm": "pillars",
+      "description": "Hover over or tap the diagram to explore each area and where they overlap.",
+      "labels": {
+        "area": "Area",
+        "intersection": "Intersection",
+        "core": "Core",
+        "diagram": "Venn diagram: Technology, Finance and Modeling. The overlaps are Quant Dev, Data Science and Econometrics; at the centre of all three, Quant.",
+        "explore": "Explore the diagram's regions"
+      },
+      "regions": {
+        "core": {
+          "name": "Quant",
+          "description": "Where all three meet: rigorous models, implemented in code and applied to markets."
+        },
+        "tech": {
+          "name": "Technology",
+          "description": "The infrastructure that turns ideas into running systems: code, data and automation.",
+          "items": ["Computing", "Programming", "Processes", "Automation", "ETL"]
+        },
+        "finance": {
+          "name": "Finance",
+          "description": "The economic context that gives models meaning: markets, prices and strategies.",
+          "items": ["Trading", "Economics", "Factors", "Pricing", "Markets"]
+        },
+        "model": {
+          "name": "Modeling",
+          "description": "The language for describing uncertainty and making data-driven decisions.",
+          "items": ["Modeling", "Statistics", "Optimization", "Mathematics"]
+        },
+        "techFinance": {
+          "name": "Quant Dev",
+          "description": "Technology applied to markets: trading systems, market data and execution."
+        },
+        "techModel": {
+          "name": "Data Science",
+          "description": "Modeling with code: extracting patterns and forecasts from large volumes of data."
+        },
+        "financeModel": {
+          "name": "Econometrics",
+          "description": "Modeling applied to economics and markets: testing hypotheses with data."
+        }
+      }
     },
     "newsletter": {
       "eyebrow": "FGV Quant Insights",

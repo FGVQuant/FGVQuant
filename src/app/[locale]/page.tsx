@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { ArrowUpRight, BrainCircuit, Code2, FlaskConical, LineChart, Sigma } from "lucide-react";
-import type { ReactNode } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
 import { TerminalPanel } from "@/components/terminal/terminal-panel";
 import { KpiStrip } from "@/components/sections/kpi-strip";
 import { DriftTimeline } from "@/components/sections/drift-timeline";
-import { BentoCard, BentoGrid } from "@/components/sections/bento-grid";
-import { AreaBackground } from "@/components/sections/area-backgrounds";
+import { QuantVenn, type QuantVennProps } from "@/components/sections/quant-venn";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
 import { NewsletterRow } from "@/components/cards/newsletter-row";
 import { NumberTicker } from "@/components/data/number-ticker";
@@ -19,7 +17,6 @@ import {
   formatEdition,
   formatEditionParts,
   formatEditionShort,
-  getAreas,
   getCompetitions,
   getEvents,
   getFeaturedIssue,
@@ -34,15 +31,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Home");
   return { title: { absolute: t("metaTitle") }, alternates: await pageAlternates("/") };
 }
-
-/** Visual treatment per focus area (ids from content/areas.json). */
-const AREA_STYLE: Record<string, { icon: ReactNode; span: string }> = {
-  derivatives: { icon: <Sigma />, span: "lg:col-span-4" },
-  ml: { icon: <BrainCircuit />, span: "lg:col-span-2" },
-  algo: { icon: <LineChart />, span: "lg:col-span-2" },
-  research: { icon: <FlaskConical />, span: "lg:col-span-2" },
-  python: { icon: <Code2 />, span: "lg:col-span-2" },
-};
 
 export default async function HomePage() {
   const locale = await getPageLocale();
@@ -165,21 +153,17 @@ export default async function HomePage() {
             }
             description={t("areas.description")}
           />
-          <BentoGrid className="mt-12">
-            {getAreas().map((area) => {
-              const style = AREA_STYLE[area.id];
-              return (
-                <BentoCard
-                  key={area.id}
-                  title={tr(area.title, locale)}
-                  description={tr(area.description, locale)}
-                  icon={style?.icon}
-                  background={<AreaBackground id={area.id} />}
-                  className={style?.span}
-                />
-              );
-            })}
-          </BentoGrid>
+          <QuantVenn
+            className="mt-12"
+            regions={t.raw("areas.regions") as QuantVennProps["regions"]}
+            labels={{
+              area: t("areas.labels.area"),
+              intersection: t("areas.labels.intersection"),
+              core: t("areas.labels.core"),
+              diagram: t("areas.labels.diagram"),
+              explore: t("areas.labels.explore"),
+            }}
+          />
         </div>
       </section>
 
