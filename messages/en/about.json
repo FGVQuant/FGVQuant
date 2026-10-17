@@ -50,6 +50,14 @@
       "body": "Follow the recruitment process and learn how to apply.",
       "button": "Recruitment process"
     },
-    "partnerCta": "Partner with us"
+    "partnerCta": "Partner with us",
+    "testimonials": {
+      "title": "In our members' words",
+      "description": "Members describe what it is like to be part of FGV Quant.",
+      "quoteTbd": "Testimonial to be confirmed.",
+      "nameTbd": "Name to be confirmed",
+      "pending": "Testimonials will be published with each person's text and permission.",
+      "teamCta": "Meet the team"
+    }
   }
 }

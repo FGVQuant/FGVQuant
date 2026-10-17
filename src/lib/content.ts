@@ -8,6 +8,7 @@ import {
   site,
   team,
   teamGroups,
+  testimonials,
   type Event,
   type NewsletterIssue,
 } from "#site/content";
@@ -107,6 +108,12 @@ export function getIssueTags() {
 // ── Team, areas, partners, competitions ─────────────────────────────────────────
 
 export const getTeam = () => [...team].sort((a, b) => a.order - b.order);
+
+/** Testimonials in display order, with the referenced team member (name, photo) resolved. */
+export const getTestimonials = () =>
+  [...testimonials]
+    .sort((a, b) => a.order - b.order)
+    .map((t) => ({ ...t, person: t.member ? team.find((m) => m.id === t.member) : undefined }));
 
 /** Team groups in display order, each with its members (members sorted by `order`). */
 export const getTeamGroups = () =>

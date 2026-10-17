@@ -84,6 +84,28 @@ const teamGroups = defineCollection({
   }),
 });
 
+/**
+ * Members' accounts of their time in the league, shown on Sobre. Written by the members
+ * themselves; never paraphrased or invented. `member` (an id from team/members.json) reuses
+ * that person's name and photo. `en` is optional: without it the PT text shows on /en too.
+ */
+const testimonials = defineCollection({
+  name: "Testimonial",
+  pattern: "testimonials.json",
+  schema: s.object({
+    id: s.string(),
+    quote: s.object({ pt: s.string(), en: s.string().optional() }).optional(),
+    member: s.string().optional(),
+    /** used when the person is not on the current team (alumni) */
+    name: s.string().optional(),
+    /** e.g. "Trainee 2025.1, hoje na Equipe Acadêmica" */
+    context: localized.optional(),
+    order: s.number(),
+    /** true until the league sends the text and the person's consent */
+    placeholder: s.boolean().default(false),
+  }),
+});
+
 const areas = defineCollection({
   name: "Area",
   pattern: "areas.json",
@@ -243,6 +265,7 @@ export default defineConfig({
     newsletter,
     team,
     teamGroups,
+    testimonials,
     areas,
     events,
     competitions,

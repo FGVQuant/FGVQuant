@@ -50,6 +50,14 @@
       "body": "Acompanhe o processo seletivo e saiba como entrar.",
       "button": "Processo seletivo"
     },
-    "partnerCta": "Seja parceiro"
+    "partnerCta": "Seja parceiro",
+    "testimonials": {
+      "title": "Na voz de quem faz a liga",
+      "description": "Membros contam como é a experiência na FGV Quant.",
+      "quoteTbd": "Depoimento a confirmar.",
+      "nameTbd": "Nome a confirmar",
+      "pending": "Os depoimentos serão publicados com o texto e a autorização de cada pessoa.",
+      "teamCta": "Conheça a equipe"
+    }
   }
 }
