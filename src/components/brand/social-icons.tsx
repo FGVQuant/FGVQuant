@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-/** lucide-react has no brand icons; minimal inline marks. */
+/** lucide-react has no brand icons; minimal inline marks for the league's social channels. */
 export function InstagramIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -26,4 +26,19 @@ export function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
       <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11.5H3V9.75Zm6.5 0h3.83v1.57h.05c.53-1 1.84-2.07 3.78-2.07 4.04 0 4.79 2.66 4.79 6.12v5.88h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.73 0-2 1.35-2 2.75v5.29h-4V9.75Z" />
     </svg>
   );
+}
+
+function networkOf(href?: string) {
+  const host = href ? href.replace(/^https?:\/\//, "").split("/")[0] : "";
+  if (host === "instagram.com" || host.endsWith(".instagram.com")) return "instagram";
+  if (host === "linkedin.com" || host.endsWith(".linkedin.com")) return "linkedin";
+  return undefined;
+}
+
+/** The brand mark for a social URL (Instagram or LinkedIn); renders nothing for other URLs. */
+export function SocialIcon({ href, className }: { href?: string; className?: string }) {
+  const network = networkOf(href);
+  if (network === "instagram") return <InstagramIcon className={className} />;
+  if (network === "linkedin") return <LinkedinIcon className={className} />;
+  return null;
 }

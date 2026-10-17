@@ -4,7 +4,8 @@ import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { getTeamGroups, intlLocale, tr } from "@/lib/content";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
-import { deriveInitials, LinkedInIcon } from "@/components/cards/member-card";
+import { deriveInitials } from "@/components/cards/member-card";
+import { LinkedinIcon } from "@/components/brand/social-icons";
 import { cn } from "@/lib/utils";
 
 type Group = ReturnType<typeof getTeamGroups>[number];
@@ -264,7 +265,7 @@ function Name({
 /** Small LinkedIn mark; quiet until the row is hovered or focused. */
 function LinkMark({ member, className }: { member: Member; className?: string }) {
   return linkOf(member) ? (
-    <LinkedInIcon
+    <LinkedinIcon
       className={cn(
         "size-4 shrink-0 text-muted-foreground/40 transition-colors group-hover:text-highlight group-focus-visible:text-highlight",
         className,

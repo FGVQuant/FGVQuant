@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { SocialIcon } from "@/components/brand/social-icons";
 import { Logo } from "@/components/brand/logo";
 import { getSite } from "@/lib/content";
 import { allNavItems } from "./nav-items";
@@ -58,6 +59,7 @@ export async function SiteFooter() {
               {follow.map(({ label, href }) => (
                 <li key={href}>
                   <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                    <SocialIcon href={href} className="size-4" />
                     {label}
                     <ArrowUpRight className="size-3.5" aria-hidden />
                     <span className="sr-only">{newTabLabel}</span>
