@@ -1,19 +1,17 @@
 {
   "Events": {
     "meta": {
-      "title": "Events and competitions",
-      "description": "Classes, company visits, competitions and milestones from FGV Quant, FGV-SP's Quantitative Finance League."
+      "title": "Events",
+      "description": "Quant Connect, classes, company visits and milestones of FGV Quant, FGV-SP's Quantitative Finance League."
     },
     "intro": {
-      "eyebrow": "Agenda, competitions and history",
-      "title": "Competitions, classes and <em>milestones</em>",
-      "description": "Competition results, classes, company visits and workshops: what the league has done, with sources and dates."
+      "eyebrow": "Events",
+      "title": "Where the league meets the market",
+      "description": "Quant Connect, which FGV Quant helped create, plus the league's classes, visits and milestones, with sources and dates."
     },
     "timeline": {
-      "title": "What has <em>happened</em>",
-      "description": "Dates are shown only at the precision we know: if we only know the month or semester, that is what we show.",
-      "ariaLabel": "FGV Quant events timeline",
-      "linkLabel": "read more"
+      "title": "Earlier years",
+      "description": "Dates are shown only as precisely as we know them: when we only know the month or semester, that is what we show."
     },
     "kinds": {
       "event": "Event",
@@ -23,9 +21,29 @@
       "milestone": "Milestone"
     },
     "cta": {
-      "title": "Follow the <em>agenda</em>",
       "description": "Upcoming events are announced on the league's Instagram.",
       "button": "Follow on Instagram"
+    },
+    "qc": {
+      "label": "Our flagship event",
+      "edition": "Edition {number} · {year}",
+      "organizers": "Organized by",
+      "statDays": "event days",
+      "statPanels": "practitioner panels",
+      "statLeagues": "organizing leagues",
+      "programTitle": "Program · {venue}",
+      "themesTitle": "Panel themes",
+      "partnersTitle": "{year} partners",
+      "partnersNote": "As announced by the event on LinkedIn.",
+      "source": "See the edition announcement",
+      "instagram": "Event Instagram",
+      "linkedin": "Event LinkedIn",
+      "pastTitle": "Past editions",
+      "details": "{year} program, themes and partners"
+    },
+    "highlights": {
+      "title": "In {year}",
+      "description": "Talks, visits and classes with the industry."
     }
   }
 }
