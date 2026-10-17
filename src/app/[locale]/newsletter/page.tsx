@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Briefcase, Compass, Newspaper, Radar, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PageIntro } from "@/components/layout/page-intro";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
 import { ButtonAnchor } from "@/components/ui/button";
-import { Em, SectionHeader } from "@/components/ui/section-header";
+import { SectionHeader } from "@/components/ui/section-header";
+import { ItemList } from "@/components/ui/item-list";
 import { getFeaturedIssue, getIssues, getIssueTags, getSite } from "@/lib/content";
 import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
@@ -20,18 +21,13 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const SECTIONS = [
-  { key: "personality", Icon: Sparkles },
-  { key: "radar", Icon: Radar },
-  { key: "news", Icon: Newspaper },
-  { key: "culture", Icon: Compass },
-  { key: "jobs", Icon: Briefcase },
-] as const;
+/** The recurring sections of every issue, in reading order. */
+const SECTIONS = ["personality", "radar", "news", "culture", "jobs"] as const;
 
 export default async function NewsletterPage() {
   const locale = await getPageLocale();
   const t = await getTranslations("Newsletter");
-  const em = (chunks: React.ReactNode) => <Em>{chunks}</Em>;
+  const em = (chunks: React.ReactNode) => chunks;
 
   const site = getSite();
   const issues = getIssues();
@@ -61,9 +57,9 @@ export default async function NewsletterPage() {
 
       {featuredData ? (
         <section className="container-page border-t border-border section-y">
-          <p className="mb-6 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+          <h2 className="mb-6 font-sans text-lg font-semibold tracking-tight">
             {t("featured.eyebrow")}
-          </p>
+          </h2>
           <NewsletterCard
             featured
             href={`/newsletter/${featuredData.slug}`}
@@ -75,6 +71,8 @@ export default async function NewsletterPage() {
               month: featuredData.month,
               year: featuredData.year,
               series: t("intro.eyebrow"),
+              figure: featuredData.figure,
+              figureNote: t("figureNote"),
             }}
             statusLabel={t(`status.${featuredData.status}`)}
             languageLabel={locale === "en" ? t("language") : undefined}
@@ -85,10 +83,7 @@ export default async function NewsletterPage() {
 
       {rest.length > 0 ? (
         <section className="container-page border-t border-border section-y">
-          <SectionHeader
-            eyebrow={t("archive.eyebrow")}
-            title={t.rich("archive.title", { em: (chunks) => chunks })}
-          />
+          <SectionHeader title={t.rich("archive.title", { em: (chunks) => chunks })} />
           <div className="mt-10">
             <IssueArchive
               issues={rest}
@@ -105,28 +100,18 @@ export default async function NewsletterPage() {
 
       <section className="container-page border-t border-border section-y">
         <SectionHeader
-          eyebrow={t("format.eyebrow")}
           title={t.rich("format.title", { em: (chunks) => chunks })}
           description={t("format.description")}
         />
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {SECTIONS.map(({ key, Icon }, i) => (
-            <li key={key} className="rounded-2xl border border-border bg-card p-5">
-              <div className="flex items-center justify-between">
-                <Icon aria-hidden className="size-5 text-highlight" />
-                <span className="font-mono text-xs text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-              <h3 className="mt-4 font-sans text-lg leading-snug font-semibold tracking-tight">
-                {t(`format.sections.${key}.title`)}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(`format.sections.${key}.body`)}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <ItemList
+          className="mt-10"
+          items={SECTIONS.map((key, i) => ({
+            key,
+            marker: i + 1,
+            title: t(`format.sections.${key}.title`),
+            body: t(`format.sections.${key}.body`),
+          }))}
+        />
       </section>
     </main>
   );

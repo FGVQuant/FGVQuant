@@ -6,10 +6,8 @@ const STATIC_PATHS = [
   "",
   "/sobre",
   "/newsletter",
-  "/time",
   "/processo-seletivo",
   "/capital",
-  "/competicoes",
   "/eventos",
   "/parceiros",
 ];

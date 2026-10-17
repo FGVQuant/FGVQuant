@@ -12,12 +12,11 @@
     "label": "Main navigation",
     "about": "About",
     "newsletter": "Newsletter",
-    "team": "Team",
     "capital": "Capital",
-    "competitions": "Competitions",
     "events": "Events",
     "partners": "Partners",
     "join": "Join us",
+    "partnerCta": "Partner with us",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "skipToContent": "Skip to content"
@@ -60,7 +59,6 @@
       "visit": "Visit",
       "milestone": "Milestone"
     },
-    "timelineLabel": "Activities timeline",
     "newTab": "(opens in a new tab)",
     "marqueePause": "Pause",
     "marqueePlay": "Resume"

@@ -6,18 +6,11 @@
     "title": "Matemática, estatística e código para <em>entender</em> o mercado",
     "lead": "O FGV Quant é a liga estudantil de finanças quantitativas da FGV-SP. Desde {year}, cerca de {members} membros e trainees estudam, pesquisam e constroem estratégias sistemáticas.",
     "mission": {
-      "eyebrow": "Missão",
       "title": "Aprender <em>fazendo</em>, com rigor",
       "p1": "Produzimos conteúdo e aprofundamos o estudo de finanças quantitativas, aplicando matemática, estatística e programação a problemas reais de mercado.",
       "p2": "Os temas vão de derivativos e machine learning a trading algorítmico e Python."
     },
-    "areas": {
-      "eyebrow": "Áreas de atuação",
-      "title": "Onde concentramos o <em>estudo</em>",
-      "description": "Cinco frentes que combinam teoria, dados e implementação."
-    },
     "how": {
-      "eyebrow": "Como trabalhamos",
       "title": "Da teoria à <em>prática</em>",
       "description": "Um ciclo contínuo de estudo, pesquisa e exposição ao mercado.",
       "study": {
@@ -50,19 +43,12 @@
       }
     },
     "numbers": {
-      "eyebrow": "Em números",
-      "title": "A liga em <em>números</em>",
-      "members": "Membros e trainees",
-      "issues": "Edições da newsletter",
-      "teams": "Times ranqueados",
-      "fund": "Retorno acumulado (fictício)",
       "note": "Membros e trainees: informado pela liga em {asOf}. Times ranqueados conforme informado pela liga."
     },
     "cta": {
       "title": "Quer fazer parte da <em>liga</em>?",
       "body": "Acompanhe o processo seletivo e saiba como entrar.",
-      "button": "Processo seletivo",
-      "team": "Conhecer o time"
+      "button": "Processo seletivo"
     },
     "partnerCta": "Seja parceiro"
   }

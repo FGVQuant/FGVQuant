@@ -120,9 +120,7 @@ export function MonthlyBars({
       </svg>
       <p className="mt-3 font-mono text-xs text-muted-foreground">{coverage}</p>
       <table className="mt-4 w-full border-collapse text-left text-sm">
-        <caption className="pb-2 text-left font-mono text-xs tracking-wide text-muted-foreground uppercase">
-          {tableCaption}
-        </caption>
+        <caption className="pb-2 text-left text-sm text-muted-foreground">{tableCaption}</caption>
         <thead className="sr-only">
           <tr>
             <th scope="col">{monthHeader}</th>

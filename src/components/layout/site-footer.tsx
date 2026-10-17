@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
 import { getSite } from "@/lib/content";
-import { JOIN_HREF, navItems } from "./nav-items";
+import { allNavItems } from "./nav-items";
 
 async function getYear() {
   "use cache";
@@ -30,43 +30,30 @@ export async function SiteFooter() {
   ];
 
   return (
-    <footer className="relative isolate mt-24 overflow-hidden border-t border-border">
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-dots-strong [mask-image:linear-gradient(to_bottom,black,transparent_80%)] opacity-60"
-      />
+    <footer className="mt-24 border-t border-border section-tone">
       <div className="container-page py-16">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div className="max-w-sm">
             <Logo tagline={brand("tagline")} />
             <p className="mt-6 text-sm text-muted-foreground">{t("about")}</p>
-            <p className="mt-4 font-mono text-xs text-highlight">{brand("motto")}</p>
+            <p className="mt-4 text-sm text-highlight">{brand("motto")}</p>
           </div>
 
           <div>
-            <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
-              {t("explore")}
-            </h2>
+            <h2 className="text-sm font-semibold text-foreground">{t("explore")}</h2>
             <ul className="mt-4 space-y-1">
-              {navItems.map(({ key, href }) => (
+              {allNavItems.map(({ key, href }) => (
                 <li key={key}>
                   <Link href={href} className={linkClass}>
                     {nav(key)}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href={JOIN_HREF} className={linkClass}>
-                  {nav("join")}
-                </Link>
-              </li>
             </ul>
           </div>
 
           <div>
-            <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
-              {t("follow")}
-            </h2>
+            <h2 className="text-sm font-semibold text-foreground">{t("follow")}</h2>
             <ul className="mt-4 space-y-1">
               {follow.map(({ label, href }) => (
                 <li key={href}>
@@ -81,16 +68,14 @@ export async function SiteFooter() {
           </div>
 
           <div>
-            <h2 className="font-mono text-xs tracking-wide text-foreground uppercase">
-              {t("contact")}
-            </h2>
+            <h2 className="text-sm font-semibold text-foreground">{t("contact")}</h2>
             {site.email ? (
               <a href={`mailto:${site.email}`} className={`mt-4 ${linkClass}`}>
                 {site.email}
               </a>
             ) : (
               // email pending from the league (docs/INPUTS.md 0.3) — shown honestly as TBD
-              <p className="mt-4 inline-block rounded-md border border-dashed border-border-strong px-2 py-1 font-mono text-xs text-muted-foreground">
+              <p className="mt-4 w-fit rounded-md border border-dashed border-border-strong px-2 py-1 text-xs text-muted-foreground">
                 {t("emailPending")}
               </p>
             )}

@@ -33,7 +33,7 @@ export function LocaleSwitch({ className }: { className?: string }) {
               if (!active) router.replace(pathname, { locale });
             }}
             className={cn(
-              "h-full rounded-full px-2.5 uppercase transition-colors",
+              "h-full pressable rounded-full px-2.5 uppercase",
               active ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground",
             )}
           >

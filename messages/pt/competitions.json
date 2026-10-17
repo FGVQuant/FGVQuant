@@ -1,22 +1,11 @@
 {
   "Competitions": {
-    "meta": {
-      "title": "Competições",
-      "description": "Equipes da FGV Quant em competições de finanças quantitativas, como o Desafio Quant AI do Itaú Asset."
-    },
-    "eyebrow": "Competições",
     "title": "Quant na <em>prática</em>, contra o mercado e os colegas",
     "description": "Os membros da liga montam equipes para competir em desafios universitários de finanças quantitativas.",
     "empty": "Os resultados de competições serão publicados assim que fornecidos pela liga.",
     "source": "Anúncio do organizador",
     "members": "Integrante",
     "selfReportedBadge": "Autodeclarado",
-    "selfReported": "Resultado divulgado pela liga.",
-    "next": {
-      "eyebrow": "Próxima edição",
-      "title": "Quer competir <em>com a gente</em>?",
-      "description": "Entre na liga, forme equipe e construa a sua estratégia para os próximos desafios.",
-      "cta": "Processo seletivo"
-    }
+    "selfReported": "Resultado divulgado pela liga."
   }
 }

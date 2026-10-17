@@ -17,7 +17,7 @@ export function Disclaimer({
       aria-label={title}
       className={cn("rounded-2xl border border-highlight/40 bg-highlight/10 p-5 sm:p-6", className)}
     >
-      <p className="flex items-center gap-2 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+      <p className="flex items-center gap-2 text-sm font-medium text-highlight">
         <ShieldAlert aria-hidden className="size-4" />
         {title}
       </p>

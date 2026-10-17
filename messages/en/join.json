@@ -17,12 +17,10 @@
     },
     "apply": "Apply",
     "how": {
-      "eyebrow": "Stages",
       "title": "How it <em>works</em>",
       "description": "Stages, deadlines and criteria will be published here once the league announces the process."
     },
     "who": {
-      "eyebrow": "Eligibility",
       "title": "Who can <em>take part</em>",
       "body": "The league is for FGV-SP students interested in quantitative finance."
     },
@@ -63,7 +61,6 @@
       }
     },
     "faq": {
-      "eyebrow": "Questions",
       "title": "Frequently asked <em>questions</em>",
       "items": [
         {
@@ -85,7 +82,6 @@
       ]
     },
     "notify": {
-      "eyebrow": "Stay in the loop",
       "title": "Get notified when it <em>opens</em>",
       "description": "Follow the league to find out when the recruitment process is announced.",
       "instagram": "Follow on Instagram",

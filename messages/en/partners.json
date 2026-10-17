@@ -10,14 +10,12 @@
       "description": "Companies that collaborate with FGV Quant, and the channels to reach us."
     },
     "list": {
-      "eyebrow": "Partners",
       "title": "Who builds <em>with us</em>",
       "description": "We show names and logos only with each organization's confirmation.",
       "pending": "Partner names and logos will be shown here once they are confirmed.",
       "marqueeLabel": "Partner logos"
     },
     "pitch": {
-      "eyebrow": "Become a partner",
       "title": "Talk to people who <em>think</em> quant",
       "description": "If your company wants to collaborate with the league, here are some ways to do it:",
       "items": {
@@ -42,7 +40,6 @@
       "ctaLinkedin": "Propose a partnership on LinkedIn"
     },
     "contact": {
-      "eyebrow": "Contact",
       "title": "Talk to <em>us</em>",
       "description": "Pick the channel you prefer.",
       "instagram": {

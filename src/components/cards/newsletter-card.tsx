@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { IssueCover } from "@/components/cards/issue-cover";
+import type { IssueFigureKind } from "@/components/cards/issue-figure";
 import { cn } from "@/lib/utils";
 
 type NewsletterCardProps = {
@@ -15,7 +16,14 @@ type NewsletterCardProps = {
   tags?: string[];
   cover?: { src: string; alt: string };
   /** Typographic cover text, used when no `cover` image is given. */
-  coverText?: { month: string; year: string; series?: string; topic?: string };
+  coverText?: {
+    month: string;
+    year: string;
+    series?: string;
+    topic?: string;
+    figure?: IssueFigureKind;
+    figureNote?: string;
+  };
   /** "Resumo" / "Summary" / full-issue label, derived from the issue status. */
   statusLabel?: string;
   /** "Português" / "In Portuguese"; pass only where the UI is not Portuguese. */
@@ -45,19 +53,19 @@ export function NewsletterCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col gap-5 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-border-strong",
+        "group relative flex flex-col gap-5 rounded-2xl bg-card p-4 transition-colors hover:bg-secondary",
         featured && "md:grid md:grid-cols-2 md:items-center md:gap-8 md:p-6",
         className,
       )}
     >
       {cover ? (
-        <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border bg-secondary">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-secondary">
           <Image
             src={cover.src}
             alt={cover.alt}
             fill
             sizes={featured ? "(min-width: 768px) 560px, 100vw" : "(min-width: 768px) 360px, 100vw"}
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+            className="object-cover transition-[scale] duration-500 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
           />
         </div>
       ) : (
@@ -67,11 +75,13 @@ export function NewsletterCard({
           year={coverText?.year ?? ""}
           series={coverText?.series ?? "FGV Quant Insights"}
           topic={coverText?.topic ?? tags?.[0]}
+          figure={coverText?.figure}
+          figureNote={coverText?.figureNote}
         />
       )}
 
       <div className="flex flex-col gap-3">
-        <p className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs tracking-wide text-muted-foreground uppercase">
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
           <span>{dateLabel}</span>
           {issueLabel ? (
             <>
@@ -113,7 +123,7 @@ export function NewsletterCard({
           {readLabel}
           <ArrowRight
             aria-hidden
-            className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+            className="size-4 transition-[translate] duration-200 ease-out group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
           />
         </span>
       </div>

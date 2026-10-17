@@ -17,12 +17,10 @@
     },
     "apply": "Inscreva-se",
     "how": {
-      "eyebrow": "Etapas",
       "title": "Como <em>funciona</em>",
       "description": "As etapas, prazos e critérios serão publicados aqui quando a liga divulgar o processo."
     },
     "who": {
-      "eyebrow": "Elegibilidade",
       "title": "Quem pode <em>participar</em>",
       "body": "A liga é voltada a estudantes da FGV-SP interessados em finanças quantitativas."
     },
@@ -63,7 +61,6 @@
       }
     },
     "faq": {
-      "eyebrow": "Dúvidas",
       "title": "Perguntas <em>frequentes</em>",
       "items": [
         {
@@ -85,7 +82,6 @@
       ]
     },
     "notify": {
-      "eyebrow": "Fique por dentro",
       "title": "Seja avisado quando <em>abrir</em>",
       "description": "Acompanhe a liga para saber quando o processo seletivo for divulgado.",
       "instagram": "Seguir no Instagram",

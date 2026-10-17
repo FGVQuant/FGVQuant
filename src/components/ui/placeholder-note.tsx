@@ -23,7 +23,7 @@ export function PlaceholderNote({
         className,
       )}
     >
-      <span className="inline-flex items-center gap-2 rounded-full border border-border px-2.5 py-0.5 font-mono text-xs tracking-wide text-highlight uppercase">
+      <span className="inline-flex items-center gap-2 rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-highlight">
         <span aria-hidden className="size-1.5 rounded-full bg-highlight" />
         {label}
       </span>

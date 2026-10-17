@@ -51,7 +51,7 @@ export function MemberCard({
 }: MemberCardProps) {
   return (
     <article className={cn("group flex flex-col gap-4", className)}>
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border bg-secondary">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-secondary">
         {photo ? (
           <Image
             src={photo.src}
@@ -61,7 +61,7 @@ export function MemberCard({
             placeholder={photo.blurDataURL ? "blur" : "empty"}
             blurDataURL={photo.blurDataURL}
             sizes="(min-width: 1024px) 280px, (min-width: 640px) 33vw, 50vw"
-            className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+            className="absolute inset-0 size-full object-cover transition-[scale] duration-500 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
           />
         ) : (
           <div
@@ -69,7 +69,6 @@ export function MemberCard({
             className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-600/70 via-brand-800 to-brand-950"
           >
             <div className="absolute inset-0 bg-dot-grid" />
-            <div className="absolute inset-0 bg-glow opacity-50" />
             <span className="relative font-display text-5xl tracking-wide text-lavender-300">
               {initials ?? deriveInitials(name)}
             </span>

@@ -78,7 +78,7 @@ async function Issue({ params }: { params: Props["params"] }) {
         </Link>
 
         <header className="mt-8">
-          <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+          <p className="text-sm font-medium text-highlight">
             {formatEdition(issue.edition, locale)}
           </p>
           <h1 className="mt-4 font-display text-3xl leading-[1.1] tracking-tight text-balance sm:text-4xl md:text-5xl">
@@ -109,7 +109,7 @@ async function Issue({ params }: { params: Props["params"] }) {
             role="note"
             className="mt-10 rounded-2xl border border-highlight/30 bg-highlight/10 p-6"
           >
-            <p className="flex items-center gap-2 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+            <p className="flex items-center gap-2 text-sm font-medium text-highlight">
               <Info aria-hidden className="size-4" />
               {t("issue.summaryTitle")}
             </p>
@@ -149,9 +149,9 @@ async function Issue({ params }: { params: Props["params"] }) {
             {older ? (
               <Link
                 href={`/newsletter/${older.slug}`}
-                className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-border-strong"
+                className="group rounded-2xl bg-card p-5 transition-colors hover:bg-secondary"
               >
-                <span className="flex items-center gap-2 font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                <span className="flex items-center gap-2 text-sm text-muted-foreground">
                   <ArrowLeft aria-hidden className="size-4" />
                   {t("issue.prev")}
                 </span>
@@ -165,9 +165,9 @@ async function Issue({ params }: { params: Props["params"] }) {
             {newer ? (
               <Link
                 href={`/newsletter/${newer.slug}`}
-                className="group rounded-2xl border border-border bg-card p-5 text-left transition-colors hover:border-border-strong sm:text-right"
+                className="group rounded-2xl bg-card p-5 text-left transition-colors hover:bg-secondary sm:text-right"
               >
-                <span className="flex items-center gap-2 font-mono text-xs tracking-wide text-muted-foreground uppercase sm:justify-end">
+                <span className="flex items-center gap-2 text-sm text-muted-foreground sm:justify-end">
                   {t("issue.next")}
                   <ArrowRight aria-hidden className="size-4" />
                 </span>
@@ -179,7 +179,7 @@ async function Issue({ params }: { params: Props["params"] }) {
           </nav>
         ) : null}
 
-        <section className="mt-10 rounded-2xl border border-border bg-card p-6 md:p-8">
+        <section className="mt-10 rounded-2xl bg-card p-6 md:p-8">
           <h2 className="font-display text-2xl">{t("issue.subscribeTitle")}</h2>
           <p className="mt-2 text-muted-foreground">{t("issue.subscribeBody")}</p>
           <ButtonAnchor variant="outline" size="lg" href={site.newsletterUrl} className="mt-5">

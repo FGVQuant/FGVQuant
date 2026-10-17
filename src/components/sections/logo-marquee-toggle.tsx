@@ -24,7 +24,7 @@ export function MarqueeToggle({
           ?.querySelector(".fq-marquee")
           ?.setAttribute("data-paused", String(next));
       }}
-      className="fq-marquee-toggle mt-3 ml-auto flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground"
+      className="fq-marquee-toggle mt-3 ml-auto flex pressable items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:border-border-strong hover:bg-accent hover:text-foreground"
     >
       <Icon className="size-3" aria-hidden />
       {paused ? playLabel : pauseLabel}

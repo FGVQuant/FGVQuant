@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Standard intro band for inner pages: node-dot eyebrow, Lora h1 (use <Em> for one emphasised
- * word), muted lead, optional actions/meta. Sits under the sticky header on a soft glow + grid.
+ * Standard intro band for inner pages: node-dot eyebrow, plain Lora h1, muted lead, optional
+ * actions/meta, and an optional page motif. Flat: it sits on the site-wide dots, no glow.
  */
 export function PageIntro({
   eyebrow,
@@ -23,37 +23,22 @@ export function PageIntro({
   className?: string;
 }) {
   return (
-    <section className={cn("relative isolate overflow-hidden border-b border-border", className)}>
-      <div aria-hidden className="absolute inset-0 -z-10 bg-glow opacity-70" />
-      {!motif ? (
-        <>
-          {/* No motif: a spotlight of brighter dots (on the site-wide grid) fills the right half. */}
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10 [background:radial-gradient(45%_70%_at_78%_45%,var(--intro-glow),transparent_70%)]"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10 bg-dots-strong [mask-image:radial-gradient(50%_85%_at_78%_45%,black,transparent_75%)] max-lg:[mask-image:radial-gradient(70%_60%_at_85%_20%,black,transparent_75%)]"
-          />
-        </>
-      ) : null}
+    <section
+      className={cn(
+        "relative isolate overflow-hidden border-b border-border section-tone",
+        className,
+      )}
+    >
       {motif ? (
-        <>
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10 [background:radial-gradient(45%_70%_at_75%_50%,var(--intro-glow),transparent_70%)]"
-          />
-          <div aria-hidden className="pointer-events-none absolute inset-0 container-page">
-            <div className="absolute top-6 right-0 h-40 w-3/5 text-highlight opacity-35 sm:h-52 lg:inset-y-0 lg:my-auto lg:h-[72%] lg:max-h-80 lg:w-[45%] lg:[mask-image:linear-gradient(to_right,transparent,black_35%)] lg:opacity-100">
-              {motif}
-            </div>
+        <div aria-hidden className="pointer-events-none absolute inset-0 container-page">
+          <div className="absolute top-6 right-0 h-40 w-3/5 text-highlight opacity-35 sm:h-52 lg:inset-y-0 lg:my-auto lg:h-[72%] lg:max-h-80 lg:w-[45%] lg:[mask-image:linear-gradient(to_right,transparent,black_35%)] lg:opacity-100">
+            {motif}
           </div>
-        </>
+        </div>
       ) : null}
       <div className="container-page pt-20 pb-14 md:pt-28 md:pb-20">
         {eyebrow ? (
-          <p className="flex items-center gap-2 font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+          <p className="flex items-center gap-2 text-sm font-medium text-highlight">
             <span aria-hidden className="size-1.5 rounded-full bg-highlight" />
             {eyebrow}
           </p>

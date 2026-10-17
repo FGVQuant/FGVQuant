@@ -140,12 +140,7 @@ export default async function ComponentsShowcase() {
       <section className={SECTION_CLASS}>
         <p className={LABEL_CLASS}>2.2 · SectionHeader · BentoGrid · BentoCard</p>
         <SectionHeader
-          eyebrow="Áreas de atuação"
-          title={
-            <>
-              Cinco frentes, <Em>um mesmo rigor</Em>.
-            </>
-          }
+          title="Cinco frentes, um mesmo rigor."
           description="Da modelagem de derivativos à programação de estratégias, cada frente combina matemática, estatística e código."
         />
         <div className="mt-12">
@@ -190,36 +185,7 @@ export default async function ComponentsShowcase() {
       {/* 2.3 TerminalPanel */}
       <section className={SECTION_CLASS}>
         <p className={LABEL_CLASS}>2.3 · TerminalPanel</p>
-        <TerminalPanel
-          className="mx-auto max-w-3xl"
-          title="fgvquant@liga: ~"
-          introCommand="cat missao.txt"
-          introLines={[
-            "A FGV Quant é a Liga de Finanças Quantitativas da FGV-SP, fundada em 2021.",
-            "Aplicamos matemática, estatística e programação aos mercados financeiros —",
-            "derivativos, machine learning, trading algorítmico e Python.",
-          ]}
-          commands={[
-            { name: "join", description: "como entrar na liga", href: "/processo-seletivo" },
-            { name: "newsletter", description: "FGV Quant Insights, mensal", href: "/newsletter" },
-            { name: "capital", description: "fundo fictício da liga", href: "/capital" },
-            { name: "team", description: "quem somos", href: "/time" },
-            { name: "about", description: "missão e história", href: "/sobre" },
-            {
-              name: "motto",
-              description: "nosso lema",
-              output: ["Excelência. Inovação. Precisão."],
-            },
-          ]}
-          labels={{
-            hint: "Digite /help para ver os comandos.",
-            helpHeading: "Comandos disponíveis:",
-            notFound: "comando não encontrado: {cmd}",
-            navigating: "abrindo {path}…",
-            inputLabel: "Comando do terminal",
-            chipsLabel: "Comandos rápidos",
-          }}
-        />
+        <TerminalPanel />
       </section>
 
       {/* 2.4 DriftTimeline */}

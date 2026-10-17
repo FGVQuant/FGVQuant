@@ -1,4 +1,5 @@
 import * as runtime from "react/jsx-runtime";
+import { TailRiskFigure } from "./tail-risk-figure";
 import { createElement, isValidElement, type ComponentProps, type ReactNode } from "react";
 import { ArrowUpRight, Info, TriangleAlert } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -130,6 +131,7 @@ const defaultComponents = {
   img: MdxImage,
   table: MdxTable,
   Callout,
+  TailRiskFigure,
 };
 
 type MdxComponents = Record<string, React.ElementType>;

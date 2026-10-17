@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 /** Shared button styling. Use directly for custom elements. */
 export const buttonVariants = cva(
-  "group/btn inline-flex max-w-full items-center justify-center gap-2 whitespace-normal text-center font-medium transition-[background-color,color,border-color,opacity] duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0",
+  "group/btn pressable inline-flex max-w-full items-center justify-center gap-2 whitespace-normal text-center font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -39,7 +39,7 @@ function Arrow() {
   return (
     <ArrowRight
       aria-hidden
-      className="size-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 motion-reduce:transition-none"
+      className="size-4 transition-[translate] duration-200 ease-out group-hover/btn:translate-x-0.5 motion-reduce:group-hover/btn:translate-x-0"
     />
   );
 }

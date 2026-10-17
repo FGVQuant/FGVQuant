@@ -42,7 +42,7 @@ export function EventCard({
     <article
       data-kind={kind}
       className={cn(
-        "group relative flex items-start gap-4 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-border-strong sm:gap-5 sm:p-5",
+        "group relative flex items-start gap-4 rounded-2xl bg-card p-4 transition-colors hover:bg-secondary sm:gap-5 sm:p-5",
         className,
       )}
     >
@@ -79,7 +79,7 @@ export function EventCard({
           </p>
         ) : null}
         {location ? (
-          <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+          <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-muted-foreground">
             <MapPin aria-hidden className="size-3.5 shrink-0" />
             {location}
           </p>
@@ -93,7 +93,7 @@ export function EventCard({
             alt={image.alt}
             fill
             sizes="96px"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+            className="object-cover transition-[scale] duration-500 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
           />
         </div>
       ) : null}

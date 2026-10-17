@@ -53,14 +53,14 @@ export function BentoCard({
   return (
     <div
       className={cn(
-        "group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl border border-border bg-card/60 p-6 transition-colors duration-300 hover:border-border-strong",
+        "group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-card p-6 transition-colors duration-300 hover:bg-secondary",
         className,
       )}
     >
       {background ? (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black_35%,transparent_92%)] text-highlight transition-transform duration-700 ease-out-expo group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black_35%,transparent_92%)] text-highlight transition-[scale] duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
         >
           {background}
         </div>
@@ -77,11 +77,7 @@ export function BentoCard({
               {icon}
             </span>
           ) : null}
-          {eyebrow ? (
-            <p className="mb-2 font-mono text-xs tracking-wide text-muted-foreground uppercase">
-              {eyebrow}
-            </p>
-          ) : null}
+          {eyebrow ? <p className="mb-2 text-sm text-muted-foreground">{eyebrow}</p> : null}
           {href ? (
             href.startsWith("http") ? (
               <a href={href} target="_blank" rel="noreferrer noopener" className={linkClass}>
@@ -101,7 +97,7 @@ export function BentoCard({
         {href ? (
           <span
             aria-hidden
-            className="shrink-0 font-mono text-lg text-muted-foreground transition-all duration-300 group-hover:translate-x-1 group-hover:text-highlight motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+            className="shrink-0 font-mono text-lg text-muted-foreground transition-[translate,color] duration-200 ease-out group-hover:translate-x-1 group-hover:text-highlight motion-reduce:group-hover:translate-x-0"
           >
             →
           </span>

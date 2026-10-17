@@ -23,14 +23,19 @@ type KpiStripProps = {
 };
 
 /**
- * Hairline-bordered band of KPIs: 2 columns on mobile, 4 on large screens.
+ * Hairline-bordered band of KPIs: three in one row, or four as 2×2 below lg.
  * Each cell shows a mono label, an animated number, optional sparkline and note.
  */
 export function KpiStrip({ items, locale, className }: KpiStripProps) {
+  // Three short figures fit one row at every width; four wrap to 2×2 below lg.
+  const three = items.length === 3;
   return (
     <div
       className={cn(
-        "grid grid-cols-2 border-y border-border lg:grid-cols-4 lg:divide-x lg:divide-border",
+        "grid border-y border-border",
+        three
+          ? "grid-cols-3 divide-x divide-border"
+          : "grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-border",
         className,
       )}
     >
@@ -39,13 +44,11 @@ export function KpiStrip({ items, locale, className }: KpiStripProps) {
           key={`${item.label}-${i}`}
           className={cn(
             "flex flex-col gap-3 p-5 transition-colors hover:bg-accent sm:p-8",
-            i % 2 === 1 && "border-l border-border lg:border-l-0",
-            i >= 2 && "border-t border-border lg:border-t-0",
+            !three && i % 2 === 1 && "border-l border-border lg:border-l-0",
+            !three && i >= 2 && "border-t border-border lg:border-t-0",
           )}
         >
-          <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-            {item.label}
-          </span>
+          <span className="text-sm text-muted-foreground">{item.label}</span>
           <NumberTicker
             value={item.value}
             decimals={item.decimals}
@@ -57,11 +60,7 @@ export function KpiStrip({ items, locale, className }: KpiStripProps) {
           {item.spark && item.spark.length > 1 && (
             <Sparkline data={item.spark} area label={item.sparkLabel ?? item.label} />
           )}
-          {item.note && (
-            <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-              * {item.note}
-            </span>
-          )}
+          {item.note && <span className="text-sm text-muted-foreground">* {item.note}</span>}
         </div>
       ))}
     </div>

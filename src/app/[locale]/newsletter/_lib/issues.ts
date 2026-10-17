@@ -1,5 +1,6 @@
 import { formatEditionParts, formatEditionShort, getIssues } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
+import type { IssueFigureKind } from "@/components/cards/issue-figure";
 
 export type IssueCardData = {
   slug: string;
@@ -12,6 +13,8 @@ export type IssueCardData = {
   status: "summary" | "full";
   excerpt: string;
   tags: string[];
+  /** Topic figure for the cover and archive row, when the issue's topic is known. */
+  figure?: IssueFigureKind;
 };
 
 /** Serializable card data (safe to pass to client components). */
@@ -26,5 +29,6 @@ export function toCardData(issue: ReturnType<typeof getIssues>[number], locale: 
     status: issue.status,
     excerpt: issue.excerpt,
     tags: issue.tags,
+    figure: issue.figure,
   } satisfies IssueCardData;
 }

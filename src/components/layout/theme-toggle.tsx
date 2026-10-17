@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const noopSubscribe = () => () => {};
 const base =
-  "inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors";
+  "inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground pressable";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const t = useTranslations("Theme");
