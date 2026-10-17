@@ -1,0 +1,147 @@
+{
+  "name": "Quant Connect",
+  "description": {
+    "pt": "Evento universitário de finanças quantitativas que aproxima estudantes do mercado, com painéis de profissionais, apresentações de empresas e networking. A FGV Quant é uma das ligas cofundadoras.",
+    "en": "A university quantitative finance event that brings students closer to the market, with panels of practitioners, company presentations and networking. FGV Quant is one of its co-founding leagues."
+  },
+  "organizers": ["Poli Quant", "FGV Quant", "FEA.dev", "Insper Quantitative Finance"],
+  "instagram": "https://www.instagram.com/quant_connect/",
+  "linkedin": "https://www.linkedin.com/company/quantconnectevento/",
+  "editions": [
+    {
+      "year": 2026,
+      "number": 2,
+      "days": [
+        {
+          "date": "2026-05-16",
+          "venue": "Insper",
+          "area": "Vila Olímpia"
+        },
+        {
+          "date": "2026-05-23",
+          "venue": "B3",
+          "area": "Centro",
+          "program": [
+            {
+              "time": "09:00",
+              "title": "Welcome coffee"
+            },
+            {
+              "time": "10:00",
+              "title": "Abertura do evento"
+            },
+            {
+              "time": "10:10",
+              "title": "Quant Research: pesquisa de alpha",
+              "by": "Giant Steps Capital"
+            },
+            {
+              "time": "11:25",
+              "title": "Apresentação das ligas fundadoras",
+              "by": "Poli Quant"
+            },
+            {
+              "time": "11:45",
+              "title": "Métodos matemáticos em finanças quantitativas",
+              "by": "Cristiano Lo Bianco"
+            },
+            {
+              "time": "14:00",
+              "title": "Operações de mesa e arquitetura de sistemas",
+              "by": "XP Inc."
+            },
+            {
+              "time": "15:15",
+              "title": "Apresentação das ligas fundadoras",
+              "by": "FEA.dev"
+            },
+            {
+              "time": "15:45",
+              "title": "Índices, infraestrutura de mercado e quant",
+              "by": "B3"
+            }
+          ]
+        }
+      ],
+      "hours": "10h–17h",
+      "panels": 6,
+      "themes": [
+        {
+          "pt": "Introdução à área quant: finanças quantitativas e carreiras",
+          "en": "An introduction to quant: quantitative finance and careers"
+        },
+        {
+          "pt": "Índices de mercado",
+          "en": "Market indices"
+        },
+        {
+          "pt": "Infraestrutura e o ecossistema quant",
+          "en": "Infrastructure and the quant ecosystem"
+        },
+        {
+          "pt": "A engenharia de um fundo sistemático no Brasil",
+          "en": "Engineering a systematic fund in Brazil"
+        }
+      ],
+      "partners": [
+        "B3",
+        "XP Inc.",
+        "Schonfeld",
+        "Bayes Capital Management",
+        "Giant Steps Capital",
+        "Avantgarde Asset Management"
+      ],
+      "source": "https://www.poli.usp.br/event/evento-quant-connect-2026-busca-aproximar-estudantes-do-mercado-financeiro/",
+      "partnersSource": "https://www.linkedin.com/company/quantconnectevento/"
+    },
+    {
+      "year": 2025,
+      "number": 1
+    }
+  ],
+  "photos": [
+    {
+      "image": "./events/photos/quant-connect-2026-palco.jpg",
+      "alt": {
+        "pt": "Participantes do Quant Connect 2026 reunidos no palco do Insper",
+        "en": "Quant Connect 2026 attendees together on the Insper stage"
+      }
+    },
+    {
+      "image": "./events/photos/quant-connect-2026-organizacao.jpg",
+      "alt": {
+        "pt": "Equipe organizadora das quatro ligas no palco do Quant Connect 2026",
+        "en": "The organizing team from the four leagues on the Quant Connect 2026 stage"
+      }
+    },
+    {
+      "image": "./events/photos/quant-connect-2026-b3-grupo.jpg",
+      "alt": {
+        "pt": "Participantes do segundo dia do Quant Connect 2026, na B3",
+        "en": "Day-two attendees of Quant Connect 2026, at B3"
+      }
+    },
+    {
+      "image": "./events/photos/quant-connect-fgv-quant.jpg",
+      "alt": {
+        "pt": "Membro da FGV Quant apresenta a liga no palco do Quant Connect 2026",
+        "en": "An FGV Quant member presents the league on the Quant Connect 2026 stage"
+      },
+      "position": "top"
+    },
+    {
+      "image": "./events/photos/quant-connect-insper.jpg",
+      "alt": {
+        "pt": "Auditório do Insper no primeiro dia do Quant Connect 2026",
+        "en": "The Insper auditorium on day one of Quant Connect 2026"
+      }
+    },
+    {
+      "image": "./events/photos/quant-connect-b3.jpg",
+      "alt": {
+        "pt": "Painel na B3 no segundo dia do Quant Connect 2026",
+        "en": "A panel at B3 on day two of Quant Connect 2026"
+      }
+    }
+  ]
+}

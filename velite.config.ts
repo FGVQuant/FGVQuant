@@ -133,6 +133,56 @@ const events = defineCollection({
     href: s.string().optional(),
     partners: s.array(s.string()).default([]),
     source: s.string().url().optional(),
+    /** cropped from the league's own Instagram posts (content/events/photos/) */
+    photo: s.image().optional(),
+  }),
+});
+
+/** Research, fund and trainee projects (from the league's own posts). No page yet. */
+const projects = defineCollection({
+  name: "Project",
+  pattern: "projects.json",
+  schema: s.object({
+    id: s.string(),
+    /** semester, e.g. "2025.2" */
+    period: s.string(),
+    kind: s.enum(["research", "fund", "trainee"]),
+    title: localized,
+    summary: localized,
+    members: s.array(s.string()).default([]),
+    /** topic figure (src/components/cards/issue-figure.tsx); illustrative, never the project's data */
+    figure: s
+      .enum([
+        "pairs",
+        "regimes",
+        "momentum",
+        "clusters",
+        "deciles",
+        "rates",
+        "event-study",
+        "vwap",
+        "fund",
+        "ongoing",
+        "straddle",
+        "factors",
+      ])
+      .optional(),
+    /** team lead (one of `members`), shown first and marked */
+    lead: s.string().optional(),
+    partner: s.string().optional(),
+    mentor: s.string().optional(),
+    /** e.g. a trainee-cycle award */
+    award: localized.optional(),
+    /** a public write-up (LinkedIn post, paper) */
+    link: s.string().url().optional(),
+    /** the project's paper, a PDF under public/papers/ (e.g. "/papers/x.pdf"), offered as a download */
+    paper: s.string().optional(),
+    /** internal page, e.g. "/capital" */
+    href: s.string().optional(),
+    /** "in-progress" for the current semester's projects */
+    status: s.enum(["done", "in-progress"]).default("done"),
+    /** true until the league confirms the project and its members */
+    placeholder: s.boolean().default(false),
   }),
 });
 
@@ -150,10 +200,12 @@ const competitions = defineCollection({
         s.object({
           name: s.string(),
           result: localized,
-          strategy: s.string().optional(),
+          strategy: localized.optional(),
           members: s.array(s.string()).default([]),
           /** true for placed/ranked results (podium, top-10); counted in the KPI strip */
           ranked: s.boolean().default(false),
+          /** false for teams that competed outside the league (e.g. former members) */
+          official: s.boolean().default(true),
         }),
       )
       .default([]),
@@ -225,6 +277,56 @@ const fund = defineCollection({
   }),
 });
 
+/** The Quant Connect, the event FGV Quant co-organizes; featured on /eventos. Sourced facts only. */
+const quantConnect = defineCollection({
+  name: "QuantConnect",
+  pattern: "quant-connect.json",
+  single: true,
+  schema: s.object({
+    name: s.string(),
+    description: localized,
+    organizers: s.array(s.string()),
+    instagram: s.string().url(),
+    linkedin: s.string().url(),
+    photos: s
+      .array(
+        s.object({
+          image: s.image(),
+          alt: localized,
+          /** CSS object-position for the cropped tile, e.g. "top" to keep faces and lose the bottom */
+          position: s.string().optional(),
+        }),
+      )
+      .default([]),
+    editions: s.array(
+      s.object({
+        year: s.number().int(),
+        number: s.number().int(),
+        days: s
+          .array(
+            s.object({
+              date: s.isodate(),
+              venue: s.string(),
+              area: s.string().optional(),
+              /** the day's schedule, as the event published it */
+              program: s
+                .array(s.object({ time: s.string(), title: s.string(), by: s.string().optional() }))
+                .default([]),
+            }),
+          )
+          .default([]),
+        hours: s.string().optional(),
+        panels: s.number().int().optional(),
+        themes: s.array(localized).default([]),
+        /** partners the event announced publicly (names only, no logos) */
+        partners: s.array(s.string()).default([]),
+        source: s.string().url().optional(),
+        partnersSource: s.string().url().optional(),
+      }),
+    ),
+  }),
+});
+
 const site = defineCollection({
   name: "Site",
   pattern: "site.json",
@@ -269,8 +371,10 @@ export default defineConfig({
     areas,
     events,
     competitions,
+    projects,
     partners,
     fund,
+    quantConnect,
     site,
     devSamples,
   },

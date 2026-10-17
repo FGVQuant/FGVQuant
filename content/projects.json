@@ -1,0 +1,307 @@
+[
+  {
+    "id": "avantgarde-2026-2",
+    "period": "2026.2",
+    "kind": "research",
+    "status": "in-progress",
+    "partner": "Avantgarde Asset Management",
+    "title": {
+      "pt": "Projeto com a Avantgarde Asset Management",
+      "en": "Project with Avantgarde Asset Management"
+    },
+    "summary": {
+      "pt": "Projeto em andamento neste semestre; o tema e os resultados serão publicados ao fim do ciclo.",
+      "en": "An ongoing project this semester; its topic and results will be published at the end of the cycle."
+    },
+    "members": [
+      "Enrique Ernandes",
+      "Rebeca Lavalle",
+      "Luiz Henrique Lopez",
+      "Maria Júlia Bongiovanni"
+    ],
+    "lead": "Enrique Ernandes",
+    "figure": "ongoing"
+  },
+  {
+    "id": "vault-2026-2",
+    "period": "2026.2",
+    "kind": "research",
+    "status": "in-progress",
+    "partner": "Vault Capital",
+    "title": {
+      "pt": "Projeto com a Vault Capital",
+      "en": "Project with Vault Capital"
+    },
+    "summary": {
+      "pt": "Projeto em andamento neste semestre; o tema e os resultados serão publicados ao fim do ciclo.",
+      "en": "An ongoing project this semester; its topic and results will be published at the end of the cycle."
+    },
+    "members": ["Pedro Berta", "Bianca Campos", "Helena Minns", "Bernardo Suplicy"],
+    "lead": "Pedro Berta",
+    "figure": "ongoing"
+  },
+  {
+    "id": "b3-2026-2",
+    "period": "2026.2",
+    "kind": "research",
+    "status": "in-progress",
+    "partner": "B3",
+    "title": {
+      "pt": "Projeto com a B3",
+      "en": "Project with B3"
+    },
+    "summary": {
+      "pt": "Projeto em andamento neste semestre; o tema e os resultados serão publicados ao fim do ciclo.",
+      "en": "An ongoing project this semester; its topic and results will be published at the end of the cycle."
+    },
+    "members": ["Marina Silva", "Fernando Suguimoto", "Maria Eduarda Boone", "João Vitor Henrique"],
+    "lead": "Marina Silva",
+    "figure": "ongoing"
+  },
+  {
+    "id": "independente-2026-2",
+    "period": "2026.2",
+    "kind": "research",
+    "status": "in-progress",
+    "title": {
+      "pt": "Projeto independente",
+      "en": "Independent project"
+    },
+    "summary": {
+      "pt": "Projeto em andamento neste semestre; o tema e os resultados serão publicados ao fim do ciclo.",
+      "en": "An ongoing project this semester; its topic and results will be published at the end of the cycle."
+    },
+    "members": ["Rodrigo Ciofi", "Enrico Poggi", "João Menezes", "Kirghean Pacheco"],
+    "lead": "Rodrigo Ciofi",
+    "figure": "ongoing"
+  },
+  {
+    "id": "zoo-2026-1",
+    "period": "2026.1",
+    "kind": "research",
+    "partner": "Avantgarde Asset Management",
+    "title": {
+      "pt": "Quantas dimensões tem o zoo? Redundância informacional entre características de retorno",
+      "en": "How many dimensions does the zoo have? Information redundancy among return characteristics"
+    },
+    "summary": {
+      "pt": "Para as ações do IBRA entre 2010 e 2024, PCA e clustering hierárquico sobre 45 características candidatas do factor zoo mostram que cerca de 11 a 12 dimensões genuinamente distintas bastam: 12 componentes explicam 82% da variância e 11 clusters emergem do dendrograma.",
+      "en": "For IBRA stocks from 2010 to 2024, PCA and hierarchical clustering over 45 candidate factor-zoo characteristics show that about 11 to 12 genuinely distinct dimensions suffice: 12 components explain 82% of the variance and 11 clusters emerge from the dendrogram."
+    },
+    "members": ["Calebe Howang", "Pedro Berta", "Vitor Guardiano"],
+    "paper": "/papers/quantas-dimensoes-tem-o-zoo-avantgarde.pdf",
+    "figure": "clusters"
+  },
+  {
+    "id": "vol-fundamentos-2026-1",
+    "period": "2026.1",
+    "kind": "research",
+    "partner": "Avantgarde Asset Management",
+    "title": {
+      "pt": "Volatilidade de fundamentos no mercado acionário brasileiro",
+      "en": "Fundamental volatility in Brazilian equities"
+    },
+    "summary": {
+      "pt": "Inspirado em Huang (2009), testa se a volatilidade histórica do fluxo de caixa operacional prevê retornos no IBrA. A estratégia long-short entre os decis extremos rendeu 90,5% acumulados de 2012 a 2022 após custos e aluguel: acima do Ibovespa, abaixo da Selic.",
+      "en": "Building on Huang (2009), it tests whether the historical volatility of operating cash flow predicts returns in the IBrA. The long-short between extreme deciles returned 90.5% cumulatively from 2012 to 2022 after costs and borrow fees: above the Ibovespa, below the Selic."
+    },
+    "members": ["Carolina Yumi", "João Menezes"],
+    "mentor": "Alberto e Álvaro",
+    "paper": "/papers/volatilidade-de-fundamentos-avantgarde.pdf",
+    "figure": "deciles"
+  },
+  {
+    "id": "avantgarde-regimes-2026",
+    "period": "2025.2",
+    "kind": "research",
+    "title": {
+      "pt": "Regimes focados em alocação e investimento dinâmico por fatores no mercado acionário brasileiro",
+      "en": "Allocation-focused regimes and dynamic factor investing in Brazilian equities"
+    },
+    "summary": {
+      "pt": "Replicação e adaptação, para o mercado acionário brasileiro (2000–2024), de uma metodologia que define regimes como períodos em que um fator supera persistentemente outro: um modelo com penalização de trocas de regime rotula a amostra e um XGBoost, com variáveis financeiras e macro, prevê o regime fora da amostra para decidir a alocação.",
+      "en": "A replication and adaptation, for Brazilian equities (2000–2024), of a method that defines regimes as periods in which one factor persistently beats another: a model with a jump penalty labels the sample and an XGBoost on financial and macro features forecasts the regime out of sample to drive allocation."
+    },
+    "partner": "Avantgarde Asset Management",
+    "paper": "/papers/regimes-focados-em-alocacao-avantgarde.pdf",
+    "members": [
+      "Arthur Formiga",
+      "Kevin Lima",
+      "Luisa Obara",
+      "Luis Poliseli",
+      "Rodrigo Kandir",
+      "Théo Ogier"
+    ],
+    "figure": "regimes"
+  },
+  {
+    "id": "fgv-quant-capital",
+    "period": "2025.2",
+    "kind": "fund",
+    "title": {
+      "pt": "FGV Quant Capital",
+      "en": "FGV Quant Capital"
+    },
+    "summary": {
+      "pt": "O fundo fictício da liga, em operação desde julho de 2025: simula a rotina de uma gestora quantitativa com dados reais, estratégias validadas internamente (Pairs Trading e Momentum) e estrutura completa em Python.",
+      "en": "The league's simulated fund, running since July 2025: it simulates a quant asset manager's routine with real data, internally validated strategies (Pairs Trading and Momentum) and a full Python stack."
+    },
+    "href": "/capital",
+    "members": [
+      "Antônio Freitas",
+      "João Henrique Cunha",
+      "Carolina Yumi",
+      "Valentina Fantozzi",
+      "Maria Lucia Lucatelli"
+    ],
+    "lead": "Antônio Freitas",
+    "status": "in-progress",
+    "figure": "fund"
+  },
+  {
+    "id": "momentum-b3-2025",
+    "period": "2025.2",
+    "kind": "research",
+    "title": {
+      "pt": "O fator Momentum na B3",
+      "en": "The Momentum factor on B3"
+    },
+    "summary": {
+      "pt": "Estudo da persistência de tendências nos preços, testado com dados reais da B3: lógica do fator, formação dos portfólios e resultados.",
+      "en": "A study of price-trend persistence tested on real B3 data: the factor's logic, portfolio formation and results."
+    },
+    "figure": "momentum"
+  },
+  {
+    "id": "avantgarde-pairs-2024",
+    "period": "2024.2",
+    "kind": "research",
+    "title": {
+      "pt": "Pairs Trading no setor de utilidade pública",
+      "en": "Pairs trading in Brazilian utilities"
+    },
+    "summary": {
+      "pt": "Implementação de Pairs Trading em ações de utilidade pública, com cinco anos de backtest e seleção de pares por cointegração de Engle-Granger, Dickey-Fuller aumentado e distância euclidiana. Apresentado à gestora em março de 2025.",
+      "en": "Pairs trading on utility stocks, with a five-year backtest and pair selection by Engle-Granger cointegration, augmented Dickey-Fuller and Euclidean distance. Presented to the firm in March 2025."
+    },
+    "partner": "Avantgarde Asset Management",
+    "mentor": "Luciano França",
+    "members": [
+      "Hugo Villanova",
+      "Marcelo Bettarello",
+      "Antonio Paiva",
+      "João Schmitt",
+      "Rosa Zhu"
+    ],
+    "paper": "/papers/pairs-trading-utilidade-publica-avantgarde.pdf",
+    "figure": "pairs"
+  },
+  {
+    "id": "constancia-rates-2024",
+    "period": "2024.1",
+    "kind": "research",
+    "title": {
+      "pt": "Modelo preditivo para a taxa de juros",
+      "en": "A predictive model for interest rates"
+    },
+    "summary": {
+      "pt": "Projeto semestral em parceria com a Constância Investimentos.",
+      "en": "A semester project in partnership with Constância Investimentos."
+    },
+    "partner": "Constância Investimentos",
+    "members": ["Gabriel Daud", "Diego Natel", "Paula Pécora", "Ellen Kim", "Célika Matsui"],
+    "figure": "rates"
+  },
+  {
+    "id": "constancia-events-2024",
+    "period": "2024.1",
+    "kind": "research",
+    "title": {
+      "pt": "Inteligência artificial e estudo de eventos para trading",
+      "en": "AI and event studies for trading"
+    },
+    "summary": {
+      "pt": "Projeto semestral em parceria com a Constância Investimentos.",
+      "en": "A semester project in partnership with Constância Investimentos."
+    },
+    "partner": "Constância Investimentos",
+    "members": ["Henrique Motta", "Juan Puzzo", "Paula Maluf", "Henri Boteon"],
+    "figure": "event-study"
+  },
+  {
+    "id": "trainee-2026-1-straddle",
+    "period": "2026.1",
+    "kind": "trainee",
+    "title": {
+      "pt": "Long Straddle",
+      "en": "Long straddle"
+    },
+    "summary": {
+      "pt": "Projeto final destaque do Ciclo Trainee 2026.1, pela qualidade técnica, clareza e conexão com a prática de mercado.",
+      "en": "Standout final project of the 2026.1 trainee cycle, for technical quality, clarity and market relevance."
+    },
+    "members": ["Bianca Campos", "João Barros", "Marina Silva"],
+    "award": {
+      "pt": "Projeto Destaque do Ciclo Trainee",
+      "en": "Standout project of the trainee cycle"
+    },
+    "figure": "straddle"
+  },
+  {
+    "id": "trainee-2025-2-vwap",
+    "period": "2025.2",
+    "kind": "trainee",
+    "title": {
+      "pt": "Volume Weighted Average Price (VWAP)",
+      "en": "Volume weighted average price (VWAP)"
+    },
+    "summary": {
+      "pt": "Projeto final destaque do Ciclo Trainee 2025.2, pela qualidade técnica, clareza e conexão com a prática de mercado.",
+      "en": "Standout final project of the 2025.2 trainee cycle, for technical quality, clarity and market relevance."
+    },
+    "members": ["Bruna Magalhães", "Enrico Poggi", "Lucas Heluy", "Sophia Shimamoto"],
+    "award": {
+      "pt": "Projeto Destaque do Ciclo Trainee",
+      "en": "Standout project of the trainee cycle"
+    },
+    "figure": "vwap"
+  },
+  {
+    "id": "trainee-2024-2-momentum",
+    "period": "2024.2",
+    "kind": "trainee",
+    "title": {
+      "pt": "Momentum Trading com Random Forest",
+      "en": "Momentum trading with random forests"
+    },
+    "summary": {
+      "pt": "Estratégia de momentum em ações da Apple na NASDAQ, com um Random Forest treinado sobre 51 indicadores técnicos diários e dois períodos de teste para evitar distorções de eventos extraordinários.",
+      "en": "A momentum strategy on Apple stock on NASDAQ, with a random forest trained on 51 daily technical indicators and two test periods to avoid distortions from extraordinary events."
+    },
+    "members": ["Álvaro Duarte", "Felipe Chanis", "Jorge Fernandes"],
+    "award": {
+      "pt": "Projeto Destaque do Ciclo Trainee",
+      "en": "Standout project of the trainee cycle"
+    },
+    "figure": "momentum"
+  },
+  {
+    "id": "trainee-2024-1-pairs",
+    "period": "2024.1",
+    "kind": "trainee",
+    "title": {
+      "pt": "Pairs Trading em construtoras (EVEN3 e TRIS3)",
+      "en": "Pairs trading in homebuilders (EVEN3 and TRIS3)"
+    },
+    "summary": {
+      "pt": "Pares cointegrados no setor de construção civil (teste de Engle-Granger), operados pelo z-score de médias móveis da razão entre os ativos, com divisão treino e teste de 70/30.",
+      "en": "Cointegrated pairs in homebuilding (Engle-Granger test), traded on the z-score of moving averages of the price ratio, with a 70/30 train-test split."
+    },
+    "members": ["Hugo Villanova", "Marcelo Bettarello", "Lucca Costa"],
+    "award": {
+      "pt": "Projeto Destaque do Ciclo Trainee",
+      "en": "Standout project of the trainee cycle"
+    },
+    "figure": "pairs"
+  }
+]

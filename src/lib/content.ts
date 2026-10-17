@@ -5,6 +5,8 @@ import {
   fund,
   newsletter,
   partners,
+  projects,
+  quantConnect,
   site,
   team,
   teamGroups,
@@ -123,6 +125,9 @@ export const getTeamGroups = () =>
 export const getAreas = () => [...areas].sort((a, b) => a.order - b.order);
 export const getCompetitions = () => [...competitions].sort((a, b) => b.year - a.year);
 
+/** Projects, newest semester first. */
+export const getProjects = () => [...projects].sort((a, b) => b.period.localeCompare(a.period));
+
 /** Partners; by default only those whose name/logo the league has cleared for publication. */
 export function getPartners({ includeUnconfirmed = false } = {}) {
   return partners.filter((p) => includeUnconfirmed || p.permission);
@@ -151,6 +156,12 @@ export function toTimelineItems(list: Event[], locale: Locale): TimelineItem[] {
 
 export const getFund = () => fund;
 export const getSite = () => site;
+
+/** Quant Connect, editions newest first. */
+export const getQuantConnect = () => ({
+  ...quantConnect,
+  editions: [...quantConnect.editions].sort((a, b) => b.year - a.year),
+});
 
 /** Headline numbers for the KPI strip — derived from content, never hardcoded. */
 export function getStats() {
