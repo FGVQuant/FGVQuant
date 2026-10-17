@@ -9,7 +9,7 @@ const STATIC_PATHS = [
   "/time",
   "/processo-seletivo",
   "/capital",
-  "/competicoes",
+  "/desafios",
   "/eventos",
   "/parceiros",
 ];

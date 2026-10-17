@@ -439,7 +439,7 @@ function CompetitionHighlight(props: {
           </>
         ) : null}
       </p>
-      <ButtonLink href="/competicoes" variant="link" arrow className="self-start px-0">
+      <ButtonLink href="/desafios" variant="link" arrow className="self-start px-0">
         {props.cta}
       </ButtonLink>
     </article>

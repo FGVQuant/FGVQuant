@@ -100,7 +100,7 @@ export default async function TeamPage() {
             {t("alumni.body")}
           </p>
           <p className="mt-4 font-mono text-xs text-muted-foreground">{t("alumni.selfReported")}</p>
-          <ButtonLink href="/competicoes" variant="outline" className="mt-6" arrow>
+          <ButtonLink href="/desafios" variant="outline" className="mt-6" arrow>
             {t("alumni.cta")}
           </ButtonLink>
         </div>

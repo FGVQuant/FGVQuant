@@ -43,7 +43,7 @@ const WAYS: { key: string; href: string; Icon: LucideIcon }[] = [
   { key: "research", href: "/newsletter", Icon: Braces },
   { key: "newsletter", href: "/newsletter", Icon: Mail },
   { key: "fund", href: "/capital", Icon: LineChart },
-  { key: "competitions", href: "/competicoes", Icon: Trophy },
+  { key: "competitions", href: "/desafios", Icon: Trophy },
   { key: "events", href: "/eventos", Icon: CalendarDays },
 ];
 

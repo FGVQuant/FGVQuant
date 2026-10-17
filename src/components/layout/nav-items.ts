@@ -10,7 +10,7 @@ export const navItems: readonly NavItem[] = [
   { key: "newsletter", href: "/newsletter" },
   { key: "team", href: "/time" },
   { key: "capital", href: "/capital" },
-  { key: "competitions", href: "/competicoes" },
+  { key: "competitions", href: "/desafios" },
   { key: "events", href: "/eventos" },
   { key: "partners", href: "/parceiros" },
 ];

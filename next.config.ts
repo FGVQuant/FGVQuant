@@ -8,6 +8,13 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   typedRoutes: true,
+  // "Competições" became "Desafios": keep old links (and search results) working.
+  async redirects() {
+    return [
+      { source: "/competicoes", destination: "/desafios", permanent: true },
+      { source: "/en/competicoes", destination: "/en/desafios", permanent: true },
+    ];
+  },
   experimental: {
     // Root layout is app/[locale]/layout.tsx, so unmatched URLs need app/global-not-found.tsx
     // to get a branded 404 (with a real 404 status).
