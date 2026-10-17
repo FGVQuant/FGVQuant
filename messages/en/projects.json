@@ -1,0 +1,49 @@
+{
+  "Projects": {
+    "meta": {
+      "title": "Projects and competitions",
+      "description": "Research with partner asset managers, the FGV Quant Capital simulated fund, trainee projects and FGV Quant's results in quantitative finance competitions."
+    },
+    "intro": {
+      "eyebrow": "Projects and competitions",
+      "title": "From research to practice",
+      "description": "Projects that start from papers and industry ideas, modeled in Python and documented by the league itself, plus our teams' results in university challenges."
+    },
+    "jump": {
+      "competitions": "Competitions",
+      "projects": "Projects"
+    },
+    "competitions": {
+      "title": "Competitions",
+      "description": "League teams in university quantitative finance challenges.",
+      "strategy": "Strategy",
+      "alumni": "Former league members",
+      "details": "Teams, members and strategy",
+      "prev": "Previous competitions",
+      "next": "Next competitions",
+      "close": "Close"
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "By semester: research with partner asset managers, the league's simulated fund and each trainee cycle's standout projects.",
+      "partner": "With {partner}",
+      "mentor": "Mentored by {mentor}",
+      "members": "Members",
+      "link": "See on LinkedIn",
+      "fundCta": "See FGV Quant Capital",
+      "inProgress": "In progress",
+      "kinds": {
+        "research": "Research",
+        "fund": "Simulated fund",
+        "trainee": "Trainee project"
+      },
+      "paper": "Download paper (PDF)",
+      "ongoing": "Ongoing projects",
+      "lead": "lead",
+      "team": "Current team",
+      "continuous": "Ongoing since {period}",
+      "trainee": "Trainee cycle standout projects",
+      "traineeDescription": "At the end of each cycle, trainees present a final project to a panel. These were the standouts."
+    }
+  }
+}

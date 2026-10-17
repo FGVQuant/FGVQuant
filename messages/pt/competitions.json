@@ -1,10 +1,8 @@
 {
   "Competitions": {
-    "title": "Quant na <em>prática</em>, contra o mercado e os colegas",
-    "description": "Os membros da liga montam equipes para competir em desafios universitários de finanças quantitativas.",
     "empty": "Os resultados de competições serão publicados assim que fornecidos pela liga.",
     "source": "Anúncio do organizador",
-    "members": "Integrante",
+    "members": "Integrantes",
     "selfReportedBadge": "Autodeclarado",
     "selfReported": "Resultado divulgado pela liga."
   }

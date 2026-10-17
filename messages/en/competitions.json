@@ -1,10 +1,8 @@
 {
   "Competitions": {
-    "title": "Quant in <em>practice</em>, against the market and our peers",
-    "description": "League members form teams to compete in university quantitative finance challenges.",
     "empty": "Competition results will be published once provided by the league.",
     "source": "Organizer's announcement",
-    "members": "Member",
+    "members": "Members",
     "selfReportedBadge": "Self-reported",
     "selfReported": "Result announced by the league."
   }

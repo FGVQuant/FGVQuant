@@ -22,10 +22,10 @@ export async function generateMetadata(): Promise<Metadata> {
 /** What members do. Study groups and research have no page of their own, so no link. */
 const WAYS: { key: string; href?: string }[] = [
   { key: "study" },
-  { key: "research" },
+  { key: "research", href: "/projetos#projetos" },
   { key: "newsletter", href: "/newsletter" },
   { key: "fund", href: "/capital" },
-  { key: "competitions", href: "/eventos#competicoes" },
+  { key: "competitions", href: "/projetos#competicoes" },
   { key: "events", href: "/eventos" },
 ];
 

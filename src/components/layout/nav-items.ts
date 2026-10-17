@@ -1,4 +1,5 @@
-export type NavKey = "about" | "team" | "newsletter" | "capital" | "events" | "partners" | "join";
+export type NavKey =
+  "about" | "team" | "newsletter" | "capital" | "events" | "projects" | "partners" | "join";
 
 export type NavItem = { key: NavKey; href: string };
 
@@ -11,6 +12,7 @@ const BASE: readonly NavItem[] = [
   { key: "newsletter", href: "/newsletter" },
   { key: "capital", href: "/capital" },
   { key: "events", href: "/eventos" },
+  { key: "projects", href: "/projetos" },
 ];
 
 /** Every public page, for the footer. */
