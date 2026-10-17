@@ -1,16 +1,17 @@
 {
   "Team": {
-    "leadership": {
-      "title": "Quem <em>conduz</em> a liga",
-      "description": "Diretorias e frentes de atuação da liga."
+    "meta": {
+      "title": "Equipe",
+      "description": "Presidência, diretorias, equipes e trainees da FGV Quant."
+    },
+    "intro": {
+      "eyebrow": "Equipe",
+      "title": "Quem faz a liga",
+      "description": "A presidência, as diretorias e suas equipes, e os trainees da turma atual."
     },
     "linkedinLabel": "{name} no LinkedIn",
     "nameTbd": "Nome a confirmar",
     "pending": "A lista do time será publicada quando a liga confirmar nomes e consentimento de cada pessoa.",
-    "alumni": {
-      "body": "O ex-presidente Hugo Villanova ficou com o 2º lugar no Desafio Quant AI 2026 com a estratégia \"Augur\".",
-      "selfReported": "Informação divulgada pela própria liga.",
-      "cta": "Ver competições"
-    }
+    "membersTbd": "Membros a confirmar"
   }
 }

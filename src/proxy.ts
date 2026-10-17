@@ -21,7 +21,7 @@ function isKnownSlug(raw: string) {
 }
 
 // Pages folded into others (2026-10 structure pass): keep old links working with a permanent redirect.
-const MOVED: Record<string, string> = { time: "/sobre#time", competicoes: "/eventos#competicoes" };
+const MOVED: Record<string, string> = { time: "/equipe", competicoes: "/eventos#competicoes" };
 const MOVED_PATH = /^(?:\/(pt|en))?\/(time|competicoes)\/?$/;
 
 export default function proxy(request: NextRequest) {

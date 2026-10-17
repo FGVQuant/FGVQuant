@@ -7,6 +7,7 @@ import {
   partners,
   site,
   team,
+  teamGroups,
   type Event,
   type NewsletterIssue,
 } from "#site/content";
@@ -106,6 +107,12 @@ export function getIssueTags() {
 // ── Team, areas, partners, competitions ─────────────────────────────────────────
 
 export const getTeam = () => [...team].sort((a, b) => a.order - b.order);
+
+/** Team groups in display order, each with its members (members sorted by `order`). */
+export const getTeamGroups = () =>
+  [...teamGroups]
+    .sort((a, b) => a.order - b.order)
+    .map((g) => ({ ...g, members: getTeam().filter((m) => m.group === g.id) }));
 export const getAreas = () => [...areas].sort((a, b) => a.order - b.order);
 export const getCompetitions = () => [...competitions].sort((a, b) => b.year - a.year);
 

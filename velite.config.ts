@@ -53,7 +53,12 @@ const team = defineCollection({
   schema: s.object({
     id: s.string(),
     name: s.string(),
-    role: localized,
+    /** optional for area teams and trainees, where the group already says what they do */
+    role: localized.optional(),
+    /** id from content/team/groups.json (presidency, an area team or a trainee cohort) */
+    group: s.string(),
+    /** the director who leads this area team; shown at the top of the team card */
+    lead: s.boolean().default(false),
     area: s.string().optional(),
     /** local image under content/ (e.g. "./photos/ana.jpg") → { src, width, height, blurDataURL } */
     photo: s.image().optional(),
@@ -61,6 +66,21 @@ const team = defineCollection({
     order: s.number().default(100),
     /** true until the league confirms name/role and consent to publish */
     placeholder: s.boolean().default(false),
+  }),
+});
+
+/** How the team is split on Sobre: board, area teams, trainee cohorts. Add a cohort here, not in code. */
+const teamGroups = defineCollection({
+  name: "TeamGroup",
+  pattern: "team/groups.json",
+  schema: s.object({
+    id: s.string(),
+    title: localized,
+    order: s.number(),
+    /** featured groups (the presidency) render as large portrait cards; the rest as team cards */
+    featured: s.boolean().default(false),
+    /** list groups that take a full row (trainee cohorts); large groups go full width anyway */
+    wide: s.boolean().default(false),
   }),
 });
 
@@ -219,7 +239,18 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { newsletter, team, areas, events, competitions, partners, fund, site, devSamples },
+  collections: {
+    newsletter,
+    team,
+    teamGroups,
+    areas,
+    events,
+    competitions,
+    partners,
+    fund,
+    site,
+    devSamples,
+  },
   mdx: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],

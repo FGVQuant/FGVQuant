@@ -16,7 +16,7 @@ type MemberCardProps = {
   className?: string;
 };
 
-function deriveInitials(name: string) {
+export function deriveInitials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length === 0) return "";
   const first = parts[0][0] ?? "";
@@ -24,7 +24,7 @@ function deriveInitials(name: string) {
   return (first + last).toUpperCase();
 }
 
-function LinkedInIcon({ className }: { className?: string }) {
+export function LinkedInIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"

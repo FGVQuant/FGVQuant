@@ -1,4 +1,4 @@
-export type NavKey = "about" | "newsletter" | "capital" | "events" | "partners" | "join";
+export type NavKey = "about" | "team" | "newsletter" | "capital" | "events" | "partners" | "join";
 
 export type NavItem = { key: NavKey; href: string };
 
@@ -7,6 +7,7 @@ export const PARTNERS_HREF = "/parceiros";
 
 const BASE: readonly NavItem[] = [
   { key: "about", href: "/sobre" },
+  { key: "team", href: "/equipe" },
   { key: "newsletter", href: "/newsletter" },
   { key: "capital", href: "/capital" },
   { key: "events", href: "/eventos" },

@@ -7,8 +7,6 @@ import { BullMotif } from "@/components/layout/intro-motifs";
 import { SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
 import { ItemList } from "@/components/ui/item-list";
-import { getPageLocale } from "@/lib/locale";
-import { TeamSection } from "./_components/team-section";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("About");
@@ -31,7 +29,6 @@ const WAYS: { key: string; href?: string }[] = [
 
 export default async function AboutPage() {
   const t = await getTranslations("About");
-  const locale = await getPageLocale();
   const site = getSite();
 
   return (
@@ -48,7 +45,7 @@ export default async function AboutPage() {
       </PageIntro>
 
       {/* Partner-facing first: identity and mission. Then the student-facing half: what members
-          do, who leads the league, and how to join. Numbers and focus areas live on Home. */}
+          do and how to join. The team itself lives on /equipe. Numbers and focus areas live on Home. */}
       <section className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.2fr]">
         <SectionHeader title={t.rich("mission.title", { em: (chunks) => chunks })} />
         <div className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
@@ -78,8 +75,6 @@ export default async function AboutPage() {
           />
         </div>
       </section>
-
-      <TeamSection locale={locale} />
 
       <section className="border-t border-border">
         <div className="container-page section-y">
