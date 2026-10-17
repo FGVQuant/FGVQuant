@@ -59,8 +59,17 @@ export default async function HomePage() {
           year: latest.year,
           source: latest.source,
           selfReported: latest.selfReported,
-          lead: { team: ranked[0].name, result: tr(ranked[0].result, locale) },
-          others: ranked.slice(1).map((x) => ({ team: x.name, result: tr(x.result, locale) })),
+          // Teams tied with the lead result share the headline ("Top 10 · Alpha Helix, El Dorado").
+          lead: {
+            team: ranked
+              .filter((x) => x.result.pt === ranked[0].result.pt)
+              .map((x) => x.name)
+              .join(", "),
+            result: tr(ranked[0].result, locale),
+          },
+          others: ranked
+            .filter((x) => x.result.pt !== ranked[0].result.pt)
+            .map((x) => ({ team: x.name, result: tr(x.result, locale) })),
         }
       : null;
   const fundMonth = formatEditionInline(stats.fundAsOf, locale);
@@ -261,10 +270,10 @@ export default async function HomePage() {
               </ButtonLink>
             }
           />
-          {/* Compact, newest first: the animated drift timeline lives on /eventos. */}
+          {/* Compact: the five most recent; the full list lives on /eventos. */}
           <ItemList
             className="mt-12"
-            items={toTimelineItems([...getEvents()].reverse(), locale).map((e) => ({
+            items={toTimelineItems([...getEvents()].reverse().slice(0, 5), locale).map((e) => ({
               key: e.id,
               marker: e.dateLabel,
               title: e.href ? (
@@ -373,8 +382,10 @@ function CompetitionHighlight(props: {
         <p className="mt-1 text-sm text-muted-foreground">{props.meta}</p>
       </div>
       <div>
-        <p className="font-display text-5xl text-balance sm:text-6xl">{props.lead.result}</p>
-        <p className="mt-2 text-sm break-words text-highlight">{props.lead.team}</p>
+        <p className="font-display text-5xl leading-tight text-balance sm:text-6xl">
+          {props.lead.result}
+        </p>
+        <p className="mt-2 text-base font-medium break-words text-highlight">{props.lead.team}</p>
       </div>
       {props.others.length > 0 ? (
         <ul className="flex flex-wrap gap-2">
@@ -413,7 +424,7 @@ function CompetitionHighlight(props: {
           </>
         ) : null}
       </p>
-      <ButtonLink href="/eventos#competicoes" variant="link" arrow className="self-start px-0">
+      <ButtonLink href="/projetos#competicoes" variant="link" arrow className="self-start px-0">
         {props.cta}
       </ButtonLink>
     </article>

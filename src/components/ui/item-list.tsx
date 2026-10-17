@@ -23,9 +23,9 @@ export function ItemList({ items, className }: { items: ItemListEntry[]; classNa
           key={item.key}
           className="grid gap-x-10 gap-y-2 py-6 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_auto] md:items-baseline"
         >
-          <h3 className="flex items-baseline gap-3 font-sans text-lg font-semibold tracking-tight text-foreground">
+          <h3 className="font-sans text-lg font-semibold tracking-tight text-foreground">
             {item.marker ? (
-              <span className="text-sm font-normal text-muted-foreground tabular-nums">
+              <span className="mb-1 block text-sm font-normal text-muted-foreground tabular-nums">
                 {item.marker}
               </span>
             ) : null}
