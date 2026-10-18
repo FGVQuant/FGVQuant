@@ -14,7 +14,8 @@ const localized = s.object({ pt: s.string(), en: s.string() });
 
 const newsletter = defineCollection({
   name: "NewsletterIssue",
-  pattern: "newsletter/*.mdx",
+  // hand-written summaries, plus the ones scripts/sync-sheet.mjs writes from the sheet's Newsletter tab
+  pattern: ["newsletter/*.mdx", "sheet/newsletter/*.mdx"],
   schema: s
     .object({
       title: s.string().max(140),
@@ -27,7 +28,6 @@ const newsletter = defineCollection({
       tags: s.array(s.string()).default([]),
       /** recurring sections covered in this edition */
       personality: s.string().optional(),
-      linkedinUrl: s.string().url(),
       /**
        * "summary": only metadata + our summary is published (default until the league
        * provides the issue text and permission). "full": the MDX body is the full issue.
@@ -39,12 +39,35 @@ const newsletter = defineCollection({
        * formulas or seeded simulations; set only when the issue's topic is known.
        */
       figure: s
-        .enum(["tail-risk", "straddle", "prediction-spread", "alt-data", "factors"])
+        .enum([
+          "tail-risk",
+          "straddle",
+          "prediction-spread",
+          "alt-data",
+          "factors",
+          "pairs",
+          "momentum",
+          "deciles",
+        ])
         .optional(),
       path: s.path(),
       body: s.mdx(),
     })
-    .transform((d) => ({ ...d, slug: d.path.replace(/^newsletter\//, "") })),
+    .transform((d) => ({ ...d, slug: d.path.split("/").pop()! })),
+});
+
+/**
+ * The issues the league published, one per row of the sheet's Newsletter tab (scripts/sync-sheet.mjs).
+ * The sheet decides which issues exist and where they live; content/newsletter/ holds our summaries.
+ */
+const newsletterLinks = defineCollection({
+  name: "NewsletterLink",
+  pattern: "sheet/newsletter.json",
+  schema: s.object({
+    edition: s.string().regex(/^\d{4}-\d{2}$/),
+    url: s.string().url(),
+    issue: s.number().int().positive().optional(),
+  }),
 });
 
 const team = defineCollection({
@@ -371,6 +394,7 @@ export default defineConfig({
   },
   collections: {
     newsletter,
+    newsletterLinks,
     team,
     teamGroups,
     testimonials,

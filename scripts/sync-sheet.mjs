@@ -3,7 +3,7 @@
 // The sheet holds facts only; everything about presentation (ids, order, groups, figures,
 // links) is derived here. Any invalid row aborts the sync before anything is written.
 // Usage: pnpm sync   (needs GOOGLE_API_KEY, from .env.local locally or the host's env)
-import { existsSync, mkdirSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { figureFor } from "./project-figure.mjs";
 
 /** "FGV Quant - site" folder on the league's Drive: the spreadsheet plus "Fotos do site". */
@@ -95,6 +95,7 @@ const TABS = [
   "Fundo mensal",
   "Fundo resumo",
   "Entidade",
+  "Newsletter",
   "Listas",
 ];
 const ranges = TABS.map(
@@ -444,6 +445,44 @@ const fund = {
   },
 };
 
+// A row's summary (Resumo, Texto…) becomes content/sheet/newsletter/<aaaa-mm>-<mês>.mdx, read by velite
+// like the hand-written ones in content/newsletter/, which it overrides. A row without one shows on
+// the site as "resumo em breve" with the link.
+const summaries = [];
+const newsletter = sheet.Newsletter.map((r) => {
+  need(r, "Edição", "Link");
+  const issue = r["Nº"] === undefined ? undefined : Number(r["Nº"]);
+  if (issue !== undefined && !(Number.isInteger(issue) && issue > 0))
+    err(r, `'Nº' inválido: ${r["Nº"]}`);
+  const edition = month(r, "Edição");
+  if (r.Resumo === undefined) {
+    if (r.Texto !== undefined) err(r, "tem 'Texto' mas 'Resumo' está vazio");
+  } else if (edition) {
+    const excerpt = String(r.Resumo);
+    if (excerpt.length > 400) err(r, `'Resumo' passa de 400 caracteres (${excerpt.length})`);
+    const name = new Intl.DateTimeFormat("pt-BR", { month: "long", timeZone: "UTC" }).format(
+      new Date(`${edition}-01`),
+    );
+    const fm = {
+      title:
+        r["Título"] ??
+        `FGV Quant Insights: ${name[0].toUpperCase()}${name.slice(1)} de ${edition.slice(0, 4)}`,
+      edition,
+      excerpt,
+      tags: names(r.Tags),
+      ...(r.Personalidade !== undefined && { personality: String(r.Personalidade) }),
+      status: "summary",
+    };
+    // Texto is markdown, compiled as MDX: escape what MDX and KaTeX would read as code or maths.
+    // Without it, the page shows the Resumo.
+    const body = String(r.Texto ?? excerpt).replace(/[{}<$]/g, "\\$&");
+    const yaml = Object.entries(fm).map(([k, v]) => `${k}: ${JSON.stringify(v)}`);
+    summaries.push([`${edition}-${slug(name)}.mdx`, `---\n${yaml.join("\n")}\n---\n\n${body}\n`]);
+  }
+  return { edition, url: url(r, "Link"), issue };
+});
+dupes(newsletter, "Newsletter", (n) => n.edition);
+
 const entity = Object.fromEntries(sheet.Entidade.map((r) => [r.Campo, r.Valor]));
 const formUrl = entity["Processo seletivo: link do formulário"];
 const site = {
@@ -508,11 +547,16 @@ const json = {
   testimonials,
   fund,
   site,
+  newsletter,
 };
 for (const [name, data] of Object.entries(json))
   writeFileSync(`${OUT}/${name}.json`, JSON.stringify(data, null, 2) + "\n");
+// regenerated on every sync, so a summary cleared in the sheet leaves the site too
+rmSync(`${OUT}/newsletter`, { recursive: true, force: true });
+mkdirSync(`${OUT}/newsletter`);
+for (const [name, mdx] of summaries) writeFileSync(`${OUT}/newsletter/${name}`, mdx);
 
 console.log(
   `Planilha sincronizada: ${members.length} membros, ${events.length} eventos, ${projects.length} projetos, ` +
-    `${competitions.length} competições, ${partners.length} parceiros, ${wanted.size} arquivos.`,
+    `${competitions.length} competições, ${partners.length} parceiros, ${newsletter.length} edições da newsletter (${summaries.length} com resumo na planilha), ${wanted.size} arquivos.`,
 );

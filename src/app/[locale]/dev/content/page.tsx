@@ -97,7 +97,7 @@ export default async function ContentShowcase() {
           3 · MdxContent — featured issue ({featured.slug})
         </p>
         <h2 className="mt-6 font-display text-3xl">{featured.title}</h2>
-        <MdxContent code={featured.body} className="mt-6" />
+        {featured.body ? <MdxContent code={featured.body} className="mt-6" /> : null}
       </section>
 
       {sample ? (

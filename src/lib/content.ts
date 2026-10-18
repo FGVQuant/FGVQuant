@@ -4,6 +4,7 @@ import {
   events,
   fund,
   newsletter,
+  newsletterLinks,
   partners,
   projects,
   quantConnect,
@@ -90,21 +91,52 @@ export function formatEventDate(event: Event, locale: Locale) {
 
 // ── Newsletter ────────────────────────────────────────────────────────────────
 
-/** All issues, newest edition first. */
-export function getIssues(): NewsletterIssue[] {
-  return [...newsletter].sort((a, b) => b.edition.localeCompare(a.edition));
+export type Issue = Omit<NewsletterIssue, "body" | "path"> & {
+  /** our summary's MDX; absent until it is written */
+  body?: string;
+  /** the published issue (LinkedIn or Substack), from the sheet */
+  url: string;
+};
+
+/**
+ * All issues, newest edition first: one per row of the sheet's Newsletter tab, with our summary from
+ * the sheet (or content/newsletter/) when it exists. Without one, the issue still lists, as "resumo em breve".
+ */
+export function getIssues(): Issue[] {
+  return newsletterLinks
+    .map(({ edition, url, issue }): Issue => {
+      // the sheet's summary (content/sheet/newsletter/) wins over a hand-written one, keeping the
+      // hand-written cover figure and featured flag, which the sheet doesn't hold
+      const sheet = newsletter.find((i) => i.edition === edition && i.path.startsWith("sheet/"));
+      const hand = newsletter.find((i) => i.edition === edition && !i.path.startsWith("sheet/"));
+      const summary = sheet
+        ? { ...sheet, figure: hand?.figure, featured: hand?.featured ?? false }
+        : hand;
+      if (summary) return { ...summary, url, issue: issue ?? summary.issue };
+      const title = formatEdition(edition, "pt");
+      const month = title.split(" ")[0].normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+      return {
+        title: `FGV Quant Insights: ${title}`,
+        edition,
+        issue,
+        excerpt: "Resumo em breve.",
+        tags: [],
+        status: "summary",
+        featured: false,
+        // same slug the summary file will get (2026-10-outubro.mdx), so the link survives it
+        slug: `${edition}-${month}`,
+        url,
+      };
+    })
+    .sort((a, b) => b.edition.localeCompare(a.edition));
 }
 
 export function getIssue(slug: string) {
-  return newsletter.find((i) => i.slug === slug);
+  return getIssues().find((i) => i.slug === slug);
 }
 
 export function getFeaturedIssue() {
   return getIssues().find((i) => i.featured) ?? getIssues()[0];
-}
-
-export function getIssueTags() {
-  return [...new Set(newsletter.flatMap((i) => i.tags))].sort((a, b) => a.localeCompare(b, "pt"));
 }
 
 // ── Team, areas, partners, competitions ─────────────────────────────────────────
@@ -167,7 +199,7 @@ export const getQuantConnect = () => ({
 export function getStats() {
   return {
     members: site.members,
-    issues: newsletter.length,
+    issues: newsletterLinks.length,
     /** only teams flagged `ranked` (podium / top-10 placements) are counted */
     rankedTeams: competitions.reduce((n, c) => n + c.teams.filter((t) => t.ranked).length, 0),
     fundCumulative: fund.cumulativeReturn,
