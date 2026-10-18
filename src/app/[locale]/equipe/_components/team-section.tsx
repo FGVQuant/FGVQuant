@@ -16,7 +16,7 @@ const WIDE_GROUP = 8;
 
 /**
  * The people of the league, on /equipe (the old /time path redirects here).
- * Groups come from content/team/groups.json. Three tiers share one card language so photo
+ * Groups come from the admin sheet (scripts/sync-sheet.mjs). Three tiers share one card language so photo
  * sizes step down gradually: the presidency as large portrait cards, each directorate as a team
  * card led by its director (`lead`), then its members; trainee cohorts as full-width cards.
  * Each name links to the member's LinkedIn when given. Missing names stay "a confirmar".

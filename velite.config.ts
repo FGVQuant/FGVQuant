@@ -49,13 +49,13 @@ const newsletter = defineCollection({
 
 const team = defineCollection({
   name: "Member",
-  pattern: "team/members.json",
+  pattern: "sheet/members.json",
   schema: s.object({
     id: s.string(),
     name: s.string(),
     /** optional for area teams and trainees, where the group already says what they do */
     role: localized.optional(),
-    /** id from content/team/groups.json (presidency, an area team or a trainee cohort) */
+    /** group id derived by scripts/sync-sheet.mjs (presidency, an area team or a trainee cohort) */
     group: s.string(),
     /** the director who leads this area team; shown at the top of the team card */
     lead: s.boolean().default(false),
@@ -69,10 +69,10 @@ const team = defineCollection({
   }),
 });
 
-/** How the team is split on Sobre: board, area teams, trainee cohorts. Add a cohort here, not in code. */
+/** How the team is split on Sobre: board, area teams, trainee cohorts. Generated from the sheet (scripts/sync-sheet.mjs). */
 const teamGroups = defineCollection({
   name: "TeamGroup",
-  pattern: "team/groups.json",
+  pattern: "sheet/groups.json",
   schema: s.object({
     id: s.string(),
     title: localized,
@@ -91,7 +91,7 @@ const teamGroups = defineCollection({
  */
 const testimonials = defineCollection({
   name: "Testimonial",
-  pattern: "testimonials.json",
+  pattern: "sheet/testimonials.json",
   schema: s.object({
     id: s.string(),
     quote: s.object({ pt: s.string(), en: s.string().optional() }).optional(),
@@ -121,7 +121,7 @@ const areas = defineCollection({
 
 const events = defineCollection({
   name: "Event",
-  pattern: "events.json",
+  pattern: "sheet/events.json",
   schema: s.object({
     id: s.string(),
     date: s.isodate(),
@@ -135,7 +135,7 @@ const events = defineCollection({
     href: s.string().optional(),
     partners: s.array(s.string()).default([]),
     source: s.string().url().optional(),
-    /** cropped from the league's own Instagram posts (content/events/photos/) */
+    /** cropped from the league's own Instagram posts (the Drive "Fotos do site" folder) */
     photo: s.image().optional(),
   }),
 });
@@ -143,7 +143,7 @@ const events = defineCollection({
 /** Research, fund and trainee projects (from the league's own posts). No page yet. */
 const projects = defineCollection({
   name: "Project",
-  pattern: "projects.json",
+  pattern: "sheet/projects.json",
   schema: s.object({
     id: s.string(),
     /** semester, e.g. "2025.2" */
@@ -181,7 +181,7 @@ const projects = defineCollection({
     paper: s.string().optional(),
     /** internal page, e.g. "/capital" */
     href: s.string().optional(),
-    /** photo of the presentation, cropped from the league's own Instagram posts (content/projects/photos/) */
+    /** photo of the presentation, cropped from the league's own Instagram posts (the Drive "Fotos do site" folder) */
     photo: s.image().optional(),
     /** "in-progress" for the current semester's projects */
     status: s.enum(["done", "in-progress"]).default("done"),
@@ -192,7 +192,7 @@ const projects = defineCollection({
 
 const competitions = defineCollection({
   name: "Competition",
-  pattern: "competitions.json",
+  pattern: "sheet/competitions.json",
   schema: s.object({
     id: s.string(),
     name: s.string(),
@@ -221,7 +221,7 @@ const competitions = defineCollection({
 
 const partners = defineCollection({
   name: "Partner",
-  pattern: "partners.json",
+  pattern: "sheet/partners.json",
   schema: s.object({
     id: s.string(),
     name: s.string(),
@@ -235,7 +235,7 @@ const partners = defineCollection({
 
 const fund = defineCollection({
   name: "Fund",
-  pattern: "fund.json",
+  pattern: "sheet/fund.json",
   single: true,
   schema: s.object({
     name: s.string(),
@@ -333,7 +333,7 @@ const quantConnect = defineCollection({
 
 const site = defineCollection({
   name: "Site",
-  pattern: "site.json",
+  pattern: "sheet/site.json",
   single: true,
   schema: s.object({
     founded: s.number().int(),

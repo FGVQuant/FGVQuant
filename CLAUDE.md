@@ -42,6 +42,7 @@ Website for **FGV Quant**, the Liga de Finanças Quantitativas da FGV-SP. Planni
 ## Content (Velite)
 
 - **Source and validation:** source lives in `content/` and is validated by `velite.config.ts`. Output goes to `.velite/` (gitignored), imported as `#site/content`.
+- **Admin sheet:** team, events, projects, competitions, partners, testimonials, fund and site data come from the league's Google Sheet and its "Fotos do site" Drive folder. `pnpm sync` (`scripts/sync-sheet.mjs`, needs `GOOGLE_API_KEY` in `.env.local`) writes `content/sheet/` and `public/sheet/`, both gitignored; `pnpm build` runs it first. Edit those facts in the sheet, never in `content/sheet/`. The sheet holds facts only: ids, order, groups, figures and links are derived in the sync script. Newsletter, Quant Connect and areas stay in `content/`.
 - **Read through helpers only:** pages read content through `src/lib/content.ts`, which handles sorting, `tr()` localisation and precision-aware dates. Don't import `#site/content` directly in pages.
 - **Build wiring:** Velite runs inside Next through a phase-aware `next.config.ts`: watch under `next dev`, a clean awaited build before `next build`. `pnpm content` runs it standalone.
 - **No invented facts:**

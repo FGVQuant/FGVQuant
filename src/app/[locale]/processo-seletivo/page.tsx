@@ -47,7 +47,7 @@ export default async function JoinPage() {
   const statusKey =
     recruitment.open === true ? "open" : recruitment.open === false ? "closed" : "tbd";
   const canApply = recruitment.open !== false && Boolean(recruitment.formUrl);
-  // Recruitment runs every semester; `next` (content/site.json) is the upcoming cycle, e.g. "2027.1".
+  // Recruitment runs every semester; `next` (the sheet's Entidade tab) is the upcoming cycle, e.g. "2027.1".
   const next = { next: recruitment.next };
   const trainee = getProjects().filter((p) => p.kind === "trainee");
 

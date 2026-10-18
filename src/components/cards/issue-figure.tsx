@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Topic figures, chosen in content: per newsletter issue (`figure` in the MDX frontmatter) and per
- * project (`figure` in content/projects.json).
+ * project (`figure`, set by scripts/sync-sheet.mjs).
  */
 export const ISSUE_FIGURES = [
   "tail-risk",

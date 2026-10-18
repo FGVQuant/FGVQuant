@@ -265,15 +265,15 @@ Pages 4.2–4.9 can run as parallel subagents because each owns its own route fo
 
 ## Phase 7 — Deployment (first time anything leaves localhost)
 
-| #   | Task                                                                                                          | Who                                |
-| --- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| 7.1 | Create the Vercel account/team and confirm Hobby vs Pro terms for a student organization                      | 🧑                                 |
-| 7.2 | Buy or arrange a domain (for example `fgvquant.com.br` through Registro.br, which requires a CPF/CNPJ holder) | 🧑                                 |
-| 7.3 | Connect the GitHub repo to Vercel, or run a CLI deploy, after your explicit go-ahead                          | 🧑 authorizes, 🤖 configures       |
-| 7.4 | Enable Vercel Analytics, set production env, check the preview deployment                                     | 🤖                                 |
-| 7.5 | DNS records at the registrar                                                                                  | 🧑 (Claude provides exact records) |
-| 7.6 | Smoke-test the live site and add the site link to the Linktree, Instagram and LinkedIn                        | 🤖 tests, 🧑 updates profiles      |
-| 7.7 | Write `docs/CONTENT-GUIDE.md` covering how to add a newsletter issue or update returns, team and events       | 🟣                                 |
+| #   | Task                                                                                                                    | Who                                |
+| --- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| 7.1 | Create the Vercel account/team and confirm Hobby vs Pro terms for a student organization                                | 🧑                                 |
+| 7.2 | Buy or arrange a domain (for example `fgvquant.com.br` through Registro.br, which requires a CPF/CNPJ holder)           | 🧑                                 |
+| 7.3 | Connect the GitHub repo to Vercel, or run a CLI deploy, after your explicit go-ahead                                    | 🧑 authorizes, 🤖 configures       |
+| 7.4 | Enable Vercel Analytics, set production env (incl. `GOOGLE_API_KEY` for `pnpm sync`), check the preview deployment      | 🤖                                 |
+| 7.5 | DNS records at the registrar                                                                                            | 🧑 (Claude provides exact records) |
+| 7.6 | Smoke-test the live site and add the site link to the Linktree, Instagram and LinkedIn                                  | 🤖 tests, 🧑 updates profiles      |
+| 7.7 | Write `docs/CONTENT-GUIDE.md` covering newsletter issues and how a sheet edit reaches the site (redeploy / deploy hook) | 🟣                                 |
 
 ---
 

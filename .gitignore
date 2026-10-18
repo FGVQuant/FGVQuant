@@ -40,6 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# admin sheet sync output (pnpm sync)
+/content/sheet
+/public/sheet
+
 # velite content build
 .velite
 

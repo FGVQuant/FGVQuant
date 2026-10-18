@@ -8,7 +8,7 @@ import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { deriveInitials } from "@/components/cards/member-card";
 
 /**
- * Members' own accounts of the league (content/testimonials.json). A quote linked to a team member
+ * Members' own accounts of the league (the sheet's Depoimentos tab). A quote linked to a team member
  * reuses their name and photo. Seats without text yet stay explicit ("a confirmar"), never filled
  * with invented quotes. On /en a quote without an English version shows in Portuguese, marked lang="pt".
  */
