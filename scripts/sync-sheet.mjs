@@ -4,6 +4,7 @@
 // links) is derived here. Any invalid row aborts the sync before anything is written.
 // Usage: pnpm sync   (needs GOOGLE_API_KEY, from .env.local locally or the host's env)
 import { existsSync, mkdirSync, statSync, writeFileSync } from "node:fs";
+import { figureFor } from "./project-figure.mjs";
 
 /** "FGV Quant - site" folder on the league's Drive: the spreadsheet plus "Fotos do site". */
 const FOLDER = "1CVmNj4WNtqLL5Ex-kre9tuqX52IzhCoa";
@@ -47,22 +48,6 @@ const EVENT_KIND = {
 };
 const PROJECT_KIND = { Pesquisa: "research", Fundo: "fund", Trainee: "trainee" };
 const STATUS = { Concluído: "done", "Em andamento": "in-progress" };
-/** Topic illustrations for finished projects (by derived id). In-progress ones get "ongoing", the fund "fund". */
-const FIGURE = {
-  "2026-1-quantas-dimensoes-tem-o-zoo-redundancia-informacional-entre-caracteristicas-de-retorno":
-    "clusters",
-  "2026-1-volatilidade-de-fundamentos-no-mercado-acionario-brasileiro": "deciles",
-  "2025-2-regimes-focados-em-alocacao-e-investimento-dinamico-por-fatores-no-mercado-acionario-brasileiro":
-    "regimes",
-  "2025-2-o-fator-momentum-na-b3": "momentum",
-  "2024-2-pairs-trading-no-setor-de-utilidade-publica": "pairs",
-  "2024-1-modelo-preditivo-para-a-taxa-de-juros": "rates",
-  "2024-1-inteligencia-artificial-e-estudo-de-eventos-para-trading": "event-study",
-  "2026-1-long-straddle": "straddle",
-  "2025-2-volume-weighted-average-price-vwap": "vwap",
-  "2024-2-momentum-trading-com-random-forest": "momentum",
-  "2024-1-pairs-trading-em-construtoras-even3-e-tris3": "pairs",
-};
 const STRATEGY = { "Pairs trading": "pairs", Momentum: "momentum", "Fundo (total)": "fund" };
 const FUND = { name: "FGV Quant Capital", source: "https://www.linkedin.com/company/fgvquant" };
 
@@ -352,7 +337,12 @@ const projects = sheet.Projetos.map((r) => {
     partner: r.Parceiro,
     mentor: r.Mentor,
     award: loc(r["Prêmio"], r["Prêmio (inglês)"]),
-    figure: kind === "fund" ? "fund" : status === "in-progress" ? "ongoing" : FIGURE[id],
+    figure:
+      kind === "fund"
+        ? "fund"
+        : status === "in-progress"
+          ? "ongoing"
+          : figureFor(r["Título"], r.Resumo),
     photo: photo(r, "Foto"),
     paper: asset(r, "Artigo (PDF)"),
     link: url(r, "Link"),
@@ -502,7 +492,9 @@ for (const [name, dest] of wanted) {
     if (body.length === Number(size)) break;
   }
   if (body.length !== Number(size))
-    fail([`não consegui baixar '${name}' do Drive (${res ? `HTTP ${res.status}` : "erro de rede"}) após 5 tentativas. Tente de novo.`]);
+    fail([
+      `não consegui baixar '${name}' do Drive (${res ? `HTTP ${res.status}` : "erro de rede"}) após 5 tentativas. Tente de novo.`,
+    ]);
   writeFileSync(dest, body);
 }
 
