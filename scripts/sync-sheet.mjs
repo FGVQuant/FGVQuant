@@ -317,7 +317,7 @@ const events = sheet.Eventos.map((r) => {
   const href = /quant connect/i.test(r["Título"])
     ? "/eventos#quant-connect"
     : kind === "competition"
-      ? "/desafios"
+      ? "/projetos#competicoes"
       : undefined;
   return {
     id: `${d.period}-${slug(r["Título"])}`,

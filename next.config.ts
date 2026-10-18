@@ -8,11 +8,11 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   typedRoutes: true,
-  // "Competições" became "Desafios": keep old links (and search results) working.
+  // Competitions moved into /projetos: keep old links (and search results) working.
   async redirects() {
     return [
-      { source: "/competicoes", destination: "/desafios", permanent: true },
-      { source: "/en/competicoes", destination: "/en/desafios", permanent: true },
+      { source: "/competicoes", destination: "/projetos#competicoes", permanent: true },
+      { source: "/en/competicoes", destination: "/en/projetos#competicoes", permanent: true },
     ];
   },
   experimental: {
