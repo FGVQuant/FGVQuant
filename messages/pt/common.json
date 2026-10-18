@@ -11,11 +11,11 @@
   "Nav": {
     "label": "Navegação principal",
     "about": "Sobre",
+    "team": "Equipe",
     "newsletter": "Newsletter",
-    "team": "Time",
-    "capital": "Capital",
-    "competitions": "Desafios",
+    "capital": "Fundo",
     "events": "Eventos",
+    "projects": "Projetos",
     "partners": "Parceiros",
     "join": "Processo seletivo",
     "openMenu": "Abrir menu",
@@ -60,7 +60,6 @@
       "visit": "Visita",
       "milestone": "Marco"
     },
-    "timelineLabel": "Linha do tempo de atividades",
     "newTab": "(abre em nova aba)",
     "marqueePause": "Pausar",
     "marqueePlay": "Retomar"

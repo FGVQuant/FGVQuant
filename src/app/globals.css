@@ -3,6 +3,17 @@
 /* Theme is driven by next-themes via a class on <html>; dark is the default. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Hover effects only for a real hovering pointer (mouse/trackpad). Tailwind's default checks
+   (hover: hover) alone; adding (pointer: fine) keeps taps on hybrid touch devices from leaving
+   hover states stuck. Applies to group-hover/peer-hover too, which build on this variant. */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 /* ------------------------------------------------------------------
    Brand palette (see docs/BRAND.md). Static, theme-independent.
    ------------------------------------------------------------------ */
@@ -23,7 +34,12 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Motion (Emil Kowalski's curves). Enter/exit and UI feedback: ease-out. On-screen movement:
+     ease-in-out. Drawers and sheets: ease-drawer. Colour and hover changes keep plain `ease`. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --default-transition-timing-function: ease;
 }
 
 /* ------------------------------------------------------------------
@@ -32,7 +48,7 @@
    Light values on :root, dark overrides on .dark (dark is the default theme).
    ------------------------------------------------------------------ */
 :root {
-  --background: #f7f5fb;
+  --background: #f3f0f8; /* one tone below the white --card, so cards read as a step up */
   --foreground: #1a0033;
   --card: #ffffff;
   --card-foreground: #1a0033;
@@ -52,16 +68,9 @@
   --input: rgb(35 0 66 / 0.18);
   --ring: #6b4fa0;
   --highlight: #6b4fa0; /* AA on --background */
-  /* headline emphasis: must out-contrast surrounding text, not recede */
-  --emphasis-from: #230042;
-  --emphasis-to: #6b3fc4;
-  --emphasis-glow: transparent;
-  --surface: rgb(255 255 255 / 0.7);
   --glow: rgb(174 148 214 / 0.35);
   --grid-line: rgb(35 0 66 / 0.06);
   --dot: rgb(35 0 66 / 0.07);
-  --dot-strong: rgb(35 0 66 / 0.2);
-  --intro-glow: rgb(174 148 214 / 0.22);
   --glow-2: rgb(174 148 214 / 0.18);
   --radius: 0.75rem;
   color-scheme: light;
@@ -88,15 +97,9 @@
   --input: rgb(174 148 214 / 0.2);
   --ring: #ae94d6;
   --highlight: #ae94d6;
-  --emphasis-from: #ffffff;
-  --emphasis-to: #b99bff;
-  --emphasis-glow: rgb(174 148 214 / 0.3);
-  --surface: rgb(84 70 131 / 0.14);
   --glow: rgb(110 60 190 / 0.45);
   --grid-line: rgb(174 148 214 / 0.06);
   --dot: rgb(174 148 214 / 0.1);
-  --dot-strong: rgb(174 148 214 / 0.32);
-  --intro-glow: rgb(84 70 131 / 0.28);
   --glow-2: rgb(84 70 131 / 0.25);
   color-scheme: dark;
 }
@@ -122,7 +125,6 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-highlight: var(--highlight);
-  --color-surface: var(--surface);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -143,6 +145,11 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+  /* Running text never runs wider than a comfortable measure. :where() keeps this at zero
+     specificity, so any max-w-* utility still wins. */
+  :where(main) :where(p, dd, blockquote) {
+    max-width: 65ch;
+  }
   ::selection {
     background: var(--highlight);
     color: var(--background);
@@ -151,6 +158,9 @@
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
+  /* Reduced motion means fewer and gentler, not off: looping keyframe animations stop, and
+     components drop travel and zoom with motion-reduce: variants, while colour and opacity
+     transitions keep giving feedback. */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -160,7 +170,6 @@
     *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
     }
   }
 }
@@ -187,28 +196,6 @@
     radial-gradient(40% 40% at 85% 30%, var(--glow-2), transparent 70%);
 }
 
-/* SVG fractal noise overlay; apply on an absolutely positioned layer */
-@utility bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  opacity: 0.06;
-  mix-blend-mode: overlay;
-}
-
-/* Glass card echoing the 3D glass objects in their posts */
-@utility glass {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-
-@utility text-gradient {
-  background: linear-gradient(180deg, var(--foreground) 30%, var(--highlight));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 /* Vertical rhythm for top-level page sections: one standard step and one tight step
    (follow-on blocks such as notices). Use instead of ad-hoc py-* on <section>. */
 @utility section-y {
@@ -225,35 +212,32 @@
   }
 }
 
-/* Site-wide film grain: a fixed, static noise layer behind all content so the flat base has some
-   texture. No blend mode (cheap to composite); slightly stronger on the dark theme. */
-@utility bg-grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  opacity: 0.025;
-  :where(.dark) & {
-    opacity: 0.045;
-  }
-}
-
 /* Alternating tone for long pages: a slightly lighter, translucent band (the site-wide dots show
    through). Put it on a full-width element (not a container-page box) so it runs edge to edge. */
 @utility section-tone {
   background-color: color-mix(in srgb, var(--card) 45%, transparent);
 }
 
-/* Site-wide soft dot pattern, and a brighter variant for spotlights. Both are anchored to the
-   viewport (the base is a fixed layer, the spotlight uses background-attachment: fixed), so the
-   spotlight's dots always land exactly on the base dots whatever the layout above them. */
+/* Site-wide soft dot pattern on a fixed layer: quiet chart paper behind every page. */
 @utility bg-dots {
   background-image: radial-gradient(circle, var(--dot) 1.2px, transparent 1.6px);
   background-size: 28px 28px;
 }
 
-@utility bg-dots-strong {
-  background-image: radial-gradient(circle, var(--dot-strong) 1.3px, transparent 1.7px);
-  background-size: 28px 28px;
-  background-attachment: fixed;
+/* Press feedback for anything clickable: a 3% scale-down on :active (Emil's 0.95-0.98 range),
+   160ms ease-out, and colour changes on the default curve. No scale under reduced motion. */
+@utility pressable {
+  transition-property: color, background-color, border-color, opacity, scale;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-out);
+  &:active {
+    scale: 0.97;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:active {
+      scale: none;
+    }
+  }
 }
 
 @utility container-page {
@@ -266,14 +250,9 @@
   }
 }
 
-/* Headline emphasis (one word per headline, Instagram-style): Lora italic with a luminous
-   gradient that is at least as bright as the surrounding text, plus a soft glow in dark mode. */
+/* Headline emphasis, used once (the home hero): Lora italic in the accent. Flat colour, no
+   gradient or glow, so it reads as type rather than effect. */
 @utility text-emphasis {
   font-style: italic;
-  background: linear-gradient(100deg, var(--emphasis-from) 0%, var(--emphasis-to) 70%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 0.35em var(--emphasis-glow));
-  padding-inline-end: 0.03em; /* italic overhang would otherwise be clipped by background-clip */
+  color: var(--highlight);
 }

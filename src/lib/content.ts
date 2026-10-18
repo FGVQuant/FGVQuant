@@ -5,8 +5,12 @@ import {
   fund,
   newsletter,
   partners,
+  projects,
+  quantConnect,
   site,
   team,
+  teamGroups,
+  testimonials,
   type Event,
   type NewsletterIssue,
 } from "#site/content";
@@ -35,7 +39,12 @@ const capitalize = (s: string) => s.charAt(0).toLocaleUpperCase() + s.slice(1);
 
 /** "2026-09" → "Setembro de 2026" / "September 2026" */
 export function formatEdition(edition: string, locale: Locale) {
-  return capitalize(fmt(`${edition}-01`, locale, { month: "long", year: "numeric" }));
+  return capitalize(formatEditionInline(edition, locale));
+}
+
+/** Same as `formatEdition` but in the locale's own case, for use mid-sentence ("até agosto de 2026"). */
+export function formatEditionInline(edition: string, locale: Locale) {
+  return fmt(`${edition}-01`, locale, { month: "long", year: "numeric" });
 }
 
 /** Month name and year apart, for typographic covers: "2026-09" → { month: "Setembro", year: "2026" }. */
@@ -101,8 +110,23 @@ export function getIssueTags() {
 // ── Team, areas, partners, competitions ─────────────────────────────────────────
 
 export const getTeam = () => [...team].sort((a, b) => a.order - b.order);
+
+/** Testimonials in display order, with the referenced team member (name, photo) resolved. */
+export const getTestimonials = () =>
+  [...testimonials]
+    .sort((a, b) => a.order - b.order)
+    .map((t) => ({ ...t, person: t.member ? team.find((m) => m.id === t.member) : undefined }));
+
+/** Team groups in display order, each with its members (members sorted by `order`). */
+export const getTeamGroups = () =>
+  [...teamGroups]
+    .sort((a, b) => a.order - b.order)
+    .map((g) => ({ ...g, members: getTeam().filter((m) => m.group === g.id) }));
 export const getAreas = () => [...areas].sort((a, b) => a.order - b.order);
 export const getCompetitions = () => [...competitions].sort((a, b) => b.year - a.year);
+
+/** Projects, newest semester first. */
+export const getProjects = () => [...projects].sort((a, b) => b.period.localeCompare(a.period));
 
 /** Partners; by default only those whose name/logo the league has cleared for publication. */
 export function getPartners({ includeUnconfirmed = false } = {}) {
@@ -132,6 +156,12 @@ export function toTimelineItems(list: Event[], locale: Locale): TimelineItem[] {
 
 export const getFund = () => fund;
 export const getSite = () => site;
+
+/** Quant Connect, editions newest first. */
+export const getQuantConnect = () => ({
+  ...quantConnect,
+  editions: [...quantConnect.editions].sort((a, b) => b.year - a.year),
+});
 
 /** Headline numbers for the KPI strip — derived from content, never hardcoded. */
 export function getStats() {

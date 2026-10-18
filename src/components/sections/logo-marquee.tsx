@@ -53,7 +53,7 @@ function Item({
   const cls =
     "inline-flex items-center rounded-lg opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 focus-visible:opacity-100 focus-visible:grayscale-0";
   const content = logo ?? (
-    <span className="rounded-lg border border-border bg-card/60 px-4 py-2 font-mono text-sm tracking-wide whitespace-nowrap text-foreground">
+    <span className="px-2 py-2 font-display text-2xl whitespace-nowrap text-foreground">
       {name}
     </span>
   );

@@ -20,7 +20,17 @@ function isKnownSlug(raw: string) {
   }
 }
 
+// Pages folded into others (2026-10 structure pass): keep old links working with a permanent redirect.
+const MOVED: Record<string, string> = { time: "/equipe", competicoes: "/projetos#competicoes" };
+const MOVED_PATH = /^(?:\/(pt|en))?\/(time|competicoes)\/?$/;
+
 export default function proxy(request: NextRequest) {
+  const moved = request.nextUrl.pathname.match(MOVED_PATH);
+  if (moved) {
+    const prefix = moved[1] === "en" ? "/en" : "";
+    return NextResponse.redirect(new URL(`${prefix}${MOVED[moved[2]]}`, request.url), 308);
+  }
+
   const match = request.nextUrl.pathname.match(ISSUE_PATH);
   if (match && !isKnownSlug(match[2])) {
     const url = request.nextUrl.clone();

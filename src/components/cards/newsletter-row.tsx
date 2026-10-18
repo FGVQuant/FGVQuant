@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
+import { IssueFigure, type IssueFigureKind } from "@/components/cards/issue-figure";
 
 type NewsletterRowProps = {
   href: string;
@@ -8,27 +9,31 @@ type NewsletterRowProps = {
   dateLabel: string;
   excerpt?: string;
   tags?: string[];
+  /** Topic figure shown above the date on sm+ (see issue-figure.tsx). */
+  figure?: IssueFigureKind;
   /** "Resumo" / "Summary" / full-issue label, derived from the issue status. */
   statusLabel: string;
   /** "Português" / "In Portuguese"; pass only where the UI is not Portuguese. */
   languageLabel?: string;
 };
 
-/** Compact text-led archive row: date, title, excerpt, tags and status. */
+/** Compact archive row: topic figure and date, title, excerpt, tags and status. */
 export function NewsletterRow({
   href,
   title,
   dateLabel,
   excerpt,
   tags,
+  figure,
   statusLabel,
   languageLabel,
 }: NewsletterRowProps) {
   return (
-    <article className="group relative grid gap-x-6 gap-y-2 rounded-2xl border border-border bg-card px-4 py-4 transition-colors hover:border-border-strong has-[a:focus-visible]:border-highlight sm:grid-cols-[6.5rem_1fr_auto] sm:items-start sm:px-5">
-      <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase sm:pt-1.5">
-        {dateLabel}
-      </p>
+    <article className="group relative grid gap-x-6 gap-y-2 rounded-2xl bg-card px-4 py-4 transition-colors hover:bg-secondary has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-ring sm:grid-cols-[6.5rem_1fr_auto] sm:items-start sm:px-5">
+      <div className="sm:pt-1.5">
+        {figure ? <IssueFigure kind={figure} className="mb-2 hidden w-full sm:block" /> : null}
+        <p className="text-sm text-muted-foreground">{dateLabel}</p>
+      </div>
       <div className="flex min-w-0 flex-col gap-2">
         <h3 className="font-sans text-lg leading-snug font-semibold tracking-tight text-balance text-foreground">
           <Link
@@ -56,7 +61,7 @@ export function NewsletterRow({
         {languageLabel ? <Badge variant="outline">{languageLabel}</Badge> : null}
         <ArrowRight
           aria-hidden
-          className="size-4 text-highlight transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+          className="size-4 text-highlight transition-[translate] duration-200 ease-out group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
         />
       </div>
     </article>

@@ -1,24 +1,18 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { BookOpenText, Mail, Mic, Puzzle, Users, type LucideIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { ArrowUpRight } from "lucide-react";
 import { PageIntro } from "@/components/layout/page-intro";
-import { LogoMarquee } from "@/components/sections/logo-marquee";
+import { partnerLogo } from "@/components/sections/partner-marquee";
 import { ButtonAnchor } from "@/components/ui/button";
+import { ItemList } from "@/components/ui/item-list";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
-import { Em, SectionHeader } from "@/components/ui/section-header";
-import { cn } from "@/lib/utils";
+import { SectionHeader } from "@/components/ui/section-header";
 import { pageAlternates } from "@/lib/seo";
 import { getPageLocale } from "@/lib/locale";
 import { getPartners, getSite, tr } from "@/lib/content";
-import { InstagramIcon, LinkedinIcon } from "./_components/brand-icons";
 
-const PITCH: { key: string; icon: LucideIcon }[] = [
-  { key: "talent", icon: Users },
-  { key: "talks", icon: Mic },
-  { key: "challenges", icon: Puzzle },
-  { key: "newsletter", icon: BookOpenText },
-];
+const PITCH = ["talent", "talks", "challenges", "newsletter"] as const;
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Partners.meta");
@@ -29,182 +23,135 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const cardCls =
-  "relative flex flex-col rounded-2xl border border-border bg-card p-6 transition-colors hover:border-border-strong";
-
 export default async function PartnersPage() {
   const [t, tCommon, locale] = await Promise.all([
     getTranslations("Partners"),
     getTranslations("Common"),
     getPageLocale(),
   ]);
-  const em = { em: (chunks: ReactNode) => <Em>{chunks}</Em> };
   const plain = { em: (chunks: ReactNode) => chunks };
   const site = getSite();
   const partners = getPartners();
+  const email = site.email ? `mailto:${site.email}` : undefined;
 
   const channels = [
-    {
-      key: "linkedin",
-      icon: <LinkedinIcon className="size-5" />,
-      href: site.linkedin,
-    },
-    {
-      key: "instagram",
-      icon: <InstagramIcon className="size-5" />,
-      href: site.instagram,
-    },
-    {
-      key: "newsletter",
-      icon: <BookOpenText aria-hidden className="size-5" />,
-      href: site.newsletterUrl,
-    },
+    { key: "linkedin", href: site.linkedin, label: t("contact.linkedin.cta") },
+    { key: "instagram", href: site.instagram, label: t("contact.instagram.cta") },
+    { key: "newsletter", href: site.newsletterUrl, label: t("contact.newsletter.cta") },
+    ...(email ? [{ key: "email", href: email, label: site.email! }] : []),
   ];
 
   return (
     <main id="content">
       <PageIntro
         eyebrow={t("intro.eyebrow")}
-        title={t.rich("intro.title", em)}
+        title={t.rich("intro.title", plain)}
         description={t("intro.description")}
       >
-        <ButtonAnchor href={site.linkedin} size="lg" arrow>
-          {t("pitch.ctaLinkedin")}
-        </ButtonAnchor>
+        <div className="flex flex-wrap gap-3">
+          {email ? (
+            <ButtonAnchor href={email} target="_self" size="lg" arrow>
+              {t("pitch.cta")}
+            </ButtonAnchor>
+          ) : null}
+          <ButtonAnchor href={site.linkedin} size="lg" variant={email ? "outline" : "primary"}>
+            {t("pitch.ctaLinkedin")}
+          </ButtonAnchor>
+        </div>
       </PageIntro>
 
-      <section>
-        <div className="container-page section-y">
-          <SectionHeader
-            eyebrow={t("pitch.eyebrow")}
-            title={t.rich("pitch.title", plain)}
-            description={t("pitch.description")}
-          />
-          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {PITCH.map(({ key, icon: Icon }) => (
-              <li key={key} className={cardCls}>
-                <Icon aria-hidden className="size-5 text-highlight" />
-                <h3 className="mt-4 font-sans text-lg font-semibold tracking-tight text-foreground">
-                  {t(`pitch.items.${key}.title`)}
-                </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  {t(`pitch.items.${key}.body`)}
+      {/* Who the league has worked with: a logo wall, one card per partner. */}
+      <section className="container-page section-y">
+        <SectionHeader title={t.rich("list.title", plain)} description={t("list.description")} />
+        {partners.length === 0 ? (
+          <PlaceholderNote label={tCommon("pending")} className="mt-10">
+            {t("list.pending")}
+          </PlaceholderNote>
+        ) : (
+          <ul className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl bg-border sm:grid-cols-2 lg:grid-cols-4">
+            {partners.map((p) => (
+              <li
+                key={p.id}
+                className="flex flex-col bg-card p-6 transition-colors hover:bg-secondary"
+              >
+                <div className="flex h-16 items-center">
+                  {partnerLogo(p, "h-9 max-w-48") ?? (
+                    <span className="font-display text-2xl text-foreground">{p.name}</span>
+                  )}
+                </div>
+                <h3 className="mt-6 text-sm font-semibold text-foreground">{p.name}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  {tr(p.relation, locale)}
                 </p>
               </li>
             ))}
           </ul>
-          {site.email ? (
-            <div className="mt-10">
-              <ButtonAnchor href={`mailto:${site.email}`} target="_self" size="lg" arrow>
-                {t("pitch.cta")}
-              </ButtonAnchor>
-            </div>
-          ) : null}
-        </div>
+        )}
       </section>
 
-      {partners.length === 0 ? (
-        <section className="container-page section-y-tight pt-0">
-          <PlaceholderNote label={tCommon("pending")}>{t("list.pending")}</PlaceholderNote>
-        </section>
-      ) : (
-        <section className="border-t border-border">
-          <div className="container-page section-y">
+      {/* The offer: header and call to action on the left, ways to collaborate on the right. */}
+      <section className="border-t border-border section-tone">
+        <div className="container-page grid items-start gap-10 section-y lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <div className="lg:sticky lg:top-24">
             <SectionHeader
-              eyebrow={t("list.eyebrow")}
-              title={t.rich("list.title", plain)}
-              description={t("list.description")}
+              title={t.rich("pitch.title", plain)}
+              description={t("pitch.description")}
             />
-            <div className="mt-10 space-y-10">
-              <LogoMarquee
-                label={t("list.marqueeLabel")}
-                items={partners.map((p) => ({
-                  name: p.name,
-                  href: p.url,
-                  logo: p.logo ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={p.logo}
-                      alt={p.name}
-                      width={160}
-                      height={32}
-                      loading="lazy"
-                      className="h-8 w-auto"
-                    />
-                  ) : undefined,
-                }))}
-              />
-              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {partners.map((p) => (
-                  <li key={p.id} className={cardCls}>
-                    <h3 className="font-sans text-lg font-semibold tracking-tight text-foreground">
-                      {p.name}
-                    </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                      {tr(p.relation, locale)}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {email ? (
+              <ButtonAnchor href={email} target="_self" size="lg" arrow className="mt-8">
+                {t("pitch.cta")}
+              </ButtonAnchor>
+            ) : null}
           </div>
-        </section>
-      )}
+          <ItemList
+            items={PITCH.map((key, i) => ({
+              key,
+              marker: String(i + 1).padStart(2, "0"),
+              title: t(`pitch.items.${key}.title`),
+              body: t(`pitch.items.${key}.body`),
+            }))}
+          />
+        </div>
+      </section>
 
       <section id="contato" className="scroll-mt-24 border-t border-border">
         <div className="container-page section-y">
           <SectionHeader
-            eyebrow={t("contact.eyebrow")}
             title={t.rich("contact.title", plain)}
             description={t("contact.description")}
           />
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {channels.map(({ key, icon, href }) => (
-              <li
-                key={key}
-                className={cn(cardCls, key === "linkedin" && "border-highlight/40 bg-card/80")}
-              >
-                <span className="text-highlight">{icon}</span>
-                <h3 className="mt-4 font-sans text-lg font-semibold tracking-tight text-foreground">
-                  {t(`contact.${key}.title`)}
-                </h3>
-                <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {t(`contact.${key}.body`)}
-                </p>
-                <ButtonAnchor
+            {channels.map(({ key, href, label }) => (
+              <li key={key}>
+                <a
                   href={href}
-                  variant={key === "linkedin" ? "primary" : "link"}
-                  arrow
-                  className="mt-5 self-start"
+                  target={key === "email" ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  className="group flex h-full flex-col rounded-2xl bg-card p-6 transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-highlight"
                 >
-                  {t(`contact.${key}.cta`)}
-                </ButtonAnchor>
+                  <span className="flex items-center justify-between font-sans text-lg font-semibold tracking-tight text-foreground">
+                    {t(`contact.${key}.title`)}
+                    <ArrowUpRight
+                      aria-hidden
+                      className="size-4 text-highlight transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </span>
+                  <span className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {t(`contact.${key}.body`)}
+                  </span>
+                  <span className="mt-auto pt-6 text-sm font-medium break-all text-highlight">
+                    {label}
+                  </span>
+                  {key === "email" ? null : <span className="sr-only">{tCommon("newTab")}</span>}
+                </a>
               </li>
             ))}
-            <li className={cardCls}>
-              <Mail aria-hidden className="size-5 text-highlight" />
-              <h3 className="mt-4 font-sans text-lg font-semibold tracking-tight text-foreground">
-                {t("contact.email.title")}
-              </h3>
-              <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
-                {t("contact.email.body")}
-              </p>
-              {site.email ? (
-                <ButtonAnchor
-                  href={`mailto:${site.email}`}
-                  target="_self"
-                  variant="link"
-                  className="mt-5 self-start"
-                >
-                  {site.email}
-                </ButtonAnchor>
-              ) : (
-                <PlaceholderNote label={tCommon("pending")} className="mt-5 p-3 text-xs">
-                  {t("contact.email.pending")}
-                </PlaceholderNote>
-              )}
-            </li>
           </ul>
+          {email ? null : (
+            <PlaceholderNote label={tCommon("pending")} className="mt-6">
+              {t("contact.email.pending")}
+            </PlaceholderNote>
+          )}
         </div>
       </section>
     </main>

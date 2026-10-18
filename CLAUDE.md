@@ -49,6 +49,7 @@ Website for **FGV Quant**, the Liga de Finanças Quantitativas da FGV-SP. Planni
   - Partners stay hidden until `permission: true`.
   - Fund `monthly` lists only months the league reported.
   - Newsletter issues are `status: summary` (our own words, linking to LinkedIn) until the league provides the text.
+  - An issue's `figure` (cover art) and the `<TailRiskFigure />` in the Sep/26 issue are labelled illustrations drawn from formulas or seeded simulations, never the issue's data. Set `figure` only when the topic is known.
 - **Open inputs:** tracked in [docs/INPUTS.md](docs/INPUTS.md).
 
 ## Brand

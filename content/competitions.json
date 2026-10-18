@@ -5,25 +5,21 @@
     "organizer": "Itaú Asset Management",
     "year": 2026,
     "summary": {
-      "pt": "7ª edição do desafio universitário da Itaú Asset, em que estudantes constroem robôs de investimento.",
-      "en": "The 7th edition of Itaú Asset's university challenge, where students build investment robots."
+      "pt": "7ª edição do desafio universitário da Itaú Asset, em que estudantes constroem robôs de investimento com IA generativa. Entre mais de 1.300 grupos, dois times da liga ficaram no top 10. Mentoria de Murillo Toda.",
+      "en": "The 7th edition of Itaú Asset's university challenge, where students build investment robots with generative AI. Out of more than 1,300 groups, two league teams made the top 10. Mentored by Murillo Toda."
     },
     "teams": [
-      {
-        "name": "Augur",
-        "ranked": true,
-        "result": {
-          "pt": "2º lugar",
-          "en": "2nd place"
-        },
-        "members": ["Hugo Villanova"]
-      },
       {
         "name": "Alpha Helix",
         "ranked": true,
         "result": {
           "pt": "Top 10",
           "en": "Top 10"
+        },
+        "members": ["Vitor Guardiano", "Natalie Kaori", "Enrico Poggi"],
+        "strategy": {
+          "pt": "Organiza o alfa a partir do “DNA” das carteiras dos fundos brasileiros: cria embeddings de ativos e investidores, mede a similaridade entre fundos e ativos e deriva a popularidade de cada ativo entre fundos parecidos. Investe nos ativos que permaneceram persistentemente populares no passado recente, na hipótese de que popularidade reflete consenso entre pares e demanda.",
+          "en": "Builds alpha from the “DNA” of Brazilian funds' portfolios: it creates embeddings of assets and investors, measures fund–asset similarity and derives each asset's popularity among similar funds. It invests in assets that stayed persistently popular in the recent past, on the hypothesis that popularity reflects peer consensus and demand."
         }
       },
       {
@@ -32,10 +28,95 @@
         "result": {
           "pt": "Top 10",
           "en": "Top 10"
+        },
+        "members": ["Antônio Freitas", "Luisa Obara", "Pedro Berta"],
+        "strategy": {
+          "pt": "Busca o prêmio de risco no mercado de commodities a partir do estoque físico: toda semana compara o estoque de cada um de dez mercados com as suas últimas 156 semanas e os ordena pelo “aperto”. Quanto mais apertado o estoque, maior o risco de ruptura e, dada a baixa substituibilidade entre commodities, maior o prêmio exigido para carregar esse risco.",
+          "en": "Hunts the risk premium in commodities from physical inventories: every week it compares each of ten markets' inventory with its last 156 weeks and ranks them by “tightness”. The tighter the inventory, the higher the risk of a shortage and, since commodities are hard to substitute, the higher the premium for carrying that risk."
         }
+      },
+      {
+        "name": "Augur",
+        "ranked": false,
+        "result": {
+          "pt": "2º lugar",
+          "en": "2nd place"
+        },
+        "members": ["Hugo Villanova", "Eduardo Zorzi"],
+        "strategy": {
+          "pt": "Antecipa o fluxo comprador dos fundos passivos sobre ações que entram no Ibovespa e captura a reversão após o rebalanceamento.",
+          "en": "Anticipates passive funds' buying of stocks entering the Ibovespa and captures the reversal after the rebalance."
+        },
+        "official": false
       }
     ],
     "source": "https://www.itau.com.br/media/dam/m/21da905a9b2584c6/original/itau-asset-abre-inscricao-para-desafio-universitario-no-setor-financeiro-4-maio-2026.pdf",
+    "selfReported": true
+  },
+  {
+    "id": "desafio-safra-top-gestor-2025",
+    "name": "Desafio Safra Top Gestor 2025",
+    "organizer": "Banco Safra",
+    "year": 2025,
+    "summary": {
+      "pt": "Desafio de gestão de recursos com mais de 280 grupos inscritos. O time montou uma gestão baseada em modelos quantitativos: cenário macro, seleção sistemática de ações e BDRs e construção de portfólio com foco em risco.",
+      "en": "An asset management challenge with over 280 registered groups. The team ran a model-based approach: macro scenario, systematic selection of stocks and BDRs, and risk-focused portfolio construction."
+    },
+    "teams": [
+      {
+        "name": "FGV Quant",
+        "ranked": true,
+        "result": {
+          "pt": "3º lugar",
+          "en": "3rd place"
+        },
+        "members": ["Antonio Paiva", "Bruno Fogaça", "Hugo Villanova", "Thiago Lebrão"]
+      }
+    ],
+    "selfReported": true
+  },
+  {
+    "id": "datathon-moedas-digitais-2024",
+    "name": "Datathon de Moedas Digitais (5ª edição)",
+    "organizer": "FGV EESP",
+    "year": 2024,
+    "summary": {
+      "pt": "Desafio de dados sobre problemas reais do ecossistema de criptoativos e moedas digitais, com 20 equipes. O time reuniu membros da FGV Quant e da FGV Crypto.",
+      "en": "A data challenge on real problems in the crypto asset and digital currency ecosystem, with 20 teams. The team joined members of FGV Quant and FGV Crypto."
+    },
+    "teams": [
+      {
+        "name": "Crypto X Quant",
+        "ranked": true,
+        "result": {
+          "pt": "1º lugar",
+          "en": "1st place"
+        },
+        "members": ["André Togni", "Bernardo Rubin", "Francisco Zipman", "Leonardo Ono"]
+      }
+    ],
+    "selfReported": true
+  },
+  {
+    "id": "desafio-quant-itau-2024",
+    "name": "Desafio Quant Itaú Asset Management 2024",
+    "organizer": "Itaú Asset Management",
+    "year": 2024,
+    "summary": {
+      "pt": "Mais de 500 equipes inscritas. Finalista, o time apresentou à banca de gestores do Itaú uma estratégia que combina Deep Reinforcement Learning (SAC, PPO e A2C) e NLP para montar portfólios ajustados ao sentimento do mercado. Mentoria de André Maranhão.",
+      "en": "Over 500 registered teams. As a finalist, the team presented Itaú's portfolio managers a strategy combining deep reinforcement learning (SAC, PPO and A2C) and NLP to build sentiment-adjusted portfolios. Mentored by André Maranhão."
+    },
+    "teams": [
+      {
+        "name": "FGV Quant",
+        "ranked": true,
+        "result": {
+          "pt": "5º lugar",
+          "en": "5th place"
+        },
+        "members": ["Juan Puzzo", "Matheus Moreira Espindola", "Henrique Motta", "Ricardo Paschoa"]
+      }
+    ],
     "selfReported": true
   }
 ]

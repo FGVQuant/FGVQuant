@@ -1,29 +1,17 @@
 {
   "Team": {
-    "metaTitle": "Team",
-    "metaDescription": "Meet FGV Quant's structure and team. FGV-SP's quantitative finance student league.",
-    "eyebrow": "Team",
-    "title": "The people behind the <em>model</em>",
-    "lead": "FGV-SP students who come together to study, research and build in quantitative finance.",
-    "leadership": {
-      "eyebrow": "Leadership and areas",
-      "title": "Who <em>leads</em> the league",
-      "description": "Directorates and focus areas of the league."
+    "meta": {
+      "title": "Team",
+      "description": "FGV Quant's presidency, directorates, teams and trainees."
+    },
+    "intro": {
+      "eyebrow": "Team",
+      "title": "Who makes the league",
+      "description": "The presidency, each directorate and its team, and the current trainee cohort."
     },
     "linkedinLabel": "{name} on LinkedIn",
     "nameTbd": "Name to be confirmed",
     "pending": "The team list will be published once the league confirms names and each person's consent.",
-    "alumni": {
-      "eyebrow": "Alumni and achievements",
-      "title": "What the team has <em>delivered</em>",
-      "body": "Former president Hugo Villanova placed 2nd in the Desafio Quant AI 2026 with the \"Augur\" strategy.",
-      "selfReported": "Reported by the league itself.",
-      "cta": "See challenges"
-    },
-    "cta": {
-      "title": "Want to work with <em>us</em>?",
-      "body": "Learn about the recruitment process and join the league.",
-      "button": "Recruitment process"
-    }
+    "membersTbd": "Members to be confirmed"
   }
 }

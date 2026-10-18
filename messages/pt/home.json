@@ -15,12 +15,9 @@
     "stats": {
       "members": "Membros e trainees",
       "issues": "Edições da newsletter",
-      "ranked": "Times ranqueados no top 10 do Desafio Itaú Quant AI",
-      "fund": "FGV Quant Capital",
-      "fundNote": "Fundo fictício · até {month}"
+      "ranked": "Pódios e top 10 em competições"
     },
     "about": {
-      "eyebrow": "Quem somos",
       "titleA": "Matemática, estatística e código",
       "titleEm": "aplicados ao mercado",
       "body": "Fundada em 2021, a FGV Quant reúne estudantes da FGV-SP interessados em finanças quantitativas, de derivativos e machine learning a trading algorítmico e Python.",
@@ -33,26 +30,37 @@
       }
     },
     "terminal": {
-      "title": "fgvquant@liga: ~",
-      "introCommand": "cat missao.txt",
-      "intro1": "A FGV Quant é a Liga de Finanças Quantitativas da FGV-SP, fundada em 2021.",
-      "intro2": "Aplicamos matemática, estatística e programação aos mercados financeiros:",
-      "intro3": "derivativos, machine learning, trading algorítmico e Python.",
-      "hint": "Digite /help para ver os comandos.",
-      "helpHeading": "Comandos disponíveis:",
-      "notFound": "comando não encontrado: {cmd}",
-      "navigating": "abrindo {path}…",
-      "inputLabel": "Comando do terminal",
-      "chipsLabel": "Comandos rápidos",
-      "cmdJoin": "como entrar na liga",
-      "cmdNewsletter": "FGV Quant Insights, mensal",
-      "cmdCapital": "nosso fundo fictício",
-      "cmdTeam": "quem faz a liga",
-      "cmdAbout": "missão e história",
-      "cmdMotto": "nosso lema"
+      "title": "fgvquant@liga: ~/calculadora",
+      "intro": "Calculadora quant: tudo é calculado aqui, no seu navegador.",
+      "hint": "Experimente os exemplos abaixo ou digite help.",
+      "helpHeading": "Comandos (vol e drift aceitam 24% ou 0,24):",
+      "helpSim": "simula R$ 100 por um ano (GBM, n trajetórias)",
+      "helpVar": "VaR e ES: normal vs. t de Student (gl graus de liberdade)",
+      "helpStraddle": "preço de um long straddle (Black-Scholes, r = 0), T em anos",
+      "helpClear": "limpa a tela",
+      "notFound": "comando não encontrado: {cmd}. Digite help.",
+      "usageSim": "uso: sim [vol, até 200%] [drift] [n entre 100 e 50000]",
+      "usageVar": "uso: var [nível, ex. 95 ou 99] [gl > 2]",
+      "usageStraddle": "uso: straddle [S] [K] [vol] [T em anos]",
+      "simHeader": "{n} trajetórias · R$ 100 · drift {mu} · vol {sigma} · 1 ano",
+      "simLoss": "probabilidade de terminar abaixo de R$ 100: {p}",
+      "simNote": "simulação ilustrativa (semente fixa), não previsão",
+      "varHeader": "nível {level} · perdas em desvios-padrão (variância 1)",
+      "normal": "normal",
+      "studentT": "t, {nu} gl",
+      "varNote": "mesma variância, caudas diferentes: compare VaR e ES",
+      "straddleHeader": "S = {s} · K = {k} · vol {sigma} · T = {years} ano(s)",
+      "straddlePrice": "preço (call + put): {price}",
+      "straddleBreakeven": "lucro no vencimento se S < {low} ou S > {high}",
+      "straddleNote": "modelo de Black-Scholes com juros zero, para fins didáticos",
+      "inputLabel": "Comando da calculadora",
+      "chipsLabel": "Exemplos",
+      "synSim": "sim [vol] [drift] [n]",
+      "synVar": "var [nível] [gl]",
+      "synStraddle": "straddle [S] [K] [vol] [T]",
+      "synClear": "clear"
     },
     "areas": {
-      "eyebrow": "Áreas de atuação",
       "titleA": "Os três",
       "titleEm": "pilares",
       "description": "Passe o mouse ou toque no diagrama para explorar cada área e suas interseções.",
@@ -98,14 +106,12 @@
       }
     },
     "newsletter": {
-      "eyebrow": "FGV Quant Insights",
       "titleA": "A newsletter",
       "titleEm": "mensal",
       "description": "Personalidades, estratégias, notícias e oportunidades do mundo quant, todo mês no LinkedIn.",
       "all": "Ver todas as edições"
     },
     "activities": {
-      "eyebrow": "Atividades",
       "titleA": "Aulas, visitas e",
       "titleEm": "competições",
       "all": "Ver todos os eventos"
@@ -118,16 +124,9 @@
       "asOf": "até {month}",
       "cta": "Ver o FGV Quant Capital"
     },
-    "join": {
-      "eyebrow": "Processo seletivo",
-      "title": "Quer fazer parte da FGV Quant?",
-      "body": "Acompanhe nossas redes para saber quando as inscrições abrirem.",
-      "cta": "Saiba como entrar"
-    },
-    "terminalSection": {
-      "eyebrow": "Explore",
-      "title": "Navegue pelo terminal",
-      "description": "Opcional: use comandos como /help ou clique nos atalhos."
+    "partners": {
+      "title": "Parcerias realizadas",
+      "all": "Ver parceiros"
     }
   }
 }

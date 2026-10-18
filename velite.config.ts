@@ -34,6 +34,13 @@ const newsletter = defineCollection({
        */
       status: s.enum(["summary", "full"]).default("summary"),
       featured: s.boolean().default(false),
+      /**
+       * Topic figure on the cover (src/components/cards/issue-figure.tsx). Illustrative, drawn from
+       * formulas or seeded simulations; set only when the issue's topic is known.
+       */
+      figure: s
+        .enum(["tail-risk", "straddle", "prediction-spread", "alt-data", "factors"])
+        .optional(),
       path: s.path(),
       body: s.mdx(),
     })
@@ -46,13 +53,57 @@ const team = defineCollection({
   schema: s.object({
     id: s.string(),
     name: s.string(),
-    role: localized,
+    /** optional for area teams and trainees, where the group already says what they do */
+    role: localized.optional(),
+    /** id from content/team/groups.json (presidency, an area team or a trainee cohort) */
+    group: s.string(),
+    /** the director who leads this area team; shown at the top of the team card */
+    lead: s.boolean().default(false),
     area: s.string().optional(),
     /** local image under content/ (e.g. "./photos/ana.jpg") → { src, width, height, blurDataURL } */
     photo: s.image().optional(),
     linkedin: s.string().url().optional(),
     order: s.number().default(100),
     /** true until the league confirms name/role and consent to publish */
+    placeholder: s.boolean().default(false),
+  }),
+});
+
+/** How the team is split on Sobre: board, area teams, trainee cohorts. Add a cohort here, not in code. */
+const teamGroups = defineCollection({
+  name: "TeamGroup",
+  pattern: "team/groups.json",
+  schema: s.object({
+    id: s.string(),
+    title: localized,
+    order: s.number(),
+    /** featured groups (the presidency) render as large portrait cards; the rest as team cards */
+    featured: s.boolean().default(false),
+    /** list groups that take a full row (trainee cohorts); large groups go full width anyway */
+    wide: s.boolean().default(false),
+  }),
+});
+
+/**
+ * Members' accounts of their time in the league, shown on Sobre. Written by the members
+ * themselves; never paraphrased or invented. `member` (an id from team/members.json) reuses
+ * that person's name and photo. `en` is optional: without it the PT text shows on /en too.
+ */
+const testimonials = defineCollection({
+  name: "Testimonial",
+  pattern: "testimonials.json",
+  schema: s.object({
+    id: s.string(),
+    quote: s.object({ pt: s.string(), en: s.string().optional() }).optional(),
+    member: s.string().optional(),
+    /** used when the person is not on the current team (alumni) */
+    name: s.string().optional(),
+    /** portrait for people not on the team (e.g. cropped from the league's testimonial post) */
+    photo: s.image().optional(),
+    /** e.g. "Trainee 2025.1, hoje na Equipe Acadêmica" */
+    context: localized.optional(),
+    order: s.number(),
+    /** true until the league sends the text and the person's consent */
     placeholder: s.boolean().default(false),
   }),
 });
@@ -84,6 +135,58 @@ const events = defineCollection({
     href: s.string().optional(),
     partners: s.array(s.string()).default([]),
     source: s.string().url().optional(),
+    /** cropped from the league's own Instagram posts (content/events/photos/) */
+    photo: s.image().optional(),
+  }),
+});
+
+/** Research, fund and trainee projects (from the league's own posts). No page yet. */
+const projects = defineCollection({
+  name: "Project",
+  pattern: "projects.json",
+  schema: s.object({
+    id: s.string(),
+    /** semester, e.g. "2025.2" */
+    period: s.string(),
+    kind: s.enum(["research", "fund", "trainee"]),
+    title: localized,
+    summary: localized,
+    members: s.array(s.string()).default([]),
+    /** topic figure (src/components/cards/issue-figure.tsx); illustrative, never the project's data */
+    figure: s
+      .enum([
+        "pairs",
+        "regimes",
+        "momentum",
+        "clusters",
+        "deciles",
+        "rates",
+        "event-study",
+        "vwap",
+        "fund",
+        "ongoing",
+        "straddle",
+        "factors",
+      ])
+      .optional(),
+    /** team lead (one of `members`), shown first and marked */
+    lead: s.string().optional(),
+    partner: s.string().optional(),
+    mentor: s.string().optional(),
+    /** e.g. a trainee-cycle award */
+    award: localized.optional(),
+    /** a public write-up (LinkedIn post, paper) */
+    link: s.string().url().optional(),
+    /** the project's paper, a PDF under public/papers/ (e.g. "/papers/x.pdf"), offered as a download */
+    paper: s.string().optional(),
+    /** internal page, e.g. "/capital" */
+    href: s.string().optional(),
+    /** photo of the presentation, cropped from the league's own Instagram posts (content/projects/photos/) */
+    photo: s.image().optional(),
+    /** "in-progress" for the current semester's projects */
+    status: s.enum(["done", "in-progress"]).default("done"),
+    /** true until the league confirms the project and its members */
+    placeholder: s.boolean().default(false),
   }),
 });
 
@@ -101,10 +204,12 @@ const competitions = defineCollection({
         s.object({
           name: s.string(),
           result: localized,
-          strategy: s.string().optional(),
+          strategy: localized.optional(),
           members: s.array(s.string()).default([]),
           /** true for placed/ranked results (podium, top-10); counted in the KPI strip */
           ranked: s.boolean().default(false),
+          /** false for teams that competed outside the league (e.g. former members) */
+          official: s.boolean().default(true),
         }),
       )
       .default([]),
@@ -176,6 +281,56 @@ const fund = defineCollection({
   }),
 });
 
+/** The Quant Connect, the event FGV Quant co-organizes; featured on /eventos. Sourced facts only. */
+const quantConnect = defineCollection({
+  name: "QuantConnect",
+  pattern: "quant-connect.json",
+  single: true,
+  schema: s.object({
+    name: s.string(),
+    description: localized,
+    organizers: s.array(s.string()),
+    instagram: s.string().url(),
+    linkedin: s.string().url(),
+    photos: s
+      .array(
+        s.object({
+          image: s.image(),
+          alt: localized,
+          /** CSS object-position for the cropped tile, e.g. "top" to keep faces and lose the bottom */
+          position: s.string().optional(),
+        }),
+      )
+      .default([]),
+    editions: s.array(
+      s.object({
+        year: s.number().int(),
+        number: s.number().int(),
+        days: s
+          .array(
+            s.object({
+              date: s.isodate(),
+              venue: s.string(),
+              area: s.string().optional(),
+              /** the day's schedule, as the event published it */
+              program: s
+                .array(s.object({ time: s.string(), title: s.string(), by: s.string().optional() }))
+                .default([]),
+            }),
+          )
+          .default([]),
+        hours: s.string().optional(),
+        panels: s.number().int().optional(),
+        themes: s.array(localized).default([]),
+        /** partners the event announced publicly (names only, no logos) */
+        partners: s.array(s.string()).default([]),
+        source: s.string().url().optional(),
+        partnersSource: s.string().url().optional(),
+      }),
+    ),
+  }),
+});
+
 const site = defineCollection({
   name: "Site",
   pattern: "site.json",
@@ -190,6 +345,8 @@ const site = defineCollection({
     newsletterUrl: s.string().url(),
     recruitment: s.object({
       open: s.boolean().optional(),
+      /** the next cycle, e.g. "2027.1": recruitment runs every semester, at the start of FGV's term */
+      next: s.string(),
       formUrl: s.string().url().optional(),
       placeholder: s.boolean().default(true),
     }),
@@ -212,7 +369,21 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { newsletter, team, areas, events, competitions, partners, fund, site, devSamples },
+  collections: {
+    newsletter,
+    team,
+    teamGroups,
+    testimonials,
+    areas,
+    events,
+    competitions,
+    projects,
+    partners,
+    fund,
+    quantConnect,
+    site,
+    devSamples,
+  },
   mdx: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],

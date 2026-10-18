@@ -7,25 +7,15 @@
     "intro": {
       "eyebrow": "Join the league",
       "title": "Recruitment <em>process</em>",
-      "description": "FGV Quant brings together FGV-SP students who want to learn quantitative finance by doing. Details of the next recruitment process haven't been announced yet. This page will be updated as soon as they are."
+      "description": "FGV Quant brings together FGV-SP students who want to learn about finance, statistics, mathematics and programming. Recruitment runs every semester, at the start of FGV's academic term: the next one is {next}. Dates and stages will be announced here and on our channels."
     },
     "status": {
       "label": "Status",
       "open": "Applications: open",
       "closed": "Applications: closed",
-      "tbd": "Applications: to be confirmed"
+      "tbd": "Next recruitment: {next}"
     },
     "apply": "Apply",
-    "how": {
-      "eyebrow": "Stages",
-      "title": "How it <em>works</em>",
-      "description": "Stages, deadlines and criteria will be published here once the league announces the process."
-    },
-    "who": {
-      "eyebrow": "Eligibility",
-      "title": "Who can <em>take part</em>",
-      "body": "The league is for FGV-SP students interested in quantitative finance."
-    },
     "build": {
       "eyebrow": "Trainee program",
       "title": "What you will <em>learn</em>",
@@ -36,7 +26,9 @@
         "strategies": "Quantitative strategies",
         "portfolios": "Portfolios",
         "fixedIncome": "Fixed income",
-        "derivatives": "Derivatives"
+        "derivatives": "Derivatives",
+        "programming": "Programming",
+        "ai": "Artificial intelligence"
       },
       "descriptions": {
         "statistics": "Probability and inference as the basis for analyzing financial data.",
@@ -44,7 +36,9 @@
         "strategies": "How systematic strategies are built and evaluated.",
         "portfolios": "Building portfolios and balancing risk and return.",
         "fixedIncome": "Bonds, interest rates and the term structure.",
-        "derivatives": "Options, futures and how to price them."
+        "derivatives": "Options, futures and how to price them.",
+        "programming": "Code to handle data, test ideas and automate analyses.",
+        "ai": "Machine learning and AI applied to market problems."
       },
       "formatTitle": "How it works",
       "format": {
@@ -62,34 +56,33 @@
         }
       }
     },
-    "faq": {
-      "eyebrow": "Questions",
-      "title": "Frequently asked <em>questions</em>",
-      "items": [
-        {
-          "q": "When do applications open?",
-          "a": "No date has been announced yet. Once the league announces it, we'll publish it here and on our channels."
-        },
-        {
-          "q": "Who can take part?",
-          "a": "The league is for FGV-SP students. Eligibility requirements will be published together with the process details."
-        },
-        {
-          "q": "Do I need to know how to code?",
-          "a": "No. The recruitment process has no technical prerequisites."
-        },
-        {
-          "q": "How will I know when applications open?",
-          "a": "Follow FGV Quant on Instagram and LinkedIn: that's where announcements will be posted."
-        }
-      ]
-    },
     "notify": {
-      "eyebrow": "Stay in the loop",
-      "title": "Get notified when it <em>opens</em>",
-      "description": "Follow the league to find out when the recruitment process is announced.",
+      "description": "Follow our channels to stay up to date on upcoming applications.",
       "instagram": "Follow on Instagram",
       "linkedin": "Follow on LinkedIn"
+    },
+    "facts": {
+      "frequency": {
+        "label": "Frequency",
+        "value": "Every semester"
+      },
+      "next": {
+        "label": "Next recruitment",
+        "value": "{next}"
+      },
+      "prerequisites": {
+        "label": "Technical prerequisites",
+        "value": "None"
+      },
+      "audience": {
+        "label": "Who it's for",
+        "value": "FGV-SP students"
+      }
+    },
+    "projects": {
+      "title": "Trainee cycle final projects",
+      "description": "At the end of the cycle, each trainee group presents a final project to a panel. These were the standouts of recent semesters.",
+      "members": "Members"
     }
   }
 }

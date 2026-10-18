@@ -5,13 +5,14 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
-import { JOIN_HREF, isActive, navItems } from "./nav-items";
+import { headerNav, isActive } from "./nav-items";
 import { LocaleSwitch } from "./locale-switch";
 import { MobileNav } from "./mobile-nav";
 import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader() {
   const t = useTranslations("Nav");
+  const { items, cta } = headerNav;
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,7 +39,7 @@ export function SiteHeader() {
 
         <nav aria-label={t("label")} className="hidden xl:block">
           <ul className="flex items-center gap-1">
-            {navItems.map(({ key, href }) => {
+            {items.map(({ key, href }) => {
               const active = isActive(pathname, href);
               return (
                 <li key={key}>
@@ -70,12 +71,12 @@ export function SiteHeader() {
             <ThemeToggle />
           </div>
           <Link
-            href={JOIN_HREF}
-            className="hidden h-9 items-center rounded-full bg-primary px-4 text-sm font-medium whitespace-nowrap text-primary-foreground transition-opacity hover:opacity-90 sm:inline-flex"
+            href={cta.href}
+            className="hidden h-9 pressable items-center rounded-full bg-primary px-4 text-sm font-medium whitespace-nowrap text-primary-foreground hover:opacity-90 sm:inline-flex"
           >
-            {t("join")}
+            {t(cta.key)}
           </Link>
-          <MobileNav />
+          <MobileNav items={items} cta={cta} />
         </div>
       </div>
     </header>

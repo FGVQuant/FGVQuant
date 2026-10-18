@@ -32,7 +32,7 @@ export function NumberTicker({
     maximumFractionDigits: decimals,
   });
   return (
-    <span className={cn("font-mono tabular-nums", className)}>
+    <span className={cn("font-sans tracking-tight tabular-nums", className)}>
       {`${prefix}${nf.format(value)}${suffix}`}
     </span>
   );

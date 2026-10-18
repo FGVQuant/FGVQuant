@@ -8,7 +8,7 @@ import { StrategiesMotif } from "@/components/layout/intro-motifs";
 import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
-import { Em, SectionHeader } from "@/components/ui/section-header";
+import { SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
 import { formatEdition, formatEditionShort, getFund, getSite, intlLocale } from "@/lib/content";
 import { pageAlternates } from "@/lib/seo";
@@ -52,7 +52,7 @@ export default async function CapitalPage() {
   const fund = getFund();
   const site = getSite();
   const intl = intlLocale(locale);
-  const em = (c: ReactNode) => <Em>{c}</Em>;
+  const em = (c: ReactNode) => c;
 
   const num = (n: number, digits = 2) =>
     new Intl.NumberFormat(intl, {
@@ -150,7 +150,6 @@ export default async function CapitalPage() {
       {/* Panorama */}
       <section className="container-page section-y">
         <SectionHeader
-          eyebrow={t("snapshot.eyebrow")}
           title={t.rich("snapshot.title", { em })}
           description={t("snapshot.description", { inception, asOf: asOfText })}
         />
@@ -221,7 +220,6 @@ export default async function CapitalPage() {
         <div className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
             <SectionHeader
-              eyebrow={t("pairs.eyebrow")}
               title={t("pairs.title")}
               description={t("pairs.lead")}
             />
@@ -283,7 +281,6 @@ export default async function CapitalPage() {
         <div className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
             <SectionHeader
-              eyebrow={t("momentum.eyebrow")}
               title={t("momentum.title")}
               description={t("momentum.lead")}
             />
@@ -328,7 +325,7 @@ export default async function CapitalPage() {
       <section className="border-t border-border section-tone">
         <div className="container-page grid gap-12 section-y lg:grid-cols-2 lg:gap-16">
           <div>
-            <SectionHeader eyebrow={t("risk.eyebrow")} title={t.rich("risk.title", { em })} />
+            <SectionHeader title={t.rich("risk.title", { em })} />
             <div className="mt-6 flex max-w-xl flex-col gap-4 text-base leading-relaxed text-muted-foreground md:text-lg">
               <p>{t("risk.p1", { correlation: num(overview?.correlation ?? 0, 3) })}</p>
               <p>{t("risk.p2")}</p>
@@ -413,7 +410,6 @@ export default async function CapitalPage() {
       <section className="border-t border-border">
         <div className="container-page section-y">
           <SectionHeader
-            eyebrow={t("process.eyebrow")}
             title={t.rich("process.title", { em })}
             description={t("process.description")}
           />
@@ -436,7 +432,7 @@ export default async function CapitalPage() {
       {/* Histórico mensal */}
       <section className="border-t border-border section-tone">
         <div className="container-page section-y">
-          <SectionHeader eyebrow={t("results.eyebrow")} title={t("results.title")} />
+          <SectionHeader title={t("results.title")} />
           <div className="mt-12 rounded-2xl border border-border bg-card p-6 sm:p-8">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
@@ -467,7 +463,6 @@ export default async function CapitalPage() {
       <section className="border-t border-border">
         <div className="container-page flex flex-col gap-8 section-y">
           <SectionHeader
-            eyebrow={t("reports.eyebrow")}
             title={t("reports.title")}
             description={t("reports.description")}
             action={

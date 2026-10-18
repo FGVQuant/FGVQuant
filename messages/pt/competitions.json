@@ -1,58 +1,9 @@
 {
   "Competitions": {
-    "meta": {
-      "title": "Desafios",
-      "description": "Equipes da FGV Quant em desafios universitários de finanças quantitativas, como o Desafio Quant AI do Itaú Asset."
-    },
-    "eyebrow": "Desafios",
-    "title": "Quant na <em>prática</em>, contra o mercado e os colegas",
-    "description": "Os membros da liga montam equipes para competir em desafios universitários de finanças quantitativas, levando para fora da sala o que estudam.",
-    "empty": "Os resultados dos desafios serão publicados assim que fornecidos pela liga.",
-    "stats": {
-      "challenges": "Desafios disputados",
-      "ranked": "Equipes no top 10",
-      "best": "Melhor colocação",
-      "bestNote": "{team} · {challenge}"
-    },
-    "results": {
-      "eyebrow": "Resultados",
-      "highlight": "Destaque",
-      "teams": "Equipes da liga"
-    },
+    "empty": "Os resultados de competições serão publicados assim que fornecidos pela liga.",
     "source": "Anúncio do organizador",
-    "members": "Integrante",
+    "members": "Integrantes",
     "selfReportedBadge": "Autodeclarado",
-    "selfReported": "Resultado divulgado pela liga.",
-    "skills": {
-      "eyebrow": "O que está em jogo",
-      "title": "Da ideia à estratégia que <em>compete</em>",
-      "description": "Uma estratégia de investimento sistemática passa pelas mesmas etapas, seja num desafio, seja numa gestora quantitativa.",
-      "items": {
-        "thesis": {
-          "title": "Tese",
-          "body": "Uma hipótese clara sobre de onde vem o retorno, que possa ser testada com dados."
-        },
-        "data": {
-          "title": "Dados",
-          "body": "Coletar, limpar e organizar as séries de preços e indicadores que alimentam o modelo."
-        },
-        "backtest": {
-          "title": "Backtest",
-          "body": "Simular a estratégia no histórico, com custos, para medir retorno, risco e robustez."
-        },
-        "risk": {
-          "title": "Risco",
-          "body": "Definir tamanho de posições, limites e o que fazer quando o mercado vira contra a tese."
-        }
-      },
-      "capital": "Veja essas etapas na prática no FGV Quant Capital, o fundo fictício da liga.",
-      "capitalCta": "Conhecer o fundo"
-    },
-    "next": {
-      "eyebrow": "Próxima edição",
-      "title": "Quer competir <em>com a gente</em>?",
-      "description": "Entre na liga, forme equipe e construa a sua estratégia para os próximos desafios.",
-      "cta": "Processo seletivo"
-    }
+    "selfReported": "Resultado divulgado pela liga."
   }
 }

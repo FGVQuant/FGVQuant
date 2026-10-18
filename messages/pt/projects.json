@@ -1,0 +1,47 @@
+{
+  "Projects": {
+    "meta": {
+      "title": "Projetos e competições",
+      "description": "Pesquisas com gestoras parceiras, o fundo fictício FGV Quant Capital, projetos de trainees e resultados da FGV Quant em competições de finanças quantitativas."
+    },
+    "intro": {
+      "eyebrow": "Projetos e competições",
+      "title": "Da pesquisa à prática",
+      "description": "Projetos que nascem de artigos e de ideias do mercado, são modelados em Python e documentados pela própria liga, e os resultados dos nossos times em desafios universitários."
+    },
+    "jump": {
+      "competitions": "Competições",
+      "projects": "Projetos"
+    },
+    "competitions": {
+      "title": "Competições",
+      "description": "Times da liga em desafios universitários de finanças quantitativas.",
+      "strategy": "Estratégia",
+      "alumni": "Ex-membros da liga",
+      "details": "Times, integrantes e estratégia",
+      "prev": "Competições anteriores",
+      "next": "Próximas competições",
+      "close": "Fechar"
+    },
+    "projects": {
+      "title": "Projetos",
+      "description": "Por semestre: pesquisas com gestoras parceiras, o fundo fictício da liga e os projetos destaque de cada ciclo de trainees.",
+      "partner": "Em parceria com {partner}",
+      "mentor": "Mentoria de {mentor}",
+      "members": "Integrantes",
+      "link": "Ver no LinkedIn",
+      "fundCta": "Ver o FGV Quant Capital",
+      "inProgress": "Em andamento",
+      "kinds": {
+        "research": "Pesquisa",
+        "fund": "Fundo fictício",
+        "trainee": "Projeto de trainee"
+      },
+      "paper": "Baixar paper (PDF)",
+      "ongoing": "Projetos em andamento",
+      "lead": "líder",
+      "team": "Equipe atual",
+      "continuous": "Projeto contínuo desde {period}"
+    }
+  }
+}

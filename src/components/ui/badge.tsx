@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 export const badgeVariants = cva(
-  "inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 font-mono text-xs leading-none tracking-wide uppercase",
+  "inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-medium leading-none",
   {
     variants: {
       variant: {
@@ -16,7 +16,7 @@ export const badgeVariants = cva(
   },
 );
 
-/** Small mono pill label. */
+/** Small pill label, sentence case. */
 export function Badge({
   variant,
   className,

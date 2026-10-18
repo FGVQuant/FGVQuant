@@ -22,7 +22,7 @@ export function IssueArchive({ issues, tags, labels }: Props) {
 
   const chip = (selected: boolean) =>
     cn(
-      "inline-flex h-9 items-center rounded-full border px-4 text-sm transition-colors",
+      "pressable inline-flex h-9 items-center rounded-full border px-4 text-sm",
       selected
         ? "border-highlight/50 bg-highlight/10 text-highlight"
         : "border-border-strong text-muted-foreground hover:bg-accent hover:text-foreground",
@@ -68,6 +68,7 @@ export function IssueArchive({ issues, tags, labels }: Props) {
                 dateLabel={issue.dateLabel}
                 excerpt={issue.excerpt}
                 tags={issue.tags}
+                figure={issue.figure}
                 statusLabel={tn(`status.${issue.status}`)}
                 languageLabel={showLanguage ? tn("language") : undefined}
               />

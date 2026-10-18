@@ -2,6 +2,7 @@
 
 import { useId, useRef } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
+import { EASE_OUT } from "@/lib/motion";
 
 import { cn } from "@/lib/utils";
 
@@ -88,7 +89,7 @@ export function Sparkline({
         vectorEffect="non-scaling-stroke"
         initial={{ pathLength: reduced ? 1 : 0 }}
         animate={{ pathLength: show ? 1 : 0 }}
-        transition={{ duration: reduced ? 0 : 1.2, ease: "easeOut" }}
+        transition={{ duration: reduced ? 0 : 1.2, ease: EASE_OUT }}
       />
       <motion.circle
         cx={lx}

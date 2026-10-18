@@ -11,11 +11,11 @@
   "Nav": {
     "label": "Main navigation",
     "about": "About",
-    "newsletter": "Newsletter",
     "team": "Team",
-    "capital": "Capital",
-    "competitions": "Challenges",
+    "newsletter": "Newsletter",
+    "capital": "Fund",
     "events": "Events",
+    "projects": "Projects",
     "partners": "Partners",
     "join": "Join us",
     "openMenu": "Open menu",
@@ -60,7 +60,6 @@
       "visit": "Visit",
       "milestone": "Milestone"
     },
-    "timelineLabel": "Activities timeline",
     "newTab": "(opens in a new tab)",
     "marqueePause": "Pause",
     "marqueePlay": "Resume"

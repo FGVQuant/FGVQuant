@@ -8,14 +8,15 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
-import { JOIN_HREF, isActive, navItems } from "./nav-items";
+import { EASE_OUT } from "@/lib/motion";
+import { isActive, type NavItem } from "./nav-items";
 import { LocaleSwitch } from "./locale-switch";
 import { ThemeToggle } from "./theme-toggle";
 
 const noopSubscribe = () => () => {};
 const PANEL_ID = "mobile-nav-panel";
 
-export function MobileNav() {
+export function MobileNav({ items, cta }: { items: NavItem[]; cta: NavItem }) {
   const t = useTranslations("Nav");
   const locale = useLocale();
   const pathname = usePathname();
@@ -78,7 +79,9 @@ export function MobileNav() {
     };
   }, [open]);
 
-  const duration = reduce ? 0 : 0.28;
+  // Menu: 240ms in, 160ms out (exits faster than entrances). Under reduced motion the panel
+  // still fades, it just doesn't travel.
+  const duration = 0.24;
 
   return (
     <>
@@ -89,7 +92,7 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls={PANEL_ID}
         aria-label={t("openMenu")}
-        className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground xl:hidden"
+        className="inline-flex size-9 pressable items-center justify-center rounded-full border border-border text-muted-foreground hover:border-border-strong hover:bg-accent hover:text-foreground xl:hidden"
       >
         <Menu className="size-4" aria-hidden />
       </button>
@@ -107,14 +110,14 @@ export function MobileNav() {
                 aria-label={t("label")}
                 initial={{ opacity: 0, y: reduce ? 0 : -12 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: reduce ? 0 : -12 }}
-                transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
+                exit={{
+                  opacity: 0,
+                  y: reduce ? 0 : -12,
+                  transition: { duration: 0.16, ease: EASE_OUT },
+                }}
+                transition={{ duration, ease: EASE_OUT }}
                 className="fixed inset-0 z-50 flex h-dvh flex-col overflow-y-auto bg-background xl:hidden"
               >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-glow opacity-60"
-                />
                 <div className="relative container-page flex h-16 shrink-0 items-center justify-between">
                   <Link href="/" aria-label="FGV Quant">
                     <Logo />
@@ -124,7 +127,7 @@ export function MobileNav() {
                     type="button"
                     onClick={() => setOpenKey(null)}
                     aria-label={t("closeMenu")}
-                    className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-border-strong hover:bg-accent hover:text-foreground"
+                    className="inline-flex size-9 pressable items-center justify-center rounded-full border border-border text-muted-foreground hover:border-border-strong hover:bg-accent hover:text-foreground"
                   >
                     <X className="size-4" aria-hidden />
                   </button>
@@ -132,14 +135,18 @@ export function MobileNav() {
 
                 <nav aria-label={t("label")} className="relative container-page flex-1 py-8">
                   <ul className="flex flex-col">
-                    {navItems.map(({ key, href }, i) => {
+                    {items.map(({ key, href }, i) => {
                       const active = isActive(pathname, href);
                       return (
                         <motion.li
                           key={key}
                           initial={{ opacity: 0, y: reduce ? 0 : 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration, delay: reduce ? 0 : 0.05 + i * 0.03 }}
+                          transition={{
+                            duration,
+                            ease: EASE_OUT,
+                            delay: reduce ? 0 : 0.05 + i * 0.03,
+                          }}
                           className="border-b border-border"
                         >
                           <Link
@@ -160,10 +167,10 @@ export function MobileNav() {
 
                 <div className="relative container-page flex flex-col gap-5 pb-8">
                   <Link
-                    href={JOIN_HREF}
-                    className="inline-flex h-12 items-center justify-center rounded-full bg-primary px-6 text-base font-medium text-primary-foreground"
+                    href={cta.href}
+                    className="inline-flex h-12 pressable items-center justify-center rounded-full bg-primary px-6 text-base font-medium text-primary-foreground"
                   >
-                    {t("join")}
+                    {t(cta.key)}
                   </Link>
                   <div className="flex items-center justify-between">
                     <LocaleSwitch />

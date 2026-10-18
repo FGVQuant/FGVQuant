@@ -1,5 +1,112 @@
 [
   {
+    "id": "goldman-sachs",
+    "name": "Goldman Sachs",
+    "relation": {
+      "pt": "Visitas ao escritório e conversas com traders",
+      "en": "Office visits and talks with traders"
+    },
+    "permission": true,
+    "logo": "/brand/partners/goldman-sachs.svg"
+  },
+  {
+    "id": "morgan-stanley",
+    "name": "Morgan Stanley",
+    "relation": {
+      "pt": "Palestra de Equity Research e visita ao escritório",
+      "en": "Equity Research talk and office visit"
+    },
+    "permission": true,
+    "logo": "/brand/partners/morgan-stanley.svg"
+  },
+  {
+    "id": "jpmorgan",
+    "name": "J.P. Morgan",
+    "relation": {
+      "pt": "Palestra na FGV",
+      "en": "Talk at FGV"
+    },
+    "permission": true,
+    "logo": "/brand/partners/jpmorgan.svg"
+  },
+  {
+    "id": "xp",
+    "name": "XP Inc.",
+    "relation": {
+      "pt": "Visitas à sede, evento na FGV e palestra no Quant Connect 2026",
+      "en": "Headquarters visits, an event at FGV and a talk at Quant Connect 2026"
+    },
+    "permission": true,
+    "logo": "/brand/partners/xp.svg"
+  },
+  {
+    "id": "giant-steps",
+    "name": "Giant Steps Capital",
+    "relation": {
+      "pt": "Visita técnica e palestra no Quant Connect 2026",
+      "en": "Company visit and a talk at Quant Connect 2026"
+    },
+    "permission": true
+  },
+  {
+    "id": "safra",
+    "name": "Safra",
+    "relation": {
+      "pt": "Organizador do Desafio Safra Top Gestor",
+      "en": "Organizer of the Desafio Safra Top Gestor"
+    },
+    "permission": true,
+    "logo": "/brand/partners/safra.svg"
+  },
+  {
+    "id": "avantgarde",
+    "name": "Avantgarde Asset Management",
+    "relation": {
+      "pt": "Visita técnica, projetos de pesquisa em parceria e apoio ao Quant Connect 2026",
+      "en": "Company visit, joint research projects and support for Quant Connect 2026"
+    },
+    "permission": true,
+    "logo": "/brand/partners/avantgarde.png"
+  },
+  {
+    "id": "blumi",
+    "name": "blūmi",
+    "relation": {
+      "pt": "Parceria realizada",
+      "en": "Past partnership"
+    },
+    "permission": true
+  },
+  {
+    "id": "b3",
+    "name": "B3",
+    "relation": {
+      "pt": "Sede do 2º dia do Quant Connect 2026, palestra e projeto de pesquisa em 2026.2",
+      "en": "Host of day two of Quant Connect 2026, a talk and a 2026.2 research project"
+    },
+    "logo": "/brand/partners/b3.svg",
+    "permission": true
+  },
+  {
+    "id": "schonfeld",
+    "name": "Schonfeld",
+    "relation": {
+      "pt": "Parceira do Quant Connect 2026",
+      "en": "Quant Connect 2026 partner"
+    },
+    "logo": "/brand/partners/schonfeld.png",
+    "permission": true
+  },
+  {
+    "id": "bayes",
+    "name": "Bayes Capital Management",
+    "relation": {
+      "pt": "Parceira do Quant Connect 2026",
+      "en": "Quant Connect 2026 partner"
+    },
+    "permission": true
+  },
+  {
     "id": "itau-asset",
     "name": "Itaú Asset Management",
     "relation": {

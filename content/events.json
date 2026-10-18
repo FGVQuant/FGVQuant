@@ -10,32 +10,383 @@
       "en": "FGV Quant is founded"
     },
     "description": {
-      "pt": "Nasce a Liga de Finanças Quantitativas da FGV-SP.",
-      "en": "FGV-SP's Quantitative Finance League is founded."
+      "pt": "Alunos da EAESP e da EESP criam a Liga de Finanças Quantitativas da FGV-SP.",
+      "en": "Students from FGV's EAESP and EESP schools found FGV-SP's Quantitative Finance League."
     },
     "source": "https://www.linkedin.com/company/fgvquant"
   },
   {
-    "id": "desafio-quant-ai-2026",
-    "date": "2026-01-01",
-    "datePrecision": "year",
-    "period": "2026.1",
-    "kind": "competition",
+    "id": "xp-visit-2024-02",
+    "date": "2024-02-27",
+    "datePrecision": "day",
+    "period": "2024.1",
+    "kind": "visit",
     "title": {
-      "pt": "Desafio Quant AI 2026: 2º lugar",
-      "en": "Desafio Quant AI 2026: 2nd place"
+      "pt": "Visita à XP Inc.",
+      "en": "Visit to XP Inc."
     },
     "description": {
-      "pt": "No desafio universitário da Itaú Asset, a estratégia Augur ficou em 2º lugar e os times Alpha Helix e El Dorado chegaram ao top 10.",
-      "en": "In Itaú Asset's university challenge, the Augur strategy placed 2nd and the Alpha Helix and El Dorado teams reached the top 10."
+      "pt": "Membros conheceram o escritório da XP em São Paulo e conversaram com profissionais de diferentes áreas. Em parceria com a Start Carreiras.",
+      "en": "Members visited XP's São Paulo office and talked with people from several areas. With Start Carreiras."
     },
-    "href": "/competicoes",
-    "partners": ["itau-asset"]
+    "photo": "./events/photos/xp-visit-2024-02.jpg"
+  },
+  {
+    "id": "jpmorgan-talk-2024",
+    "date": "2024-03-20",
+    "datePrecision": "day",
+    "period": "2024.1",
+    "kind": "event",
+    "title": {
+      "pt": "Palestra com Rodolfo de Angele (J.P. Morgan)",
+      "en": "Talk with Rodolfo de Angele (J.P. Morgan)"
+    },
+    "description": {
+      "pt": "O Head of LatAm Commodities Equity Research do J.P. Morgan falou sobre equity research, valuation e entrada no mercado, com Q&A aberto aos alunos da FGV.",
+      "en": "J.P. Morgan's Head of LatAm Commodities Equity Research covered equity research, valuation and getting into the industry, with a Q&A open to FGV students."
+    },
+    "photo": "./events/photos/jpmorgan-talk-2024.jpg"
+  },
+  {
+    "id": "goldman-visit-2024",
+    "date": "2024-05-09",
+    "datePrecision": "day",
+    "period": "2024.1",
+    "kind": "visit",
+    "title": {
+      "pt": "Visita ao Goldman Sachs",
+      "en": "Visit to Goldman Sachs"
+    },
+    "description": {
+      "pt": "Conversa sobre o banco e suas áreas, processo seletivo e estágios, com Q&A sobre temas quantitativos.",
+      "en": "A conversation about the bank and its areas, recruiting and internships, with a Q&A on quantitative topics."
+    },
+    "photo": "./events/photos/goldman-visit-2024.jpg"
+  },
+  {
+    "id": "techday-2024",
+    "date": "2024-05-22",
+    "datePrecision": "day",
+    "period": "2024.1",
+    "kind": "event",
+    "title": {
+      "pt": "TechDay FGV EAESP",
+      "en": "TechDay at FGV EAESP"
+    },
+    "description": {
+      "pt": "A FGV Quant foi correalizadora do maior evento de tecnologia da FGV EAESP, sobre o impacto da IA em diferentes setores, com 354 participantes.",
+      "en": "FGV Quant co-hosted FGV EAESP's largest technology event, on the impact of AI across industries, with 354 attendees."
+    },
+    "photo": "./events/photos/techday-2024.jpg"
+  },
+  {
+    "id": "kinea-talk-2024",
+    "date": "2024-06-04",
+    "datePrecision": "day",
+    "period": "2024.1",
+    "kind": "class",
+    "title": {
+      "pt": "Palestra com Eduarda Saurin (Kinea)",
+      "en": "Talk with Eduarda Saurin (Kinea)"
+    },
+    "description": {
+      "pt": "Para os trainees: as áreas do mercado financeiro e um mergulho em private equity, com quem passou pelo investment banking do Morgan Stanley.",
+      "en": "For trainees: the areas of the financial market and a deep dive into private equity, from a former Morgan Stanley investment banker."
+    },
+    "photo": "./events/photos/kinea-talk-2024.jpg"
+  },
+  {
+    "id": "giant-steps-visit-2024",
+    "date": "2024-06-17",
+    "datePrecision": "day",
+    "period": "2024.1",
+    "kind": "visit",
+    "title": {
+      "pt": "Visita à Giant Steps Capital",
+      "en": "Visit to Giant Steps Capital"
+    },
+    "description": {
+      "pt": "Membros conheceram a gestora quantitativa e discutiram o papel da tecnologia no mercado e o fundo Zarathustra.",
+      "en": "Members visited the quantitative asset manager and discussed technology in markets and its Zarathustra fund."
+    },
+    "photo": "./events/photos/giant-steps-visit-2024.jpg"
+  },
+  {
+    "id": "morgan-stanley-talk-2024",
+    "date": "2024-06-19",
+    "datePrecision": "day",
+    "period": "2024.1",
+    "kind": "event",
+    "title": {
+      "pt": "Morgan Stanley: Equity Research na FGV",
+      "en": "Morgan Stanley: Equity Research at FGV"
+    },
+    "description": {
+      "pt": "Mauricio Cepeda e Julia Habermann falaram sobre o dia a dia em equity research e o processo seletivo de estágio. Com a Start Carreiras.",
+      "en": "Mauricio Cepeda and Julia Habermann talked about day-to-day equity research and internship recruiting. With Start Carreiras."
+    },
+    "photo": "./events/photos/morgan-stanley-talk-2024.jpg"
+  },
+  {
+    "id": "banco-pan-talk-2024",
+    "date": "2024-08-14",
+    "datePrecision": "day",
+    "period": "2024.2",
+    "kind": "event",
+    "title": {
+      "pt": "Palestra com o Banco Pan",
+      "en": "Talk with Banco Pan"
+    },
+    "description": {
+      "pt": "Índices de mercado, captação bancária, tipos de crédito e taxas, com Q&A e quiz. Com a Start Carreiras.",
+      "en": "Market indices, bank funding, credit types and rates, with a Q&A and a quiz. With Start Carreiras."
+    },
+    "photo": "./events/photos/banco-pan-talk-2024.jpg"
+  },
+  {
+    "id": "xp-talk-2024-08",
+    "date": "2024-08-26",
+    "datePrecision": "day",
+    "period": "2024.2",
+    "kind": "event",
+    "title": {
+      "pt": "XP na FGV",
+      "en": "XP at FGV"
+    },
+    "description": {
+      "pt": "Pedro Dutra Henriques, Head Comercial da XP Investimentos, e Fernanda Rozman, da XP Future, contaram suas trajetórias. Com a Start Carreiras.",
+      "en": "Pedro Dutra Henriques, XP Investimentos' Head of Sales, and Fernanda Rozman of XP Future shared their careers. With Start Carreiras."
+    }
+  },
+  {
+    "id": "xp-visit-2024-10",
+    "date": "2024-10-07",
+    "datePrecision": "day",
+    "period": "2024.2",
+    "kind": "visit",
+    "title": {
+      "pt": "Visita à sede da XP Inc.",
+      "en": "Visit to XP Inc. headquarters"
+    },
+    "description": {
+      "pt": "Conversa com Marcelo Cruz, sócio e coordenador da mesa de renda variável, sobre as mesas de operação.",
+      "en": "A conversation with Marcelo Cruz, partner and head of the equities desk, about the trading desks."
+    },
+    "photo": "./events/photos/xp-visit-2024-10.jpg"
+  },
+  {
+    "id": "goldman-talk-2025",
+    "date": "2025-02-27",
+    "datePrecision": "day",
+    "period": "2025.1",
+    "kind": "event",
+    "title": {
+      "pt": "Palestra com traders do Goldman Sachs",
+      "en": "Talk with Goldman Sachs traders"
+    },
+    "description": {
+      "pt": "Guilherme Regueira, trader de volatilidade, e André Wurzmann, de Systematic Trading Strategies, falaram sobre carreira no mercado quantitativo.",
+      "en": "Guilherme Regueira, a volatility trader, and André Wurzmann, from Systematic Trading Strategies, talked about quant careers."
+    },
+    "photo": "./events/photos/goldman-talk-2025.jpg"
+  },
+  {
+    "id": "avantgarde-visit-2025",
+    "date": "2025-03-19",
+    "datePrecision": "day",
+    "period": "2025.1",
+    "kind": "visit",
+    "title": {
+      "pt": "Visita à Avantgarde Asset Management",
+      "en": "Visit to Avantgarde Asset Management"
+    },
+    "description": {
+      "pt": "Apresentação do estudo de Pairs Trading da liga para Luciano Boudjoukian França e Mário de Avelar, com feedback da gestora.",
+      "en": "The league presented its Pairs Trading study to Luciano Boudjoukian França and Mário de Avelar and got the firm's feedback."
+    },
+    "photo": "./events/photos/avantgarde-visit-2025.jpg"
+  },
+  {
+    "id": "goldman-ms-visit-2025",
+    "date": "2025-03-24",
+    "datePrecision": "day",
+    "period": "2025.1",
+    "kind": "visit",
+    "title": {
+      "pt": "Visitas ao Goldman Sachs e ao Morgan Stanley",
+      "en": "Visits to Goldman Sachs and Morgan Stanley"
+    },
+    "description": {
+      "pt": "Programas de estágio e carreira no mercado financeiro, nas sedes dos dois bancos em São Paulo. Com a Start Carreiras.",
+      "en": "Internship programs and careers, at both banks' São Paulo offices. With Start Carreiras."
+    },
+    "photo": "./events/photos/goldman-ms-visit-2025.jpg"
+  },
+  {
+    "id": "traders-chat-2025",
+    "date": "2025-09-10",
+    "datePrecision": "day",
+    "period": "2025.2",
+    "kind": "event",
+    "title": {
+      "pt": "Bate-papo com traders do Goldman Sachs",
+      "en": "Chat with Goldman Sachs traders"
+    },
+    "description": {
+      "pt": "André Wurzmann e Gustavo Bassichetto, ex-membro da FGV Quant, sobre trading, finanças quantitativas e derivativos.",
+      "en": "André Wurzmann and Gustavo Bassichetto, a former FGV Quant member, on trading, quantitative finance and derivatives."
+    },
+    "photo": "./events/photos/traders-chat-2025.jpg"
+  },
+  {
+    "id": "xp-visit-2025",
+    "date": "2025-09-23",
+    "datePrecision": "day",
+    "period": "2025.2",
+    "kind": "visit",
+    "title": {
+      "pt": "Visita à XP Inc.",
+      "en": "Visit to XP Inc."
+    },
+    "description": {
+      "pt": "Recepção de Leonardo Campos, Head of QSG, e Vinicius Busti, Head of xVA Quants, sobre as áreas quantitativas da XP.",
+      "en": "Hosted by Leonardo Campos, Head of QSG, and Vinicius Busti, Head of xVA Quants, on XP's quantitative teams."
+    },
+    "photo": "./events/photos/xp-visit-2025.jpg"
+  },
+  {
+    "id": "itau-asset-talk-2025",
+    "date": "2025-11-11",
+    "datePrecision": "day",
+    "period": "2025.2",
+    "kind": "event",
+    "title": {
+      "pt": "Rafael Lavrado (Itaú Asset) na FGV",
+      "en": "Rafael Lavrado (Itaú Asset) at FGV"
+    },
+    "description": {
+      "pt": "O Head of Quantitative Research da Itaú Asset deu feedback às estratégias dos times SP3CTRUM e Complexity Edge, do Desafio Quant AI.",
+      "en": "Itaú Asset's Head of Quantitative Research gave feedback on the strategies of teams SP3CTRUM and Complexity Edge in the Quant AI challenge."
+    },
+    "photo": "./events/photos/itau-asset-talk-2025.jpg"
+  },
+  {
+    "id": "apex-class-2026",
+    "date": "2026-03-05",
+    "datePrecision": "day",
+    "period": "2026.1",
+    "kind": "class",
+    "title": {
+      "pt": "Aula de Asset Management (Apex Partners)",
+      "en": "Asset management class (Apex Partners)"
+    },
+    "description": {
+      "pt": "Aula especial para os membros com Jean Hirschfelder, da Apex Partners.",
+      "en": "A special class for members with Jean Hirschfelder of Apex Partners."
+    },
+    "photo": "./events/photos/apex-class-2026.jpg"
+  },
+  {
+    "id": "itau-asset-talk-2026",
+    "date": "2026-04-24",
+    "datePrecision": "day",
+    "period": "2026.1",
+    "kind": "event",
+    "title": {
+      "pt": "Encontro com Rafael Lavrado (Itaú Asset)",
+      "en": "Meeting with Rafael Lavrado (Itaú Asset)"
+    },
+    "description": {
+      "pt": "Apresentação do Desafio Quant AI e trajetórias na área quantitativa.",
+      "en": "An introduction to the Quant AI challenge and career paths in quant."
+    },
+    "photo": "./events/photos/itau-asset-talk-2026.jpg"
+  },
+  {
+    "id": "ml-class-2026",
+    "date": "2026-05-06",
+    "datePrecision": "day",
+    "period": "2026.1",
+    "kind": "class",
+    "title": {
+      "pt": "Aula de Machine Learning com Murillo Toda",
+      "en": "Machine learning class with Murillo Toda"
+    },
+    "description": {
+      "pt": "Do limite da OLS a Ridge, Random Forest, XGBoost e clustering de fatores, com o professor e doutor em Economia pela FGV EESP.",
+      "en": "From the limits of OLS to Ridge, Random Forest, XGBoost and factor clustering, with the FGV EESP economics professor."
+    },
+    "photo": "./events/photos/ml-class-2026.jpg"
+  },
+  {
+    "id": "itau-bba-talk-2026",
+    "date": "2026-05-11",
+    "datePrecision": "day",
+    "period": "2026.1",
+    "kind": "event",
+    "title": {
+      "pt": "Encontro com Christiano Lo Bianco (Itaú BBA)",
+      "en": "Meeting with Christiano Lo Bianco (Itaú BBA)"
+    },
+    "description": {
+      "pt": "O quant researcher falou sobre contratação no mercado e o perfil de um profissional quant.",
+      "en": "The quant researcher covered hiring in the industry and what makes a quant professional."
+    },
+    "photo": "./events/photos/itau-bba-talk-2026.jpg"
+  },
+  {
+    "id": "quant-connect-2026",
+    "date": "2026-05-16",
+    "datePrecision": "day",
+    "period": "2026.1",
+    "kind": "event",
+    "title": {
+      "pt": "Quant Connect 2026",
+      "en": "Quant Connect 2026"
+    },
+    "description": {
+      "pt": "2ª edição do evento cofundado pela FGV Quant: dois dias de painéis, no Insper (16/05) e na B3 (23/05).",
+      "en": "2nd edition of the event FGV Quant co-founded: two days of panels, at Insper (May 16) and B3 (May 23)."
+    },
+    "href": "/eventos#quant-connect",
+    "source": "https://www.poli.usp.br/event/evento-quant-connect-2026-busca-aproximar-estudantes-do-mercado-financeiro/"
+  },
+  {
+    "id": "qitech-visit-2026",
+    "date": "2026-05-19",
+    "datePrecision": "day",
+    "period": "2026.1",
+    "kind": "visit",
+    "title": {
+      "pt": "Visita à QI Tech",
+      "en": "Visit to QI Tech"
+    },
+    "description": {
+      "pt": "Com o Insper Quantitative Finance: palestras com profissionais e como a infraestrutura financeira funciona na prática.",
+      "en": "With Insper Quantitative Finance: talks by the team and how financial infrastructure works in practice."
+    },
+    "photo": "./events/photos/qitech-visit-2026.jpg"
+  },
+  {
+    "id": "itau-asset-day-2026",
+    "date": "2026-05-22",
+    "datePrecision": "day",
+    "period": "2026.1",
+    "kind": "event",
+    "title": {
+      "pt": "Itaú Asset Day",
+      "en": "Itaú Asset Day"
+    },
+    "description": {
+      "pt": "Bate-papo com o CEO Carlos Augusto Salamonde, kick-off do Desafio Quant AI 2026 e painel com ex-finalistas do desafio.",
+      "en": "A conversation with CEO Carlos Augusto Salamonde, the Quant AI 2026 kick-off and a panel of former finalists."
+    },
+    "photo": "./events/photos/itau-asset-day-2026.jpg"
   },
   {
     "id": "vault-capital-visit",
-    "date": "2026-08-01",
-    "datePrecision": "month",
+    "date": "2026-08-28",
+    "datePrecision": "day",
     "period": "2026.2",
     "kind": "visit",
     "title": {
@@ -43,25 +394,60 @@
       "en": "Visit to Vault Capital"
     },
     "description": {
-      "pt": "Visita técnica à gestora de criptoativos, com apresentação de um desafio aos membros.",
-      "en": "Company visit to the crypto asset manager, including a challenge presented to members."
+      "pt": "Brunno Drezza, head de pesquisa quantitativa, apresentou o desafio da gestora de criptoativos. Com a FEA.dev e o IQF.",
+      "en": "Brunno Drezza, head of quantitative research, presented the crypto asset manager's challenge. With FEA.dev and IQF."
     },
-    "partners": ["vault-capital"]
+    "partners": ["vault-capital"],
+    "photo": "./events/photos/vault-capital-visit.jpg"
   },
   {
     "id": "gvtech-ai-class",
-    "date": "2026-08-01",
-    "datePrecision": "semester",
+    "date": "2026-10-07",
+    "datePrecision": "day",
     "period": "2026.2",
     "kind": "class",
     "title": {
-      "pt": "Aula de IA aplicada a Finanças Quantitativas",
-      "en": "AI applied to Quantitative Finance class"
+      "pt": "Aula de IA e Machine Learning com Rodrigo Togneri",
+      "en": "AI and machine learning class with Rodrigo Togneri"
     },
     "description": {
-      "pt": "Aula especial com Rodrigo Togneri, em parceria com a GVTech.",
-      "en": "Special class with Rodrigo Togneri, in partnership with GVTech."
+      "pt": "Feature engineering para detectar eventos anômalos de mercado, com o professor da FGV EAESP. Em parceria com a FGV Tech.",
+      "en": "Feature engineering to detect anomalous market events, with the FGV EAESP professor. With FGV Tech."
     },
-    "partners": ["gvtech"]
+    "partners": ["gvtech"],
+    "photo": "./events/photos/gvtech-ai-class.jpg"
+  },
+  {
+    "id": "itau-asset-presentation-2026",
+    "date": "2026-10-15",
+    "datePrecision": "day",
+    "period": "2026.2",
+    "kind": "event",
+    "title": {
+      "pt": "Apresentação na Itaú Asset",
+      "en": "Presentation at Itaú Asset"
+    },
+    "description": {
+      "pt": "A convite de Rafael Lavrado, dois grupos semifinalistas do Desafio Quant AI apresentaram suas estratégias e receberam feedback.",
+      "en": "Invited by Rafael Lavrado, two of the league's Quant AI semifinalist groups presented their strategies and got feedback."
+    },
+    "photo": "./events/photos/itau-asset-presentation-2026.jpg"
+  },
+  {
+    "id": "desafio-quant-ai-2026",
+    "date": "2026-09-25",
+    "datePrecision": "day",
+    "period": "2026.2",
+    "kind": "competition",
+    "title": {
+      "pt": "Desafio Quant AI 2026: dois times no top 10",
+      "en": "Quant AI Challenge 2026: two teams in the top 10"
+    },
+    "description": {
+      "pt": "No desafio universitário da Itaú Asset, com mais de 1.300 grupos, os robôs Alpha Helix e El Dorado ficaram entre os 10 melhores.",
+      "en": "In Itaú Asset's university challenge, with over 1,300 groups, the Alpha Helix and El Dorado robots finished in the top 10."
+    },
+    "href": "/projetos#competicoes",
+    "partners": ["itau-asset"]
   }
 ]

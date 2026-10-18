@@ -5,28 +5,34 @@
     "eyebrow": "Sobre a liga",
     "title": "Matemática, estatística e código para <em>entender</em> o mercado",
     "lead": "O FGV Quant é a liga estudantil de finanças quantitativas da FGV-SP. Desde {year}, cerca de {members} membros e trainees estudam, pesquisam e constroem estratégias sistemáticas.",
-    "mission": {
-      "eyebrow": "Missão",
-      "title": "Aprender <em>fazendo</em>, com rigor",
-      "p1": "Produzimos conteúdo e aprofundamos o estudo de finanças quantitativas, aplicando matemática, estatística e programação a problemas reais de mercado.",
-      "p2": "Os temas vão de derivativos e machine learning a trading algorítmico e Python."
-    },
-    "areas": {
-      "eyebrow": "Áreas de atuação",
-      "title": "Onde concentramos o <em>estudo</em>",
-      "description": "Cinco frentes que combinam teoria, dados e implementação."
+    "path": {
+      "title": "O caminho na liga",
+      "steps": [
+        {
+          "title": "Processo seletivo",
+          "body": "Todo semestre, no início do semestre letivo da FGV. Não há pré-requisitos técnicos."
+        },
+        {
+          "title": "Programa de trainees",
+          "body": "Aulas de estatística, econometria, estratégias, portfólios, renda fixa, derivativos, programação e IA, com avaliações e um projeto final."
+        },
+        {
+          "title": "Membro(a) da liga",
+          "body": "Você escolhe uma área (Acadêmica, Pesquisas e Mídias, Institucional ou Projetos) e participa também de projetos ou competições."
+        },
+        {
+          "title": "Mercado",
+          "body": "Ex-membros hoje atuam em bancos e gestoras como Goldman Sachs, Itaú Asset e Vinci Compass."
+        }
+      ]
     },
     "how": {
-      "eyebrow": "Como trabalhamos",
       "title": "Da teoria à <em>prática</em>",
       "description": "Um ciclo contínuo de estudo, pesquisa e exposição ao mercado.",
-      "study": {
-        "title": "Grupos de estudo",
-        "body": "Encontros para aprofundar tópicos de finanças quantitativas, com problemas para resolver em grupo."
-      },
-      "research": {
-        "title": "Pesquisa",
-        "body": "Leitura crítica de literatura acadêmica e desenvolvimento de estratégias e modelos próprios."
+      "projects": {
+        "title": "Projetos",
+        "body": "Todo semestre, grupos de membros desenvolvem projetos de pesquisa, com gestoras parceiras ou de forma independente: partem de um artigo ou de uma ideia do mercado, modelam em Python com mentoria e documentam os resultados em papers.",
+        "cta": "Ver projetos"
       },
       "newsletter": {
         "title": "Newsletter",
@@ -50,20 +56,21 @@
       }
     },
     "numbers": {
-      "eyebrow": "Em números",
-      "title": "A liga em <em>números</em>",
-      "members": "Membros e trainees",
-      "issues": "Edições da newsletter",
-      "teams": "Times ranqueados",
-      "fund": "Retorno acumulado (fictício)",
       "note": "Membros e trainees: informado pela liga em {asOf}. Times ranqueados conforme informado pela liga."
     },
     "cta": {
       "title": "Quer fazer parte da <em>liga</em>?",
       "body": "Acompanhe o processo seletivo e saiba como entrar.",
-      "button": "Processo seletivo",
-      "team": "Conhecer o time"
+      "button": "Processo seletivo"
     },
-    "partnerCta": "Seja parceiro"
+    "partnerCta": "Seja parceiro",
+    "testimonials": {
+      "title": "Na voz de quem passou pela liga",
+      "description": "Ex-membros contam como a FGV Quant impactou a formação deles. Hoje eles atuam em bancos, gestoras e grandes instituições do mercado financeiro.",
+      "quoteTbd": "Depoimento a confirmar.",
+      "nameTbd": "Nome a confirmar",
+      "pending": "Os depoimentos serão publicados com o texto e a autorização de cada pessoa.",
+      "teamCta": "Conheça a equipe"
+    }
   }
 }

@@ -17,6 +17,7 @@ export const MESSAGE_FILES = [
   "join",
   "capital",
   "competitions",
+  "projects",
   "events",
   "partners",
 ] as const;

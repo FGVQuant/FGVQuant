@@ -2,8 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type SectionHeaderProps = {
-  eyebrow?: string;
-  /** Headline; wrap one word in `<Em>` for emphasis. */
+  /** Headline, written plain (emphasis is reserved for the home hero). */
   title: ReactNode;
   description?: ReactNode;
   align?: "left" | "center";
@@ -14,14 +13,13 @@ type SectionHeaderProps = {
   className?: string;
 };
 
-/** Emphasis for a single word/phrase inside a headline: Lora italic + luminous gradient (see `text-emphasis`). */
+/** Emphasis for a single word/phrase in the home hero headline only: Lora italic in the accent (see `text-emphasis`). */
 export function Em({ children }: { children: ReactNode }) {
   return <em className="text-emphasis">{children}</em>;
 }
 
-/** Section intro: node-dot eyebrow, serif headline, muted description. */
+/** Section intro: serif headline, muted description. No eyebrow: the headline carries the section. */
 export function SectionHeader({
-  eyebrow,
   title,
   description,
   align = "left",
@@ -39,19 +37,6 @@ export function SectionHeader({
       )}
     >
       <div className={cn("max-w-3xl", centered && "mx-auto text-center")}>
-        {eyebrow ? (
-          <p
-            className={cn(
-              "mb-4 inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.18em] text-highlight uppercase",
-            )}
-          >
-            <span aria-hidden className="relative flex size-2 items-center justify-center">
-              <span className="absolute size-2 rounded-full bg-highlight/30" />
-              <span className="size-1 rounded-full bg-highlight" />
-            </span>
-            {eyebrow}
-          </p>
-        ) : null}
         <Heading className="font-display text-3xl leading-[1.1] font-medium tracking-tight text-balance text-foreground sm:text-4xl md:text-5xl">
           {title}
         </Heading>

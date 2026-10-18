@@ -1,58 +1,9 @@
 {
   "Competitions": {
-    "meta": {
-      "title": "Challenges",
-      "description": "FGV Quant teams in university quantitative finance challenges, such as Itaú Asset's Desafio Quant AI."
-    },
-    "eyebrow": "Challenges",
-    "title": "Quant in <em>practice</em>, against the market and our peers",
-    "description": "League members form teams to compete in university quantitative finance challenges, taking what they study beyond the classroom.",
-    "empty": "Challenge results will be published once provided by the league.",
-    "stats": {
-      "challenges": "Challenges entered",
-      "ranked": "Teams in the top 10",
-      "best": "Best placement",
-      "bestNote": "{team} · {challenge}"
-    },
-    "results": {
-      "eyebrow": "Results",
-      "highlight": "Highlight",
-      "teams": "League teams"
-    },
+    "empty": "Competition results will be published once provided by the league.",
     "source": "Organizer's announcement",
-    "members": "Member",
+    "members": "Members",
     "selfReportedBadge": "Self-reported",
-    "selfReported": "Result announced by the league.",
-    "skills": {
-      "eyebrow": "What it takes",
-      "title": "From an idea to a strategy that <em>competes</em>",
-      "description": "A systematic investment strategy goes through the same stages, whether in a challenge or at a quantitative asset manager.",
-      "items": {
-        "thesis": {
-          "title": "Thesis",
-          "body": "A clear hypothesis about where the return comes from, one that can be tested with data."
-        },
-        "data": {
-          "title": "Data",
-          "body": "Collecting, cleaning and organizing the price series and indicators that feed the model."
-        },
-        "backtest": {
-          "title": "Backtest",
-          "body": "Simulating the strategy on history, with costs, to measure return, risk and robustness."
-        },
-        "risk": {
-          "title": "Risk",
-          "body": "Setting position sizes, limits and what to do when the market turns against the thesis."
-        }
-      },
-      "capital": "See these stages in practice at FGV Quant Capital, the league's simulated fund.",
-      "capitalCta": "About the fund"
-    },
-    "next": {
-      "eyebrow": "Next edition",
-      "title": "Want to compete <em>with us</em>?",
-      "description": "Join the league, form a team and build your strategy for the next challenges.",
-      "cta": "Recruitment process"
-    }
+    "selfReported": "Result announced by the league."
   }
 }
