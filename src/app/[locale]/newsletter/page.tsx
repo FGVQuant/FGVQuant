@@ -6,7 +6,7 @@ import { NewsletterCard } from "@/components/cards/newsletter-card";
 import { ButtonAnchor } from "@/components/ui/button";
 import { SectionHeader } from "@/components/ui/section-header";
 import { ItemList } from "@/components/ui/item-list";
-import { getFeaturedIssue, getIssues, getIssueTags, getSite } from "@/lib/content";
+import { getFeaturedIssue, getIssues, getSite } from "@/lib/content";
 import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
 import { IssueArchive } from "./_components/issue-archive";
@@ -33,8 +33,7 @@ export default async function NewsletterPage() {
   const issues = getIssues();
   const featured = getFeaturedIssue();
   const rest = issues.filter((i) => i.slug !== featured?.slug).map((i) => toCardData(i, locale));
-  const restTags = new Set(rest.flatMap((i) => i.tags));
-  const tags = getIssueTags().filter((tag) => restTags.has(tag));
+  const semesters = [...new Set(rest.map((i) => i.semester))];
   const featuredData = featured ? toCardData(featured, locale) : null;
 
   return (
@@ -87,7 +86,7 @@ export default async function NewsletterPage() {
           <div className="mt-10">
             <IssueArchive
               issues={rest}
-              tags={tags}
+              semesters={semesters}
               labels={{
                 filter: t("archive.filterLabel"),
                 all: t("archive.all"),

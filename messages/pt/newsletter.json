@@ -42,7 +42,7 @@
     },
     "archive": {
       "title": "Todas as <em>edições</em>",
-      "filterLabel": "Filtrar por tema",
+      "filterLabel": "Filtrar por semestre",
       "all": "Todas",
       "empty": "Nenhuma edição com este tema.",
       "results": "{count, plural, one {# edição encontrada} other {# edições encontradas}}"
@@ -50,10 +50,9 @@
     "issue": {
       "back": "Todas as edições",
       "enNote": "Esta edição foi publicada apenas em português.",
-      "summaryTitle": "Resumo da edição",
-      "summaryBody": "Resumo da edição. Leia a edição completa no LinkedIn.",
-      "readFull": "Ler a edição completa no LinkedIn",
-      "originally": "Publicado originalmente no LinkedIn",
+      "summaryNote": "Resumo feito pela FGV Quant.",
+      "readFull": "Ler a edição completa no {platform}",
+      "originally": "Publicado originalmente no {platform}",
       "personality": "Personalidade da área",
       "prev": "Edição anterior",
       "next": "Próxima edição",

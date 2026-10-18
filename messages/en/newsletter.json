@@ -42,7 +42,7 @@
     },
     "archive": {
       "title": "All <em>issues</em>",
-      "filterLabel": "Filter by topic",
+      "filterLabel": "Filter by semester",
       "all": "All",
       "empty": "No issues on this topic.",
       "results": "{count, plural, one {# issue found} other {# issues found}}"
@@ -50,10 +50,9 @@
     "issue": {
       "back": "All issues",
       "enNote": "This issue was published in Portuguese only.",
-      "summaryTitle": "Issue summary",
-      "summaryBody": "Issue summary. Read the full issue on LinkedIn.",
-      "readFull": "Read the full issue on LinkedIn",
-      "originally": "Originally published on LinkedIn",
+      "summaryNote": "A summary by FGV Quant.",
+      "readFull": "Read the full issue on {platform}",
+      "originally": "Originally published on {platform}",
       "personality": "Field personality",
       "prev": "Previous issue",
       "next": "Next issue",

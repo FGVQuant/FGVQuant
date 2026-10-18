@@ -8,17 +8,18 @@ import type { IssueCardData } from "../_lib/issues";
 
 type Props = {
   issues: IssueCardData[];
-  tags: string[];
+  /** newest first */
+  semesters: string[];
   labels: { filter: string; all: string; empty: string };
 };
 
-/** Archive rows with in-place tag filtering (no URL change, keeps the page static). */
-export function IssueArchive({ issues, tags, labels }: Props) {
+/** Archive rows with in-place semester filtering (no URL change, keeps the page static). */
+export function IssueArchive({ issues, semesters, labels }: Props) {
   const t = useTranslations("Newsletter.archive");
   const tn = useTranslations("Newsletter");
   const showLanguage = useLocale() === "en";
   const [active, setActive] = useState<string | null>(null);
-  const visible = active ? issues.filter((i) => i.tags.includes(active)) : issues;
+  const visible = active ? issues.filter((i) => i.semester === active) : issues;
 
   const chip = (selected: boolean) =>
     cn(
@@ -30,7 +31,7 @@ export function IssueArchive({ issues, tags, labels }: Props) {
 
   return (
     <div>
-      {tags.length > 0 ? (
+      {semesters.length > 1 ? (
         <div role="group" aria-label={labels.filter} className="flex flex-wrap gap-2">
           <button
             type="button"
@@ -40,15 +41,15 @@ export function IssueArchive({ issues, tags, labels }: Props) {
           >
             {labels.all}
           </button>
-          {tags.map((tag) => (
+          {semesters.map((semester) => (
             <button
-              key={tag}
+              key={semester}
               type="button"
-              aria-pressed={active === tag}
-              className={chip(active === tag)}
-              onClick={() => setActive(active === tag ? null : tag)}
+              aria-pressed={active === semester}
+              className={chip(active === semester)}
+              onClick={() => setActive(active === semester ? null : semester)}
             >
-              {tag}
+              {semester}
             </button>
           ))}
         </div>

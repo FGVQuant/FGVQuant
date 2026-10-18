@@ -13,6 +13,8 @@ export type IssueCardData = {
   status: "summary" | "full";
   excerpt: string;
   tags: string[];
+  /** League semester, "2026.1": January to July is .1, August to December .2. */
+  semester: string;
   /** Topic figure for the cover and archive row, when the issue's topic is known. */
   figure?: IssueFigureKind;
 };
@@ -29,6 +31,7 @@ export function toCardData(issue: ReturnType<typeof getIssues>[number], locale: 
     status: issue.status,
     excerpt: issue.excerpt,
     tags: issue.tags,
+    semester: `${issue.edition.slice(0, 4)}.${Number(issue.edition.slice(5)) <= 7 ? 1 : 2}`,
     figure: issue.figure,
   } satisfies IssueCardData;
 }
