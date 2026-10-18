@@ -100,12 +100,6 @@ export default async function ProjectsPage() {
                 ))}
               </Carousel>
             )}
-            {competitions.some((c) => c.selfReported) ? (
-              <p className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-                <Badge variant="outline">{tc("selfReportedBadge")}</Badge>
-                {tc("selfReported")}
-              </p>
-            ) : null}
           </section>
 
           {/* Projects by semester */}

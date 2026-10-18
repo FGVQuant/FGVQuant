@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { ArrowUpRight } from "lucide-react";
 import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
 import { KpiStrip } from "@/components/sections/kpi-strip";
 import { JoinCta } from "@/components/sections/join-cta";
@@ -41,8 +40,6 @@ export default async function HomePage() {
   const t = await getTranslations("Home");
   const tc = await getTranslations("Common");
   const tn = await getTranslations("Newsletter");
-  const tcp = await getTranslations("Competitions");
-  const ta = await getTranslations("About");
   const intl = intlLocale(locale);
 
   const stats = getStats();
@@ -50,30 +47,26 @@ export default async function HomePage() {
   const recent = getIssues()
     .filter((i) => i.slug !== featured?.slug)
     .slice(0, 2);
-  // Most recent competition: first ranked team is the focal result, the rest are secondary.
-  const latest = getCompetitions()[0];
-  const ranked = latest?.teams.filter((x) => x.ranked) ?? [];
-  const competition =
-    latest && ranked.length > 0
-      ? {
-          name: latest.name,
-          organizer: latest.organizer,
-          year: latest.year,
-          source: latest.source,
-          selfReported: latest.selfReported,
-          // Teams tied with the lead result share the headline ("Top 10 · Alpha Helix, El Dorado").
-          lead: {
-            team: ranked
-              .filter((x) => x.result.pt === ranked[0].result.pt)
-              .map((x) => x.name)
-              .join(", "),
-            result: tr(ranked[0].result, locale),
-          },
-          others: ranked
-            .filter((x) => x.result.pt !== ranked[0].result.pt)
-            .map((x) => ({ team: x.name, result: tr(x.result, locale) })),
-        }
-      : null;
+  // Latest competition results, newest first: each row shows the best result and the teams that got it.
+  const results = getCompetitions()
+    .flatMap((c) => {
+      const ranked = c.teams.filter((x) => x.ranked);
+      if (ranked.length === 0) return [];
+      const best = ranked[0].result;
+      return [
+        {
+          id: c.id,
+          name: c.name,
+          meta: `${c.organizer} · ${c.year}`,
+          result: tr(best, locale),
+          teams: ranked
+            .filter((x) => x.result.pt === best.pt)
+            .map((x) => x.name)
+            .join(", "),
+        },
+      ];
+    })
+    .slice(0, 4);
   const fundMonth = formatEditionInline(stats.fundAsOf, locale);
   const recruitmentOpen = getSite().recruitment.open === true;
   const hasPartners = getPartners().length > 0;
@@ -123,9 +116,6 @@ export default async function HomePage() {
             { label: t("stats.ranked"), value: stats.rankedTeams },
           ]}
         />
-        <p className="mt-4 text-xs text-muted-foreground">
-          {ta("numbers.note", { asOf: getSite().membersAsOf })}
-        </p>
       </section>
 
       {/* Parcerias realizadas: right under the numbers, as social proof. */}
@@ -158,21 +148,10 @@ export default async function HomePage() {
             {t("about.cta")}
           </ButtonLink>
         </div>
-        {competition ? (
-          <CompetitionHighlight
+        {results.length > 0 ? (
+          <CompetitionResults
             eyebrow={t("about.competition.eyebrow")}
-            name={competition.name}
-            meta={`${competition.organizer} · ${competition.year}`}
-            lead={competition.lead}
-            others={competition.others}
-            selfReported={
-              competition.selfReported
-                ? { badge: tcp("selfReportedBadge"), note: tcp("selfReported") }
-                : undefined
-            }
-            source={competition.source}
-            sourceText={t("about.competition.source")}
-            sourceLabel={t("about.competition.sourceLabel", { organizer: competition.organizer })}
+            results={results}
             cta={t("about.competition.cta")}
           />
         ) : null}
@@ -356,71 +335,35 @@ function CapitalTeaser(props: {
   );
 }
 
-/** Compact, sourced achievement card: the lead result is the focal point. */
-function CompetitionHighlight(props: {
+/** The league's competition record: one ruled row per competition, the result as the focal point. */
+function CompetitionResults(props: {
   eyebrow: string;
-  name: string;
-  meta: string;
-  lead: { team: string; result: string };
-  others: { team: string; result: string }[];
-  /** Shown only for results the league reported itself (`selfReported` in content). */
-  selfReported?: { badge: string; note: string };
-  source?: string;
-  sourceText: string;
-  sourceLabel: string;
+  results: { id: string; name: string; meta: string; result: string; teams: string }[];
   cta: string;
 }) {
   return (
-    <article className="flex flex-col gap-6 rounded-2xl bg-card p-6 sm:p-8">
-      <div>
-        <p className="text-sm font-medium text-highlight">{props.eyebrow}</p>
-        <h3 className="mt-3 font-sans text-xl font-semibold tracking-tight">{props.name}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{props.meta}</p>
-      </div>
-      <div>
-        <p className="font-display text-5xl leading-tight text-balance sm:text-6xl">
-          {props.lead.result}
-        </p>
-        <p className="mt-2 text-base font-medium break-words text-highlight">{props.lead.team}</p>
-      </div>
-      {props.others.length > 0 ? (
-        <ul className="flex flex-wrap gap-2">
-          {props.others.map((o) => (
-            <li
-              key={o.team}
-              className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
-            >
-              <span className="text-foreground">{o.team}</span> · {o.result}
-            </li>
-          ))}
-        </ul>
-      ) : null}
-      <p className="text-xs text-muted-foreground">
-        {props.selfReported ? (
-          <>
-            <span className="mr-2 inline-block rounded-full border border-border px-2 py-0.5 text-xs">
-              {props.selfReported.badge}
-            </span>
-            {props.selfReported.note}
-          </>
-        ) : null}
-        {props.source ? (
-          <>
-            {" "}
-            <a
-              href={props.source}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={props.sourceLabel}
-              className="inline-flex items-center gap-0.5 rounded-sm underline underline-offset-4 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-            >
-              {props.sourceText}
-              <ArrowUpRight aria-hidden className="size-3" />
-            </a>
-          </>
-        ) : null}
-      </p>
-      <ButtonLink href="/projetos#competicoes" variant="link" arrow className="self-start px-0">
+    <article className="rounded-2xl bg-card p-6 sm:p-8">
+      <p className="text-sm font-medium text-highlight">{props.eyebrow}</p>
+      <ul className="mt-4 divide-y divide-border">
+        {props.results.map((r) => (
+          <li
+            key={r.id}
+            className="grid grid-cols-[6.5rem_1fr] items-center gap-4 py-4 sm:grid-cols-[8rem_1fr]"
+          >
+            <p className="font-display text-2xl leading-none text-foreground sm:text-3xl">
+              {r.result}
+            </p>
+            <div className="min-w-0">
+              <h3 className="font-sans text-base font-semibold tracking-tight text-foreground">
+                {r.name}
+              </h3>
+              <p className="mt-0.5 text-sm text-muted-foreground">{r.meta}</p>
+              <p className="mt-1 text-sm font-medium wrap-break-word text-highlight">{r.teams}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <ButtonLink href="/projetos#competicoes" variant="link" arrow className="mt-2 px-0">
         {props.cta}
       </ButtonLink>
     </article>

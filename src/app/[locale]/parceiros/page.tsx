@@ -89,7 +89,7 @@ export default async function PartnersPage() {
 
       {/* Who the league has worked with: one card per partner, in a carousel so the list can grow. */}
       <section className="container-page section-y">
-        <SectionHeader title={t.rich("list.title", plain)} description={t("list.description")} />
+        <SectionHeader title={t.rich("list.title", plain)} />
         {partners.length === 0 ? (
           <PlaceholderNote label={tCommon("pending")} className="mt-10">
             {t("list.pending")}

@@ -11,7 +11,6 @@
     },
     "list": {
       "title": "Quem constrói <em>junto</em>",
-      "description": "Mostramos nomes e logos apenas com a confirmação de cada organização.",
       "pending": "Os nomes e logos dos parceiros serão exibidos aqui assim que forem confirmados.",
       "marqueeLabel": "Logos dos parceiros",
       "prev": "Parceiros anteriores",

@@ -2,8 +2,6 @@
   "Competitions": {
     "empty": "Competition results will be published once provided by the league.",
     "source": "Organizer's announcement",
-    "members": "Members",
-    "selfReportedBadge": "Self-reported",
-    "selfReported": "Result announced by the league."
+    "members": "Members"
   }
 }

@@ -20,12 +20,10 @@
     "about": {
       "titleA": "Matemática, estatística e código",
       "titleEm": "aplicados ao mercado",
-      "body": "Fundada em 2021, a FGV Quant reúne estudantes da FGV-SP interessados em finanças quantitativas, de derivativos e machine learning a trading algorítmico e Python.",
+      "body": "Fundada em 2021, a FGV Quant reúne estudantes da FGV-SP interessados em finanças, matemática, estatística e programação para se aprofundar em temas de derivativos, machine learning, algorithmic trading e demais segmentos das finanças quantitativas.",
       "cta": "Conheça a liga",
       "competition": {
-        "eyebrow": "Destaque em competição",
-        "sourceLabel": "Fonte: {organizer} (abre em nova aba)",
-        "source": "Fonte",
+        "eyebrow": "Resultados em competições",
         "cta": "Ver desafios"
       }
     },

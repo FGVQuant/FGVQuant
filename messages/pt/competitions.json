@@ -2,8 +2,6 @@
   "Competitions": {
     "empty": "Os resultados de competições serão publicados assim que fornecidos pela liga.",
     "source": "Anúncio do organizador",
-    "members": "Integrantes",
-    "selfReportedBadge": "Autodeclarado",
-    "selfReported": "Resultado divulgado pela liga."
+    "members": "Integrantes"
   }
 }
