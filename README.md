@@ -1,108 +1,145 @@
-# FGV Quant — website
+# FGV Quant — site
 
-Website for **FGV Quant**, the Liga de Finanças Quantitativas da FGV-SP. Bilingual (Portuguese by default, English at `/en`), dark theme by default, content-driven.
+Site da **FGV Quant**, a Liga de Finanças Quantitativas da FGV-SP: [ligafgvquant.vercel.app](https://ligafgvquant.vercel.app).
 
-> **Status:** feature-complete on localhost. It is not deployed yet: the league still has to supply some content (see [docs/INPUTS.md](docs/INPUTS.md)). Anything not yet confirmed by the league is shown as a visible placeholder ("A confirmar com a liga" / "TBD").
+O site é bilíngue (português por padrão, inglês em `/en`) e escuro por padrão, com um tema claro. A maior parte do conteúdo vem da planilha da liga no Google, então os membros conseguem atualizar o site sem mexer em código.
 
-## Quick start
+## Atualizando o conteúdo (sem código)
 
-Requires Node 20+ and pnpm 10.
+Equipe, eventos, projetos, competições, parceiros, depoimentos, números do fundo e dados da liga ficam na planilha **"FGV Quant - Site"**. Fotos e logos ficam na pasta **"Fotos do site"**, ao lado dela, no Drive da liga.
+
+1. Edite a linha na planilha. Para uma imagem, suba o arquivo em "Fotos do site" e escreva o nome exato do arquivo na linha.
+2. Atualize o site: use **Site → Atualizar o site agora** na planilha ou faça um redeploy no Vercel. Qualquer push na `main` também atualiza. O menu vem de [scripts/apps-script/atualizar-site.gs](scripts/apps-script/atualizar-site.gs), e o cabeçalho do arquivo explica como instalá-lo.
+3. Se alguma linha estiver inválida (coluna obrigatória vazia, parceiro que não existe na aba Parceiros, arquivo que não está na pasta), o build para e o site no ar continua como estava. O log do build no Vercel diz qual é a linha.
+
+Bom saber:
+
+- **A planilha guarda só fatos.** Ids, ordem, agrupamentos e ilustrações dos projetos são calculados por [scripts/sync-sheet.mjs](scripts/sync-sheet.mjs).
+- **Parceiros ficam escondidos** até "Autorizou uso do nome?" estar como "sim".
+- **Logos precisam de fundo transparente de verdade.** O ideal é SVG. O site desenha todas as logos numa cor só, então um fundo pintado vira um bloco sólido.
+- **Projetos concluídos ganham uma ilustração do tema**, escolhida por palavras-chave do título e do resumo ([scripts/project-figure.mjs](scripts/project-figure.mjs)). Se nenhuma palavra bater, o projeto fica sem ilustração.
+
+Newsletter, a página do Quant Connect e as áreas ainda são editadas em [`content/`](content) (veja [Conteúdo](#conteúdo), mais abaixo).
+
+## Rodando localmente
+
+Precisa de Node 24 (a versão em uso) e pnpm 10.
 
 ```bash
 pnpm install
-pnpm dev            # http://localhost:3000
+echo GOOGLE_API_KEY=... > .env.local   # chave do Google Cloud com as APIs do Drive e do Sheets ativadas
+pnpm sync                              # baixa a planilha para content/sheet/ e public/sheet/
+pnpm dev                               # http://localhost:3000
 ```
 
-| Command                    | What it does                                                  |
-| -------------------------- | ------------------------------------------------------------- |
-| `pnpm dev`                 | Dev server (Velite content runs in watch mode)                |
-| `pnpm build && pnpm start` | Production build and local production server                  |
-| `pnpm lint`                | ESLint                                                        |
-| `pnpm typecheck`           | `tsc --noEmit`                                                |
-| `pnpm format`              | Prettier (with the Tailwind class sorter)                     |
-| `pnpm content`             | Build the content layer on its own (`content/` → `.velite/`)  |
-| `pnpm check:messages`      | Check that `messages/pt` and `messages/en` have the same keys |
+`content/sheet/` e `public/sheet/` estão no `.gitignore`, então um clone novo precisa rodar `pnpm sync` uma vez antes do `pnpm dev`. Rode de novo sempre que quiser os dados mais recentes da planilha localmente.
 
-No environment variables are needed locally. At deploy time set `NEXT_PUBLIC_SITE_URL` (canonical origin for SEO, sitemap and OG images; defaults to `http://localhost:3000`).
+| Comando                           | O que faz                                                      |
+| --------------------------------- | -------------------------------------------------------------- |
+| `pnpm dev`                        | Servidor de desenvolvimento (conteúdo do Velite em modo watch) |
+| `pnpm sync`                       | Baixa a planilha e as fotos (precisa de `GOOGLE_API_KEY`)      |
+| `pnpm build && pnpm start`        | Sincroniza, gera o build de produção e sobe o servidor local   |
+| `pnpm lint`                       | ESLint                                                         |
+| `pnpm typecheck`                  | `tsc --noEmit`                                                 |
+| `pnpm format`                     | Prettier (com o ordenador de classes do Tailwind)              |
+| `pnpm content`                    | Gera só a camada de conteúdo (`content/` → `.velite/`)         |
+| `pnpm check:messages`             | Confere se `messages/pt` e `messages/en` têm as mesmas chaves  |
+| `node scripts/project-figure.mjs` | Teste das palavras-chave das ilustrações dos projetos          |
+
+**Rode só um servidor de desenvolvimento por cópia do repositório.** Dois `next dev` na mesma pasta disputam os arquivos `.next/dev/*.json` e corrompem o cache, o que aparece como um erro 500 de JSON.parse em todas as páginas.
+
+### Variáveis de ambiente
+
+| Variável               | Onde                 | Para quê                                                                                                                                                                                  |
+| ---------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GOOGLE_API_KEY`       | `.env.local`, Vercel | Leitura da planilha e da pasta de fotos, usada pelo `pnpm sync`                                                                                                                           |
+| `NEXT_PUBLIC_SITE_URL` | opcional             | Endereço canônico para SEO, sitemap e imagens de compartilhamento. No Vercel usa o domínio de produção; localmente, `http://localhost:3000` ([src/lib/site-url.ts](src/lib/site-url.ts)). |
+
+## Deploy
+
+O Vercel faz o build a partir da `main` no GitHub (`FGVQuant/FGVQuant`). O `pnpm build` roda o `pnpm sync` antes, então todo deploy pega a planilha atual. A sincronização tenta de novo os downloads do Drive que falham por erro temporário. Se um download continuar falhando, o build falha e o deploy anterior continua no ar.
 
 ## Stack
 
-- **Next.js 16.4** (App Router, Turbopack, `cacheComponents`/PPR, `typedRoutes`), React 19.3, TypeScript.
-- **Tailwind v4** via the `@tailwindcss/turbopack` loader. Design tokens live in [src/app/globals.css](src/app/globals.css) with shadcn naming.
-- **next-intl 4** for i18n, **next-themes** for dark/light, **motion** for animation, **lucide-react** for icons.
-- **Velite** for typed MDX/JSON content, with KaTeX for formulas (remark-math + rehype-katex).
+- **Next.js 16.4** (App Router, Turbopack, `cacheComponents`, `typedRoutes`), React 19.3, TypeScript.
+- **Tailwind v4** via `@tailwindcss/turbopack`. Os tokens de design ficam em [src/app/globals.css](src/app/globals.css), com a nomenclatura do shadcn.
+- **next-intl 4** para os idiomas, **next-themes** para o tema claro/escuro, **motion** para animações e **lucide-react** para ícones.
+- **Velite** para conteúdo tipado em MDX/JSON, com KaTeX para fórmulas (remark-math + rehype-katex).
 
-> ⚠️ Next.js 16 has breaking changes from older versions you may know: `middleware.ts` is now [src/proxy.ts](src/proxy.ts), the locale comes from `next/root-params`, and the config is evaluated in a child process. Before using an API you're unsure of, read the docs bundled in `node_modules/next/dist/docs/`.
+> ⚠️ O Next.js 16 tem mudanças incompatíveis com versões anteriores. Por exemplo, o `middleware.ts` agora é [src/proxy.ts](src/proxy.ts), o idioma vem de `next/root-params` e a configuração roda num processo separado. Antes de usar uma API de que não tenha certeza, leia a documentação que vem em `node_modules/next/dist/docs/`.
 
-## Project layout
+## Estrutura do projeto
 
 ```
-content/               Site data, validated by velite.config.ts (the single source of facts)
-  site.json            League facts, socials, stats
-  team/members.json    Members (placeholders until the league confirms)
-  areas.json, events.json, competitions.json, partners.json
-  fund.json            FGV Quant Capital (simulated fund) monthly returns
-  newsletter/*.mdx     One file per newsletter issue
-messages/{pt,en}/      UI strings per page namespace (next-intl)
+content/
+  sheet/               Gerado pelo `pnpm sync` a partir da planilha (no .gitignore; nunca edite à mão)
+  newsletter/*.mdx     Um arquivo por edição da newsletter
+  quant-connect.json   Página do evento Quant Connect
+  areas.json           As áreas da liga
+  events/photos/       Fotos de eventos guardadas no repositório
+messages/{pt,en}/      Textos da interface por página (next-intl)
+scripts/
+  sync-sheet.mjs       Planilha + Drive → content/sheet/ e public/sheet/, com validação
+  project-figure.mjs   Regras de palavras-chave das ilustrações dos projetos
+  apps-script/         O menu "Site" da planilha
+  check-messages.mjs   Paridade de chaves PT/EN
 src/
-  app/[locale]/        One folder per page; PT slugs (sobre, time, capital, eventos, …)
-    */_components/     Components used by only that page
-  app/                 Root-level: global-not-found, sitemap, robots, icons, globals.css
-  components/          Shared components (layout, hero, sections, cards, data, mdx, ui)
-  i18n/                next-intl routing, request config, typed navigation helpers
-  lib/content.ts       ALL content access goes through here (sorting, localisation, dates)
-  lib/quant/gbm.ts     Geometric Brownian motion simulation for the Monte Carlo hero
-  lib/seo.ts           Metadata and hreflang alternates
-  proxy.ts             i18n routing plus real 404s for unknown newsletter slugs
-assets/brand/          Logo sources (see "Brand" below); public copies are in public/brand/
-scripts/               check-messages.mjs (PT/EN key parity)
-docs/                  Planning docs: PLAN, DECISIONS, BRAND, RESEARCH, INPUTS, WALKTHROUGH
+  app/[locale]/        Uma pasta por página, com slugs em português (sobre, equipe, capital, eventos, projetos, …)
+    */_components/     Componentes usados só naquela página
+  app/                 Raiz: global-not-found, sitemap, robots, ícones, globals.css
+  components/          Componentes compartilhados (layout, hero, sections, cards, data, mdx, terminal, ui)
+  i18n/                Rotas do next-intl, configuração e helpers de navegação tipados
+  lib/content.ts       TODO acesso ao conteúdo passa por aqui (ordenação, idioma, datas)
+  lib/quant/           Simulações e distribuições usadas no hero, no terminal e nas ilustrações
+  proxy.ts             Rotas por idioma e 404 de verdade para edições da newsletter que não existem
+assets/brand/          Fontes da logo; as cópias públicas ficam em public/brand/
+docs/                  Documentos de planejamento: PLAN, DECISIONS, BRAND, RESEARCH, INPUTS, WALKTHROUGH
 ```
 
-### Routing and i18n
+### Rotas e idiomas
 
-- Locales are `pt` (default, no prefix: `/sobre`) and `en` (`/en/sobre`). Configured in [src/i18n/routing.ts](src/i18n/routing.ts). There's no automatic language detection and no locale cookie, so responses can stay static.
-- Use the `Link`/`useRouter` helpers from [src/i18n/navigation.ts](src/i18n/navigation.ts), not `next/link`, so locale prefixes are handled.
-- In server components, get the locale with `getPageLocale()` from [src/lib/locale.ts](src/lib/locale.ts).
-- Every UI string goes in **both** `messages/pt/<ns>.json` and `messages/en/<ns>.json`. Run `pnpm check:messages` after editing.
+- Os idiomas são `pt` (padrão, sem prefixo: `/sobre`) e `en` (`/en/sobre`), configurados em [src/i18n/routing.ts](src/i18n/routing.ts). Não há detecção automática de idioma nem cookie, para as respostas poderem continuar estáticas.
+- Use os helpers `Link`/`useRouter` de [src/i18n/navigation.ts](src/i18n/navigation.ts), não o `next/link`, para os prefixos de idioma funcionarem.
+- Em server components, pegue o idioma com `getPageLocale()`, de [src/lib/locale.ts](src/lib/locale.ts).
+- Todo texto da interface vai **nos dois** arquivos, `messages/pt/<ns>.json` e `messages/en/<ns>.json`. Rode `pnpm check:messages` depois de editar.
 
-### Content
+### Conteúdo
 
-- Pages never import `#site/content` directly. They use the helpers in [src/lib/content.ts](src/lib/content.ts) (`getIssues`, `getEvents`, `getFund`, `tr()` for `{ pt, en }` fields, and so on).
-- Bilingual fields are `{ "pt": "...", "en": "..." }`. The newsletter is PT-only by design.
-- Unknown facts use `placeholder: true`, which renders a visible "to be confirmed" note. Partners stay hidden until `permission: true`.
-- Newsletter issues are `status: "summary"` (our own summary plus a LinkedIn link) until the league provides the full text and permission, which switches them to `"full"`.
-- To add a newsletter issue, create `content/newsletter/YYYY-MM-<month>.mdx` with the frontmatter defined in [velite.config.ts](velite.config.ts). The slug comes from the filename, and [src/proxy.ts](src/proxy.ts) picks it up automatically.
+- As páginas nunca importam `#site/content` diretamente. Elas usam os helpers de [src/lib/content.ts](src/lib/content.ts) (`getIssues`, `getEvents`, `getFund`, `tr()` para campos `{ pt, en }` etc.).
+- O [velite.config.ts](velite.config.ts) valida tudo: tanto os arquivos de `content/` quanto o que a sincronização escreve.
+- Campos bilíngues têm o formato `{ "pt": "...", "en": "..." }`. A newsletter é só em português, de propósito.
+- As edições da newsletter ficam como `status: "summary"` (um resumo nosso com link para o LinkedIn) até a liga mandar o texto completo e a autorização; aí passam para `"full"`.
+- Para adicionar uma edição, crie `content/newsletter/YYYY-MM-<mês>.mdx` com o frontmatter definido em [velite.config.ts](velite.config.ts). O slug vem do nome do arquivo.
 
-### Dev-only pages
+### Páginas só de desenvolvimento
 
-`/dev/components` and `/dev/content` are component and content showcases. They return 404 in production builds.
+`/dev/components` e `/dev/content` são vitrines de componentes e de conteúdo. Em produção, dão 404.
 
-## Ground rules for contributors and agents
+## Regras
 
-1. **Never invent facts** about the league (members, dates, emails, results). Use `placeholder: true` and record the open question in [docs/INPUTS.md](docs/INPUTS.md).
-2. **FGV Quant Capital is a simulated fund.** Every page that shows its returns must label it "Fundo Fictício / Simulated fund" (see `capital/_components/disclaimer.tsx`).
-3. **Keep PT and EN in sync.** Run `pnpm check:messages`.
-4. **Run only one dev server per checkout.** Two `next dev` processes race on `.next/dev/*.json` and corrupt the cache, which shows up as a JSON.parse 500 on every page.
-5. **Before committing:** `pnpm lint && pnpm typecheck && pnpm build` should all pass.
-6. **No secrets in the repo.** `.env*` is gitignored; the site needs no API keys.
+1. **Nunca invente fatos** sobre a liga (membros, datas, e-mails, resultados). O que não se sabe ganha um aviso visível e uma entrada em [docs/INPUTS.md](docs/INPUTS.md).
+2. **O FGV Quant Capital é um fundo simulado.** Toda página que mostra retornos dele precisa da marcação "Fundo Fictício / Simulated fund" (veja `capital/_components/disclaimer.tsx`).
+3. **Mantenha PT e EN iguais.** Rode `pnpm check:messages`.
+4. **Edite os fatos na planilha**, não em `content/sheet/`: a próxima sincronização sobrescreve.
+5. **Antes de dar push:** `pnpm lint && pnpm typecheck && pnpm build` devem passar.
+6. **Nada de segredos no repositório.** Os arquivos `.env*` estão no `.gitignore`.
 
-More context for AI agents is in [CLAUDE.md](CLAUDE.md) and [AGENTS.md](AGENTS.md). Design and scope decisions are in [docs/DECISIONS.md](docs/DECISIONS.md).
+Mais contexto para agentes de IA está em [CLAUDE.md](CLAUDE.md) e [AGENTS.md](AGENTS.md). As decisões de design e de escopo estão em [docs/DECISIONS.md](docs/DECISIONS.md).
 
-## Brand
+## Marca
 
-- **Colors:** primary `#230042`; backgrounds `#130421`/`#170537`; lavender accent `#AE94D6`.
-- **Type:** Lora (display), Geist Sans (UI), Geist Mono (data), all self-hosted via `next/font`.
-- **Logo:** the bull mark is hand-traced geometry in [assets/brand/src/bull_geometry.py](assets/brand/src/bull_geometry.py). To regenerate the SVGs, PNGs and `bull-geometry.json`, run:
+- **Cores:** primária `#230042`; fundos `#130421`/`#170537`; destaque lavanda `#AE94D6`.
+- **Tipografia:** Lora (títulos), Geist Sans (interface), Geist Mono (dados), todas servidas pelo próprio site via `next/font`.
+- **Logo:** o touro é uma geometria traçada à mão em [assets/brand/src/bull_geometry.py](assets/brand/src/bull_geometry.py). Para gerar de novo os SVGs, PNGs e o `bull-geometry.json`, rode:
 
   ```bash
   cd assets/brand/src && python3 -I build_svgs.py
   ```
 
-  The lockup text is outlined Lora, produced by `outline.mjs` (uses `opentype.js` and `@fontsource/lora`). Copies used by the site are `public/brand/*.svg`, `src/app/icon.svg`, `apple-icon.png` and `favicon.ico`.
+  O texto da logo é a Lora convertida em contornos, feita pelo `outline.mjs` (usa `opentype.js` e `@fontsource/lora`). As cópias que o site usa são `public/brand/*.svg`, `src/app/icon.svg`, `apple-icon.png` e `favicon.ico`.
 
-Full details are in [docs/BRAND.md](docs/BRAND.md).
+Os detalhes completos estão em [docs/BRAND.md](docs/BRAND.md).
 
-## License
+## Licença
 
-The source code is released under the [MIT License](LICENSE). The FGV Quant name, logo and brand assets (`assets/brand/`, `public/brand/`, the site icons), the site content in `content/` and the documents in `docs/entregas/` are **not** covered: they belong to the league and/or FGV. See [NOTICE](NOTICE).
+O código-fonte está sob a [Licença MIT](LICENSE). O nome, a logo e os materiais de marca da FGV Quant (`assets/brand/`, `public/brand/`, os ícones do site), o conteúdo do site (`content/` e a planilha da liga) e os documentos em `docs/entregas/` **não** estão cobertos: pertencem à liga e/ou à FGV. Veja o [NOTICE](NOTICE).
