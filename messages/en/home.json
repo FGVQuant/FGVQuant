@@ -59,9 +59,8 @@
       "synClear": "clear"
     },
     "areas": {
-      "titleA": "The three",
-      "titleEm": "pillars",
-      "description": "Hover over or tap the diagram to explore each area and where they overlap.",
+      "title": "What is Quant?",
+      "description": "The three pillars. Hover over or tap the diagram to explore each area and where they overlap.",
       "labels": {
         "area": "Area",
         "intersection": "Intersection",

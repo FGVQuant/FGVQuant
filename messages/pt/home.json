@@ -59,9 +59,8 @@
       "synClear": "clear"
     },
     "areas": {
-      "titleA": "Os três",
-      "titleEm": "pilares",
-      "description": "Passe o mouse ou toque no diagrama para explorar cada área e suas interseções.",
+      "title": "O que é Quant?",
+      "description": "Os três pilares. Passe o mouse ou toque no diagrama para explorar cada área e suas interseções.",
       "labels": {
         "area": "Área",
         "intersection": "Interseção",

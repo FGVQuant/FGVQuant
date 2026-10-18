@@ -134,8 +134,8 @@ export default async function HomePage() {
       ) : null}
 
       {/* Quem somos + destaque em competição */}
-      <section className="container-page grid items-center gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-        <div>
+      <section className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-16">
+        <div className="lg:pt-8">
           <SectionHeader
             title={
               <>
@@ -163,7 +163,7 @@ export default async function HomePage() {
           <SectionHeader
             title={
               <>
-                {t("areas.titleA")} {t("areas.titleEm")}.
+                {t("areas.title")}
               </>
             }
             description={t("areas.description")}
@@ -344,13 +344,13 @@ function CompetitionResults(props: {
   return (
     <article className="rounded-2xl bg-card p-6 sm:p-8">
       <p className="text-sm font-medium text-highlight">{props.eyebrow}</p>
-      <ul className="mt-4 divide-y divide-border">
+      <ul className="mt-4 grid grid-cols-[auto_1fr] gap-x-5 divide-y divide-border sm:gap-x-8">
         {props.results.map((r) => (
           <li
             key={r.id}
-            className="grid grid-cols-[6.5rem_1fr] items-center gap-4 py-4 sm:grid-cols-[8rem_1fr]"
+            className="col-span-2 grid grid-cols-subgrid items-center py-5"
           >
-            <p className="font-display text-2xl leading-none text-foreground sm:text-3xl">
+            <p className="font-display text-2xl leading-none whitespace-nowrap text-foreground sm:text-3xl">
               {r.result}
             </p>
             <div className="min-w-0">
