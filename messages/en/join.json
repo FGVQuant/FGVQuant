@@ -82,7 +82,9 @@
     "projects": {
       "title": "Trainee cycle final projects",
       "description": "At the end of the cycle, each trainee group presents a final project to a panel. These were the standouts of recent semesters.",
-      "members": "Members"
+      "members": "Members",
+      "prev": "Previous projects",
+      "next": "Next projects"
     }
   }
 }

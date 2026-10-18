@@ -82,7 +82,9 @@
     "projects": {
       "title": "Projetos finais do ciclo trainee",
       "description": "Ao fim do ciclo, cada grupo de trainees apresenta um projeto final a uma banca. Estes foram os destaques dos últimos semestres.",
-      "members": "Integrantes"
+      "members": "Integrantes",
+      "prev": "Projetos anteriores",
+      "next": "Próximos projetos"
     }
   }
 }

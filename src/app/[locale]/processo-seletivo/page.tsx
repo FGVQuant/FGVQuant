@@ -5,10 +5,12 @@ import { getTranslations } from "next-intl/server";
 import { PageIntro } from "@/components/layout/page-intro";
 import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
+import { Carousel } from "@/components/ui/carousel";
 import { SectionHeader } from "@/components/ui/section-header";
 import { getProjects, getSite, tr } from "@/lib/content";
 import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
+import { cn } from "@/lib/utils";
 
 /** Trainee program topics, in the order the classes run. */
 const TOPICS = [
@@ -50,6 +52,8 @@ export default async function JoinPage() {
   // Recruitment runs every semester; `next` (the sheet's Entidade tab) is the upcoming cycle, e.g. "2027.1".
   const next = { next: recruitment.next };
   const trainee = getProjects().filter((p) => p.kind === "trainee");
+  // Up to four projects sit in one row; more than that become a carousel.
+  const traineeFits = trainee.length <= 4;
 
   return (
     <main id="content">
@@ -147,9 +151,16 @@ export default async function JoinPage() {
         <section className="border-t border-border">
           <div className="container-page section-y">
             <SectionHeader title={t("projects.title")} description={t("projects.description")} />
-            <ul className="mt-12 grid gap-6 md:grid-cols-2">
-              {trainee.map((p) => (
-                <li key={p.id} className="flex flex-col overflow-hidden rounded-2xl bg-card">
+            {(() => {
+              const cards = trainee.map((p) => (
+                <li
+                  key={p.id}
+                  className={cn(
+                    "flex flex-col overflow-hidden rounded-2xl bg-card",
+                    !traineeFits &&
+                      "w-[82%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]",
+                  )}
+                >
                   {p.photo ? (
                     <div className="relative aspect-[16/10] bg-secondary">
                       <Image
@@ -159,7 +170,7 @@ export default async function JoinPage() {
                         height={p.photo.height}
                         placeholder={p.photo.blurDataURL ? "blur" : "empty"}
                         blurDataURL={p.photo.blurDataURL}
-                        sizes="(min-width: 768px) 50vw, 100vw"
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                         className="absolute inset-0 size-full object-cover"
                       />
                     </div>
@@ -169,7 +180,7 @@ export default async function JoinPage() {
                       <span className="font-mono text-highlight tabular-nums">{p.period}</span>
                       {p.award ? <Badge variant="highlight">{tr(p.award, locale)}</Badge> : null}
                     </p>
-                    <h3 className="mt-3 font-sans text-xl font-semibold tracking-tight text-foreground">
+                    <h3 className="mt-3 font-sans text-lg font-semibold tracking-tight text-foreground">
                       {tr(p.title, locale)}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -183,8 +194,17 @@ export default async function JoinPage() {
                     ) : null}
                   </div>
                 </li>
-              ))}
-            </ul>
+              ));
+              return traineeFits ? (
+                <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{cards}</ul>
+              ) : (
+                <div className="mt-8">
+                  <Carousel prevLabel={t("projects.prev")} nextLabel={t("projects.next")}>
+                    {cards}
+                  </Carousel>
+                </div>
+              );
+            })()}
           </div>
         </section>
       ) : null}
