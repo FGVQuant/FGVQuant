@@ -98,6 +98,8 @@ const testimonials = defineCollection({
     member: s.string().optional(),
     /** used when the person is not on the current team (alumni) */
     name: s.string().optional(),
+    /** portrait for people not on the team (e.g. cropped from the league's testimonial post) */
+    photo: s.image().optional(),
     /** e.g. "Trainee 2025.1, hoje na Equipe Acadêmica" */
     context: localized.optional(),
     order: s.number(),
@@ -179,6 +181,8 @@ const projects = defineCollection({
     paper: s.string().optional(),
     /** internal page, e.g. "/capital" */
     href: s.string().optional(),
+    /** photo of the presentation, cropped from the league's own Instagram posts (content/projects/photos/) */
+    photo: s.image().optional(),
     /** "in-progress" for the current semester's projects */
     status: s.enum(["done", "in-progress"]).default("done"),
     /** true until the league confirms the project and its members */
@@ -341,6 +345,8 @@ const site = defineCollection({
     newsletterUrl: s.string().url(),
     recruitment: s.object({
       open: s.boolean().optional(),
+      /** the next cycle, e.g. "2027.1": recruitment runs every semester, at the start of FGV's term */
+      next: s.string(),
       formUrl: s.string().url().optional(),
       placeholder: s.boolean().default(true),
     }),

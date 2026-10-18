@@ -170,7 +170,7 @@ export function MobileNav({ items, cta }: { items: NavItem[]; cta: NavItem }) {
                     href={cta.href}
                     className="inline-flex h-12 pressable items-center justify-center rounded-full bg-primary px-6 text-base font-medium text-primary-foreground"
                   >
-                    {cta.key === "join" ? t("join") : t("partnerCta")}
+                    {t(cta.key)}
                   </Link>
                   <div className="flex items-center justify-between">
                     <LocaleSwitch />

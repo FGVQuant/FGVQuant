@@ -8,6 +8,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
 import { ItemList } from "@/components/ui/item-list";
 import { getPageLocale } from "@/lib/locale";
+import { JoinCta } from "@/components/sections/join-cta";
 import { Testimonials } from "./_components/testimonials";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,10 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-/** What members do. Study groups and research have no page of their own, so no link. */
+/** What members do, each with the page that shows it. */
 const WAYS: { key: string; href?: string }[] = [
-  { key: "study" },
-  { key: "research", href: "/projetos#projetos" },
+  { key: "projects", href: "/projetos#projetos" },
   { key: "newsletter", href: "/newsletter" },
   { key: "fund", href: "/capital" },
   { key: "competitions", href: "/projetos#competicoes" },
@@ -47,14 +47,28 @@ export default async function AboutPage() {
         </ButtonLink>
       </PageIntro>
 
-      {/* Partner-facing first: identity and mission. Then the student-facing half: what members
+      {/* Partner-facing first: identity. Then a member's path through the league. Then the student-facing half: what members
           do, what members say about it (the team itself lives on /equipe), and how to join. Numbers and focus areas live on Home. */}
-      <section className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.2fr]">
-        <SectionHeader title={t.rich("mission.title", { em: (chunks) => chunks })} />
-        <div className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-          <p>{t("mission.p1")}</p>
-          <p>{t("mission.p2")}</p>
-        </div>
+      {/* A member's path, left to right: recruitment → trainee program → teams → the market. */}
+      <section className="container-page section-y">
+        <SectionHeader title={t("path.title")} />
+        <ol className="mt-12 grid gap-8 md:grid-cols-4 md:gap-6">
+          {(t.raw("path.steps") as { title: string; body: string }[]).map((step, i) => (
+            <li key={step.title} className="relative border-t border-border pt-6">
+              <span
+                aria-hidden
+                className="absolute -top-[5px] left-0 size-[9px] rounded-full bg-highlight ring-4 ring-background"
+              />
+              <p className="font-mono text-xs text-highlight tabular-nums">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-2 font-sans text-lg font-semibold tracking-tight text-foreground">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <section className="border-t border-border section-tone">
@@ -81,21 +95,7 @@ export default async function AboutPage() {
 
       <Testimonials locale={locale} />
 
-      <section className="border-t border-border">
-        <div className="container-page section-y">
-          <div className="rounded-3xl bg-card p-8 text-center md:p-14">
-            <h2 className="mx-auto max-w-2xl font-display text-3xl text-balance sm:text-4xl md:text-5xl">
-              {t.rich("cta.title", { em: (chunks) => chunks })}
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{t("cta.body")}</p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <ButtonLink href="/processo-seletivo" size="lg" arrow>
-                {t("cta.button")}
-              </ButtonLink>
-            </div>
-          </div>
-        </div>
-      </section>
+      <JoinCta />
     </main>
   );
 }

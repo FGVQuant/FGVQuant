@@ -41,9 +41,7 @@
       "ongoing": "Projetos em andamento",
       "lead": "líder",
       "team": "Equipe atual",
-      "continuous": "Projeto contínuo desde {period}",
-      "trainee": "Projetos destaque dos ciclos trainee",
-      "traineeDescription": "Ao fim de cada ciclo, os trainees apresentam um projeto final a uma banca. Estes foram os destaques."
+      "continuous": "Projeto contínuo desde {period}"
     }
   }
 }

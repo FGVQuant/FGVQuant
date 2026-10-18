@@ -124,14 +124,9 @@
       "asOf": "through {month}",
       "cta": "View FGV Quant Capital"
     },
-    "join": {
-      "title": "Want to join FGV Quant?",
-      "body": "Follow us to find out when applications open.",
-      "cta": "How to join"
-    },
-    "terminalSection": {
-      "title": "Run the numbers",
-      "description": "A real terminal: simulate paths, compare VaR and ES under fat tails, or price a straddle."
+    "partners": {
+      "title": "Past partnerships",
+      "all": "See partners"
     }
   }
 }

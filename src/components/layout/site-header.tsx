@@ -5,15 +5,14 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
-import { getNav, isActive } from "./nav-items";
+import { headerNav, isActive } from "./nav-items";
 import { LocaleSwitch } from "./locale-switch";
 import { MobileNav } from "./mobile-nav";
 import { ThemeToggle } from "./theme-toggle";
 
-/** `recruitmentOpen` comes from content/site.json (read on the server in the locale layout). */
-export function SiteHeader({ recruitmentOpen }: { recruitmentOpen: boolean }) {
+export function SiteHeader() {
   const t = useTranslations("Nav");
-  const { items, cta } = getNav(recruitmentOpen);
+  const { items, cta } = headerNav;
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
@@ -75,7 +74,7 @@ export function SiteHeader({ recruitmentOpen }: { recruitmentOpen: boolean }) {
             href={cta.href}
             className="hidden h-9 pressable items-center rounded-full bg-primary px-4 text-sm font-medium whitespace-nowrap text-primary-foreground hover:opacity-90 sm:inline-flex"
           >
-            {cta.key === "join" ? t("join") : t("partnerCta")}
+            {t(cta.key)}
           </Link>
           <MobileNav items={items} cta={cta} />
         </div>

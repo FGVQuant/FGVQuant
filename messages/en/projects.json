@@ -41,9 +41,7 @@
       "ongoing": "Ongoing projects",
       "lead": "lead",
       "team": "Current team",
-      "continuous": "Ongoing since {period}",
-      "trainee": "Trainee cycle standout projects",
-      "traineeDescription": "At the end of each cycle, trainees present a final project to a panel. These were the standouts."
+      "continuous": "Ongoing since {period}"
     }
   }
 }

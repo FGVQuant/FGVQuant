@@ -5,21 +5,33 @@
     "eyebrow": "About the league",
     "title": "Math, statistics and code to <em>understand</em> markets",
     "lead": "FGV Quant is the quantitative finance student league at FGV-SP. Since {year}, about {members} members and trainees have studied, researched and built systematic strategies.",
-    "mission": {
-      "title": "Learn by <em>doing</em>, with rigor",
-      "p1": "We produce content and go deeper into quantitative finance, applying mathematics, statistics and programming to real market problems.",
-      "p2": "Our topics range from derivatives and machine learning to algorithmic trading and Python."
+    "path": {
+      "title": "The path through the league",
+      "steps": [
+        {
+          "title": "Recruitment",
+          "body": "Every semester, at the start of FGV's academic term. No technical prerequisites."
+        },
+        {
+          "title": "Trainee program",
+          "body": "Classes in statistics, econometrics, strategies, portfolios, fixed income, derivatives, programming and AI, with assessments and a final project."
+        },
+        {
+          "title": "League member",
+          "body": "You choose an area (Academic, Research and Media, Institutional or Projects) and also take part in projects or competitions."
+        },
+        {
+          "title": "The market",
+          "body": "Former members now work at banks and asset managers such as Goldman Sachs, Itaú Asset and Vinci Compass."
+        }
+      ]
     },
     "how": {
       "title": "From theory to <em>practice</em>",
       "description": "A continuous cycle of study, research and market exposure.",
-      "study": {
-        "title": "Study groups",
-        "body": "Sessions that go deeper into quantitative finance topics, with problems to solve as a group."
-      },
-      "research": {
-        "title": "Research",
-        "body": "Critical reading of academic literature and development of our own strategies and models.",
+      "projects": {
+        "title": "Projects",
+        "body": "Every semester, groups of members run research projects, with partner asset managers or on their own: they start from a paper or a market idea, model it in Python with mentoring and write the results up as papers.",
         "cta": "See projects"
       },
       "newsletter": {
@@ -53,8 +65,8 @@
     },
     "partnerCta": "Partner with us",
     "testimonials": {
-      "title": "In our members' words",
-      "description": "Members describe what it is like to be part of FGV Quant.",
+      "title": "In the words of those who came through the league",
+      "description": "Former members on how FGV Quant shaped them. Today they work at banks, asset managers and major financial institutions.",
       "quoteTbd": "Testimonial to be confirmed.",
       "nameTbd": "Name to be confirmed",
       "pending": "Testimonials will be published with each person's text and permission.",

@@ -5,21 +5,33 @@
     "eyebrow": "Sobre a liga",
     "title": "Matemática, estatística e código para <em>entender</em> o mercado",
     "lead": "O FGV Quant é a liga estudantil de finanças quantitativas da FGV-SP. Desde {year}, cerca de {members} membros e trainees estudam, pesquisam e constroem estratégias sistemáticas.",
-    "mission": {
-      "title": "Aprender <em>fazendo</em>, com rigor",
-      "p1": "Produzimos conteúdo e aprofundamos o estudo de finanças quantitativas, aplicando matemática, estatística e programação a problemas reais de mercado.",
-      "p2": "Os temas vão de derivativos e machine learning a trading algorítmico e Python."
+    "path": {
+      "title": "O caminho na liga",
+      "steps": [
+        {
+          "title": "Processo seletivo",
+          "body": "Todo semestre, no início do semestre letivo da FGV. Não há pré-requisitos técnicos."
+        },
+        {
+          "title": "Programa de trainees",
+          "body": "Aulas de estatística, econometria, estratégias, portfólios, renda fixa, derivativos, programação e IA, com avaliações e um projeto final."
+        },
+        {
+          "title": "Membro(a) da liga",
+          "body": "Você escolhe uma área (Acadêmica, Pesquisas e Mídias, Institucional ou Projetos) e participa também de projetos ou competições."
+        },
+        {
+          "title": "Mercado",
+          "body": "Ex-membros hoje atuam em bancos e gestoras como Goldman Sachs, Itaú Asset e Vinci Compass."
+        }
+      ]
     },
     "how": {
       "title": "Da teoria à <em>prática</em>",
       "description": "Um ciclo contínuo de estudo, pesquisa e exposição ao mercado.",
-      "study": {
-        "title": "Grupos de estudo",
-        "body": "Encontros para aprofundar tópicos de finanças quantitativas, com problemas para resolver em grupo."
-      },
-      "research": {
-        "title": "Pesquisa",
-        "body": "Leitura crítica de literatura acadêmica e desenvolvimento de estratégias e modelos próprios.",
+      "projects": {
+        "title": "Projetos",
+        "body": "Todo semestre, grupos de membros desenvolvem projetos de pesquisa, com gestoras parceiras ou de forma independente: partem de um artigo ou de uma ideia do mercado, modelam em Python com mentoria e documentam os resultados em papers.",
         "cta": "Ver projetos"
       },
       "newsletter": {
@@ -53,8 +65,8 @@
     },
     "partnerCta": "Seja parceiro",
     "testimonials": {
-      "title": "Na voz de quem faz a liga",
-      "description": "Membros contam como é a experiência na FGV Quant.",
+      "title": "Na voz de quem passou pela liga",
+      "description": "Ex-membros contam como a FGV Quant impactou a formação deles. Hoje eles atuam em bancos, gestoras e grandes instituições do mercado financeiro.",
       "quoteTbd": "Depoimento a confirmar.",
       "nameTbd": "Nome a confirmar",
       "pending": "Os depoimentos serão publicados com o texto e a autorização de cada pessoa.",

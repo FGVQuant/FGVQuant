@@ -31,36 +31,21 @@ export async function Testimonials({ locale }: { locale: Locale }) {
           }
         />
 
-        <ul className="mt-12 grid gap-4 md:grid-cols-2">
+        {/* One full-width row per testimonial; the author side alternates left and right. */}
+        <ul className="mt-12 divide-y divide-border border-y border-border">
           {items.map((item) => {
             const pending = item.placeholder || !item.quote;
             const quote = item.quote ? (locale === "en" ? item.quote.en : undefined) : undefined;
             const text = quote ?? item.quote?.pt;
             const name = item.person?.name ?? item.name;
-            const photo = item.person?.photo;
+            const photo = item.person?.photo ?? item.photo;
             return (
-              <li key={item.id}>
-                <figure className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 sm:p-8">
-                  <span
-                    aria-hidden
-                    className="font-display text-6xl leading-none text-highlight/50 select-none"
-                  >
-                    “
-                  </span>
-                  <blockquote
-                    lang={!pending && locale === "en" && !quote ? "pt" : undefined}
-                    className={
-                      pending
-                        ? "mt-2 flex-1 text-lg text-muted-foreground"
-                        : "mt-2 flex-1 font-display text-xl leading-relaxed text-pretty text-foreground sm:text-2xl"
-                    }
-                  >
-                    {pending ? t("quoteTbd") : text}
-                  </blockquote>
-                  <figcaption className="mt-8 flex items-center gap-4">
+              <li key={item.id} className="group">
+                <figure className="flex flex-col gap-6 py-10 md:flex-row md:items-center md:gap-14 md:group-even:flex-row-reverse">
+                  <figcaption className="flex shrink-0 items-center gap-4 md:w-60 md:flex-col md:items-start md:gap-3 md:group-even:items-end md:group-even:text-right">
                     <span
                       aria-hidden
-                      className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-secondary font-display text-lavender-300"
+                      className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-secondary font-display text-lavender-300 ring-1 ring-border md:size-20"
                     >
                       {photo && !pending ? (
                         <Image
@@ -68,7 +53,7 @@ export async function Testimonials({ locale }: { locale: Locale }) {
                           alt=""
                           width={photo.width}
                           height={photo.height}
-                          sizes="48px"
+                          sizes="80px"
                           className="absolute inset-0 size-full object-cover object-[50%_30%]"
                         />
                       ) : pending || !name ? (
@@ -88,10 +73,18 @@ export async function Testimonials({ locale }: { locale: Locale }) {
                         {pending || !name ? t("nameTbd") : name}
                       </p>
                       {item.context && !pending ? (
-                        <p className="text-sm text-muted-foreground">{tr(item.context, locale)}</p>
+                        <p className="mt-0.5 text-sm leading-snug text-highlight">
+                          {tr(item.context, locale)}
+                        </p>
                       ) : null}
                     </div>
                   </figcaption>
+                  <blockquote
+                    lang={!pending && locale === "en" && !quote ? "pt" : undefined}
+                    className="max-w-none flex-1 font-display text-lg leading-relaxed text-pretty text-foreground/90 italic md:text-xl"
+                  >
+                    {pending ? t("quoteTbd") : <p className="max-w-none">“{text}”</p>}
+                  </blockquote>
                 </figure>
               </li>
             );

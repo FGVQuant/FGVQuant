@@ -124,14 +124,9 @@
       "asOf": "até {month}",
       "cta": "Ver o FGV Quant Capital"
     },
-    "join": {
-      "title": "Quer fazer parte da FGV Quant?",
-      "body": "Acompanhe nossas redes para saber quando as inscrições abrirem.",
-      "cta": "Saiba como entrar"
-    },
-    "terminalSection": {
-      "title": "Faça as contas",
-      "description": "Um terminal de verdade: simule trajetórias, compare VaR e ES sob caudas pesadas ou precifique um straddle."
+    "partners": {
+      "title": "Parcerias realizadas",
+      "all": "Ver parceiros"
     }
   }
 }

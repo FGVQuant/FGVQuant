@@ -22,22 +22,11 @@ export const allNavItems: readonly NavItem[] = [
   { key: "join", href: JOIN_HREF },
 ];
 
-/**
- * Header navigation. The filled call to action is the partner page while recruitment has no
- * dates (`recruitment.open` in content/site.json), and the recruitment page once it opens; the
- * other one stays in the link list so both are always one click away.
- */
-export function getNav(recruitmentOpen: boolean): { items: NavItem[]; cta: NavItem } {
-  return recruitmentOpen
-    ? {
-        items: [...BASE, { key: "partners", href: PARTNERS_HREF }],
-        cta: { key: "join", href: JOIN_HREF },
-      }
-    : {
-        items: [...BASE, { key: "join", href: JOIN_HREF }],
-        cta: { key: "partners", href: PARTNERS_HREF },
-      };
-}
+/** Header navigation: recruitment is the filled call to action; partners is a plain link. */
+export const headerNav: { items: NavItem[]; cta: NavItem } = {
+  items: [...BASE, { key: "partners", href: PARTNERS_HREF }],
+  cta: { key: "join", href: JOIN_HREF },
+};
 
 export function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);

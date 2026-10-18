@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ArrowUpRight } from "lucide-react";
 import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
-import { TerminalPanel } from "@/components/terminal/terminal-panel";
 import { KpiStrip } from "@/components/sections/kpi-strip";
+import { JoinCta } from "@/components/sections/join-cta";
+import { PartnerMarquee } from "@/components/sections/partner-marquee";
 import { QuantVenn, type QuantVennProps } from "@/components/sections/quant-venn";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
 import { NewsletterRow } from "@/components/cards/newsletter-row";
@@ -22,6 +23,7 @@ import {
   getEvents,
   getFeaturedIssue,
   getIssues,
+  getPartners,
   getSite,
   getStats,
   intlLocale,
@@ -74,6 +76,7 @@ export default async function HomePage() {
       : null;
   const fundMonth = formatEditionInline(stats.fundAsOf, locale);
   const recruitmentOpen = getSite().recruitment.open === true;
+  const hasPartners = getPartners().length > 0;
 
   return (
     <main id="content">
@@ -124,6 +127,21 @@ export default async function HomePage() {
           {ta("numbers.note", { asOf: getSite().membersAsOf })}
         </p>
       </section>
+
+      {/* Parcerias realizadas: right under the numbers, as social proof. */}
+      {hasPartners ? (
+        <section className="container-page pt-16">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="font-sans text-sm font-medium text-muted-foreground">
+              {t("partners.title")}
+            </h2>
+            <ButtonLink href="/parceiros" variant="link" arrow className="px-0">
+              {t("partners.all")}
+            </ButtonLink>
+          </div>
+          <PartnerMarquee label={t("partners.title")} className="mt-6" />
+        </section>
+      ) : null}
 
       {/* Quem somos + destaque em competição */}
       <section className="container-page grid items-center gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
@@ -294,29 +312,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Calculadora quant: a real, computing terminal (see terminal-panel.tsx) */}
-      <section className="border-t border-border section-y">
-        <div className="container-page grid items-start gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
-          <SectionHeader
-            title={t("terminalSection.title")}
-            description={t("terminalSection.description")}
-          />
-          <TerminalPanel />
-        </div>
-      </section>
-
-      {/* Join CTA */}
-      <section className="border-t border-border section-tone">
-        <div className="container-page flex flex-col items-center section-y text-center">
-          <h2 className="max-w-3xl font-display text-4xl text-balance md:text-6xl">
-            {t("join.title")}
-          </h2>
-          <p className="mt-6 max-w-xl text-lg text-muted-foreground">{t("join.body")}</p>
-          <ButtonLink href="/processo-seletivo" size="lg" arrow className="mt-10">
-            {t("join.cta")}
-          </ButtonLink>
-        </div>
-      </section>
+      <JoinCta />
     </main>
   );
 }

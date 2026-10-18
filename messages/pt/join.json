@@ -7,23 +7,15 @@
     "intro": {
       "eyebrow": "Entre na liga",
       "title": "Processo <em>seletivo</em>",
-      "description": "A FGV Quant reúne estudantes da FGV-SP que querem aprender finanças quantitativas fazendo. Os detalhes do próximo processo ainda não foram divulgados. Esta página será atualizada assim que forem."
+      "description": "A FGV Quant reúne estudantes da FGV-SP que querem aprender sobre finanças, estatística, matemática e programação. O processo seletivo acontece todo semestre, no início do semestre letivo da FGV: o próximo será em {next}. As datas e etapas serão divulgadas aqui e nos nossos canais."
     },
     "status": {
       "label": "Status",
       "open": "Inscrições: abertas",
       "closed": "Inscrições: encerradas",
-      "tbd": "Inscrições: a confirmar"
+      "tbd": "Próximo processo: {next}"
     },
     "apply": "Inscreva-se",
-    "how": {
-      "title": "Como <em>funciona</em>",
-      "description": "As etapas, prazos e critérios serão publicados aqui quando a liga divulgar o processo."
-    },
-    "who": {
-      "title": "Quem pode <em>participar</em>",
-      "body": "A liga é voltada a estudantes da FGV-SP interessados em finanças quantitativas."
-    },
     "build": {
       "eyebrow": "Programa de trainees",
       "title": "O que você vai <em>aprender</em>",
@@ -34,7 +26,9 @@
         "strategies": "Estratégias quantitativas",
         "portfolios": "Portfólios",
         "fixedIncome": "Renda fixa",
-        "derivatives": "Derivativos"
+        "derivatives": "Derivativos",
+        "programming": "Programação",
+        "ai": "Inteligência artificial"
       },
       "descriptions": {
         "statistics": "Probabilidade e inferência como base para analisar dados financeiros.",
@@ -42,7 +36,9 @@
         "strategies": "Como estratégias sistemáticas são construídas e avaliadas.",
         "portfolios": "Construção de carteiras e o equilíbrio entre risco e retorno.",
         "fixedIncome": "Títulos, taxas de juros e a estrutura a termo.",
-        "derivatives": "Opções, futuros e como precificá-los."
+        "derivatives": "Opções, futuros e como precificá-los.",
+        "programming": "Código para tratar dados, testar ideias e automatizar análises.",
+        "ai": "Machine learning e IA aplicados a problemas de mercado."
       },
       "formatTitle": "Como funciona",
       "format": {
@@ -60,32 +56,33 @@
         }
       }
     },
-    "faq": {
-      "title": "Perguntas <em>frequentes</em>",
-      "items": [
-        {
-          "q": "Quando abrem as inscrições?",
-          "a": "Ainda não há data divulgada. Quando a liga anunciar, publicaremos aqui e nos nossos canais."
-        },
-        {
-          "q": "Quem pode participar?",
-          "a": "A liga é voltada a estudantes da FGV-SP. Os requisitos de elegibilidade serão publicados junto com os detalhes do processo."
-        },
-        {
-          "q": "Preciso saber programar?",
-          "a": "Não. O processo seletivo não tem pré-requisitos técnicos."
-        },
-        {
-          "q": "Como fico sabendo quando as inscrições abrirem?",
-          "a": "Siga a FGV Quant no Instagram e no LinkedIn: é por lá que os avisos serão publicados."
-        }
-      ]
-    },
     "notify": {
-      "title": "Seja avisado quando <em>abrir</em>",
-      "description": "Acompanhe a liga para saber quando o processo seletivo for divulgado.",
+      "description": "Acompanhe nossas redes para ficar por dentro das próximas inscrições.",
       "instagram": "Seguir no Instagram",
       "linkedin": "Seguir no LinkedIn"
+    },
+    "facts": {
+      "frequency": {
+        "label": "Frequência",
+        "value": "Todo semestre"
+      },
+      "next": {
+        "label": "Próximo processo",
+        "value": "{next}"
+      },
+      "prerequisites": {
+        "label": "Pré-requisitos técnicos",
+        "value": "Nenhum"
+      },
+      "audience": {
+        "label": "Para quem",
+        "value": "Estudantes da FGV-SP"
+      }
+    },
+    "projects": {
+      "title": "Projetos finais do ciclo trainee",
+      "description": "Ao fim do ciclo, cada grupo de trainees apresenta um projeto final a uma banca. Estes foram os destaques dos últimos semestres.",
+      "members": "Integrantes"
     }
   }
 }

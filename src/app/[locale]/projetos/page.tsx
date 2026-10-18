@@ -10,8 +10,8 @@ import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { getCompetitions, getProjects, tr } from "@/lib/content";
 import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
-import { FundFeature, OngoingCard, ProjectRow, TraineeCard } from "./_components/project-items";
-import { Carousel } from "./_components/carousel";
+import { FundFeature, OngoingCard, ProjectRow } from "./_components/project-items";
+import { Carousel } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 
 type Translator = Awaited<ReturnType<typeof getTranslations>>;
@@ -40,9 +40,8 @@ export default async function ProjectsPage() {
   ]);
   const competitions = getCompetitions();
   const all = getProjects();
-  // The fund runs continuously and trainee projects have their own section; the rest go by semester.
+  // The fund runs continuously; trainee projects live on /processo-seletivo; the rest go by semester.
   const fund = all.find((p) => p.kind === "fund");
-  const trainee = all.filter((p) => p.kind === "trainee");
   const projects = all.filter((p) => p.kind === "research");
   const semesters = [...new Set(projects.map((p) => p.period))];
 
@@ -174,29 +173,6 @@ export default async function ProjectsPage() {
           </section>
         </div>
       </div>
-
-      {trainee.length > 0 ? (
-        <section aria-labelledby="trainees-titulo" className="border-t border-border section-tone">
-          <div className="container-page section-y">
-            <h2
-              id="trainees-titulo"
-              className="font-display text-3xl tracking-tight text-foreground sm:text-4xl"
-            >
-              {t("projects.trainee")}
-            </h2>
-            <p className="mt-3 max-w-[65ch] text-base text-muted-foreground">
-              {t("projects.traineeDescription")}
-            </p>
-            <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {trainee.map((p) => (
-                <li key={p.id}>
-                  <TraineeCard project={p} t={t} locale={locale} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      ) : null}
     </main>
   );
 }

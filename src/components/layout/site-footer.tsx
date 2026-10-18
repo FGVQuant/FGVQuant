@@ -1,4 +1,5 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Newspaper } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { SocialIcon } from "@/components/brand/social-icons";
@@ -25,15 +26,28 @@ export async function SiteFooter() {
   const newTabLabel = common("newTab");
   const site = getSite();
   const follow = [
-    { label: "Instagram", href: site.instagram },
-    { label: "LinkedIn", href: site.linkedin },
-    { label: t("subscribe"), href: site.newsletterUrl },
+    {
+      label: "Instagram",
+      href: site.instagram,
+      icon: <SocialIcon href={site.instagram} className="size-4" />,
+    },
+    {
+      label: "LinkedIn",
+      href: site.linkedin,
+      icon: <SocialIcon href={site.linkedin} className="size-4" />,
+    },
+    // The newsletter lives on LinkedIn; a newspaper mark tells it apart from the LinkedIn page.
+    {
+      label: t("subscribe"),
+      href: site.newsletterUrl,
+      icon: <Newspaper className="size-4" aria-hidden />,
+    },
   ];
 
   return (
     <footer className="mt-24 border-t border-border section-tone">
       <div className="container-page py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_1.4fr_1fr_1fr]">
           <div className="max-w-sm">
             <Logo tagline={brand("tagline")} />
             <p className="mt-6 text-sm text-muted-foreground">{t("about")}</p>
@@ -42,7 +56,8 @@ export async function SiteFooter() {
 
           <div>
             <h2 className="text-sm font-semibold text-foreground">{t("explore")}</h2>
-            <ul className="mt-4 space-y-1">
+            {/* Two short columns instead of one long list. */}
+            <ul className="mt-4 grid grid-cols-2 gap-x-8 gap-y-1">
               {allNavItems.map(({ key, href }) => (
                 <li key={key}>
                   <Link href={href} className={linkClass}>
@@ -56,10 +71,15 @@ export async function SiteFooter() {
           <div>
             <h2 className="text-sm font-semibold text-foreground">{t("follow")}</h2>
             <ul className="mt-4 space-y-1">
-              {follow.map(({ label, href }) => (
+              {follow.map(({ label, href, icon }) => (
                 <li key={href}>
-                  <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                    <SocialIcon href={href} className="size-4" />
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(linkClass, "gap-2")}
+                  >
+                    {icon}
                     {label}
                     <ArrowUpRight className="size-3.5" aria-hidden />
                     <span className="sr-only">{newTabLabel}</span>

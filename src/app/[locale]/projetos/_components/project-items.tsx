@@ -226,28 +226,3 @@ export function FundFeature({ project: p, t, locale }: Props) {
     </article>
   );
 }
-
-/** Trainee standout project: illustrated cover, award, title and the trainees. */
-export function TraineeCard({ project: p, t, locale }: Props) {
-  return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card">
-      <FigureTile figure={p.figure} className="aspect-[16/9] rounded-none" label={p.period} />
-      <div className="flex flex-1 flex-col p-5">
-        {p.award ? (
-          <Badge variant="highlight" className="self-start">
-            {tr(p.award, locale)}
-          </Badge>
-        ) : null}
-        <h3 className="mt-3 font-sans text-lg leading-snug font-semibold tracking-tight text-foreground">
-          {tr(p.title, locale)}
-        </h3>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          {tr(p.summary, locale)}
-        </p>
-        <div className="mt-auto pt-4">
-          <People project={p} t={t} locale={locale} label={t("projects.members")} stacked />
-        </div>
-      </div>
-    </article>
-  );
-}

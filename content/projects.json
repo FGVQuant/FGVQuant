@@ -245,7 +245,8 @@
       "pt": "Projeto Destaque do Ciclo Trainee",
       "en": "Standout project of the trainee cycle"
     },
-    "figure": "straddle"
+    "figure": "straddle",
+    "photo": "./projects/photos/trainee-2026-1-straddle.jpg"
   },
   {
     "id": "trainee-2025-2-vwap",
@@ -264,7 +265,8 @@
       "pt": "Projeto Destaque do Ciclo Trainee",
       "en": "Standout project of the trainee cycle"
     },
-    "figure": "vwap"
+    "figure": "vwap",
+    "photo": "./projects/photos/trainee-2025-2-vwap.jpg"
   },
   {
     "id": "trainee-2024-2-momentum",
@@ -283,7 +285,8 @@
       "pt": "Projeto Destaque do Ciclo Trainee",
       "en": "Standout project of the trainee cycle"
     },
-    "figure": "momentum"
+    "figure": "momentum",
+    "photo": "./projects/photos/trainee-2024-2-momentum.jpg"
   },
   {
     "id": "trainee-2024-1-pairs",
@@ -302,6 +305,7 @@
       "pt": "Projeto Destaque do Ciclo Trainee",
       "en": "Standout project of the trainee cycle"
     },
-    "figure": "pairs"
+    "figure": "pairs",
+    "photo": "./projects/photos/trainee-2024-1-pairs.jpg"
   }
 ]
