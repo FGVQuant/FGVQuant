@@ -21,15 +21,16 @@ export function ItemList({ items, className }: { items: ItemListEntry[]; classNa
       {items.map((item) => (
         <li
           key={item.key}
-          className="grid gap-x-10 gap-y-2 py-6 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_auto] md:items-baseline"
+          className="grid gap-x-10 gap-y-2 py-6 md:grid-cols-[minmax(0,22rem)_minmax(0,1fr)_auto] md:items-baseline"
         >
-          <h3 className="font-sans text-lg font-semibold tracking-tight text-foreground">
+          {/* the marker hangs: a title that wraps stays aligned with its first line, not under the number */}
+          <h3 className="flex items-baseline gap-3 font-sans text-lg font-semibold tracking-tight text-foreground">
             {item.marker ? (
-              <span className="mr-3 font-mono text-sm font-normal text-muted-foreground tabular-nums">
+              <span className="shrink-0 font-mono text-sm font-normal text-muted-foreground tabular-nums">
                 {item.marker}
               </span>
             ) : null}
-            {item.title}
+            <span className="min-w-0">{item.title}</span>
           </h3>
           <div className="max-w-[60ch] text-base leading-relaxed text-muted-foreground">
             {item.body}
