@@ -490,13 +490,19 @@ for (const [name, dest] of wanted) {
   // ponytail: unchanged = same size; compare md5Checksum if a same-size swap ever slips through.
   const { id, size } = files.get(name);
   if (existsSync(dest) && statSync(dest).size === Number(size)) continue;
-  // the public download host, not the API's alt=media, which Google throttles after a few dozen files
-  const res = await fetch(
-    `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`,
-  );
-  const body = Buffer.from(await res.arrayBuffer());
+  // the public download host, not the API's alt=media, which Google throttles after a few dozen files.
+  // Drive answers the odd 429/503 on a cold build that fetches everything: back off and retry.
+  let res, body;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    if (attempt) await new Promise((r) => setTimeout(r, 2000 * 2 ** attempt));
+    res = await fetch(
+      `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`,
+    ).catch(() => null);
+    body = res ? Buffer.from(await res.arrayBuffer()) : Buffer.alloc(0);
+    if (body.length === Number(size)) break;
+  }
   if (body.length !== Number(size))
-    fail([`não consegui baixar '${name}' do Drive (HTTP ${res.status}). Tente de novo.`]);
+    fail([`não consegui baixar '${name}' do Drive (${res ? `HTTP ${res.status}` : "erro de rede"}) após 5 tentativas. Tente de novo.`]);
   writeFileSync(dest, body);
 }
 
