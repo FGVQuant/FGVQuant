@@ -25,7 +25,7 @@ export function ItemList({ items, className }: { items: ItemListEntry[]; classNa
         >
           <h3 className="font-sans text-lg font-semibold tracking-tight text-foreground">
             {item.marker ? (
-              <span className="mb-1 block text-sm font-normal text-muted-foreground tabular-nums">
+              <span className="mr-3 font-mono text-sm font-normal text-muted-foreground tabular-nums">
                 {item.marker}
               </span>
             ) : null}
