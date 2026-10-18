@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Mail, Newspaper } from "lucide-react";
+import { InstagramIcon, LinkedinIcon } from "@/components/brand/social-icons";
 import { PageIntro } from "@/components/layout/page-intro";
 import { partnerLogo } from "@/components/sections/partner-marquee";
 import { ButtonAnchor } from "@/components/ui/button";
+import { Carousel } from "@/components/ui/carousel";
 import { ItemList } from "@/components/ui/item-list";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { SectionHeader } from "@/components/ui/section-header";
@@ -34,11 +36,36 @@ export default async function PartnersPage() {
   const partners = getPartners();
   const email = site.email ? `mailto:${site.email}` : undefined;
 
+  const iconClass = "size-5";
   const channels = [
-    { key: "linkedin", href: site.linkedin, label: t("contact.linkedin.cta") },
-    { key: "instagram", href: site.instagram, label: t("contact.instagram.cta") },
-    { key: "newsletter", href: site.newsletterUrl, label: t("contact.newsletter.cta") },
-    ...(email ? [{ key: "email", href: email, label: site.email! }] : []),
+    {
+      key: "linkedin",
+      href: site.linkedin,
+      label: t("contact.linkedin.cta"),
+      icon: <LinkedinIcon className={iconClass} />,
+    },
+    {
+      key: "instagram",
+      href: site.instagram,
+      label: t("contact.instagram.cta"),
+      icon: <InstagramIcon className={iconClass} />,
+    },
+    {
+      key: "newsletter",
+      href: site.newsletterUrl,
+      label: t("contact.newsletter.cta"),
+      icon: <Newspaper aria-hidden className={iconClass} />,
+    },
+    ...(email
+      ? [
+          {
+            key: "email",
+            href: email,
+            label: site.email!,
+            icon: <Mail aria-hidden className={iconClass} />,
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -60,7 +87,7 @@ export default async function PartnersPage() {
         </div>
       </PageIntro>
 
-      {/* Who the league has worked with: a logo wall, one card per partner. */}
+      {/* Who the league has worked with: one card per partner, in a carousel so the list can grow. */}
       <section className="container-page section-y">
         <SectionHeader title={t.rich("list.title", plain)} description={t("list.description")} />
         {partners.length === 0 ? (
@@ -68,24 +95,26 @@ export default async function PartnersPage() {
             {t("list.pending")}
           </PlaceholderNote>
         ) : (
-          <ul className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl bg-border sm:grid-cols-2 lg:grid-cols-4">
-            {partners.map((p) => (
-              <li
-                key={p.id}
-                className="flex flex-col bg-card p-6 transition-colors hover:bg-secondary"
-              >
-                <div className="flex h-16 items-center">
-                  {partnerLogo(p, "h-9 max-w-48") ?? (
-                    <span className="font-display text-2xl text-foreground">{p.name}</span>
-                  )}
-                </div>
-                <h3 className="mt-6 text-sm font-semibold text-foreground">{p.name}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                  {tr(p.relation, locale)}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-8">
+            <Carousel prevLabel={t("list.prev")} nextLabel={t("list.next")}>
+              {partners.map((p) => (
+                <li
+                  key={p.id}
+                  className="flex w-[78%] shrink-0 snap-start flex-col rounded-2xl bg-card p-6 transition-colors hover:bg-secondary sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]"
+                >
+                  <div className="flex h-16 items-center">
+                    {partnerLogo(p, "h-9 max-w-48") ?? (
+                      <span className="font-display text-2xl text-foreground">{p.name}</span>
+                    )}
+                  </div>
+                  <h3 className="mt-6 text-sm font-semibold text-foreground">{p.name}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                    {tr(p.relation, locale)}
+                  </p>
+                </li>
+              ))}
+            </Carousel>
+          </div>
         )}
       </section>
 
@@ -121,7 +150,7 @@ export default async function PartnersPage() {
             description={t("contact.description")}
           />
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {channels.map(({ key, href, label }) => (
+            {channels.map(({ key, href, label, icon }) => (
               <li key={key}>
                 <a
                   href={href}
@@ -129,12 +158,17 @@ export default async function PartnersPage() {
                   rel="noopener noreferrer"
                   className="group flex h-full flex-col rounded-2xl bg-card p-6 transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-highlight"
                 >
-                  <span className="flex items-center justify-between font-sans text-lg font-semibold tracking-tight text-foreground">
-                    {t(`contact.${key}.title`)}
+                  <span className="flex items-start justify-between">
+                    <span className="inline-flex size-10 items-center justify-center rounded-xl bg-secondary text-highlight transition-colors group-hover:bg-card">
+                      {icon}
+                    </span>
                     <ArrowUpRight
                       aria-hidden
                       className="size-4 text-highlight transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     />
+                  </span>
+                  <span className="mt-5 font-sans text-lg font-semibold tracking-tight text-foreground">
+                    {t(`contact.${key}.title`)}
                   </span>
                   <span className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {t(`contact.${key}.body`)}

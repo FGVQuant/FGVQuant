@@ -13,7 +13,9 @@
       "title": "Who builds <em>with us</em>",
       "description": "We show names and logos only with each organization's confirmation.",
       "pending": "Partner names and logos will be shown here once they are confirmed.",
-      "marqueeLabel": "Partner logos"
+      "marqueeLabel": "Partner logos",
+      "prev": "Previous partners",
+      "next": "Next partners"
     },
     "pitch": {
       "title": "Talk to people who <em>think</em> quant",
