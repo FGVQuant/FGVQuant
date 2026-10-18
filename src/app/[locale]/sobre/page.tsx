@@ -40,7 +40,7 @@ export default async function AboutPage() {
         motif={<BullMotif />}
         eyebrow={t("eyebrow")}
         title={t.rich("title", { em: (c) => c })}
-        description={t("lead", { year: site.founded, members: site.members })}
+        description={t("lead", { year: site.founded })}
       >
         <ButtonLink href="/parceiros" size="lg" arrow>
           {t("partnerCta")}
