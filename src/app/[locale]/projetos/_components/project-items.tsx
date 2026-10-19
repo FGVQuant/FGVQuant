@@ -169,7 +169,7 @@ export function ProjectRow({ project: p, t, locale }: Props) {
   );
 }
 
-/** This semester's projects: an illustrated strip naming the partner, then the team. */
+/** This semester's projects: an illustrated strip naming the partner, the summary, then the team. */
 export function OngoingCard({ project: p, t, locale }: Props) {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card">
@@ -182,6 +182,9 @@ export function OngoingCard({ project: p, t, locale }: Props) {
         <h4 className="font-sans text-lg leading-snug font-semibold tracking-tight text-foreground">
           {tr(p.title, locale)}
         </h4>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          {tr(p.summary, locale)}
+        </p>
         {/* Top-aligned: pinned to the bottom, a name list that wraps lifts the avatars out of line. */}
         <div className="mt-4">
           <People project={p} t={t} locale={locale} label={t("projects.members")} stacked />
