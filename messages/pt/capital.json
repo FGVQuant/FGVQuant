@@ -183,14 +183,12 @@
       }
     },
     "results": {
-      "eyebrow": "Histórico",
-      "title": "Retornos mensais",
       "monthly": "Retornos mensais reportados (fundo fictício)",
       "chartLabel": "Gráfico de barras dos retornos mensais reportados do fundo fictício: {summary}.",
-      "tableCaption": "Retornos mensais reportados do fundo fictício",
+      "tableCaption": "Ver os valores mês a mês",
       "coverage": "{count, plural, one {# mês reportado} other {# meses reportados}} · {range}",
-      "month": "Mês",
-      "return": "Retorno"
+      "missing": "{count, plural, one {# mês sem relatório} other {# meses sem relatório}}",
+      "window": "gráfico com os últimos {count} meses"
     },
     "reports": {
       "eyebrow": "Relatórios",

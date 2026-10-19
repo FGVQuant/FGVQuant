@@ -183,14 +183,12 @@
       }
     },
     "results": {
-      "eyebrow": "History",
-      "title": "Monthly returns",
       "monthly": "Reported monthly returns (simulated fund)",
       "chartLabel": "Bar chart of the simulated fund's reported monthly returns: {summary}.",
-      "tableCaption": "Reported monthly returns of the simulated fund",
+      "tableCaption": "Show month-by-month values",
       "coverage": "{count, plural, one {# month reported} other {# months reported}} · {range}",
-      "month": "Month",
-      "return": "Return"
+      "missing": "{count, plural, one {# month without a report} other {# months without a report}}",
+      "window": "chart shows the last {count} months"
     },
     "reports": {
       "eyebrow": "Reports",

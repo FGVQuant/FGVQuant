@@ -105,19 +105,33 @@ export default async function CapitalPage() {
     );
   const volMax = Math.max(...vols.map((x) => x.v), 1);
 
-  const bars = [...fund.monthly]
-    .sort((a, b) => a.month.localeCompare(b.month))
-    .map((m) => ({
-      key: m.month,
-      label: formatEditionShort(m.month, locale),
-      value: m.return,
-      valueLabel: signedPct(m.return),
-    }));
-  const coverage = t("results.coverage", {
-    count: bars.length,
-    range:
-      bars.length > 1 ? `${bars[0].label}–${bars[bars.length - 1].label}` : (bars[0]?.label ?? ""),
-  });
+  const monthly = [...fund.monthly].sort((a, b) => a.month.localeCompare(b.month));
+  const bars = monthly.map((m) => ({
+    key: m.month,
+    label: formatEditionShort(m.month, locale),
+    value: m.return,
+    valueLabel: signedPct(m.return),
+  }));
+  // months between the first and last report that the league did not report (named in the legend only)
+  const monthIndex = (key: string) => Number(key.slice(0, 4)) * 12 + Number(key.slice(5, 7));
+  const missing = monthly.length
+    ? monthIndex(monthly[monthly.length - 1].month) -
+      monthIndex(monthly[0].month) +
+      1 -
+      monthly.length
+    : 0;
+  const coverage = [
+    t("results.coverage", {
+      count: bars.length,
+      range:
+        bars.length > 1
+          ? `${bars[0].label}–${bars[bars.length - 1].label}`
+          : (bars[0]?.label ?? ""),
+    }),
+    missing ? t("results.missing", { count: missing }) : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   const disclaimerItems = [
     t("disclaimer.simulated"),
@@ -188,6 +202,28 @@ export default async function CapitalPage() {
           ) : null}
         </div>
 
+        {bars.length ? (
+          <div className="mt-6 rounded-2xl border border-border bg-card p-4 sm:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                {t("results.monthly")}
+              </h3>
+              <Badge variant="highlight">{tCommon("simulated")}</Badge>
+            </div>
+            <div className="mt-4">
+              <MonthlyBars
+                bars={bars}
+                ariaLabel={t("results.chartLabel", {
+                  summary: bars.map((b) => `${b.label} ${b.valueLabel}`).join(", "),
+                })}
+                tableCaption={t("results.tableCaption")}
+                coverage={coverage}
+                windowNote={t("results.window", { count: 24 })}
+              />
+            </div>
+          </div>
+        ) : null}
+
         {overview ? (
           <div className="mt-6 rounded-2xl border border-border bg-card p-4 sm:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -218,10 +254,7 @@ export default async function CapitalPage() {
       <section className="border-t border-border section-tone">
         <div className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
-            <SectionHeader
-              title={t("pairs.title")}
-              description={t("pairs.lead")}
-            />
+            <SectionHeader title={t("pairs.title")} description={t("pairs.lead")} />
             <Steps
               className="mt-10"
               items={pairsSteps.map((key) => ({
@@ -279,10 +312,7 @@ export default async function CapitalPage() {
       <section className="border-t border-border">
         <div className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
-            <SectionHeader
-              title={t("momentum.title")}
-              description={t("momentum.lead")}
-            />
+            <SectionHeader title={t("momentum.title")} description={t("momentum.lead")} />
             <Steps
               className="mt-10"
               items={momentumSteps.map((key) => ({
@@ -425,33 +455,6 @@ export default async function CapitalPage() {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* Histórico mensal */}
-      <section className="border-t border-border section-tone">
-        <div className="container-page section-y">
-          <SectionHeader title={t("results.title")} />
-          <div className="mt-12 rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                {t("results.monthly")}
-              </h3>
-              <Badge variant="highlight">{tCommon("simulated")}</Badge>
-            </div>
-            <div className="mt-6">
-              <MonthlyBars
-                bars={bars}
-                ariaLabel={t("results.chartLabel", {
-                  summary: bars.map((b) => `${b.label} ${b.valueLabel}`).join(", "),
-                })}
-                tableCaption={t("results.tableCaption")}
-                monthHeader={t("results.month")}
-                returnHeader={t("results.return")}
-                coverage={coverage}
-              />
-            </div>
-          </div>
         </div>
       </section>
 
