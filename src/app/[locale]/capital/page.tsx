@@ -9,7 +9,15 @@ import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
 import { SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
-import { formatEdition, formatEditionShort, getFund, getSite, intlLocale } from "@/lib/content";
+import {
+  formatEdition,
+  formatEditionShort,
+  getFund,
+  getSite,
+  getStrategies,
+  intlLocale,
+  tr,
+} from "@/lib/content";
 import { pageAlternates } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { Disclaimer } from "./_components/disclaimer";
@@ -25,10 +33,6 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: await pageAlternates("/capital"),
   };
 }
-
-/** Momentum leg weights in the strategy's recent configuration (see the copy). */
-const MOMENTUM_LONG = 150;
-const MOMENTUM_SHORT = 50;
 
 const OVERVIEW_ROWS = [
   "totalReturn",
@@ -139,8 +143,7 @@ export default async function CapitalPage() {
     t("disclaimer.past"),
     t("disclaimer.advice"),
   ];
-  const pairsSteps = ["universe", "signal", "trade", "carry", "costs"] as const;
-  const momentumSteps = ["score", "portfolio", "weights", "rebalance"] as const;
+  const strategies = getStrategies();
   const outcomes = ["converged", "diverged", "carry"] as const;
   const definitions = ["volatility", "sharpe", "drawdown", "correlation"] as const;
   const processSteps = ["research", "execution", "monitoring", "report"] as const;
@@ -250,105 +253,107 @@ export default async function CapitalPage() {
         ) : null}
       </section>
 
-      {/* Pairs Trading */}
-      <section className="border-t border-border section-tone">
-        <div className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-          <div>
-            <SectionHeader title={t("pairs.title")} description={t("pairs.lead")} />
-            <Steps
-              className="mt-10"
-              items={pairsSteps.map((key) => ({
-                title: t(`pairs.steps.${key}.title`),
-                body: t(`pairs.steps.${key}.body`),
-              }))}
-            />
-          </div>
-          <div className="flex flex-col gap-6 lg:pt-4">
-            <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-              <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                {t("pairs.chart.title")}
-              </h3>
-              <div className="mt-6">
-                <ZScoreChart
-                  ariaLabel={t("pairs.chart.aria")}
-                  entryLabel={t("pairs.chart.entry")}
-                  exitLabel={t("pairs.chart.exit")}
-                  openLabel={t("pairs.chart.open")}
-                  locale={intl}
+      {/* Estratégias: one section per active strategy in the sheet. Pairs keeps its illustration;
+          any strategy with exposure columns gets the long/short bars. */}
+      {strategies.map((st, i) => {
+        const visual =
+          st.id === "pairs" ? (
+            <div className="flex flex-col gap-6 lg:pt-4">
+              <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+                <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                  {t("pairs.chart.title")}
+                </h3>
+                <div className="mt-6">
+                  <ZScoreChart
+                    ariaLabel={t("pairs.chart.aria")}
+                    entryLabel={t("pairs.chart.entry")}
+                    exitLabel={t("pairs.chart.exit")}
+                    openLabel={t("pairs.chart.open")}
+                    locale={intl}
+                  />
+                </div>
+                <p className="mt-4 text-xs text-muted-foreground">{t("pairs.chart.note")}</p>
+              </div>
+              <div className="rounded-2xl border border-border bg-card p-6">
+                <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                  {t("pairs.formulaLabel")}
+                </p>
+                <p className="mt-3 font-mono text-base text-foreground sm:text-lg">
+                  {t("pairs.formula")}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-border bg-card p-6">
+                <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                  {t("pairs.outcomesTitle")}
+                </h3>
+                <ul className="mt-4 grid gap-4 sm:grid-cols-3">
+                  {outcomes.map((key) => (
+                    <li key={key}>
+                      <p className="font-sans text-sm font-semibold text-foreground">
+                        {t(`pairs.outcomes.${key}.title`)}
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {t(`pairs.outcomes.${key}.body`)}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : st.exposure ? (
+            <div className="lg:pt-4">
+              <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+                <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                  {t("exposure.title")}
+                </h3>
+                <ExposureBars
+                  className="mt-6"
+                  items={[
+                    { label: t("exposure.long"), value: st.exposure.long, tone: "long" },
+                    { label: t("exposure.short"), value: -st.exposure.short, tone: "short" },
+                    {
+                      label: t("exposure.gross"),
+                      value: st.exposure.long + st.exposure.short,
+                      tone: "total",
+                    },
+                    {
+                      label: t("exposure.net"),
+                      value: st.exposure.long - st.exposure.short,
+                      tone: "total",
+                    },
+                  ]}
+                  format={(v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v)}%`}
+                />
+                <p className="mt-6 text-xs text-muted-foreground">{t("exposure.note")}</p>
+              </div>
+            </div>
+          ) : null;
+        return (
+          <section
+            key={st.id}
+            className={cn("border-t border-border", i % 2 === 0 && "section-tone")}
+          >
+            <div
+              className={cn(
+                "container-page grid gap-12 section-y",
+                visual && "lg:grid-cols-[1fr_1.1fr] lg:gap-16",
+              )}
+            >
+              <div>
+                <SectionHeader title={tr(st.name, locale)} description={tr(st.summary, locale)} />
+                <Steps
+                  className="mt-10"
+                  items={st.rules.map((r) => ({
+                    title: tr(r.title, locale),
+                    body: tr(r.body, locale),
+                  }))}
                 />
               </div>
-              <p className="mt-4 text-xs text-muted-foreground">{t("pairs.chart.note")}</p>
+              {visual}
             </div>
-            <div className="rounded-2xl border border-border bg-card p-6">
-              <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                {t("pairs.formulaLabel")}
-              </p>
-              <p className="mt-3 font-mono text-base text-foreground sm:text-lg">
-                {t("pairs.formula")}
-              </p>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-6">
-              <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                {t("pairs.outcomesTitle")}
-              </h3>
-              <ul className="mt-4 grid gap-4 sm:grid-cols-3">
-                {outcomes.map((key) => (
-                  <li key={key}>
-                    <p className="font-sans text-sm font-semibold text-foreground">
-                      {t(`pairs.outcomes.${key}.title`)}
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {t(`pairs.outcomes.${key}.body`)}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Momentum */}
-      <section className="border-t border-border">
-        <div className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-          <div>
-            <SectionHeader title={t("momentum.title")} description={t("momentum.lead")} />
-            <Steps
-              className="mt-10"
-              items={momentumSteps.map((key) => ({
-                title: t(`momentum.steps.${key}.title`),
-                body: t(`momentum.steps.${key}.body`),
-              }))}
-            />
-          </div>
-          <div className="lg:pt-4">
-            <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-              <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                {t("momentum.exposure.title")}
-              </h3>
-              <ExposureBars
-                className="mt-6"
-                items={[
-                  { label: t("momentum.exposure.long"), value: MOMENTUM_LONG, tone: "long" },
-                  { label: t("momentum.exposure.short"), value: -MOMENTUM_SHORT, tone: "short" },
-                  {
-                    label: t("momentum.exposure.gross"),
-                    value: MOMENTUM_LONG + MOMENTUM_SHORT,
-                    tone: "total",
-                  },
-                  {
-                    label: t("momentum.exposure.net"),
-                    value: MOMENTUM_LONG - MOMENTUM_SHORT,
-                    tone: "total",
-                  },
-                ]}
-                format={(v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v)}%`}
-              />
-              <p className="mt-6 text-xs text-muted-foreground">{t("momentum.exposure.note")}</p>
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        );
+      })}
 
       {/* Risco */}
       <section className="border-t border-border section-tone">

@@ -50,31 +50,6 @@
       "source": "Source: the league's management report for {asOf}. Simulated fund."
     },
     "pairs": {
-      "eyebrow": "Strategy 01",
-      "title": "Pairs Trading",
-      "lead": "A relative-value strategy: instead of forecasting whether the market rises or falls, it bets that the relationship between two similar assets returns to normal.",
-      "steps": {
-        "universe": {
-          "title": "Pair universe",
-          "body": "We start from liquid stocks and look for pairs with statistically significant cointegration and a low SSD (sum of squared distances between normalized prices): assets that have historically moved together."
-        },
-        "signal": {
-          "title": "Signal",
-          "body": "For each pair, we track the spread between the two prices and standardize it into a z-score. The further from zero, the larger the deviation from the historical relationship."
-        },
-        "trade": {
-          "title": "Entry and exit",
-          "body": "A position opens when the z-score moves past about 2 standard deviations: we buy the relatively cheap asset and sell the expensive one. It closes when the spread comes back to around 0.5 standard deviations."
-        },
-        "carry": {
-          "title": "Position management",
-          "body": "Open positions can roll over the month end (carry-over), for up to 42 trading days. Selected pairs that never hit the entry trigger are not traded."
-        },
-        "costs": {
-          "title": "Costs",
-          "body": "The simulation charges 2.5 bps per entry and per exit, plus 2 bps per day on short positions as an approximation of borrow costs."
-        }
-      },
       "formulaLabel": "Spread z-score",
       "formula": "z = (spread − mean) ÷ standard deviation",
       "chart": {
@@ -101,36 +76,13 @@
         }
       }
     },
-    "momentum": {
-      "eyebrow": "Strategy 02",
-      "title": "Momentum",
-      "lead": "A trend strategy: it ranks stocks by the strength of their recent performance, buys the strongest and sells the weakest.",
-      "steps": {
-        "score": {
-          "title": "Ranking",
-          "body": "Every month, the stocks in the universe are ranked by a momentum score that measures the strength of recent relative performance."
-        },
-        "portfolio": {
-          "title": "Long-short portfolio",
-          "body": "We buy the highest-scoring names and sell the lowest-scoring ones. The recent configuration holds 15 names on each side, 30 positions in total."
-        },
-        "weights": {
-          "title": "Asymmetric weights",
-          "body": "The long leg gets 1.5x and the short leg 0.5x. The fund stays net long the market, while the short leg aims to profit from the weakest names falling."
-        },
-        "rebalance": {
-          "title": "Rebalancing",
-          "body": "Every position is rebuilt on the first trading day of the month. Portfolio size and weights are reviewed periodically by the managers."
-        }
-      },
-      "exposure": {
-        "title": "Portfolio exposure",
-        "long": "Long",
-        "short": "Short",
-        "gross": "Gross exposure",
-        "net": "Net exposure",
-        "note": "Percent of net assets, in the strategy's recent configuration."
-      }
+    "exposure": {
+      "title": "Portfolio exposure",
+      "long": "Long",
+      "short": "Short",
+      "gross": "Gross exposure",
+      "net": "Net exposure",
+      "note": "Percent of equity, in the strategy's current configuration."
     },
     "risk": {
       "eyebrow": "Risk",

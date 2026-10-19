@@ -256,6 +256,22 @@ const partners = defineCollection({
   }),
 });
 
+/** Strategy descriptions on /capital, from the sheet's "Estratégias" tab (order = row order). */
+const strategies = defineCollection({
+  name: "Strategy",
+  pattern: "sheet/strategies.json",
+  schema: s.object({
+    id: s.string(),
+    name: localized,
+    status: s.enum(["active", "closed"]),
+    summary: localized,
+    rules: s.array(s.object({ title: localized, body: localized })),
+    /** long and short legs in % of equity, when the strategy has a fixed configuration */
+    exposure: s.object({ long: s.number(), short: s.number() }).optional(),
+    order: s.number(),
+  }),
+});
+
 const fund = defineCollection({
   name: "Fund",
   pattern: "sheet/fund.json",
@@ -404,6 +420,7 @@ export default defineConfig({
     projects,
     partners,
     fund,
+    strategies,
     quantConnect,
     site,
     devSamples,

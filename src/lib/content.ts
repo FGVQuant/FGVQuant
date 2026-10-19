@@ -9,6 +9,7 @@ import {
   projects,
   quantConnect,
   site,
+  strategies,
   team,
   teamGroups,
   testimonials,
@@ -187,6 +188,9 @@ export function toTimelineItems(list: Event[], locale: Locale): TimelineItem[] {
 // ── Fund & site ───────────────────────────────────────────────────────────────
 
 export const getFund = () => fund;
+/** Strategies the fund runs now, in sheet order. */
+export const getStrategies = () =>
+  strategies.filter((x) => x.status === "active").sort((a, b) => a.order - b.order);
 export const getSite = () => site;
 
 /** Quant Connect, editions newest first. */

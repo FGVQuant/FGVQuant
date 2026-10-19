@@ -50,31 +50,6 @@
       "source": "Fonte: relatório de gestão da liga referente a {asOf}. Fundo fictício."
     },
     "pairs": {
-      "eyebrow": "Estratégia 01",
-      "title": "Pairs Trading",
-      "lead": "Uma estratégia de valor relativo: em vez de prever se o mercado sobe ou cai, ela aposta que a relação entre dois ativos parecidos volta ao normal.",
-      "steps": {
-        "universe": {
-          "title": "Universo de pares",
-          "body": "Partimos de ações líquidas e buscamos pares com cointegração estatisticamente significativa e baixo SSD (soma das distâncias quadráticas entre os preços normalizados): ativos que historicamente se movem juntos."
-        },
-        "signal": {
-          "title": "Sinal",
-          "body": "Para cada par, acompanhamos o spread entre os dois preços e o padronizamos em um z-score. Quanto mais longe de zero, maior o desvio em relação à relação histórica."
-        },
-        "trade": {
-          "title": "Entrada e saída",
-          "body": "A posição é aberta quando o z-score passa de cerca de 2 desvios-padrão: compramos o ativo relativamente barato e vendemos o caro. Ela é encerrada quando o spread volta para perto de 0,5 desvio."
-        },
-        "carry": {
-          "title": "Gestão das posições",
-          "body": "Posições abertas podem atravessar a virada do mês (carry-over), com limite de 42 pregões. Pares selecionados que não atingem o gatilho de entrada não são operados."
-        },
-        "costs": {
-          "title": "Custos",
-          "body": "A simulação desconta 2,5 bps por entrada e por saída e 2 bps por dia sobre as posições vendidas, como aproximação do custo de aluguel."
-        }
-      },
       "formulaLabel": "Z-score do spread",
       "formula": "z = (spread − média) ÷ desvio-padrão",
       "chart": {
@@ -101,36 +76,13 @@
         }
       }
     },
-    "momentum": {
-      "eyebrow": "Estratégia 02",
-      "title": "Momentum",
-      "lead": "Uma estratégia de tendência: ela ordena as ações pela força do desempenho recente, compra as mais fortes e vende as mais fracas.",
-      "steps": {
-        "score": {
-          "title": "Ranking",
-          "body": "Todo mês, as ações do universo são ordenadas por um score de momentum, que mede a força do desempenho relativo recente."
-        },
-        "portfolio": {
-          "title": "Carteira long-short",
-          "body": "Compramos os papéis de maior score e vendemos os de menor. A configuração recente usa 15 papéis em cada ponta, 30 posições no total."
-        },
-        "weights": {
-          "title": "Pesos assimétricos",
-          "body": "A ponta comprada recebe 1,5x e a vendida 0,5x. O fundo fica líquido comprado no mercado, e a ponta vendida busca ganhar com a queda dos papéis mais fracos."
-        },
-        "rebalance": {
-          "title": "Rebalanceamento",
-          "body": "Todas as posições são refeitas no primeiro pregão do mês. O tamanho da carteira e os pesos são revisados periodicamente pela gestão."
-        }
-      },
-      "exposure": {
-        "title": "Exposição da carteira",
-        "long": "Long",
-        "short": "Short",
-        "gross": "Exposição bruta",
-        "net": "Exposição líquida",
-        "note": "Percentuais do patrimônio, na configuração recente da estratégia."
-      }
+    "exposure": {
+      "title": "Exposição da carteira",
+      "long": "Long",
+      "short": "Short",
+      "gross": "Exposição bruta",
+      "net": "Exposição líquida",
+      "note": "Percentuais do patrimônio, na configuração atual da estratégia."
     },
     "risk": {
       "eyebrow": "Risco",

@@ -49,6 +49,7 @@ const EVENT_KIND = {
 const PROJECT_KIND = { Pesquisa: "research", Fundo: "fund", Trainee: "trainee" };
 const STATUS = { Concluído: "done", "Em andamento": "in-progress" };
 const STRATEGY = { "Pairs trading": "pairs", Momentum: "momentum", "Fundo (total)": "fund" };
+const STRATEGY_STATUS = { Ativa: "active", Encerrada: "closed" };
 const FUND = { name: "FGV Quant Capital", source: "https://www.linkedin.com/company/fgvquant" };
 
 // ── Google APIs ───────────────────────────────────────────────────────────────
@@ -94,6 +95,7 @@ const TABS = [
   "Depoimentos",
   "Fundo mensal",
   "Fundo resumo",
+  "Estratégias",
   "Entidade",
   "Newsletter",
   "Listas",
@@ -445,6 +447,51 @@ const fund = {
   },
 };
 
+// Strategy descriptions on /capital. "Regras" holds one rule per line, "Título: texto"; the optional
+// exposure columns (% of equity) draw the long/short bars. Known names keep the ids the fund tables use.
+const rules = (row, col) =>
+  row[col] === undefined
+    ? undefined
+    : String(row[col])
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter(Boolean)
+        .map((l) => {
+          const i = l.indexOf(":");
+          if (i < 1) err(row, `'${col}': cada linha precisa ser "Título: texto" (linha: ${l})`);
+          return { title: l.slice(0, i).trim(), body: l.slice(i + 1).trim() };
+        });
+const pct = (row, col) => {
+  if (row[col] === undefined) return undefined;
+  const v = Number(row[col]);
+  if (!Number.isFinite(v) || v < 0) err(row, `'${col}' inválido: ${row[col]}`);
+  return v;
+};
+const strategies = sheet["Estratégias"].map((r, i) => {
+  need(r, "Estratégia", "Status", "Resumo", "Regras");
+  const pt = rules(r, "Regras") ?? [];
+  const en = rules(r, "Regras (inglês)");
+  if (en && en.length !== pt.length)
+    err(r, "'Regras (inglês)' precisa ter o mesmo número de linhas que 'Regras'");
+  const long = pct(r, "Exposição comprada (%)");
+  const short = pct(r, "Exposição vendida (%)");
+  if ((long === undefined) !== (short === undefined))
+    err(r, "preencha as duas colunas de exposição, ou nenhuma");
+  return {
+    id: STRATEGY[r["Estratégia"]] ?? slug(r["Estratégia"]),
+    name: loc(r["Estratégia"], r["Estratégia (inglês)"]),
+    status: pick(r, STRATEGY_STATUS, "Status"),
+    summary: loc(r.Resumo, r["Resumo (inglês)"]),
+    rules: pt.map((rule, j) => ({
+      title: { pt: rule.title, en: en?.[j].title ?? rule.title },
+      body: { pt: rule.body, en: en?.[j].body ?? rule.body },
+    })),
+    exposure: long === undefined ? undefined : { long, short },
+    order: i + 1,
+  };
+});
+dupes(strategies, "Estratégias", (x) => x.id);
+
 // A row's summary (Resumo, Texto…) becomes content/sheet/newsletter/<aaaa-mm>-<mês>.mdx, read by velite
 // like the hand-written ones in content/newsletter/, which it overrides. A row without one shows on
 // the site as "resumo em breve" with the link.
@@ -546,6 +593,7 @@ const json = {
   partners,
   testimonials,
   fund,
+  strategies,
   site,
   newsletter,
 };
