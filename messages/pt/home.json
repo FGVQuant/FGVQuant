@@ -20,12 +20,16 @@
     "about": {
       "titleA": "Matemática, estatística e código",
       "titleEm": "aplicados ao mercado",
-      "body": "Fundada em 2021, a FGV Quant reúne estudantes da FGV-SP interessados em finanças, matemática, estatística e programação para se aprofundar em temas de derivativos, machine learning, algorithmic trading e demais segmentos das finanças quantitativas.",
-      "cta": "Conheça a liga",
-      "competition": {
-        "eyebrow": "Resultados em competições",
-        "cta": "Ver desafios"
-      }
+      "body": "Fundada em 2021, a FGV Quant reúne estudantes da FGV-SP interessados em finanças quantitativas.",
+      "cta": "Saiba mais sobre a liga",
+      "topics": "O que estudamos"
+    },
+    "highlights": {
+      "title": "Projetos e competições",
+      "prev": "Destaques anteriores",
+      "next": "Próximos destaques",
+      "projects": "Ver projetos",
+      "competitions": "Ver desafios"
     },
     "terminal": {
       "title": "fgvquant@liga: ~/calculadora",
@@ -60,13 +64,13 @@
     },
     "areas": {
       "title": "O que é Quant?",
-      "description": "Os três pilares. Passe o mouse ou toque no diagrama para explorar cada área e suas interseções.",
+      "subtitle": "Os três pilares",
       "labels": {
         "area": "Área",
         "intersection": "Interseção",
         "core": "Núcleo",
-        "diagram": "Diagrama de Venn: Tecnologia, Finanças e Modelagem. As interseções são Quant Dev, Data Science e Econometria; no centro das três, Quant.",
-        "explore": "Explorar regiões do diagrama"
+        "diagram": "Diagrama de Venn: Tecnologia, Finanças e Modelagem. As interseções são Quant Dev, Data Science e Econometria; no centro das três, Quant. Use as setas para percorrer as regiões.",
+        "explore": "Passe o mouse ou toque para explorar"
       },
       "regions": {
         "core": {
@@ -119,7 +123,8 @@
       "body": "Os membros praticam construção de portfólio, gestão de risco e reporte mensal em um fundo fictício.",
       "label": "Retorno acumulado desde o início",
       "asOf": "até {month}",
-      "cta": "Ver o FGV Quant Capital"
+      "cta": "Ver o FGV Quant Capital",
+      "strategies": "Estratégias em operação"
     },
     "partners": {
       "title": "Parcerias realizadas",

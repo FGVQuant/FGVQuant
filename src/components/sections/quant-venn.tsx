@@ -1,14 +1,14 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { cn } from "@/lib/utils";
-import { BentoGlow } from "./bento-glow";
 
 /**
  * Interactive three-set Venn diagram: Tecnologia, Finanças and Modelagem, with "Quant" at the
- * centre. Hovering (or tapping) any of the seven regions lights it up and shows its description
- * in the side panel; the region buttons do the same for keyboard and touch users.
- * Hit-testing is geometric (which circles contain the pointer), so every region is exact.
+ * centre. A card beside the Home intro: title and hint on top, the circles, and a caption footer.
+ * Hovering (or tapping) any of the seven regions lights it up and the caption describes it; with
+ * the diagram focused, the arrow keys step through the regions. Hit-testing is geometric (which
+ * circles contain the pointer), so every region is exact.
  */
 export type VennSet = "tech" | "finance" | "model";
 export type VennRegionId =
@@ -22,14 +22,17 @@ export type VennRegionCopy = {
 };
 
 export type QuantVennProps = {
+  title: string;
+  subtitle: string;
   regions: Record<VennRegionId, VennRegionCopy>;
   labels: {
-    /** Panel eyebrows, by region kind. */
+    /** Caption prefix, by region kind. */
     area: string;
     intersection: string;
     core: string;
-    /** Accessible name for the diagram and the region buttons group. */
+    /** Accessible name for the diagram. */
     diagram: string;
+    /** Short hint on how to explore it, in the card header. */
     explore: string;
   };
   className?: string;
@@ -96,7 +99,7 @@ function regionAt(x: number, y: number): VennRegionId | null {
   })!;
 }
 
-export function QuantVenn({ regions, labels, className }: QuantVennProps) {
+export function QuantVenn({ title, subtitle, regions, labels, className }: QuantVennProps) {
   const [hovered, setHovered] = useState<VennRegionId | null>(null);
   const [selected, setSelected] = useState<VennRegionId>("core");
   const active = hovered ?? selected;
@@ -117,24 +120,32 @@ export function QuantVenn({ regions, labels, className }: QuantVennProps) {
   const kind = (id: VennRegionId) =>
     id === "core" ? labels.core : REGION_SETS[id].length === 2 ? labels.intersection : labels.area;
   const current = regions[active];
-  // A set lists its topics; an intersection lists the sets it combines.
-  const chips = current.items ?? activeSets.map((s) => regions[s].name);
+
+  function step(e: KeyboardEvent) {
+    const delta = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (!delta) return;
+    e.preventDefault();
+    setHovered(null);
+    setSelected(ORDER[(ORDER.indexOf(selected) + delta + ORDER.length) % ORDER.length]);
+  }
 
   return (
-    <div
-      className={cn(
-        "group relative isolate grid gap-8 overflow-hidden rounded-2xl border border-border bg-card/60 p-4 transition-colors duration-300 hover:border-border-strong sm:p-8 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-12",
-        className,
-      )}
-    >
-      <BentoGlow />
-
+    <figure className={cn("rounded-2xl border border-border bg-card p-6 sm:p-8", className)}>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <div>
+          <h3 className="font-display text-2xl tracking-tight text-foreground">{title}</h3>
+          <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>
+        </div>
+        <p className="text-xs text-muted-foreground">{labels.explore}</p>
+      </div>
       <svg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="img"
         aria-label={labels.diagram}
-        className="h-auto w-full touch-manipulation select-none"
+        tabIndex={0}
+        onKeyDown={step}
+        className="mx-auto mt-4 block h-auto w-full max-w-[24rem] touch-manipulation rounded-2xl select-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         onPointerMove={(e) => setHovered(toRegion(e))}
         onPointerLeave={() => setHovered(null)}
         onClick={(e) => {
@@ -233,7 +244,7 @@ export function QuantVenn({ regions, labels, className }: QuantVennProps) {
           </text>
         ))}
 
-        {/* topics inside each circle (hidden on small screens, where the panel lists them) */}
+        {/* topics inside each circle (hidden on small screens, where the caption lists them) */}
         {SETS.map((s) => {
           const items = regions[s].items ?? [];
           const top = ITEMS_POS[s].y - ((items.length - 1) * ITEM_LINE) / 2;
@@ -297,51 +308,18 @@ export function QuantVenn({ regions, labels, className }: QuantVennProps) {
         </text>
       </svg>
 
-      <div className="relative z-10 flex flex-col gap-6">
-        <div aria-live="polite" className="min-h-[13rem]">
-          <p className="font-mono text-xs tracking-[0.18em] text-highlight uppercase">
+      <figcaption aria-live="polite" className="mt-6 min-h-[5.5rem] border-t border-border pt-4">
+        <p className="flex items-baseline gap-3">
+          <span className="font-mono text-xs tracking-[0.14em] text-highlight uppercase">
             {kind(active)}
-          </p>
-          <h3 className="mt-3 font-display text-3xl leading-tight text-foreground sm:text-4xl">
-            {current.name}
-          </h3>
-          <p className="mt-3 max-w-md text-muted-foreground">{current.description}</p>
-          {chips.length > 1 ? (
-            <ul className="mt-5 flex flex-wrap gap-2">
-              {chips.map((c) => (
-                <li
-                  key={c}
-                  className="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted-foreground"
-                >
-                  {c}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-
-        <div role="group" aria-label={labels.explore} className="flex flex-wrap gap-2">
-          {ORDER.map((id) => (
-            <button
-              key={id}
-              type="button"
-              aria-pressed={selected === id}
-              onClick={() => setSelected(id)}
-              onPointerEnter={() => setHovered(id)}
-              onPointerLeave={() => setHovered(null)}
-              onFocus={() => setSelected(id)}
-              className={cn(
-                "rounded-full border px-3 py-1.5 text-sm transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none motion-reduce:transition-none",
-                id === active
-                  ? "border-highlight bg-highlight/15 text-foreground"
-                  : "border-border text-muted-foreground hover:border-border-strong hover:text-foreground",
-              )}
-            >
-              {regions[id].name}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
+          </span>
+          <span className="font-sans text-base font-semibold text-foreground">{current.name}</span>
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {current.description}
+          {current.items ? <span className="sm:hidden"> ({current.items.join(", ")})</span> : null}
+        </p>
+      </figcaption>
+    </figure>
   );
 }

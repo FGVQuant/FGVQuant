@@ -8,29 +8,44 @@ const arrowClass =
 
 /**
  * Native scroll-snap row; the arrows (sm+) only scroll it by one viewport. Swipe and
- * trackpad scrolling work without them.
+ * trackpad scrolling work without them. An optional header sits on the arrows' row, at the left.
  */
 export function Carousel({
   children,
   prevLabel,
   nextLabel,
+  header,
 }: {
   children: ReactNode;
   prevLabel: string;
   nextLabel: string;
+  header?: ReactNode;
 }) {
   const ref = useRef<HTMLUListElement>(null);
   const scroll = (dir: 1 | -1) =>
     ref.current?.scrollBy({ left: dir * ref.current.clientWidth, behavior: "smooth" });
   return (
     <div>
-      <div className="hidden justify-end gap-2 sm:flex">
-        <button type="button" aria-label={prevLabel} className={arrowClass} onClick={() => scroll(-1)}>
-          <ChevronLeft aria-hidden className="size-4" />
-        </button>
-        <button type="button" aria-label={nextLabel} className={arrowClass} onClick={() => scroll(1)}>
-          <ChevronRight aria-hidden className="size-4" />
-        </button>
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0">{header}</div>
+        <div className="hidden shrink-0 gap-2 sm:flex">
+          <button
+            type="button"
+            aria-label={prevLabel}
+            className={arrowClass}
+            onClick={() => scroll(-1)}
+          >
+            <ChevronLeft aria-hidden className="size-4" />
+          </button>
+          <button
+            type="button"
+            aria-label={nextLabel}
+            className={arrowClass}
+            onClick={() => scroll(1)}
+          >
+            <ChevronRight aria-hidden className="size-4" />
+          </button>
+        </div>
       </div>
       <ul
         ref={ref}

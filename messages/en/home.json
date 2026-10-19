@@ -20,12 +20,16 @@
     "about": {
       "titleA": "Mathematics, statistics and code",
       "titleEm": "applied to markets",
-      "body": "Founded in 2021, FGV Quant brings together FGV-SP students interested in finance, mathematics, statistics and programming who want to dig into derivatives, machine learning, algorithmic trading and the other areas of quantitative finance.",
-      "cta": "About the league",
-      "competition": {
-        "eyebrow": "Competition results",
-        "cta": "See challenges"
-      }
+      "body": "Founded in 2021, FGV Quant brings together FGV-SP students interested in quantitative finance.",
+      "cta": "Learn more about the league",
+      "topics": "What we study"
+    },
+    "highlights": {
+      "title": "Projects and competitions",
+      "prev": "Previous highlights",
+      "next": "Next highlights",
+      "projects": "See projects",
+      "competitions": "See challenges"
     },
     "terminal": {
       "title": "fgvquant@league: ~/calculator",
@@ -60,13 +64,13 @@
     },
     "areas": {
       "title": "What is Quant?",
-      "description": "The three pillars. Hover over or tap the diagram to explore each area and where they overlap.",
+      "subtitle": "The three pillars",
       "labels": {
         "area": "Area",
         "intersection": "Intersection",
         "core": "Core",
-        "diagram": "Venn diagram: Technology, Finance and Modeling. The overlaps are Quant Dev, Data Science and Econometrics; at the centre of all three, Quant.",
-        "explore": "Explore the diagram's regions"
+        "diagram": "Venn diagram: Technology, Finance and Modeling. The overlaps are Quant Dev, Data Science and Econometrics; at the centre of all three, Quant. Use the arrow keys to step through the regions.",
+        "explore": "Hover or tap to explore"
       },
       "regions": {
         "core": {
@@ -119,7 +123,8 @@
       "body": "Members practice portfolio construction, risk management and monthly reporting in a simulated fund.",
       "label": "Cumulative return since inception",
       "asOf": "through {month}",
-      "cta": "View FGV Quant Capital"
+      "cta": "View FGV Quant Capital",
+      "strategies": "Strategies in operation"
     },
     "partners": {
       "title": "Past partnerships",

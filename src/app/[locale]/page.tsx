@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
 import { KpiStrip } from "@/components/sections/kpi-strip";
@@ -6,9 +7,10 @@ import { JoinCta } from "@/components/sections/join-cta";
 import { PartnerMarquee } from "@/components/sections/partner-marquee";
 import { QuantVenn, type QuantVennProps } from "@/components/sections/quant-venn";
 import { NewsletterCard } from "@/components/cards/newsletter-card";
-import { NewsletterRow } from "@/components/cards/newsletter-row";
 import { NumberTicker } from "@/components/data/number-ticker";
+import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
+import { Carousel } from "@/components/ui/carousel";
 import { ItemList } from "@/components/ui/item-list";
 import { Link } from "@/i18n/navigation";
 import { Em, SectionHeader } from "@/components/ui/section-header";
@@ -18,13 +20,16 @@ import {
   formatEditionInline,
   formatEditionParts,
   formatEditionShort,
+  getAreas,
   getCompetitions,
   getEvents,
   getFeaturedIssue,
-  getIssues,
+  getFund,
+  getProjects,
   getPartners,
   getSite,
   getStats,
+  getStrategies,
   intlLocale,
   toTimelineItems,
   tr,
@@ -40,14 +45,15 @@ export default async function HomePage() {
   const t = await getTranslations("Home");
   const tc = await getTranslations("Common");
   const tn = await getTranslations("Newsletter");
+  const tcap = await getTranslations("Capital");
+  const tp = await getTranslations("Projects");
   const intl = intlLocale(locale);
 
   const stats = getStats();
   const featured = getFeaturedIssue();
-  const recent = getIssues()
-    .filter((i) => i.slug !== featured?.slug)
-    .slice(0, 2);
-  // Latest competition results, newest first: each row shows the best result and the teams that got it.
+  // This semester's projects (the fund has its own section below), then the latest competition results.
+  const ongoing = getProjects().filter((p) => p.status === "in-progress" && p.kind !== "fund");
+  // Latest competition results, newest first: each card shows the best result and the teams that got it.
   const results = getCompetitions()
     .flatMap((c) => {
       const ranked = c.teams.filter((x) => x.ranked);
@@ -67,7 +73,18 @@ export default async function HomePage() {
       ];
     })
     .slice(0, 4);
+  const highlights = Array.from({ length: Math.max(ongoing.length, results.length) }).flatMap(
+    (_, i) => [
+      ...(ongoing[i] ? [{ kind: "project" as const, item: ongoing[i] }] : []),
+      ...(results[i] ? [{ kind: "result" as const, item: results[i] }] : []),
+    ],
+  );
   const fundMonth = formatEditionInline(stats.fundAsOf, locale);
+  const fund = getFund();
+  const fundRow = fund.overview?.rows.find((r) => r.id === "fund");
+  const strategies = getStrategies();
+  const num = (n: number) =>
+    new Intl.NumberFormat(intl, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
   const recruitmentOpen = getSite().recruitment.open === true;
   const hasPartners = getPartners().length > 0;
 
@@ -133,43 +150,36 @@ export default async function HomePage() {
         </section>
       ) : null}
 
-      {/* Quem somos + destaque em competição */}
-      <section className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-16">
-        <div className="lg:pt-8">
-          <SectionHeader
-            title={
-              <>
-                {t("about.titleA")} {t("about.titleEm")}
-              </>
-            }
-            description={t("about.body")}
-          />
-          <ButtonLink href="/sobre" variant="outline" arrow className="mt-8">
-            {t("about.cta")}
-          </ButtonLink>
-        </div>
-        {results.length > 0 ? (
-          <CompetitionResults
-            eyebrow={t("about.competition.eyebrow")}
-            results={results}
-            cta={t("about.competition.cta")}
-          />
-        ) : null}
-      </section>
-
-      {/* Áreas */}
-      <section className="border-t border-border section-tone">
-        <div className="container-page section-y">
-          <SectionHeader
-            title={
-              <>
-                {t("areas.title")}
-              </>
-            }
-            description={t("areas.description")}
-          />
+      {/* Quem somos (with the study topics) beside the three pillars */}
+      <section className="container-page section-y">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:gap-16">
+          <div>
+            <h2 className="font-display text-3xl leading-[1.1] font-medium tracking-tight text-balance text-foreground md:text-4xl">
+              {t("about.titleA")} {t("about.titleEm")}
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
+              {t("about.body")}
+            </p>
+            <h3 className="mt-8 font-sans text-sm font-medium text-highlight">
+              {t("about.topics")}
+            </h3>
+            <ul className="mt-3 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              {getAreas().map((a) => (
+                <li key={a.id} className="border-t border-border pt-3">
+                  <p className="text-sm font-semibold text-foreground">{tr(a.title, locale)}</p>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    {tr(a.description, locale)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <ButtonLink href="/sobre" variant="outline" arrow className="mt-8">
+              {t("about.cta")}
+            </ButtonLink>
+          </div>
           <QuantVenn
-            className="mt-12"
+            title={t("areas.title")}
+            subtitle={t("areas.subtitle")}
             regions={t.raw("areas.regions") as QuantVennProps["regions"]}
             labels={{
               area: t("areas.labels.area"),
@@ -182,8 +192,138 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* FGV Quant Capital: its own section, the headline number beside what the fund is */}
+      <section className="border-t border-border section-tone">
+        <div className="container-page grid gap-12 section-y lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-16">
+          <div>
+            <p className="text-sm font-medium text-highlight">{t("capital.eyebrow")}</p>
+            <SectionHeader
+              className="mt-3"
+              title={t("capital.title")}
+              description={t("capital.body")}
+            />
+            {strategies.length > 0 ? (
+              <ul className="mt-8 flex flex-wrap gap-2" aria-label={t("capital.strategies")}>
+                {strategies.map((st) => (
+                  <li key={st.id}>
+                    <Badge variant="outline">{tr(st.name, locale)}</Badge>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            <ButtonLink href="/capital" variant="outline" arrow className="mt-8">
+              {t("capital.cta")}
+            </ButtonLink>
+          </div>
+          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm text-muted-foreground">{t("capital.label")}</p>
+              <Badge variant="highlight">{tc("simulated")}</Badge>
+            </div>
+            <NumberTicker
+              value={stats.fundCumulative}
+              prefix={stats.fundCumulative > 0 ? "+" : ""}
+              suffix="%"
+              decimals={2}
+              locale={intl}
+              className="mt-2 block font-display text-6xl tracking-tight text-foreground sm:text-7xl"
+            />
+            <p className="mt-2 text-sm text-highlight">
+              {t("capital.asOf", { month: fundMonth })}
+              {fund.overview
+                ? ` · ${tcap("snapshot.vsBenchmark", {
+                    benchmark: fund.overview.benchmark,
+                    value: `${num(fund.overview.benchmarkReturn)}%`,
+                  })}`
+                : null}
+            </p>
+            {fundRow && (fundRow.volatility !== undefined || fundRow.sharpe !== undefined) ? (
+              <dl className="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6">
+                {fundRow.volatility !== undefined ? (
+                  <div>
+                    <dt className="text-sm text-muted-foreground">{tcap("snapshot.volatility")}</dt>
+                    <dd className="mt-1 font-mono text-2xl text-foreground tabular-nums">
+                      {num(fundRow.volatility)}%
+                    </dd>
+                  </div>
+                ) : null}
+                {fundRow.sharpe !== undefined ? (
+                  <div>
+                    <dt className="text-sm text-muted-foreground">{tcap("snapshot.sharpe")}</dt>
+                    <dd className="mt-1 font-mono text-2xl text-foreground tabular-nums">
+                      {num(fundRow.sharpe)}
+                    </dd>
+                  </div>
+                ) : null}
+              </dl>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      {/* Destaques: ongoing projects and competition results, mixed */}
+      {highlights.length > 0 ? (
+        <section className="border-t border-border">
+          <div className="container-page section-y">
+            <div>
+              <Carousel
+                prevLabel={t("highlights.prev")}
+                nextLabel={t("highlights.next")}
+                header={
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+                    <h2 className="font-display text-3xl leading-[1.1] font-medium tracking-tight text-foreground md:text-4xl">
+                      {t("highlights.title")}
+                    </h2>
+                    <ButtonLink href="/projetos#projetos" variant="link" arrow className="px-0">
+                      {t("highlights.projects")}
+                    </ButtonLink>
+                    <ButtonLink href="/projetos#competicoes" variant="link" arrow className="px-0">
+                      {t("highlights.competitions")}
+                    </ButtonLink>
+                  </div>
+                }
+              >
+                {highlights.map((h) =>
+                  h.kind === "project" ? (
+                    <HighlightCard
+                      key={h.item.id}
+                      href="/projetos#projetos"
+                      top={
+                        <span className="font-mono text-xs tracking-[0.14em] text-highlight uppercase">
+                          {tp("projects.inProgress")}
+                        </span>
+                      }
+                      title={tr(h.item.title, locale)}
+                      body={<span className="line-clamp-3">{tr(h.item.summary, locale)}</span>}
+                      foot={
+                        h.item.partner
+                          ? tp("projects.partner", { partner: h.item.partner })
+                          : undefined
+                      }
+                    />
+                  ) : (
+                    <HighlightCard
+                      key={h.item.id}
+                      href="/projetos#competicoes"
+                      top={
+                        <span className="font-display text-3xl leading-none whitespace-nowrap text-foreground">
+                          {h.item.result}
+                        </span>
+                      }
+                      title={h.item.name}
+                      body={h.item.meta}
+                      foot={h.item.teams}
+                    />
+                  ),
+                )}
+              </Carousel>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* Newsletter */}
-      <section className="border-t border-border section-y">
+      <section className="border-t border-border section-tone section-y">
         <div className="container-page">
           <SectionHeader
             title={
@@ -198,62 +338,31 @@ export default async function HomePage() {
               </ButtonLink>
             }
           />
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {featured ? (
-              <NewsletterCard
-                featured
-                className="lg:col-span-3"
-                href={`/newsletter/${featured.slug}`}
-                title={featured.title}
-                dateLabel={formatEditionShort(featured.edition, locale)}
-                coverText={{
-                  ...formatEditionParts(featured.edition, locale),
-                  series: tn("intro.eyebrow"),
-                  figure: featured.figure,
-                  figureNote: tn("figureNote"),
-                }}
-                excerpt={featured.excerpt}
-                tags={featured.tags}
-                statusLabel={tn(`status.${featured.status}`)}
-                languageLabel={locale === "en" ? tn("language") : undefined}
-                readLabel={tn(`read.${featured.status}`)}
-              />
-            ) : null}
-            {recent.length > 0 ? (
-              <ul className="flex flex-col gap-3 lg:col-span-3">
-                {recent.map((issue) => (
-                  <li key={issue.slug}>
-                    <NewsletterRow
-                      href={`/newsletter/${issue.slug}`}
-                      title={issue.title}
-                      dateLabel={formatEditionShort(issue.edition, locale)}
-                      excerpt={issue.excerpt}
-                      tags={issue.tags}
-                      figure={issue.figure}
-                      statusLabel={tn(`status.${issue.status}`)}
-                      languageLabel={locale === "en" ? tn("language") : undefined}
-                    />
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-            <CapitalTeaser
-              eyebrow={t("capital.eyebrow")}
-              title={t("capital.title")}
-              body={t("capital.body")}
-              label={t("capital.label")}
-              asOf={t("capital.asOf", { month: fundMonth })}
-              simulated={tc("simulated")}
-              cta={t("capital.cta")}
-              value={stats.fundCumulative}
-              locale={intl}
+          {featured ? (
+            <NewsletterCard
+              featured
+              className="mt-12"
+              href={`/newsletter/${featured.slug}`}
+              title={featured.title}
+              dateLabel={formatEditionShort(featured.edition, locale)}
+              coverText={{
+                ...formatEditionParts(featured.edition, locale),
+                series: tn("intro.eyebrow"),
+                figure: featured.figure,
+                figureNote: tn("figureNote"),
+              }}
+              excerpt={featured.excerpt}
+              tags={featured.tags}
+              statusLabel={tn(`status.${featured.status}`)}
+              languageLabel={locale === "en" ? tn("language") : undefined}
+              readLabel={tn(`read.${featured.status}`)}
             />
-          </div>
+          ) : null}
         </div>
       </section>
 
       {/* Atividades */}
-      <section className="border-t border-border section-tone">
+      <section className="border-t border-border">
         <div className="container-page section-y">
           <SectionHeader
             title={
@@ -296,76 +405,31 @@ export default async function HomePage() {
   );
 }
 
-function CapitalTeaser(props: {
-  eyebrow: string;
+/** One card in the Destaques carousel: a project in progress or a competition result. */
+function HighlightCard(props: {
+  href: string;
+  top: ReactNode;
   title: string;
-  body: string;
-  label: string;
-  asOf: string;
-  simulated: string;
-  cta: string;
-  value: number;
-  locale: string;
+  body: ReactNode;
+  foot?: string;
 }) {
   return (
-    <div className="flex flex-col justify-between gap-8 rounded-2xl bg-card p-6 lg:col-span-3 lg:flex-row lg:items-end lg:gap-12 lg:p-8">
-      <div className="lg:max-w-xl">
-        <p className="text-sm font-medium text-highlight">{props.eyebrow}</p>
-        <h3 className="mt-3 font-sans text-xl font-semibold tracking-tight">{props.title}</h3>
-        <p className="mt-3 text-sm text-muted-foreground">{props.body}</p>
-      </div>
-      <div className="lg:shrink-0">
-        <p className="text-sm text-muted-foreground">{props.label}</p>
-        <NumberTicker
-          value={props.value}
-          prefix={props.value > 0 ? "+" : ""}
-          suffix="%"
-          decimals={2}
-          locale={props.locale}
-          className="mt-1 block text-5xl text-foreground"
-        />
-        <p className="mt-2 text-sm text-highlight">
-          {props.simulated} · {props.asOf}
-        </p>
-        <ButtonLink href="/capital" variant="link" arrow className="mt-4 px-0">
-          {props.cta}
-        </ButtonLink>
-      </div>
-    </div>
-  );
-}
-
-/** The league's competition record: one ruled row per competition, the result as the focal point. */
-function CompetitionResults(props: {
-  eyebrow: string;
-  results: { id: string; name: string; meta: string; result: string; teams: string }[];
-  cta: string;
-}) {
-  return (
-    <article className="rounded-2xl bg-card p-6 sm:p-8">
-      <p className="text-sm font-medium text-highlight">{props.eyebrow}</p>
-      <ul className="mt-4 grid grid-cols-[auto_1fr] gap-x-5 divide-y divide-border sm:gap-x-8">
-        {props.results.map((r) => (
-          <li
-            key={r.id}
-            className="col-span-2 grid grid-cols-subgrid items-center py-5"
-          >
-            <p className="font-display text-2xl leading-none whitespace-nowrap text-foreground sm:text-3xl">
-              {r.result}
-            </p>
-            <div className="min-w-0">
-              <h3 className="font-sans text-base font-semibold tracking-tight text-foreground">
-                {r.name}
-              </h3>
-              <p className="mt-0.5 text-sm text-muted-foreground">{r.meta}</p>
-              <p className="mt-1 text-sm font-medium wrap-break-word text-highlight">{r.teams}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <ButtonLink href="/projetos#competicoes" variant="link" arrow className="mt-2 px-0">
-        {props.cta}
-      </ButtonLink>
-    </article>
+    <li className="w-[82%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]">
+      <Link
+        href={props.href}
+        className="flex h-full flex-col rounded-2xl border border-transparent bg-card p-6 transition-colors hover:border-border-strong focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      >
+        <p className="flex min-h-8 items-end">{props.top}</p>
+        <h3 className="mt-4 font-sans text-base font-semibold tracking-tight text-foreground">
+          {props.title}
+        </h3>
+        <p className="mt-1 text-sm text-muted-foreground">{props.body}</p>
+        {props.foot ? (
+          <p className="mt-auto pt-3 text-sm font-medium wrap-break-word text-highlight">
+            {props.foot}
+          </p>
+        ) : null}
+      </Link>
+    </li>
   );
 }
