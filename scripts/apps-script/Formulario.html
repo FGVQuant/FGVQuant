@@ -1,0 +1,139 @@
+<!doctype html>
+<!-- Painel do menu Site → "Adicionar linha nesta aba…". Os campos vêm de camposDaAba() em formulario.gs. -->
+<html>
+  <head>
+    <base target="_top" />
+    <style>
+      body { font: 13px/1.4 Arial, sans-serif; color: #222; margin: 0; padding: 12px 14px 80px; }
+      h1 { font-size: 15px; color: #230042; margin: 0 0 4px; }
+      p.ajuda { color: #8a8a8a; margin: 0 0 14px; }
+      label { display: block; font-weight: bold; margin: 12px 0 4px; }
+      label .obr { color: #b3261e; }
+      .nota { font-weight: normal; color: #8a8a8a; font-size: 12px; margin: 2px 0 4px; white-space: pre-line; }
+      input, select, textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 6px 8px;
+        border: 1px solid #c9bfd9; border-radius: 6px; background: #fff; }
+      textarea { min-height: 84px; resize: vertical; }
+      input:focus, select:focus, textarea:focus { outline: 2px solid #ae94d6; border-color: #ae94d6; }
+      details { margin-top: 18px; border-top: 1px solid #efe8f8; padding-top: 6px; }
+      summary { cursor: pointer; color: #230042; font-weight: bold; }
+      .barra { position: fixed; left: 0; right: 0; bottom: 0; background: #fff; border-top: 1px solid #efe8f8;
+        padding: 10px 14px; display: flex; gap: 8px; align-items: center; }
+      button { background: #230042; color: #fff; border: 0; border-radius: 6px; padding: 8px 16px;
+        font: bold 13px Arial, sans-serif; cursor: pointer; }
+      button:disabled { opacity: 0.5; cursor: default; }
+      #status { font-size: 12px; white-space: pre-line; }
+      #status.erro { color: #b3261e; }
+      #status.ok { color: #1e6b34; }
+    </style>
+  </head>
+  <body>
+    <h1>Nova linha em <?= aba ?></h1>
+    <p class="ajuda">Preencha e clique em Salvar. A linha entra na primeira linha vazia da aba. Campos com * são obrigatórios.</p>
+    <form id="form"><p>Carregando…</p></form>
+    <div class="barra">
+      <button id="salvar" type="submit" form="form" disabled>Salvar</button>
+      <span id="status"></span>
+    </div>
+
+    <script>
+      const ABA = <?!= JSON.stringify(aba) ?>;
+      const form = document.getElementById("form");
+      const status = document.getElementById("status");
+      const salvar = document.getElementById("salvar");
+      let campos = [];
+
+      function avisar(msg, tipo) {
+        status.textContent = msg;
+        status.className = tipo || "";
+      }
+
+      function campoHtml(c) {
+        const id = "c" + c.coluna;
+        const wrap = document.createElement("div");
+        const label = document.createElement("label");
+        label.htmlFor = id;
+        label.textContent = c.nome;
+        if (c.obrigatoria) label.insertAdjacentHTML("beforeend", ' <span class="obr">*</span>');
+        wrap.appendChild(label);
+        if (c.nota) {
+          const nota = document.createElement("div");
+          nota.className = "nota";
+          nota.textContent = c.nota;
+          wrap.appendChild(nota);
+        }
+        let el;
+        if (c.tipo === "lista") {
+          el = document.createElement("select");
+          el.add(new Option("", ""));
+          c.opcoes.forEach((o) => el.add(new Option(o, o)));
+        } else if (c.tipo === "longo") {
+          el = document.createElement("textarea");
+        } else {
+          el = document.createElement("input");
+          el.type = { data: "date", mes: "month", numero: "text", link: "url", arquivo: "file" }[c.tipo] || "text";
+          if (c.tipo === "semestre") el.placeholder = "2026.2";
+          if (c.tipo === "numero") el.inputMode = "decimal";
+          if (c.tipo === "link") el.placeholder = "https://";
+        }
+        el.id = id;
+        el.name = String(c.coluna);
+        if (c.obrigatoria && c.tipo !== "arquivo") el.required = true;
+        wrap.appendChild(el);
+        return wrap;
+      }
+
+      function montar(lista) {
+        campos = lista;
+        form.innerHTML = "";
+        const ingles = document.createElement("details");
+        ingles.innerHTML = "<summary>Tradução para o inglês (opcional)</summary>";
+        lista.forEach((c) => (c.ingles ? ingles : form).appendChild(campoHtml(c)));
+        if (ingles.children.length > 1) form.appendChild(ingles);
+        salvar.disabled = false;
+      }
+
+      const lerArquivo = (file) =>
+        new Promise((ok, falha) => {
+          const r = new FileReader();
+          r.onload = () => ok({ nome: file.name, tipo: file.type, base64: String(r.result).split(",")[1] });
+          r.onerror = () => falha(r.error);
+          r.readAsDataURL(file);
+        });
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const valores = {};
+        const arquivos = {};
+        for (const c of campos) {
+          const el = document.getElementById("c" + c.coluna);
+          if (c.tipo === "arquivo") {
+            const f = el.files[0];
+            if (!f) continue;
+            if (f.size > 20 * 1024 * 1024) return avisar("'" + c.nome + "': o arquivo passa de 20 MB.", "erro");
+            arquivos[c.coluna] = await lerArquivo(f);
+          } else if (el.value.trim() !== "") {
+            valores[c.coluna] = el.value.trim();
+          }
+        }
+        salvar.disabled = true;
+        avisar("Salvando…");
+        google.script.run
+          .withSuccessHandler((linha) => {
+            form.reset();
+            salvar.disabled = false;
+            avisar("Salvo na linha " + linha + ". Para ver no site: menu Site → Atualizar o site agora.", "ok");
+          })
+          .withFailureHandler((err) => {
+            salvar.disabled = false;
+            avisar(err.message, "erro");
+          })
+          .salvarLinha(ABA, valores, arquivos);
+      });
+
+      google.script.run
+        .withSuccessHandler(montar)
+        .withFailureHandler((err) => avisar(err.message, "erro"))
+        .camposDaAba(ABA);
+    </script>
+  </body>
+</html>
