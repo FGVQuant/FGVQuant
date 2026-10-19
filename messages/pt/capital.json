@@ -190,8 +190,7 @@
       "tableCaption": "Retornos mensais reportados do fundo fictício",
       "coverage": "{count, plural, one {# mês reportado} other {# meses reportados}} · {range}",
       "month": "Mês",
-      "return": "Retorno",
-      "pendingNote": "Por enquanto, o gráfico mostra só os meses com retorno mensal publicado. A série completa desde {inception} será adicionada conforme os relatórios forem incorporados."
+      "return": "Retorno"
     },
     "reports": {
       "eyebrow": "Relatórios",

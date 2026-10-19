@@ -190,8 +190,7 @@
       "tableCaption": "Reported monthly returns of the simulated fund",
       "coverage": "{count, plural, one {# month reported} other {# months reported}} · {range}",
       "month": "Month",
-      "return": "Return",
-      "pendingNote": "For now, the chart shows only the months with a published monthly return. The full series since {inception} will be added as the reports are incorporated."
+      "return": "Return"
     },
     "reports": {
       "eyebrow": "Reports",

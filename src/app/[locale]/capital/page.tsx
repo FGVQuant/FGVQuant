@@ -7,7 +7,6 @@ import { PageIntro } from "@/components/layout/page-intro";
 import { StrategiesMotif } from "@/components/layout/intro-motifs";
 import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
-import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
 import { formatEdition, formatEditionShort, getFund, getSite, intlLocale } from "@/lib/content";
@@ -453,9 +452,6 @@ export default async function CapitalPage() {
               />
             </div>
           </div>
-          <PlaceholderNote label={tCommon("pending")} className="mt-6">
-            {t("results.pendingNote", { inception })}
-          </PlaceholderNote>
         </div>
       </section>
 
