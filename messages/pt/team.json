@@ -14,6 +14,11 @@
     "pending": "A lista do time será publicada quando a liga confirmar nomes e consentimento de cada pessoa.",
     "membersTbd": "Membros a confirmar",
     "semester": "{n}º semestre",
-    "semesterShort": "{n}º sem."
+    "semesterShort": "{n}º sem.",
+    "tiers": {
+      "presidency": "Presidência",
+      "teams": "Equipes"
+    },
+    "director": "Diretoria"
   }
 }

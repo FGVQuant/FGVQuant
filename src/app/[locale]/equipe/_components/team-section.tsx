@@ -11,31 +11,31 @@ import { cn } from "@/lib/utils";
 type Group = ReturnType<typeof getTeamGroups>[number];
 type Member = Group["members"][number];
 
-/** Above this many members (not counting the director) a team card takes the full row. */
-const WIDE_GROUP = 8;
-
 /**
- * The people of the league, on /equipe (the old /time path redirects here).
- * Groups come from the admin sheet (scripts/sync-sheet.mjs). Three tiers share one card language so photo
- * sizes step down gradually: the presidency as large portrait cards, each directorate as a team
- * card led by its director (`lead`), then its members; trainee cohorts as full-width cards.
+ * The people of the league, on /equipe (the old /time path redirects here), in tiers that step down
+ * in weight: the presidency (large tinted cards); each directorate, its director's card (`lead`) beside
+ * the team's members (unboxed rows with a small photo); and the trainee cohorts (names only).
+ * Groups come from the admin sheet (scripts/sync-sheet.mjs).
  * Each name links to the member's LinkedIn when given. Missing names stay "a confirmar".
  */
 export async function TeamSection({ locale }: { locale: Locale }) {
   const t = await getTranslations("Team");
   const tCommon = await getTranslations("Common");
   const groups = getTeamGroups();
-  const featured = groups.filter((g) => g.featured);
-  const teams = groups.filter((g) => !g.featured);
+  const presidency = groups.filter((g) => g.featured).flatMap((g) => g.members);
+  // cohorts get their id from the sync script: trainees-<entry semester>
+  const cohorts = groups.filter((g) => g.id.startsWith("trainees-"));
+  const teams = groups.filter((g) => !g.featured && !cohorts.includes(g));
   const anyPending = groups.some(
     (g) => g.members.length === 0 || g.members.some((m) => m.placeholder),
   );
+  const byName = (a: Member, b: Member) => a.name.localeCompare(b.name, intlLocale(locale));
   const linkLabel = (m: Member) => `${t("linkedinLabel", { name: m.name })} ${tCommon("newTab")}`;
   const nameOf = (m: Member) => (m.placeholder ? t("nameTbd") : m.name);
   const roleOf = (m: Member) => (m.role ? tr(m.role, locale) : undefined);
-  // "Economia · 6º semestre": course and current semester, whichever the sheet has
+  // "Economia 6º semestre": course and current semester, whichever the sheet has
   const term = await currentTerm();
-  // `short` ("4º sem.") for the narrow member rows; the portrait cards have room
+  // `short` ("4º sem.") for the trainee columns
   const studyOf = (m: Member, short = false) => {
     const n = m.placeholder ? undefined : currentSemester(m.enrolled, term);
     return {
@@ -46,187 +46,172 @@ export async function TeamSection({ locale }: { locale: Locale }) {
 
   return (
     <section>
-      <div className="container-page section-y">
-        {featured.map((g) => (
-          <div key={g.id}>
-            <h3 className="sr-only">{tr(g.title, locale)}</h3>
+      <div className="container-page space-y-20 section-y md:space-y-28">
+        {presidency.length > 0 ? (
+          <Tier title={t("tiers.presidency")}>
             <ul className="grid gap-4 lg:grid-cols-2">
-              {g.members.map((m) => (
+              {presidency.map((m) => (
                 <li key={m.id}>
                   <MaybeLink
                     href={linkOf(m)}
                     label={linkLabel(m)}
-                    className="flex h-full items-center gap-5 rounded-2xl border border-border bg-card p-5 sm:gap-6 sm:p-6"
-                    hover="hover:border-border-strong"
+                    className="flex h-full items-center gap-5 rounded-2xl border border-highlight/25 bg-linear-to-br from-highlight/10 to-card p-4 sm:gap-6 sm:p-5"
+                    hover="hover:border-highlight/50"
                   >
                     <Avatar
                       member={m}
-                      sizes="128px"
-                      className="aspect-4/5 w-24 rounded-xl text-2xl sm:w-32"
+                      sizes="112px"
+                      className="aspect-4/5 w-24 rounded-xl text-2xl sm:w-28"
                     />
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-highlight">{roleOf(m)}</p>
-                      <Name member={m} className="mt-1 text-xl sm:text-2xl">
+                      <p className="text-sm font-medium text-highlight">{roleOf(m)}</p>
+                      <Name
+                        member={m}
+                        className="mt-1 font-display text-xl font-medium sm:text-2xl"
+                      >
                         {nameOf(m)}
                       </Name>
-                      <Study {...studyOf(m)} className="mt-1" />
+                      <Study {...studyOf(m)} className="mt-2" />
                     </div>
                     <LinkMark member={m} className="self-start" />
                   </MaybeLink>
                 </li>
               ))}
             </ul>
-          </div>
-        ))}
-
-        {teams.length > 0 ? (
-          <div className="mt-4 grid gap-4 lg:grid-cols-2">
-            {teams.map((g) => {
-              const lead = g.members.find((m) => m.lead);
-              // director first, then members alphabetically (accent-aware)
-              const members = g.members
-                .filter((m) => !m.lead)
-                .sort((a, b) => a.name.localeCompare(b.name, intlLocale(locale)));
-              // a team with photos shows small portrait cards, director first; cohorts without
-              // photos keep the compact rows, where initials don't leave empty frames
-              const portraits = g.members.some((m) => m.photo);
-              const wide = portraits || g.wide || members.length > WIDE_GROUP;
-              return (
-                <div
-                  key={g.id}
-                  className={cn(
-                    "rounded-2xl border border-border bg-card p-6 sm:p-8",
-                    wide && "lg:col-span-2",
-                  )}
-                >
-                  <h3 className="flex items-baseline justify-between gap-4 font-sans text-xl font-semibold tracking-tight">
-                    {tr(g.title, locale)}
-                    {g.members.length > 0 ? (
-                      <span className="text-sm font-normal text-muted-foreground tabular-nums">
-                        {g.members.length}
-                      </span>
-                    ) : null}
-                  </h3>
-
-                  {portraits ? (
-                    <ul className="-mx-2 mt-5 grid gap-x-4 gap-y-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                      {(lead ? [lead, ...members] : members).map((m) => (
-                        <li key={m.id} className={m.lead ? "sm:col-span-2" : undefined}>
-                          <MaybeLink
-                            href={linkOf(m)}
-                            label={linkLabel(m)}
-                            // the director's card: a larger photo on a lavender-tinted, bordered card
-                            className={cn(
-                              "flex h-full items-center gap-4 rounded-xl border p-2",
-                              m.lead ? "border-highlight/30 bg-highlight/5" : "border-transparent",
-                            )}
-                            hover={m.lead ? "hover:border-highlight/60" : "hover:bg-accent"}
-                          >
-                            <Avatar
-                              member={m}
-                              sizes={m.lead ? "88px" : "64px"}
-                              className={cn(
-                                "aspect-4/5 rounded-lg text-lg",
-                                m.lead ? "w-22" : "w-16",
-                              )}
-                            />
-                            <div className="flex min-w-0 flex-1 flex-col">
-                              <div className="flex items-start justify-between gap-2">
-                                <Name member={m} className={m.lead ? "text-lg" : undefined}>
-                                  {nameOf(m)}
-                                </Name>
-                                <LinkMark member={m} className="mt-1" />
-                              </div>
-                              {roleOf(m) ? (
-                                <p
-                                  className={cn(
-                                    "text-sm",
-                                    m.lead
-                                      ? "-order-1 mb-0.5 text-highlight"
-                                      : "text-muted-foreground",
-                                  )}
-                                >
-                                  {roleOf(m)}
-                                </p>
-                              ) : null}
-                              <Study {...studyOf(m)} className="mt-1" />
-                            </div>
-                          </MaybeLink>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-
-                  {!portraits && lead ? (
-                    <MaybeLink
-                      href={linkOf(lead)}
-                      label={linkLabel(lead)}
-                      className="-mx-3 mt-5 flex items-center gap-4 rounded-xl px-3 py-3"
-                      hover="hover:bg-accent"
-                    >
-                      <Avatar member={lead} sizes="64px" className="size-16 rounded-xl text-lg" />
-                      <div className="min-w-0 flex-1">
-                        <Name member={lead} className="text-lg">
-                          {nameOf(lead)}
-                        </Name>
-                        <p className="mt-0.5 text-sm text-highlight">{roleOf(lead)}</p>
-                        <Study {...studyOf(lead)} />
-                      </div>
-                      <LinkMark member={lead} />
-                    </MaybeLink>
-                  ) : null}
-
-                  {portraits ? null : members.length > 0 ? (
-                    <ul
-                      className={cn(
-                        "grid gap-x-6 gap-y-1 sm:grid-cols-2",
-                        lead ? "mt-4 border-t border-border pt-4" : "mt-6",
-                        wide && "lg:grid-cols-3 xl:grid-cols-4",
-                      )}
-                    >
-                      {members.map((m) => (
-                        <li key={m.id}>
-                          <MaybeLink
-                            href={linkOf(m)}
-                            label={linkLabel(m)}
-                            className="-mx-2 flex items-center gap-3 rounded-xl px-2 py-2"
-                            hover="hover:bg-accent"
-                          >
-                            <Avatar
-                              member={m}
-                              sizes="40px"
-                              className="size-10 rounded-full text-sm"
-                            />
-                            <div className="min-w-0 flex-1">
-                              <Name member={m} className="font-medium">
-                                {nameOf(m)}
-                              </Name>
-                              {roleOf(m) ? (
-                                <p className="text-sm text-muted-foreground">{roleOf(m)}</p>
-                              ) : null}
-                              <Study {...studyOf(m, true)} />
-                            </div>
-                            <LinkMark member={m} />
-                          </MaybeLink>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : !lead ? (
-                    <p className="mt-4 text-sm text-muted-foreground">{t("membersTbd")}</p>
-                  ) : null}
-                </div>
-              );
-            })}
-          </div>
+          </Tier>
         ) : null}
 
+        {teams.length > 0 ? (
+          <Tier title={t("tiers.teams")}>
+            <div className="divide-y divide-border">
+              {teams.map((g) => {
+                const lead = g.members.find((m) => m.lead);
+                const members = g.members.filter((m) => !m.lead).sort(byName);
+                return (
+                  <div key={g.id} className="py-10 first:pt-0 last:pb-0">
+                    <h3 className="font-sans text-base font-semibold tracking-tight">
+                      {tr(g.title, locale)}
+                      <span className="ml-2 font-mono text-sm font-normal text-muted-foreground tabular-nums">
+                        {g.members.length || null}
+                      </span>
+                    </h3>
+                    <div className="mt-5 grid gap-4 lg:grid-cols-[22rem_1fr] lg:gap-8">
+                      {lead ? (
+                        <MaybeLink
+                          href={linkOf(lead)}
+                          label={linkLabel(lead)}
+                          className="flex items-center gap-5 self-start rounded-2xl border border-border bg-card p-4"
+                          hover="hover:border-border-strong"
+                        >
+                          <Avatar
+                            member={lead}
+                            sizes="80px"
+                            className="aspect-4/5 w-20 rounded-lg text-xl"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm text-highlight">{t("director")}</p>
+                            <Name member={lead} className="mt-1 text-lg">
+                              {nameOf(lead)}
+                            </Name>
+                            <Study {...studyOf(lead)} className="mt-1.5 flex-col" />
+                          </div>
+                          <LinkMark member={lead} className="self-start" />
+                        </MaybeLink>
+                      ) : null}
+                      {members.length > 0 ? (
+                        <ul
+                          className={cn(
+                            "-mx-2 grid content-start gap-1 sm:grid-cols-2 xl:grid-cols-3",
+                            !lead && "lg:col-span-2",
+                          )}
+                        >
+                          {members.map((m) => (
+                            <li key={m.id}>
+                              <MaybeLink
+                                href={linkOf(m)}
+                                label={linkLabel(m)}
+                                className="flex h-full items-center gap-3 rounded-xl p-2"
+                                hover="hover:bg-accent"
+                              >
+                                <Avatar
+                                  member={m}
+                                  sizes="48px"
+                                  className="aspect-4/5 w-12 rounded-md text-sm"
+                                />
+                                <div className="min-w-0 flex-1">
+                                  <Name member={m} className="font-medium">
+                                    {nameOf(m)}
+                                  </Name>
+                                  {roleOf(m) ? (
+                                    <p className="text-sm text-muted-foreground">{roleOf(m)}</p>
+                                  ) : null}
+                                  <Study {...studyOf(m)} className="flex-col" />
+                                </div>
+                                <LinkMark member={m} />
+                              </MaybeLink>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-sm text-muted-foreground">{t("membersTbd")}</p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Tier>
+        ) : null}
+
+        {cohorts.map((g) => (
+          <Tier key={g.id} title={tr(g.title, locale)} count={g.members.length}>
+            {g.members.length > 0 ? (
+              <ul className="-mx-2 grid grid-cols-2 gap-1 lg:grid-cols-3 xl:grid-cols-4">
+                {[...g.members].sort(byName).map((m) => (
+                  <li key={m.id}>
+                    <MaybeLink
+                      href={linkOf(m)}
+                      label={linkLabel(m)}
+                      className="flex h-full items-start justify-between gap-3 rounded-lg px-2 py-1.5"
+                      hover="hover:bg-accent"
+                    >
+                      <div className="min-w-0">
+                        <Name member={m} className="text-sm font-medium">
+                          {nameOf(m)}
+                        </Name>
+                        <Study {...studyOf(m, true)} />
+                      </div>
+                      <LinkMark member={m} className="mt-0.5" />
+                    </MaybeLink>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-muted-foreground">{t("membersTbd")}</p>
+            )}
+          </Tier>
+        ))}
+
         {anyPending ? (
-          <PlaceholderNote label={tCommon("pending")} className="mt-6">
-            {t("pending")}
-          </PlaceholderNote>
+          <PlaceholderNote label={tCommon("pending")}>{t("pending")}</PlaceholderNote>
         ) : null}
       </div>
     </section>
+  );
+}
+
+/** One tier of the page: a serif heading over a hairline, with an optional head count. */
+function Tier({ title, count, children }: { title: string; count?: number; children: ReactNode }) {
+  return (
+    <div>
+      <div className="mb-8 flex items-baseline justify-between gap-4 border-b border-border pb-4">
+        <h2 className="font-display text-2xl tracking-tight md:text-3xl">{title}</h2>
+        {count ? (
+          <span className="font-mono text-sm text-muted-foreground tabular-nums">{count}</span>
+        ) : null}
+      </div>
+      {children}
+    </div>
   );
 }
 

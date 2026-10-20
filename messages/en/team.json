@@ -14,6 +14,11 @@
     "pending": "The team list will be published once the league confirms names and each person's consent.",
     "membersTbd": "Members to be confirmed",
     "semester": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} semester",
-    "semesterShort": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} sem."
+    "semesterShort": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} sem.",
+    "tiers": {
+      "presidency": "Presidency",
+      "teams": "Teams"
+    },
+    "director": "Director"
   }
 }
