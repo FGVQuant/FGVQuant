@@ -35,13 +35,13 @@ export async function TeamSection({ locale }: { locale: Locale }) {
   const roleOf = (m: Member) => (m.role ? tr(m.role, locale) : undefined);
   // "Economia · 6º semestre": course and current semester, whichever the sheet has
   const term = await currentTerm();
-  const studyOf = (m: Member) => {
+  // `short` ("4º sem.") for the narrow member rows; the portrait cards have room
+  const studyOf = (m: Member, short = false) => {
     const n = m.placeholder ? undefined : currentSemester(m.enrolled, term);
-    const parts = [
-      m.course && !m.placeholder ? tr(m.course, locale) : undefined,
-      n ? t("semester", { n }) : undefined,
-    ].filter(Boolean);
-    return parts.length ? parts.join(" · ") : undefined;
+    return {
+      course: m.course && !m.placeholder ? tr(m.course, locale) : undefined,
+      semester: n ? t(short ? "semesterShort" : "semester", { n }) : undefined,
+    };
   };
 
   return (
@@ -69,7 +69,7 @@ export async function TeamSection({ locale }: { locale: Locale }) {
                       <Name member={m} className="mt-1 text-xl sm:text-2xl">
                         {nameOf(m)}
                       </Name>
-                      <Study text={studyOf(m)} className="mt-1" />
+                      <Study {...studyOf(m)} className="mt-1" />
                     </div>
                     <LinkMark member={m} className="self-start" />
                   </MaybeLink>
@@ -87,7 +87,10 @@ export async function TeamSection({ locale }: { locale: Locale }) {
               const members = g.members
                 .filter((m) => !m.lead)
                 .sort((a, b) => a.name.localeCompare(b.name, intlLocale(locale)));
-              const wide = g.wide || members.length > WIDE_GROUP;
+              // a team with photos shows small portrait cards, director first; cohorts without
+              // photos keep the compact rows, where initials don't leave empty frames
+              const portraits = g.members.some((m) => m.photo);
+              const wide = portraits || g.wide || members.length > WIDE_GROUP;
               return (
                 <div
                   key={g.id}
@@ -105,7 +108,56 @@ export async function TeamSection({ locale }: { locale: Locale }) {
                     ) : null}
                   </h3>
 
-                  {lead ? (
+                  {portraits ? (
+                    <ul className="-mx-2 mt-5 grid gap-x-4 gap-y-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      {(lead ? [lead, ...members] : members).map((m) => (
+                        <li key={m.id} className={m.lead ? "sm:col-span-2" : undefined}>
+                          <MaybeLink
+                            href={linkOf(m)}
+                            label={linkLabel(m)}
+                            // the director's card: a larger photo on a lavender-tinted, bordered card
+                            className={cn(
+                              "flex h-full items-center gap-4 rounded-xl border p-2",
+                              m.lead ? "border-highlight/30 bg-highlight/5" : "border-transparent",
+                            )}
+                            hover={m.lead ? "hover:border-highlight/60" : "hover:bg-accent"}
+                          >
+                            <Avatar
+                              member={m}
+                              sizes={m.lead ? "88px" : "64px"}
+                              className={cn(
+                                "aspect-4/5 rounded-lg text-lg",
+                                m.lead ? "w-22" : "w-16",
+                              )}
+                            />
+                            <div className="flex min-w-0 flex-1 flex-col">
+                              <div className="flex items-start justify-between gap-2">
+                                <Name member={m} className={m.lead ? "text-lg" : undefined}>
+                                  {nameOf(m)}
+                                </Name>
+                                <LinkMark member={m} className="mt-1" />
+                              </div>
+                              {roleOf(m) ? (
+                                <p
+                                  className={cn(
+                                    "text-sm",
+                                    m.lead
+                                      ? "-order-1 mb-0.5 text-highlight"
+                                      : "text-muted-foreground",
+                                  )}
+                                >
+                                  {roleOf(m)}
+                                </p>
+                              ) : null}
+                              <Study {...studyOf(m)} className="mt-1" />
+                            </div>
+                          </MaybeLink>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+
+                  {!portraits && lead ? (
                     <MaybeLink
                       href={linkOf(lead)}
                       label={linkLabel(lead)}
@@ -118,13 +170,13 @@ export async function TeamSection({ locale }: { locale: Locale }) {
                           {nameOf(lead)}
                         </Name>
                         <p className="mt-0.5 text-sm text-highlight">{roleOf(lead)}</p>
-                        <Study text={studyOf(lead)} />
+                        <Study {...studyOf(lead)} />
                       </div>
                       <LinkMark member={lead} />
                     </MaybeLink>
                   ) : null}
 
-                  {members.length > 0 ? (
+                  {portraits ? null : members.length > 0 ? (
                     <ul
                       className={cn(
                         "grid gap-x-6 gap-y-1 sm:grid-cols-2",
@@ -152,7 +204,7 @@ export async function TeamSection({ locale }: { locale: Locale }) {
                               {roleOf(m) ? (
                                 <p className="text-sm text-muted-foreground">{roleOf(m)}</p>
                               ) : null}
-                              <Study text={studyOf(m)} />
+                              <Study {...studyOf(m, true)} />
                             </div>
                             <LinkMark member={m} />
                           </MaybeLink>
@@ -180,9 +232,27 @@ export async function TeamSection({ locale }: { locale: Locale }) {
 
 const linkOf = (m: Member) => (m.placeholder ? undefined : m.linkedin);
 
-/** Course and semester line under a name; renders nothing when the sheet has neither. */
-function Study({ text, className }: { text?: string; className?: string }) {
-  return text ? <p className={cn("text-xs text-muted-foreground", className)}>{text}</p> : null;
+/**
+ * Course and semester under a name; nothing when the sheet has neither. No separator: the semester is
+ * set in mono, and in a narrow row it drops whole to the next line instead of leaving a dangling "·".
+ */
+function Study({
+  course,
+  semester,
+  className,
+}: {
+  course?: string;
+  semester?: string;
+  className?: string;
+}) {
+  if (!course && !semester) return null;
+  return (
+    <p className={cn("flex flex-wrap gap-x-2 text-xs text-muted-foreground", className)}>
+      {course ? <span>{course}</span> : null}
+      {course && semester ? <span className="sr-only">, </span> : null}
+      {semester ? <span className="font-mono whitespace-nowrap">{semester}</span> : null}
+    </p>
+  );
 }
 
 /** A LinkedIn link when the member has one, otherwise a plain block with the same layout. */
@@ -219,6 +289,15 @@ function MaybeLink({
   );
 }
 
+/**
+ * Crop focus for photos whose face is off-centre, by member id; the rest use the default above.
+ * ponytail: hand-kept list; a sheet column if more photos need it.
+ */
+const PHOTO_FOCUS: Record<string, string> = {
+  // square source with the face at ~⅓ width: anchor the 4:5 crop to the left edge
+  "fernando-suguimoto": "0% 30%",
+};
+
 /** Photo when the member has one, initials otherwise. Size and shape come from `className`. */
 function Avatar({
   member,
@@ -248,6 +327,7 @@ function Avatar({
           sizes={sizes}
           // portraits are 4:5 with the face in the upper half; keep it in frame when cropped square
           className="absolute inset-0 size-full object-cover object-[50%_30%]"
+          style={{ objectPosition: PHOTO_FOCUS[member.id] }}
         />
       ) : member.placeholder ? (
         "?"
