@@ -16,6 +16,7 @@ import { Link } from "@/i18n/navigation";
 import { Em, SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site-url";
 import {
   formatEditionInline,
   formatEditionParts,
@@ -88,8 +89,40 @@ export default async function HomePage() {
   const recruitmentOpen = getSite().recruitment.open === true;
   const hasPartners = getPartners().length > 0;
 
+  // Structured data for Google (Organization + WebSite), built only from facts in the sheet.
+  const site = getSite();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: "FGV Quant",
+        alternateName: (await getTranslations("Brand"))("tagline"),
+        url: SITE_URL,
+        logo: `${SITE_URL}/apple-icon.png`,
+        email: site.email,
+        foundingDate: String(site.founded),
+        sameAs: [site.instagram, site.linkedin],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: "FGV Quant",
+        url: SITE_URL,
+        inLanguage: locale === "en" ? "en" : "pt-BR",
+        publisher: { "@id": `${SITE_URL}/#organization` },
+      },
+    ],
+  };
+
   return (
     <main id="content">
+      <script
+        type="application/ld+json"
+        // JSON.stringify output with "<" escaped, so no value can close the script tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <MonteCarloHero
         eyebrow={t("hero.eyebrow")}
         title={

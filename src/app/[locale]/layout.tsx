@@ -35,10 +35,19 @@ export function generateStaticParams() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Metadata");
+  const locale = await rootLocale();
   return {
-    title: { default: t("title"), template: `%s · FGV Quant` },
+    title: { default: t("title"), template: `%s | FGV Quant` },
     description: t("description"),
     metadataBase: new URL(SITE_URL), // NEXT_PUBLIC_SITE_URL in Phase 7; localhost until then
+    // og:image comes from the opengraph-image file next to this layout; title and description
+    // follow each page's own metadata.
+    openGraph: {
+      type: "website",
+      siteName: "FGV Quant",
+      locale: locale === "en" ? "en_US" : "pt_BR",
+      alternateLocale: locale === "en" ? "pt_BR" : "en_US",
+    },
   };
 }
 

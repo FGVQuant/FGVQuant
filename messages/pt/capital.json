@@ -2,7 +2,7 @@
   "Capital": {
     "meta": {
       "title": "FGV Quant Capital (fundo fictício)",
-      "description": "FGV Quant Capital é o fundo quantitativo simulado da liga: Pairs Trading e Momentum em ações brasileiras, com regras explícitas, custos e relatório de gestão mensal contra o CDI."
+      "description": "Fundo quantitativo simulado da FGV Quant: Pairs Trading e Momentum em ações brasileiras, com custos, regras explícitas e relatório mensal contra o CDI."
     },
     "eyebrow": "FGV Quant Capital · Fundo fictício",
     "title": "Um fundo quantitativo <em>simulado</em>",

@@ -41,6 +41,8 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Skip Next internals, API routes and any path with a file extension (icons, brand assets).
-  matcher: "/((?!api|_next|_vercel|.*\\..*).*)",
+  // Skip Next internals, API routes, any path with a file extension (icons, brand assets) and the
+  // generated share images: og:image points at /pt/opengraph-image, which next-intl would
+  // otherwise redirect (307) to /opengraph-image — some link-preview crawlers don't follow that.
+  matcher: "/((?!api|_next|_vercel|.*\\..*|.*opengraph-image|.*twitter-image).*)",
 };

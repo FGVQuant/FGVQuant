@@ -2,7 +2,7 @@
   "Capital": {
     "meta": {
       "title": "FGV Quant Capital (simulated fund)",
-      "description": "FGV Quant Capital is the league's simulated quantitative fund: Pairs Trading and Momentum in Brazilian equities, with explicit rules, transaction costs and a monthly management report against the CDI."
+      "description": "FGV Quant's simulated quant fund: Pairs Trading and Momentum in Brazilian stocks, with costs, explicit rules and a monthly report against the CDI."
     },
     "eyebrow": "FGV Quant Capital · Simulated fund",
     "title": "A <em>simulated</em> quantitative fund",
