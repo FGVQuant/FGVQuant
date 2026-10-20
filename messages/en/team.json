@@ -12,6 +12,7 @@
     "linkedinLabel": "{name} on LinkedIn",
     "nameTbd": "Name to be confirmed",
     "pending": "The team list will be published once the league confirms names and each person's consent.",
-    "membersTbd": "Members to be confirmed"
+    "membersTbd": "Members to be confirmed",
+    "semester": "{n, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} semester"
   }
 }

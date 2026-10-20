@@ -224,6 +224,9 @@ const areaEn = Object.fromEntries(
 const roleEn = Object.fromEntries(
   sheet.Listas.map((r) => [r.Cargo, r["Cargo (inglês)"]]).filter(([c]) => c),
 );
+const courseEn = Object.fromEntries(
+  sheet.Listas.map((r) => [r.Curso, r["Curso (inglês)"]]).filter(([c]) => c),
+);
 
 const active = sheet.Membros.filter((r) => r["Saída"] === undefined);
 const groups = new Map();
@@ -231,8 +234,11 @@ const members = active.map((r, i) => {
   need(r, "Nome", "Área", "Cargo");
   if (r["Área"] && !(r["Área"] in areaEn)) err(r, `'Área' fora da lista: ${r["Área"]}`);
   if (r.Cargo && !(r.Cargo in roleEn)) err(r, `'Cargo' fora da lista: ${r.Cargo}`);
-  const entrada = semesterOf(r, "Entrada");
+  const entrada = semesterOf(r, "Entrada"); // semestre em que entrou na liga (agrupa os trainees)
   semesterOf(r, "Saída");
+  // Curso e semestre de ingresso na faculdade: opcionais; o site calcula o semestre atual.
+  const ingresso = semesterOf(r, "Ingresso na FGV");
+  if (r.Curso && !(r.Curso in courseEn)) err(r, `'Curso' fora da lista: ${r.Curso}`);
   let group;
   if (r.Cargo === "Trainee") {
     if (!entrada) err(r, "trainee precisa do semestre de 'Entrada'");
@@ -269,6 +275,8 @@ const members = active.map((r, i) => {
     ...(role && { role }),
     group: group.id,
     lead: r.Cargo === "Diretor(a)",
+    ...(r.Curso && { course: { pt: r.Curso, en: courseEn[r.Curso] ?? r.Curso } }),
+    ...(ingresso && { enrolled: ingresso }),
     photo: photo(r, "Foto"),
     linkedin: url(r, "LinkedIn"),
     order: i + 1,

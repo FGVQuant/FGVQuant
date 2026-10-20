@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
-import { getTeamGroups, intlLocale, tr } from "@/lib/content";
+import { currentSemester, currentTerm, getTeamGroups, intlLocale, tr } from "@/lib/content";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { deriveInitials } from "@/components/cards/member-card";
 import { LinkedinIcon } from "@/components/brand/social-icons";
@@ -33,6 +33,16 @@ export async function TeamSection({ locale }: { locale: Locale }) {
   const linkLabel = (m: Member) => `${t("linkedinLabel", { name: m.name })} ${tCommon("newTab")}`;
   const nameOf = (m: Member) => (m.placeholder ? t("nameTbd") : m.name);
   const roleOf = (m: Member) => (m.role ? tr(m.role, locale) : undefined);
+  // "Economia · 6º semestre": course and current semester, whichever the sheet has
+  const term = await currentTerm();
+  const studyOf = (m: Member) => {
+    const n = m.placeholder ? undefined : currentSemester(m.enrolled, term);
+    const parts = [
+      m.course && !m.placeholder ? tr(m.course, locale) : undefined,
+      n ? t("semester", { n }) : undefined,
+    ].filter(Boolean);
+    return parts.length ? parts.join(" · ") : undefined;
+  };
 
   return (
     <section>
@@ -59,6 +69,7 @@ export async function TeamSection({ locale }: { locale: Locale }) {
                       <Name member={m} className="mt-1 text-xl sm:text-2xl">
                         {nameOf(m)}
                       </Name>
+                      <Study text={studyOf(m)} className="mt-1" />
                     </div>
                     <LinkMark member={m} className="self-start" />
                   </MaybeLink>
@@ -107,6 +118,7 @@ export async function TeamSection({ locale }: { locale: Locale }) {
                           {nameOf(lead)}
                         </Name>
                         <p className="mt-0.5 text-sm text-highlight">{roleOf(lead)}</p>
+                        <Study text={studyOf(lead)} />
                       </div>
                       <LinkMark member={lead} />
                     </MaybeLink>
@@ -140,6 +152,7 @@ export async function TeamSection({ locale }: { locale: Locale }) {
                               {roleOf(m) ? (
                                 <p className="text-sm text-muted-foreground">{roleOf(m)}</p>
                               ) : null}
+                              <Study text={studyOf(m)} />
                             </div>
                             <LinkMark member={m} />
                           </MaybeLink>
@@ -166,6 +179,11 @@ export async function TeamSection({ locale }: { locale: Locale }) {
 }
 
 const linkOf = (m: Member) => (m.placeholder ? undefined : m.linkedin);
+
+/** Course and semester line under a name; renders nothing when the sheet has neither. */
+function Study({ text, className }: { text?: string; className?: string }) {
+  return text ? <p className={cn("text-xs text-muted-foreground", className)}>{text}</p> : null;
+}
 
 /** A LinkedIn link when the member has one, otherwise a plain block with the same layout. */
 function MaybeLink({

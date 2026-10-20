@@ -83,6 +83,14 @@ const team = defineCollection({
     /** the director who leads this area team; shown at the top of the team card */
     lead: s.boolean().default(false),
     area: s.string().optional(),
+    /** undergraduate course (sheet "Curso", English from the Listas tab) */
+    course: localized.optional(),
+    /** semester the member started college, e.g. "2024.1" (sheet "Ingresso na FGV");
+        the current semester is computed on the site (see currentSemester in src/lib/content.ts) */
+    enrolled: s
+      .string()
+      .regex(/^\d{4}\.[12]$/)
+      .optional(),
     /** local image under content/ (e.g. "./photos/ana.jpg") → { src, width, height, blurDataURL } */
     photo: s.image().optional(),
     linkedin: s.string().url().optional(),

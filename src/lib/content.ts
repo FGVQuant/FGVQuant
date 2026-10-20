@@ -16,6 +16,7 @@ import {
   type Event,
   type NewsletterIssue,
 } from "#site/content";
+import { cacheLife } from "next/cache";
 import type { Locale } from "@/i18n/routing";
 import type { TimelineItem } from "@/components/sections/drift-timeline";
 
@@ -143,6 +144,25 @@ export function getFeaturedIssue() {
 // ── Team, areas, partners, competitions ─────────────────────────────────────────
 
 export const getTeam = () => [...team].sort((a, b) => a.order - b.order);
+
+/**
+ * Today's academic term as [year, 1 | 2] (Jan–Jun = 1, Jul–Dec = 2). Cached for a day, so a
+ * prerendered page picks up the new term on its own, without a redeploy.
+ */
+export async function currentTerm(): Promise<[number, 1 | 2]> {
+  "use cache";
+  cacheLife("days");
+  const now = new Date();
+  return [now.getUTCFullYear(), now.getUTCMonth() < 6 ? 1 : 2];
+}
+
+/** Semester a member is in now: entered "2024.1" → 2026.2 is the 6th. Undefined if not started. */
+export function currentSemester(enrolled: string | undefined, [year, half]: [number, 1 | 2]) {
+  if (!enrolled) return undefined;
+  const [y, h] = enrolled.split(".").map(Number);
+  const n = (year - y) * 2 + (half - h) + 1;
+  return n >= 1 ? n : undefined;
+}
 
 /** Testimonials in display order, with the referenced team member (name, photo) resolved. */
 export const getTestimonials = () =>

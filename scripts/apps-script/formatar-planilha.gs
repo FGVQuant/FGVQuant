@@ -29,6 +29,8 @@ const LARGURA = {
   Nº: 50,
   Entrada: 85,
   Saída: 85,
+  "Ingresso na FGV": 95,
+  Curso: 150,
   Tipo: 120,
   Status: 110,
   Área: 140,

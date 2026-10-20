@@ -12,6 +12,7 @@
     "linkedinLabel": "{name} no LinkedIn",
     "nameTbd": "Nome a confirmar",
     "pending": "A lista do time será publicada quando a liga confirmar nomes e consentimento de cada pessoa.",
-    "membersTbd": "Membros a confirmar"
+    "membersTbd": "Membros a confirmar",
+    "semester": "{n}º semestre"
   }
 }
