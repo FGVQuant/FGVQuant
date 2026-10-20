@@ -18,10 +18,15 @@ const copy = { pt: ptCommon.Brand, en: enCommon.Brand };
 
 // Fonts are read synchronously at module load: under cacheComponents, async fs I/O inside the
 // handler counts as uncached I/O and forces this route to render on demand (ƒ) instead of static.
-const fontFile = (name: string) =>
-  readFileSync(path.join(process.cwd(), "node_modules/@fontsource/lora/files", name));
-const lora = fontFile("lora-latin-400-normal.woff");
-const loraBold = fontFile("lora-latin-700-normal.woff");
+// Keep the paths literal and inside the repo: Next only ships files to the server function when
+// it can see the path in the code. A computed path into node_modules (pnpm symlinks) was left
+// out of the Vercel bundle and made every on-demand render throw ENOENT (5xx).
+const lora = readFileSync(
+  path.join(process.cwd(), "assets/brand/fonts/lora-latin-400-normal.woff"),
+);
+const loraBold = readFileSync(
+  path.join(process.cwd(), "assets/brand/fonts/lora-latin-700-normal.woff"),
+);
 const [, , vw, vh] = geometry.viewBox;
 const nodes = geometry.nodes as Record<string, number[]>;
 
