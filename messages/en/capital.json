@@ -14,10 +14,57 @@
       "past": "Past (simulated) performance is not an indication of future results.",
       "advice": "Nothing on this site is investment advice."
     },
+    "daily": {
+      "badge": "Preview · public data",
+      "asOf": "Close of {date}",
+      "chartLabel": "Daily cumulative return of the fund, Pairs Trading, Momentum and CDI since {inception}. Last day: fund {fund}, CDI {cdi}.",
+      "preview": "Preview",
+      "series": {
+        "fund": "Fund",
+        "pairs": "Pairs",
+        "momentum": "Momentum",
+        "cdi": "CDI"
+      },
+      "mtd": "Month to date · {month}",
+      "mtdNote": "Preview as of {date} · CDI this month: {cdi}",
+      "pairsOpen": "Open pairs",
+      "pairsOpenEmpty": "No pair is open right now.",
+      "pairsClosed": "Latest closed trades",
+      "pair": "Pair",
+      "long": "Long",
+      "short": "Short",
+      "since": "Since",
+      "period": "Period",
+      "zNow": "z now",
+      "result": "Result",
+      "momentumTitle": "Momentum portfolio this month",
+      "notes": {
+        "source": "Prices from Yahoo Finance and CDI from the Central Bank of Brazil (SGS 12), run through the same code as the monthly report. Official figures come out in the monthly report, with Economatica data, and may differ from this preview.",
+        "monthEnd": "For the current month, exit costs and the Pairs month-end rule are applied as if the month closed on the latest trading day.",
+        "carry": "This preview started the month without the Pairs positions carried over from the previous month."
+      },
+      "nav": {
+        "label": "Simulated NAV per share",
+        "day": "on the day",
+        "aum": "AUM",
+        "base": "Base 1.00 at the open of {date}"
+      }
+    },
+    "panel": {
+      "label": "Fund dashboard",
+      "tabs": {
+        "daily": "Daily NAV",
+        "monthly": "Month by month",
+        "strategies": "By strategy",
+        "positions": "Positions"
+      },
+      "official": "Official · {asOf}"
+    },
     "snapshot": {
       "eyebrow": "Overview",
       "title": "The fund in <em>numbers</em>",
       "description": "From inception in {inception} to {asOf}. All results are simulated.",
+      "descriptionDaily": "Official figures from {inception} to {asOf}, from the monthly report. The current month shows as a daily preview, from public data, until the report is out. All results are simulated.",
       "cumulative": "Cumulative return",
       "vsBenchmark": "{benchmark} over the period: {value}",
       "volatility": "Annualized volatility",
@@ -26,7 +73,6 @@
       "sharpeNote": "Return above the {benchmark} per unit of risk",
       "correlation": "Correlation between strategies",
       "correlationNote": "Pairs Trading × Momentum",
-      "tableTitle": "Overview by strategy",
       "tableCaption": "Simulated performance since inception, by strategy, fund and {benchmark}, as of {asOf}",
       "metric": "Metric",
       "columns": {
@@ -135,7 +181,6 @@
       }
     },
     "results": {
-      "monthly": "Reported monthly returns (simulated fund)",
       "chartLabel": "Bar chart of the simulated fund's reported monthly returns: {summary}.",
       "tableCaption": "Show month-by-month values",
       "coverage": "{count, plural, one {# month reported} other {# months reported}} · {range}",
@@ -148,9 +193,6 @@
     "reports": {
       "eyebrow": "Reports",
       "title": "Management reports on LinkedIn",
-      "description": "Every month, the league publishes the simulated fund's management report on FGV Quant's LinkedIn page.",
-      "cta": "View on LinkedIn",
-      "source": "Source: FGV Quant's LinkedIn page.",
       "legal": "FGV Quant Capital is a fictional educational project that aims to rigorously simulate the operations and routines of a quantitative asset manager. Data, assumptions and results are simulated, may differ materially from actual market conditions and are not a promise of returns, an investment offer or a recommendation to buy or sell securities."
     }
   }

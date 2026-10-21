@@ -208,6 +208,101 @@ export function toTimelineItems(list: Event[], locale: Locale): TimelineItem[] {
 // ── Fund & site ───────────────────────────────────────────────────────────────
 
 export const getFund = () => fund;
+
+/** Daily preview written by fgvquant/FGV-Quant-Capital's GitHub Action (diario/rodar.py). */
+export type FundDaily = {
+  asOf: string;
+  generatedAt: string;
+  source: { official: string; preview: string[]; prices: string; cdi: string };
+  pairsCarryOver: boolean;
+  /** initial AUM in BRL (ETL_05's INITIAL_AUM_BRL); the NAV starts at 1.00 */
+  initialAum?: number | null;
+  /**
+   * One per *_Acc column of the History_Master: fund first, then each strategy, cdi last. A new
+   * strategy in the fund's code shows up here (and in the chart) with no change to the site.
+   */
+  series: { id: string; label: string }[];
+  /** cumulative factors (1 = inception), one key per series id; `preview` marks days after the last official month */
+  daily: FundDailyPoint[];
+  /** fractions (0.012 = 1.2%), by series id */
+  metrics: Record<
+    string,
+    {
+      mtd: number | null;
+      itd: number | null;
+      volatility: number | null;
+      sharpe: number | null;
+      maxDrawdown: number | null;
+    }
+  >;
+  /** Pairs and Momentum details; absent if the notebooks stop defining them */
+  pairs?: {
+    open: {
+      pair: string;
+      long: string;
+      short: string;
+      since: string;
+      entryZ: number | null;
+      z: number | null;
+    }[];
+    closed: {
+      pair: string;
+      long: string;
+      short: string;
+      entry: string;
+      exit: string;
+      return: number | null;
+    }[];
+  };
+  momentum?: { long: string[]; short: string[] };
+};
+export type FundDailyPoint = {
+  date: string;
+  preview: boolean;
+  [series: string]: number | string | boolean;
+};
+
+/**
+ * The fund repo is private: read the JSON through the GitHub API with a read-only token
+ * (QUANT_CAPITAL_TOKEN). FUND_DAILY_FILE reads a local copy instead, for localhost checks.
+ * No token, a failed fetch or a malformed file → null, and the page hides the preview.
+ */
+export async function getFundDaily(): Promise<FundDaily | null> {
+  "use cache";
+  cacheLife("hours");
+  try {
+    let data: FundDaily;
+    if (process.env.FUND_DAILY_FILE) {
+      const { readFile } = await import("node:fs/promises");
+      data = JSON.parse(await readFile(process.env.FUND_DAILY_FILE, "utf8"));
+    } else if (process.env.QUANT_CAPITAL_TOKEN) {
+      const res = await fetch(
+        // pinned to main: other branches of the fund repo are not production and never reach the site
+        "https://api.github.com/repos/fgvquant/FGV-Quant-Capital/contents/publico/fund-daily.json?ref=main",
+        {
+          headers: {
+            Accept: "application/vnd.github.raw+json",
+            Authorization: `Bearer ${process.env.QUANT_CAPITAL_TOKEN}`,
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        },
+      );
+      if (!res.ok) return null;
+      data = await res.json();
+    } else return null;
+    // files written before `series` existed carried these four
+    data.series ??= ["Fund", "Pairs", "Momentum", "CDI"].map((l) => ({
+      id: l.toLowerCase(),
+      label: l,
+    }));
+    const ids = data.series.map((s) => s.id);
+    return data.daily?.length && data.metrics?.fund && ids.includes("fund") && ids.includes("cdi")
+      ? data
+      : null;
+  } catch {
+    return null;
+  }
+}
 /** Strategies the fund runs now, in sheet order. */
 export const getStrategies = () =>
   strategies.filter((x) => x.status === "active").sort((a, b) => a.order - b.order);

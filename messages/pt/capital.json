@@ -14,10 +14,57 @@
       "past": "Rentabilidade passada (simulada) não é indicação de resultados futuros.",
       "advice": "Nada neste site constitui recomendação de investimento."
     },
+    "daily": {
+      "badge": "Prévia · dados públicos",
+      "asOf": "Fechamento de {date}",
+      "chartLabel": "Retorno acumulado diário do fundo, de Pairs Trading, de Momentum e do CDI desde {inception}. Último dia: fundo {fund}, CDI {cdi}.",
+      "preview": "Prévia",
+      "series": {
+        "fund": "Fundo",
+        "pairs": "Pairs",
+        "momentum": "Momentum",
+        "cdi": "CDI"
+      },
+      "mtd": "No mês · {month}",
+      "mtdNote": "Prévia de {date} · CDI no mês: {cdi}",
+      "pairsOpen": "Pares abertos",
+      "pairsOpenEmpty": "Nenhum par aberto agora.",
+      "pairsClosed": "Últimas operações encerradas",
+      "pair": "Par",
+      "long": "Comprado",
+      "short": "Vendido",
+      "since": "Desde",
+      "period": "Período",
+      "zNow": "z atual",
+      "result": "Resultado",
+      "momentumTitle": "Carteira de Momentum no mês",
+      "notes": {
+        "source": "Preços do Yahoo Finance e CDI do Banco Central (SGS 12), rodados pelo mesmo código do relatório mensal. Os números oficiais saem no relatório mensal, com dados da Economatica, e podem diferir desta prévia.",
+        "monthEnd": "No mês em curso, os custos de saída e a regra de fim de mês do Pairs são aplicados como se o mês fechasse no último pregão.",
+        "carry": "Esta prévia começou o mês sem as posições de Pairs herdadas do mês anterior."
+      },
+      "nav": {
+        "label": "Cota simulada",
+        "day": "no dia",
+        "aum": "PL",
+        "base": "Base 1,00 na abertura de {date}"
+      }
+    },
+    "panel": {
+      "label": "Painel do fundo",
+      "tabs": {
+        "daily": "Cota diária",
+        "monthly": "Mês a mês",
+        "strategies": "Por estratégia",
+        "positions": "Posições"
+      },
+      "official": "Oficial · {asOf}"
+    },
     "snapshot": {
       "eyebrow": "Panorama",
       "title": "O fundo em <em>números</em>",
       "description": "Desde o início, em {inception}, até {asOf}. Todos os resultados são simulados.",
+      "descriptionDaily": "Números oficiais de {inception} até {asOf}, do relatório mensal. O mês em curso aparece como prévia diária, com dados públicos, até o relatório sair. Todos os resultados são simulados.",
       "cumulative": "Retorno acumulado",
       "vsBenchmark": "{benchmark} no período: {value}",
       "volatility": "Volatilidade anualizada",
@@ -26,7 +73,6 @@
       "sharpeNote": "Retorno acima do {benchmark} por unidade de risco",
       "correlation": "Correlação entre estratégias",
       "correlationNote": "Pairs Trading × Momentum",
-      "tableTitle": "Panorama por estratégia",
       "tableCaption": "Desempenho simulado desde o início, por estratégia, fundo e {benchmark}, até {asOf}",
       "metric": "Métrica",
       "columns": {
@@ -135,7 +181,6 @@
       }
     },
     "results": {
-      "monthly": "Retornos mensais reportados (fundo fictício)",
       "chartLabel": "Gráfico de barras dos retornos mensais reportados do fundo fictício: {summary}.",
       "tableCaption": "Ver os valores mês a mês",
       "coverage": "{count, plural, one {# mês reportado} other {# meses reportados}} · {range}",
@@ -148,9 +193,6 @@
     "reports": {
       "eyebrow": "Relatórios",
       "title": "Relatórios de gestão no LinkedIn",
-      "description": "Todo mês, a liga publica o relatório de gestão do fundo fictício na página da FGV Quant no LinkedIn.",
-      "cta": "Ver no LinkedIn",
-      "source": "Fonte: página da FGV Quant no LinkedIn.",
       "legal": "O FGV Quant Capital é um projeto educacional fictício que busca simular com rigor as operações e rotinas de uma gestora quantitativa. Dados, premissas e resultados são simulados, podem divergir materialmente de condições efetivas de mercado e não constituem promessa de rentabilidade, oferta de investimento ou recomendação de compra ou venda de valores mobiliários."
     }
   }

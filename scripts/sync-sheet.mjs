@@ -414,10 +414,17 @@ const testimonials = sheet.Depoimentos.map((r, i) => {
 const summary = Object.fromEntries(sheet["Fundo resumo"].map((r) => [r["Estratégia"], r]));
 const info = (label) => sheet["Fundo resumo"].find((r) => r["Estratégia"] === label);
 const num = (r, col) => (r?.[col] === undefined ? undefined : Number(r[col]));
+// strategy rows: the known names, CDI, and any other row with a "Retorno total" (a strategy the
+// site doesn't know yet, kept under its sheet name); the info rows below the table have none
+const isStrategyRow = (label, r) =>
+  STRATEGY[label] ||
+  label === "CDI" ||
+  (r["Retorno total"] !== undefined && r["Retorno total"] !== "");
 const fundRows = Object.entries(summary)
-  .filter(([label]) => STRATEGY[label] || label === "CDI")
+  .filter(([label, r]) => isStrategyRow(label, r))
   .map(([label, r]) => ({
-    id: STRATEGY[label] ?? "benchmark",
+    id: STRATEGY[label] ?? (label === "CDI" ? "benchmark" : slug(label)),
+    label: STRATEGY[label] || label === "CDI" ? undefined : label,
     totalReturn: num(r, "Retorno total"),
     volatility: num(r, "Volatilidade"),
     sharpe: num(r, "Sharpe"),

@@ -68,6 +68,11 @@
   --input: rgb(35 0 66 / 0.18);
   --ring: #6b4fa0;
   --highlight: #6b4fa0; /* AA on --background */
+  /* fund daily chart: categorical trio checked with the dataviz validator on --card */
+  --series-fund: #6b4fa0;
+  --series-pairs: #00866f;
+  --series-momentum: #c76a00;
+  --series-new: #e0457b; /* a strategy the site doesn't know yet; validated with the trio (all pairs) */
   --glow: rgb(174 148 214 / 0.35);
   --grid-line: rgb(35 0 66 / 0.06);
   --dot: rgb(35 0 66 / 0.07);
@@ -97,6 +102,10 @@
   --input: rgb(174 148 214 / 0.2);
   --ring: #ae94d6;
   --highlight: #ae94d6;
+  --series-fund: #9a76d6;
+  --series-pairs: #219e87;
+  --series-momentum: #c97b1c;
+  --series-new: #f0507f;
   --glow: rgb(110 60 190 / 0.45);
   --grid-line: rgb(174 148 214 / 0.06);
   --dot: rgb(174 148 214 / 0.1);

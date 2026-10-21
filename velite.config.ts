@@ -315,7 +315,10 @@ const fund = defineCollection({
         correlation: s.number(),
         rows: s.array(
           s.object({
-            id: s.enum(["pairs", "momentum", "fund", "benchmark"]),
+            /** pairs, momentum, fund, benchmark, or the slug of a strategy the site doesn't know yet */
+            id: s.string(),
+            /** sheet name of an unknown strategy (known ids are translated) */
+            label: s.string().optional(),
             totalReturn: s.number(),
             volatility: s.number().optional(),
             sharpe: s.number().optional(),
