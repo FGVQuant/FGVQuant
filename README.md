@@ -1,6 +1,6 @@
 # FGV Quant — site
 
-Site da **FGV Quant**, a Liga de Finanças Quantitativas da FGV-SP: [ligafgvquant.vercel.app](https://ligafgvquant.vercel.app).
+Site da **FGV Quant**, a Liga de Finanças Quantitativas da FGV-SP: [www.fgvquant.com.br](https://www.fgvquant.com.br).
 
 O site é bilíngue (português por padrão, inglês em `/en`) e escuro por padrão, com um tema claro. A maior parte do conteúdo vem da planilha da liga no Google, então os membros conseguem atualizar o site sem mexer em código.
 
@@ -50,10 +50,10 @@ pnpm dev                               # http://localhost:3000
 
 ### Variáveis de ambiente
 
-| Variável               | Onde                 | Para quê                                                                                                                                                                                  |
-| ---------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GOOGLE_API_KEY`       | `.env.local`, Vercel | Leitura da planilha e da pasta de fotos, usada pelo `pnpm sync`                                                                                                                           |
-| `NEXT_PUBLIC_SITE_URL` | opcional             | Endereço canônico para SEO, sitemap e imagens de compartilhamento. No Vercel usa o domínio de produção; localmente, `http://localhost:3000` ([src/lib/site-url.ts](src/lib/site-url.ts)). |
+| Variável               | Onde                 | Para quê                                                                                                                                                                                          |
+| ---------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GOOGLE_API_KEY`       | `.env.local`, Vercel | Leitura da planilha e da pasta de fotos, usada pelo `pnpm sync`                                                                                                                                   |
+| `NEXT_PUBLIC_SITE_URL` | opcional             | Endereço canônico para SEO, sitemap e imagens de compartilhamento. No Vercel usa `https://www.fgvquant.com.br`; localmente, `http://localhost:3000` ([src/lib/site-url.ts](src/lib/site-url.ts)). |
 
 ## Deploy
 

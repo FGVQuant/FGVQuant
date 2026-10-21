@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: { default: t("title"), template: `%s | FGV Quant` },
     description: t("description"),
-    metadataBase: new URL(SITE_URL), // NEXT_PUBLIC_SITE_URL in Phase 7; localhost until then
+    metadataBase: new URL(SITE_URL), // www.fgvquant.com.br on Vercel, localhost in dev
     // og:image comes from the opengraph-image file next to this layout; title and description
     // follow each page's own metadata.
     openGraph: {
