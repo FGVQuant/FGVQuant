@@ -12,11 +12,6 @@
       "legend": "N = 128 paths · μ = 8% · σ = 24% · p5–p95 band · simulation",
       "legendShort": "Illustrative simulation"
     },
-    "stats": {
-      "members": "Members and trainees",
-      "issues": "Newsletter issues",
-      "ranked": "Podium and top-10 finishes"
-    },
     "about": {
       "titleA": "Mathematics, statistics and code",
       "titleEm": "applied to markets",

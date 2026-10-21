@@ -12,11 +12,6 @@
       "legend": "N = 128 trajetórias · μ = 8% · σ = 24% · banda p5–p95 · simulação",
       "legendShort": "Simulação ilustrativa"
     },
-    "stats": {
-      "members": "Membros e trainees",
-      "issues": "Edições da newsletter",
-      "ranked": "Pódios e top 10 em competições"
-    },
     "about": {
       "titleA": "Matemática, estatística e código",
       "titleEm": "aplicados ao mercado",

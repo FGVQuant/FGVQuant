@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { MonteCarloHero } from "@/components/hero/monte-carlo-hero";
-import { KpiStrip } from "@/components/sections/kpi-strip";
 import { JoinCta } from "@/components/sections/join-cta";
 import { PartnerMarquee } from "@/components/sections/partner-marquee";
 import { QuantVenn, type QuantVennProps } from "@/components/sections/quant-venn";
@@ -157,18 +156,7 @@ export default async function HomePage() {
         legendShort={t("hero.legendShort")}
       />
 
-      <section className="container-page">
-        <KpiStrip
-          locale={intl}
-          items={[
-            { label: t("stats.members"), value: stats.members },
-            { label: t("stats.issues"), value: stats.issues },
-            { label: t("stats.ranked"), value: stats.rankedTeams },
-          ]}
-        />
-      </section>
-
-      {/* Parcerias realizadas: right under the numbers, as social proof. */}
+      {/* Parcerias realizadas: right under the hero, as social proof. */}
       {hasPartners ? (
         <section className="container-page pt-16">
           <div className="flex items-center justify-between gap-4">
