@@ -7,7 +7,8 @@ import type { Locale } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
 import { ButtonAnchor } from "@/components/ui/button";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
-import { getCompetitions, getProjects, tr } from "@/lib/content";
+import { SocialIcon } from "@/components/brand/social-icons";
+import { getCompetitions, getProjects, getSite, tr } from "@/lib/content";
 import { getPageLocale } from "@/lib/locale";
 import { pageAlternates } from "@/lib/seo";
 import { FundFeature, OngoingCard, ProjectRow } from "./_components/project-items";
@@ -39,6 +40,7 @@ export default async function ProjectsPage() {
     getPageLocale(),
   ]);
   const competitions = getCompetitions();
+  const site = getSite();
   const all = getProjects();
   // The fund runs continuously; trainee projects live on /processo-seletivo; the rest go by semester.
   const fund = all.find((p) => p.kind === "fund");
@@ -68,6 +70,19 @@ export default async function ProjectsPage() {
           <a href="#projetos" className={jumpClass}>
             {t("jump.projects")}
           </a>
+          {site.github ? (
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(jumpClass, "gap-2")}
+            >
+              <SocialIcon href={site.github} className="size-4" />
+              {t("jump.github")}
+              <ArrowUpRight aria-hidden className="size-3.5" />
+              <span className="sr-only">{tCommon("newTab")}</span>
+            </a>
+          ) : null}
         </nav>
       </PageIntro>
 

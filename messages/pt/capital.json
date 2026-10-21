@@ -140,7 +140,10 @@
       "tableCaption": "Ver os valores mês a mês",
       "coverage": "{count, plural, one {# mês reportado} other {# meses reportados}} · {range}",
       "missing": "{count, plural, one {# mês sem relatório} other {# meses sem relatório}}",
-      "window": "gráfico com os últimos {count} meses"
+      "window": "gráfico com os últimos {count} meses",
+      "reportsTitle": "Relatórios de gestão (PDF)",
+      "reportDownload": "Baixar o relatório de {month}",
+      "reportLatest": "Relatório de {month} (PDF)"
     },
     "reports": {
       "eyebrow": "Relatórios",

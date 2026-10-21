@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Download } from "lucide-react";
 import type { ReactNode } from "react";
 import { NumberTicker } from "@/components/data/number-ticker";
 import { PageIntro } from "@/components/layout/page-intro";
 import { StrategiesMotif } from "@/components/layout/intro-motifs";
 import { Badge } from "@/components/ui/badge";
-import { ButtonAnchor } from "@/components/ui/button";
+import { ButtonAnchor, buttonVariants } from "@/components/ui/button";
 import { SectionHeader } from "@/components/ui/section-header";
 import { getPageLocale } from "@/lib/locale";
 import {
@@ -110,6 +110,8 @@ export default async function CapitalPage() {
   const volMax = Math.max(...vols.map((x) => x.v), 1);
 
   const monthly = [...fund.monthly].sort((a, b) => a.month.localeCompare(b.month));
+  // management reports the sheet links (Fundo mensal → Relatório (PDF)), newest first
+  const reports = monthly.filter((m) => m.report).reverse();
   const bars = monthly.map((m) => ({
     key: m.month,
     label: formatEditionShort(m.month, locale),
@@ -156,7 +158,22 @@ export default async function CapitalPage() {
         title={t.rich("title", { em })}
         description={t("description")}
       >
-        <Badge variant="highlight">{tCommon("simulated")}</Badge>
+        <div className="flex flex-wrap items-center gap-3">
+          <Badge variant="highlight">{tCommon("simulated")}</Badge>
+          {/* the latest management report up front; the full list sits under the monthly chart */}
+          {reports[0] ? (
+            <a
+              href={reports[0].report}
+              download
+              className={buttonVariants({ variant: "primary", size: "sm" })}
+            >
+              <Download aria-hidden className="size-4" />
+              {t("results.reportLatest", {
+                month: inSentence(formatEdition(reports[0].month, locale)),
+              })}
+            </a>
+          ) : null}
+        </div>
       </PageIntro>
 
       <section className="container-page pt-10">
@@ -224,6 +241,30 @@ export default async function CapitalPage() {
                 windowNote={t("results.window", { count: 24 })}
               />
             </div>
+            {reports.length > 0 ? (
+              <div className="mt-6 border-t border-border pt-5">
+                <h4 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                  {t("results.reportsTitle")}
+                </h4>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {reports.map((m) => (
+                    <li key={m.month}>
+                      <a
+                        href={m.report}
+                        download
+                        aria-label={t("results.reportDownload", {
+                          month: inSentence(formatEdition(m.month, locale)),
+                        })}
+                        className={buttonVariants({ variant: "outline", size: "sm" })}
+                      >
+                        <Download aria-hidden className="size-4" />
+                        {formatEditionShort(m.month, locale)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
         ) : null}
 

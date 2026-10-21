@@ -295,7 +295,14 @@ const fund = defineCollection({
     cumulativeReturn: s.number(),
     cumulativeAsOf: s.string().regex(/^\d{4}-\d{2}$/),
     /** monthly returns in %, only months actually reported by the league */
-    monthly: s.array(s.object({ month: s.string().regex(/^\d{4}-\d{2}$/), return: s.number() })),
+    monthly: s.array(
+      s.object({
+        month: s.string().regex(/^\d{4}-\d{2}$/),
+        return: s.number(),
+        /** that month's management report, a PDF under public/sheet/ (e.g. "/sheet/x.pdf"), offered as a download */
+        report: s.string().optional(),
+      }),
+    ),
     /**
      * "Panorama geral" from the latest monthly management report, since inception and as of
      * `cumulativeAsOf`. All figures in % except sharpe, correlation and month counts.
@@ -389,6 +396,8 @@ const site = defineCollection({
     email: s.string().email().optional(),
     instagram: s.string().url(),
     linkedin: s.string().url(),
+    /** the league's GitHub organisation (Entidade → GitHub), linked from the footer and /projetos */
+    github: s.string().url().optional(),
     newsletterUrl: s.string().url(),
     recruitment: s.object({
       open: s.boolean().optional(),

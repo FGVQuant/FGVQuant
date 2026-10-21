@@ -36,6 +36,15 @@ export async function SiteFooter() {
       href: site.linkedin,
       icon: <SocialIcon href={site.linkedin} className="size-4" />,
     },
+    ...(site.github
+      ? [
+          {
+            label: "GitHub",
+            href: site.github,
+            icon: <SocialIcon href={site.github} className="size-4" />,
+          },
+        ]
+      : []),
     // The newsletter lives on LinkedIn; a newspaper mark tells it apart from the LinkedIn page.
     {
       label: t("subscribe"),

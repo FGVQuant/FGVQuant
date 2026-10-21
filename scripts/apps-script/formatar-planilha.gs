@@ -62,6 +62,7 @@ const LARGURA = {
   Foto: 170,
   Logo: 160,
   "Artigo (PDF)": 170,
+  "Relatório (PDF)": 170,
   Link: 260,
   Fonte: 220,
   LinkedIn: 240,
@@ -79,6 +80,10 @@ const LARGURA_PADRAO = 150;
 const CORTAR = ["Texto", "Regras"];
 
 const EXPLICACOES = {
+  "Fundo mensal": {
+    "Relatório (PDF)":
+      "Nome do PDF do relatório de gestão deste mês, na pasta 'Fotos do site'. Opcional. O site oferece para download.",
+  },
   Newsletter: {
     Edição: "mm/aaaa da edição. Obrigatório.",
     Link: "Publicação no LinkedIn ou no Substack. Obrigatório.",

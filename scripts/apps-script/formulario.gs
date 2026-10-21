@@ -8,7 +8,7 @@
  *  - colunas com lista suspensa viram uma lista de opções;
  *  - colunas lilás com fórmula (ex.: Status em Membros) ficam de fora e são calculadas na planilha;
  *  - colunas "(inglês)" ficam num grupo opcional;
- *  - Foto, Logo e Artigo (PDF) aceitam um arquivo, que vai para a pasta 'Fotos do site'.
+ *  - Foto, Logo, Artigo (PDF) e Relatório (PDF) aceitam um arquivo, que vai para a pasta 'Fotos do site'.
  * Os campos obrigatórios são os mesmos que o site exige (scripts/sync-sheet.mjs, need()).
  */
 
@@ -26,7 +26,7 @@ const OBRIGATORIAS = {
   Newsletter: ["Edição", "Link"],
   Entidade: ["Campo", "Valor"],
 };
-const COL_ARQUIVO = ["Foto", "Logo", "Artigo (PDF)"];
+const COL_ARQUIVO = ["Foto", "Logo", "Artigo (PDF)", "Relatório (PDF)"];
 const COL_DATA = ["Data"];
 const COL_MES = ["Mês", "Edição"];
 const COL_SEMESTRE = ["Semestre", "Entrada", "Saída", "Ingresso na FGV"];

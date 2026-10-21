@@ -11,7 +11,8 @@
     },
     "jump": {
       "competitions": "Competições",
-      "projects": "Projetos"
+      "projects": "Projetos",
+      "github": "Nosso código no GitHub"
     },
     "competitions": {
       "title": "Competições",

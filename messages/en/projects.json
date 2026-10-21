@@ -11,7 +11,8 @@
     },
     "jump": {
       "competitions": "Competitions",
-      "projects": "Projects"
+      "projects": "Projects",
+      "github": "Our code on GitHub"
     },
     "competitions": {
       "title": "Competitions",

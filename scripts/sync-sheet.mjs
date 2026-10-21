@@ -444,6 +444,7 @@ const fund = {
   monthly: sheet["Fundo mensal"].map((r) => ({
     month: month(r, "Mês"),
     return: Number(r["Retorno (%)"]),
+    report: asset(r, "Relatório (PDF)"),
   })),
   overview: {
     benchmark: "CDI",
@@ -547,6 +548,7 @@ const site = {
   email: entity["E-mail de contato"],
   instagram: entity.Instagram,
   linkedin: entity.LinkedIn,
+  github: url(entity, "GitHub"),
   newsletterUrl: entity["Newsletter (LinkedIn)"],
   recruitment: {
     open: yes(entity["Processo seletivo: inscrições abertas?"]),

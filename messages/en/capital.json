@@ -140,7 +140,10 @@
       "tableCaption": "Show month-by-month values",
       "coverage": "{count, plural, one {# month reported} other {# months reported}} · {range}",
       "missing": "{count, plural, one {# month without a report} other {# months without a report}}",
-      "window": "chart shows the last {count} months"
+      "window": "chart shows the last {count} months",
+      "reportsTitle": "Management reports (PDF)",
+      "reportDownload": "Download the {month} report",
+      "reportLatest": "{month} report (PDF)"
     },
     "reports": {
       "eyebrow": "Reports",

@@ -145,9 +145,11 @@ export function QuantVenn({ title, subtitle, regions, labels, className }: Quant
         aria-label={labels.diagram}
         tabIndex={0}
         onKeyDown={step}
-        className="mx-auto mt-4 block h-auto w-full max-w-[24rem] touch-manipulation rounded-2xl select-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className="mx-auto mt-4 block h-auto w-full max-w-[24rem] touch-manipulation rounded-2xl outline-none select-none [-webkit-tap-highlight-color:transparent] focus-visible:ring-2 focus-visible:ring-ring"
         onPointerMove={(e) => setHovered(toRegion(e))}
         onPointerLeave={() => setHovered(null)}
+        // a click selects a region without focusing the diagram (no focus ring); Tab still focuses it
+        onMouseDown={(e) => e.preventDefault()}
         onClick={(e) => {
           const id = toRegion(e);
           if (id) setSelected(id);
