@@ -4,6 +4,7 @@
 // links) is derived here. Any invalid row aborts the sync before anything is written.
 // Usage: pnpm sync   (needs GOOGLE_API_KEY, from .env.local locally or the host's env)
 import { existsSync, mkdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import readXlsx from "read-excel-file/node";
 import { figureFor } from "./project-figure.mjs";
 
 /** "FGV Quant - site" folder on the league's Drive: the spreadsheet plus "Fotos do site". */
@@ -49,6 +50,8 @@ const EVENT_KIND = {
 const PROJECT_KIND = { Pesquisa: "research", Fundo: "fund", Trainee: "trainee" };
 const STATUS = { Concluído: "done", "Em andamento": "in-progress" };
 const STRATEGY = { "Pairs trading": "pairs", Momentum: "momentum", "Fundo (total)": "fund" };
+/** History_Master column names → the ids the fund tables use */
+const STRATEGY_ID = { Fund: "fund", Pairs: "pairs", Momentum: "momentum", CDI: "cdi" };
 const STRATEGY_STATUS = { Ativa: "active", Encerrada: "closed" };
 const FUND = { name: "FGV Quant Capital", source: "https://www.linkedin.com/company/fgvquant" };
 
@@ -463,6 +466,15 @@ const fund = {
   },
 };
 
+// Official daily history: the latest History_Master_AAAA_MM.xlsx in "Fotos do site", as the fund's
+// monthly run writes it (sheet CUMULATIVE: Date plus one <Name>_Acc column per series). Read after the
+// downloads below; without one, the site hides the cumulative and drawdown tabs.
+const historyFile = [...files.keys()]
+  .filter((n) => /^History_Master_\d{4}_\d{2}\.xlsx$/.test(n))
+  .sort()
+  .at(-1);
+if (historyFile) wanted.set(historyFile, `${OUT}/${historyFile}`);
+
 // Strategy descriptions on /capital. "Regras" holds one rule per line, "Título: texto"; the optional
 // exposure columns (% of equity) draw the long/short bars. Known names keep the ids the fund tables use.
 const rules = (row, col) =>
@@ -599,6 +611,34 @@ for (const [name, dest] of wanted) {
       `não consegui baixar '${name}' do Drive (${res ? `HTTP ${res.status}` : "erro de rede"}) após 5 tentativas. Tente de novo.`,
     ]);
   writeFileSync(dest, body);
+}
+
+if (historyFile) {
+  const rows = (await readXlsx(`${OUT}/${historyFile}`)).find(
+    (x) => x.sheet === "CUMULATIVE",
+  )?.data;
+  const head = rows?.[0] ?? [];
+  const cols = head.flatMap((h, c) =>
+    String(h).endsWith("_Acc") ? [[String(h).slice(0, -4), c]] : [],
+  );
+  if (
+    !rows ||
+    head[0] !== "Date" ||
+    !cols.some(([n]) => n === "Fund") ||
+    !cols.some(([n]) => n === "CDI")
+  )
+    fail([`${historyFile}: a aba CUMULATIVE precisa de Date, Fund_Acc e CDI_Acc.`]);
+  // as in the fund tables: fund, Pairs, Momentum, any other strategy in column order, CDI last
+  const rank = (n) => ({ Fund: 0, Pairs: 1, Momentum: 2, CDI: 9 })[n] ?? 5;
+  cols.sort(([a], [b]) => rank(a) - rank(b));
+  fund.history = {
+    month: historyFile.slice(15, 22).replace("_", "-"),
+    series: cols.map(([n]) => ({ id: STRATEGY_ID[n] ?? slug(n), label: n })),
+    points: rows.slice(1).map((r) => ({
+      date: r[0].toISOString().slice(0, 10),
+      values: cols.map(([, c]) => Math.round(r[c] * 1e6) / 1e6),
+    })),
+  };
 }
 
 const json = {

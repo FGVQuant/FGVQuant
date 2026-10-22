@@ -13,7 +13,6 @@ import {
   formatEdition,
   formatEditionShort,
   getFund,
-  getFundDaily,
   getSite,
   getStrategies,
   intlLocale,
@@ -22,8 +21,8 @@ import {
 import { pageAlternates } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { Disclaimer } from "./_components/disclaimer";
-import { FundDailyChart } from "./_components/fund-daily-chart";
 import { PanelTabs } from "./_components/panel-tabs";
+import { FundLineChart } from "./_components/fund-line-chart";
 import { MonthlyBars } from "./_components/monthly-bars";
 import { OverviewTable } from "./_components/overview-table";
 import { ZScoreChart } from "./_components/zscore-chart";
@@ -137,7 +136,7 @@ export default async function CapitalPage() {
     : 0;
   const coverage = [
     t("results.coverage", {
-      count: bars.length,
+      count: monthly.length,
       range:
         bars.length > 1
           ? `${bars[0].label}–${bars[bars.length - 1].label}`
@@ -148,39 +147,33 @@ export default async function CapitalPage() {
     .filter(Boolean)
     .join(" · ");
 
-  const daily = await getFundDaily();
-  // one line per series in the JSON: known ids get translated names, a new strategy its name from the code
-  const KNOWN_SERIES = ["fund", "pairs", "momentum", "cdi"];
-  // order: fund, pairs, momentum, new strategies as the JSON lists them, cdi last
-  const rank = (id: string) => (id === "cdi" ? 99 : KNOWN_SERIES.indexOf(id) + 1 || 50);
-  const dailySeries = [...(daily?.series ?? [])]
-    .sort((a, b) => rank(a.id) - rank(b.id))
-    .map((s) => ({
-      id: s.id,
-      label: KNOWN_SERIES.includes(s.id)
-        ? t(`daily.series.${s.id as "fund" | "pairs" | "momentum" | "cdi"}`)
-        : s.label,
-    }));
-  const dailyPairs = daily?.pairs;
-  const dailyMomentum = daily?.momentum;
-  const dayLabel = (iso: string) =>
-    new Intl.DateTimeFormat(intl, { timeZone: "UTC", day: "2-digit", month: "2-digit" }).format(
-      new Date(iso),
-    );
-  const dailyAsOf = daily ? dayLabel(daily.asOf) : "";
-  const dailyMonth = daily ? inSentence(formatEdition(daily.asOf.slice(0, 7), locale)) : "";
-  // Caveats shown only inside the preview tabs, as one compact paragraph.
-  const previewNotes = daily ? (
-    <p className="mt-6 max-w-none border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">
-      {[
-        t("daily.notes.source"),
-        t("daily.notes.monthEnd"),
-        daily.pairsCarryOver ? null : t("daily.notes.carry"),
-      ]
-        .filter(Boolean)
-        .join(" ")}
-    </p>
-  ) : null;
+  // Official daily history (latest History_Master on the Drive): cumulative return and drawdown
+  const history = fund.history;
+  const historyAsOf = history ? formatEdition(history.month, locale) : "";
+  const seriesLabel = (s: { id: string; label: string }) =>
+    s.id === "cdi"
+      ? benchmark
+      : [...KNOWN_STRATEGIES, "fund"].includes(s.id)
+        ? columnLabel(s.id)
+        : s.label;
+  const historySeries = history?.series.map((s) => ({ id: s.id, label: seriesLabel(s) })) ?? [];
+  const lastPoint = history?.points.at(-1);
+  // value over the running peak, for every series but the benchmark
+  const ddIdx = historySeries.flatMap((s, k) => (s.id === "cdi" ? [] : [k]));
+  const peaks = ddIdx.map(() => 0);
+  const drawdown =
+    history?.points.map((p) => ({
+      date: p.date,
+      values: ddIdx.map((k, j) => {
+        peaks[j] = Math.max(peaks[j], p.values[k]);
+        return p.values[k] / peaks[j];
+      }),
+    })) ?? [];
+  const ddSeries = ddIdx.map((k) => historySeries[k]);
+  const ddWorst = ddSeries.map((s, j) => ({
+    label: s.label,
+    v: (Math.min(...drawdown.map((p) => p.values[j])) - 1) * 100,
+  }));
 
   const disclaimerItems = [
     t("disclaimer.simulated"),
@@ -222,12 +215,11 @@ export default async function CapitalPage() {
         </div>
       </PageIntro>
 
-      {/* Panorama: official figures from the monthly report plus, when the fund repo's JSON is
-          reachable, the daily public-data preview — one KPI row and one tabbed card. */}
+      {/* Panorama: official figures from the monthly report — one KPI row and one tabbed card. */}
       <section className="container-page section-y">
         <SectionHeader
           title={t.rich("snapshot.title", { em })}
-          description={t(daily ? "snapshot.descriptionDaily" : "snapshot.description", {
+          description={t("snapshot.description", {
             inception,
             asOf: asOfText,
           })}
@@ -261,17 +253,7 @@ export default async function CapitalPage() {
               {num(fundRow.sharpe)}
             </Kpi>
           ) : null}
-          {daily && daily.metrics.fund.mtd !== null ? (
-            <Kpi
-              label={t("daily.mtd", { month: dailyMonth })}
-              note={t("daily.mtdNote", {
-                date: dailyAsOf,
-                cdi: daily.metrics.cdi.mtd === null ? "–" : signedPct(daily.metrics.cdi.mtd * 100),
-              })}
-            >
-              {signedPct(daily.metrics.fund.mtd * 100)}
-            </Kpi>
-          ) : overview ? (
+          {overview ? (
             <Kpi label={t("snapshot.correlation")} note={t("snapshot.correlationNote")}>
               {num(overview.correlation, 3)}
             </Kpi>
@@ -282,44 +264,33 @@ export default async function CapitalPage() {
           <PanelTabs
             label={t("panel.label")}
             items={[
-              daily && {
-                id: "daily",
-                label: t("panel.tabs.daily"),
-                content: (
-                  <>
-                    <PanelMeta
-                      badges={[
-                        tCommon("simulated"),
-                        t("daily.badge"),
-                        t("daily.asOf", { date: dailyAsOf }),
-                      ]}
-                    />
-                    <FundDailyChart
-                      points={daily.daily}
-                      series={dailySeries}
-                      previewLabel={t("daily.preview")}
-                      ariaLabel={t("daily.chartLabel", {
-                        inception,
-                        fund: signedPct(((daily.daily.at(-1)!.fund as number) - 1) * 100),
-                        cdi: signedPct(((daily.daily.at(-1)!.cdi as number) - 1) * 100),
-                      })}
-                      locale={intl}
-                      nav={{
-                        label: t("daily.nav.label"),
-                        dayLabel: t("daily.nav.day"),
-                        aumLabel: t("daily.nav.aum"),
-                        baseNote: t("daily.nav.base", {
-                          date: new Intl.DateTimeFormat(intl, { timeZone: "UTC" }).format(
-                            new Date(daily.daily[0].date),
-                          ),
-                        }),
-                        initialAum: daily.initialAum ?? null,
-                      }}
-                    />
-                    {previewNotes}
-                  </>
-                ),
-              },
+              history &&
+                lastPoint && {
+                  id: "cumulative",
+                  label: t("panel.tabs.cumulative"),
+                  content: (
+                    <>
+                      <PanelMeta
+                        badges={[tCommon("simulated"), t("panel.official", { asOf: historyAsOf })]}
+                      />
+                      <FundLineChart
+                        points={history.points}
+                        series={historySeries}
+                        locale={intl}
+                        ariaLabel={t("cumulative.chartLabel", {
+                          inception,
+                          asOf: inSentence(historyAsOf),
+                          summary: historySeries
+                            .map(
+                              (s, k) => `${s.label} ${signedPct((lastPoint.values[k] - 1) * 100)}`,
+                            )
+                            .join(", "),
+                        })}
+                      />
+                      <p className="mt-4 text-xs text-muted-foreground">{t("cumulative.note")}</p>
+                    </>
+                  ),
+                },
               bars.length > 0 && {
                 id: "monthly",
                 label: t("panel.tabs.monthly"),
@@ -335,30 +306,6 @@ export default async function CapitalPage() {
                       coverage={coverage}
                       windowNote={t("results.window", { count: 24 })}
                     />
-                    {reports.length > 0 ? (
-                      <div className="mt-6 border-t border-border pt-5">
-                        <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                          {t("results.reportsTitle")}
-                        </h3>
-                        <ul className="mt-3 flex flex-wrap gap-2">
-                          {reports.map((m) => (
-                            <li key={m.month}>
-                              <a
-                                href={m.report}
-                                download
-                                aria-label={t("results.reportDownload", {
-                                  month: inSentence(formatEdition(m.month, locale)),
-                                })}
-                                className={buttonVariants({ variant: "outline", size: "sm" })}
-                              >
-                                <Download aria-hidden className="size-4" />
-                                {formatEditionShort(m.month, locale)}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ) : null}
                   </>
                 ),
               },
@@ -381,88 +328,68 @@ export default async function CapitalPage() {
                   </>
                 ),
               },
-              (dailyPairs || dailyMomentum) && {
-                id: "positions",
-                label: t("panel.tabs.positions"),
+              drawdown.length > 0 && {
+                id: "drawdown",
+                label: t("panel.tabs.drawdown"),
                 content: (
                   <>
                     <PanelMeta
-                      badges={[
-                        tCommon("simulated"),
-                        t("daily.badge"),
-                        t("daily.asOf", { date: dailyAsOf }),
-                      ]}
+                      badges={[tCommon("simulated"), t("panel.official", { asOf: historyAsOf })]}
                     />
-                    <div className="grid gap-8 lg:grid-cols-2 [&>*]:min-w-0">
-                      {dailyPairs ? (
-                        <div>
-                          <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                            {t("daily.pairsOpen")}
-                          </h3>
-                          {dailyPairs.open.length ? (
-                            <PositionsTable
-                              head={[
-                                t("daily.long"),
-                                t("daily.short"),
-                                t("daily.since"),
-                                t("daily.zNow"),
-                              ]}
-                              rows={dailyPairs.open.map((p) => [
-                                p.long,
-                                p.short,
-                                dayLabel(p.since),
-                                p.z === null ? "–" : num(p.z),
-                              ])}
+                    <FundLineChart
+                      points={drawdown}
+                      series={ddSeries}
+                      locale={intl}
+                      step={2}
+                      ariaLabel={t("drawdown.chartLabel", {
+                        summary: ddWorst.map((d) => `${d.label} ${pct(d.v)}`).join(", "),
+                      })}
+                    />
+                    <p className="mt-4 text-xs text-muted-foreground">
+                      {t("drawdown.note", {
+                        summary: ddWorst.map((d) => `${d.label} ${pct(d.v)}`).join(" · "),
+                      })}
+                    </p>
+                  </>
+                ),
+              },
+              reports.length > 0 && {
+                id: "reports",
+                label: t("panel.tabs.reports"),
+                content: (
+                  <>
+                    <PanelMeta badges={[tCommon("simulated"), t("results.reportsTitle")]} />
+                    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {reports.map((m, i) => (
+                        <li key={m.month}>
+                          <a
+                            href={m.report}
+                            download
+                            aria-label={t("results.reportDownload", {
+                              month: inSentence(formatEdition(m.month, locale)),
+                            })}
+                            className={cn(
+                              "flex items-center justify-between gap-3 rounded-xl border p-4 transition-colors hover:border-highlight focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+                              i === 0 ? "border-highlight bg-muted" : "border-border",
+                            )}
+                          >
+                            <span>
+                              <span className="block font-sans font-semibold text-foreground">
+                                {formatEdition(m.month, locale)}
+                              </span>
+                              <span className="font-mono text-xs text-muted-foreground">
+                                {i === 0 ? `${t("results.latest")} · PDF` : "PDF"} ·{" "}
+                                {signedPct(m.return)}
+                              </span>
+                            </span>
+                            <Download
+                              aria-hidden
+                              className="size-4 shrink-0 text-muted-foreground"
                             />
-                          ) : (
-                            <p className="mt-4 text-sm text-muted-foreground">
-                              {t("daily.pairsOpenEmpty")}
-                            </p>
-                          )}
-                        </div>
-                      ) : null}
-                      <div className="flex flex-col gap-8">
-                        {dailyPairs?.closed.length ? (
-                          <div>
-                            <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                              {t("daily.pairsClosed")}
-                            </h3>
-                            <PositionsTable
-                              head={[
-                                t("daily.long"),
-                                t("daily.short"),
-                                t("daily.period"),
-                                t("daily.result"),
-                              ]}
-                              rows={dailyPairs.closed.map((p) => [
-                                p.long,
-                                p.short,
-                                `${dayLabel(p.entry)}–${dayLabel(p.exit)}`,
-                                p.return === null ? "–" : signedPct(p.return * 100),
-                              ])}
-                            />
-                          </div>
-                        ) : null}
-                        {dailyMomentum ? (
-                          <div>
-                            <h3 className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                              {t("daily.momentumTitle")}
-                            </h3>
-                            {(["long", "short"] as const).map((side) => (
-                              <p key={side} className="mt-3 text-sm">
-                                <span className="font-semibold text-foreground">
-                                  {t(`daily.${side}`)}:{" "}
-                                </span>
-                                <span className="font-mono leading-relaxed text-muted-foreground">
-                                  {dailyMomentum[side].join(" · ")}
-                                </span>
-                              </p>
-                            ))}
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                    {previewNotes}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
                   </>
                 ),
               },
@@ -728,44 +655,6 @@ function PanelMeta({ badges }: { badges: string[] }) {
           {b}
         </Badge>
       ))}
-    </div>
-  );
-}
-
-/** Compact mono table for the preview positions; the last column is right-aligned numbers. */
-function PositionsTable({ head, rows }: { head: string[]; rows: string[][] }) {
-  const last = head.length - 1;
-  return (
-    <div className="mt-3 overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead className="text-left font-mono text-xs text-muted-foreground">
-          <tr>
-            {head.map((h, i) => (
-              <th key={h} className={cn("py-2 font-normal", i === last ? "text-right" : "pr-3")}>
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border font-mono">
-          {rows.map((r) => (
-            <tr key={r.join("|")}>
-              {r.map((c, i) => (
-                <td
-                  key={i}
-                  className={cn(
-                    "py-1.5",
-                    i === last ? "text-right tabular-nums" : "pr-3",
-                    i === 2 && "text-muted-foreground",
-                  )}
-                >
-                  {c}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 }

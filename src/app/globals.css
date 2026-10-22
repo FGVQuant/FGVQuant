@@ -68,7 +68,7 @@
   --input: rgb(35 0 66 / 0.18);
   --ring: #6b4fa0;
   --highlight: #6b4fa0; /* AA on --background */
-  /* fund daily chart: categorical trio checked with the dataviz validator on --card */
+  /* fund line charts: categorical trio checked with the dataviz validator on --card */
   --series-fund: #6b4fa0;
   --series-pairs: #00866f;
   --series-momentum: #c76a00;

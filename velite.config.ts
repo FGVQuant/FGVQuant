@@ -304,6 +304,17 @@ const fund = defineCollection({
       }),
     ),
     /**
+     * Official daily history from the latest History_Master_AAAA_MM.xlsx in "Fotos do site":
+     * cumulative factors (1 = inception), `values` aligned with `series` (fund first, cdi last).
+     */
+    history: s
+      .object({
+        month: s.string().regex(/^\d{4}-\d{2}$/),
+        series: s.array(s.object({ id: s.string(), label: s.string() })),
+        points: s.array(s.object({ date: s.string(), values: s.array(s.number()) })),
+      })
+      .optional(),
+    /**
      * "Panorama geral" from the latest monthly management report, since inception and as of
      * `cumulativeAsOf`. All figures in % except sharpe, correlation and month counts.
      */

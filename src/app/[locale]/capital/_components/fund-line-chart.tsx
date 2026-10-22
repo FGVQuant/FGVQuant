@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { FundDailyPoint } from "@/lib/content";
 
+export type LinePoint = { date: string; values: number[] };
 type Series = { id: string; label: string };
+
 /** CDI is the benchmark: a thin dashed neutral reference line, not another hue. */
 const STROKE: Record<string, string> = {
   fund: "var(--series-fund)",
@@ -19,58 +20,38 @@ const dashed = (id: string) => id === "cdi";
 const W = 960;
 const H = 320;
 const PAD_L = 52;
-const PAD_R = 150; // room for the direct end labels ("Momentum +10,91%")
+const PAD_R = 150; // room for the direct end labels ("Momentum +17,54%")
 const PAD_T = 16;
 const PAD_B = 28;
 
-/** Cumulative return (%) from inception, one point per day; hover reads every series at a day. */
-export function FundDailyChart({
+/**
+ * Daily line chart of factors around 1 (cumulative return, or value over the running peak for a
+ * drawdown), drawn as % from 1. Hover or touch reads every series at a day.
+ */
+export function FundLineChart({
   points,
   series,
-  previewLabel,
   ariaLabel,
   locale,
-  nav,
+  step = 5,
 }: {
-  /** cumulative factors (1 = inception) */
-  points: FundDailyPoint[];
-  /** in drawing order, as the JSON lists them (fund, strategies, cdi) */
+  /** `values` aligned with `series` */
+  points: LinePoint[];
   series: Series[];
-  previewLabel: string;
   ariaLabel: string;
   locale: string;
-  /**
-   * Simulated NAV per share: base 1.00 before the first day, so the NAV is the fund's cumulative
-   * factor (NAV_t = NAV_t-1 × (1 + r_t)); AUM = initial AUM × NAV.
-   */
-  nav?: {
-    label: string;
-    dayLabel: string;
-    aumLabel: string;
-    baseNote: string;
-    initialAum: number | null;
-  };
+  /** gridline spacing in percentage points */
+  step?: number;
 }) {
   const [hover, setHover] = useState<number | null>(null);
   const unknown = series.filter((s) => !STROKE[s.id]);
   const stroke = (id: string) =>
     STROKE[id] ?? SPARE[unknown.findIndex((s) => s.id === id)] ?? "var(--muted-foreground)";
-  const val = (p: FundDailyPoint, id: string) => p[id] as number;
   const pct = (f: number) => (f - 1) * 100;
   const fmtPct = new Intl.NumberFormat(locale, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
     signDisplay: "exceptZero",
-  });
-  const fmtNav = new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 6,
-    maximumFractionDigits: 6,
-  });
-  const fmtAum = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: "BRL",
-    notation: "compact",
-    maximumFractionDigits: 2,
   });
   const fmtAxis = new Intl.NumberFormat(locale, { signDisplay: "exceptZero" });
   const fmtDay = new Intl.DateTimeFormat(locale, {
@@ -85,14 +66,13 @@ export function FundDailyChart({
     year: "2-digit",
   });
 
-  const values = points.flatMap((p) => series.map((s) => pct(val(p, s.id))));
-  const step = 5;
+  const values = points.flatMap((p) => p.values.map(pct));
   const lo = Math.floor(Math.min(0, ...values) / step) * step;
-  const hi = Math.ceil(Math.max(...values) / step) * step;
+  const hi = Math.max(Math.ceil(Math.max(0, ...values) / step) * step, lo + step);
   const n = points.length;
   const x = (i: number) => PAD_L + (i / Math.max(n - 1, 1)) * (W - PAD_L - PAD_R);
-  const y = (v: number) => PAD_T + ((hi - v) / (hi - lo || 1)) * (H - PAD_T - PAD_B);
-  const ticks = Array.from({ length: (hi - lo) / step + 1 }, (_, k) => lo + k * step);
+  const y = (v: number) => PAD_T + ((hi - v) / (hi - lo)) * (H - PAD_T - PAD_B);
+  const ticks = Array.from({ length: Math.round((hi - lo) / step) + 1 }, (_, k) => lo + k * step);
 
   // first day of each quarter on the x axis
   const monthTicks = points
@@ -104,17 +84,16 @@ export function FundDailyChart({
         Number(d.slice(5, 7)) % 3 === 1,
     );
 
-  const previewFrom = points.findIndex((p) => p.preview);
-  const path = (id: string) =>
+  const path = (k: number) =>
     points
-      .map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(pct(val(p, id))).toFixed(1)}`)
+      .map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(pct(p.values[k])).toFixed(1)}`)
       .join("");
 
   // direct end labels, nudged apart so they never overlap
   const ends = series
-    .map((s) => ({ s, y: y(pct(val(points[n - 1], s.id))) }))
+    .map((s, k) => ({ s, k, y: y(pct(points[n - 1].values[k])) }))
     .sort((a, b) => a.y - b.y);
-  for (let k = 1; k < ends.length; k++) ends[k].y = Math.max(ends[k].y, ends[k - 1].y + 15);
+  for (let j = 1; j < ends.length; j++) ends[j].y = Math.max(ends[j].y, ends[j - 1].y + 15);
 
   const pick = (clientX: number, rect: DOMRect) => {
     const px = ((clientX - rect.left) / rect.width) * W;
@@ -143,12 +122,6 @@ export function FundDailyChart({
             {s.label}
           </li>
         ))}
-        {previewFrom >= 0 ? (
-          <li className="inline-flex items-center gap-2">
-            <span aria-hidden className="h-2.5 w-4 rounded-sm bg-muted" />
-            {previewLabel}
-          </li>
-        ) : null}
       </ul>
       <div className="relative">
         <svg
@@ -159,16 +132,6 @@ export function FundDailyChart({
           onPointerMove={(e) => pick(e.clientX, e.currentTarget.getBoundingClientRect())}
           onPointerLeave={() => setHover(null)}
         >
-          {previewFrom >= 0 ? (
-            <rect
-              x={x(previewFrom)}
-              y={PAD_T}
-              width={x(n - 1) - x(previewFrom)}
-              height={H - PAD_T - PAD_B}
-              className="fill-muted"
-              opacity={0.7}
-            />
-          ) : null}
           {ticks.map((v) => (
             <g key={v}>
               <line
@@ -200,10 +163,10 @@ export function FundDailyChart({
               {fmtMonth.format(new Date(d))}
             </text>
           ))}
-          {series.map((s) => (
+          {series.map((s, k) => (
             <path
               key={s.id}
-              d={path(s.id)}
+              d={path(k)}
               fill="none"
               stroke={stroke(s.id)}
               strokeWidth={dashed(s.id) ? 1.5 : 2}
@@ -212,14 +175,14 @@ export function FundDailyChart({
               strokeLinecap="round"
             />
           ))}
-          {ends.map(({ s, y: ly }) => (
+          {ends.map(({ s, k, y: ly }) => (
             <text
               key={s.id}
               x={x(n - 1) + 8}
               y={ly + 4}
               className="fill-foreground font-mono text-[11px] max-sm:hidden"
             >
-              {s.label} {fmtPct.format(pct(val(points[n - 1], s.id)))}%
+              {s.label} {fmtPct.format(pct(points[n - 1].values[k]))}%
             </text>
           ))}
           {h ? (
@@ -232,11 +195,11 @@ export function FundDailyChart({
                 className="stroke-border-strong"
                 strokeWidth={1}
               />
-              {series.map((s) => (
+              {series.map((s, k) => (
                 <circle
                   key={s.id}
                   cx={x(hover!)}
-                  cy={y(pct(val(h, s.id)))}
+                  cy={y(pct(h.values[k]))}
                   r={4}
                   fill={stroke(s.id)}
                   className="stroke-card"
@@ -246,29 +209,6 @@ export function FundDailyChart({
             </g>
           ) : null}
         </svg>
-        {nav && !h ? (
-          // sits in the plot's top-left corner, which the curves leave empty as the fund grows
-          <div
-            className="pointer-events-none absolute z-10 rounded-lg border border-border bg-card/85 px-3 py-2.5 backdrop-blur-sm max-sm:hidden"
-            style={{ left: `${(PAD_L / W) * 100 + 1.5}%`, top: `${(PAD_T / H) * 100 + 3}%` }}
-          >
-            <p className="font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
-              {nav.label}
-            </p>
-            <p className="mt-1 font-mono text-2xl text-foreground tabular-nums">
-              {fmtNav.format(val(points[n - 1], "fund"))}
-            </p>
-            <p className="mt-1 font-mono text-xs text-muted-foreground tabular-nums">
-              {n > 1
-                ? `${fmtPct.format((val(points[n - 1], "fund") / val(points[n - 2], "fund") - 1) * 100)}% ${nav.dayLabel}`
-                : null}
-              {nav.initialAum
-                ? ` · ${nav.aumLabel} ${fmtAum.format(nav.initialAum * val(points[n - 1], "fund"))}`
-                : null}
-            </p>
-            <p className="mt-1 text-[11px] text-muted-foreground">{nav.baseNote}</p>
-          </div>
-        ) : null}
         {h ? (
           <div
             role="status"
@@ -279,12 +219,9 @@ export function FundDailyChart({
                 : { left: `${(x(hover!) / W) * 100 + 2}%` }
             }
           >
-            <p className="font-mono text-muted-foreground">
-              {fmtDay.format(new Date(h.date))}
-              {h.preview ? ` · ${previewLabel}` : ""}
-            </p>
+            <p className="font-mono text-muted-foreground">{fmtDay.format(new Date(h.date))}</p>
             <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
-              {series.map((s) => (
+              {series.map((s, k) => (
                 <div key={s.id} className="contents">
                   <dt className="inline-flex items-center gap-1.5 text-muted-foreground">
                     <span
@@ -295,19 +232,11 @@ export function FundDailyChart({
                     {s.label}
                   </dt>
                   <dd className="text-right font-mono text-foreground">
-                    {fmtPct.format(pct(val(h, s.id)))}%
+                    {fmtPct.format(pct(h.values[k]))}%
                   </dd>
                 </div>
               ))}
             </dl>
-            {nav ? (
-              <p className="mt-2 flex justify-between gap-3 border-t border-border pt-2">
-                <span className="text-muted-foreground">{nav.label}</span>
-                <span className="font-mono text-foreground tabular-nums">
-                  {fmtNav.format(val(h, "fund"))}
-                </span>
-              </p>
-            ) : null}
           </div>
         ) : null}
       </div>
