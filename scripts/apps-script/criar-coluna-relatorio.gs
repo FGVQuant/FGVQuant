@@ -5,12 +5,12 @@
  * arquivo pode ser apagado.
  *
  * A coluna é opcional. Para publicar o relatório de gestão de um mês, ponha o PDF na pasta
- * 'Fotos do site' e escreva o nome exato do arquivo (ex.: relatorio-2026-08.pdf) na linha do mês.
+ * 'Arquivos do site' e escreva o nome exato do arquivo (ex.: relatorio-2026-08.pdf) na linha do mês.
  * O site mostra um botão de download na aba "Mês a mês" do painel do fundo.
  */
 
 const NOTA_RELATORIO =
-  "Nome do PDF do relatório de gestão deste mês, na pasta 'Fotos do site' (ex.: relatorio-2026-08.pdf). " +
+  "Nome do PDF do relatório de gestão deste mês, na pasta 'Arquivos do site' (ex.: relatorio-2026-08.pdf). " +
   "Opcional. O site oferece o arquivo para download.";
 
 function criarColunaRelatorio() {

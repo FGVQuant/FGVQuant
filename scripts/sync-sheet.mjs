@@ -7,7 +7,7 @@ import { existsSync, mkdirSync, rmSync, statSync, writeFileSync } from "node:fs"
 import readXlsx from "read-excel-file/node";
 import { figureFor } from "./project-figure.mjs";
 
-/** "FGV Quant - site" folder on the league's Drive: the spreadsheet plus "Fotos do site". */
+/** "FGV Quant - site" folder on the league's Drive: the spreadsheet plus "Arquivos do site". */
 const FOLDER = "1CVmNj4WNtqLL5Ex-kre9tuqX52IzhCoa";
 const KEY = process.env.GOOGLE_API_KEY;
 const OUT = "content/sheet";
@@ -85,8 +85,14 @@ const root = await list(FOLDER);
 const sheetFile = root.find((f) => f.mimeType === "application/vnd.google-apps.spreadsheet");
 const photoFolder = root.find((f) => f.mimeType === "application/vnd.google-apps.folder");
 if (!sheetFile || !photoFolder)
-  fail(["A pasta do Drive precisa ter uma planilha Google (não .xlsx) e a pasta 'Fotos do site'."]);
-const files = new Map((await list(photoFolder.id)).map((f) => [f.name, f]));
+  fail(["A pasta do Drive precisa ter uma planilha Google (não .xlsx) e a pasta 'Arquivos do site'."]);
+// "Arquivos do site" may be split into subfolders; the sheet still names files only, so names must be unique.
+const files = new Map();
+for (const queue = [photoFolder.id]; queue.length; )
+  for (const f of await list(queue.shift()))
+    if (f.mimeType === "application/vnd.google-apps.folder") queue.push(f.id);
+    else if (files.has(f.name)) fail([`'${f.name}' aparece duas vezes em 'Arquivos do site'.`]);
+    else files.set(f.name, f);
 
 const TABS = [
   "Membros",
@@ -167,12 +173,12 @@ function url(row, col) {
   return v;
 }
 
-/** Files to fetch from "Fotos do site": name → destination path. */
+/** Files to fetch from "Arquivos do site": name → destination path. */
 const wanted = new Map();
 function file(row, col, dir, ref) {
   const name = row[col];
   if (name === undefined) return undefined;
-  if (!files.has(name)) return err(row, `'${name}' não está na pasta 'Fotos do site'`);
+  if (!files.has(name)) return err(row, `'${name}' não está na pasta 'Arquivos do site'`);
   wanted.set(name, `${dir}/${name}`);
   return ref(name);
 }
@@ -466,7 +472,7 @@ const fund = {
   },
 };
 
-// Official daily history: the latest History_Master_AAAA_MM.xlsx in "Fotos do site", as the fund's
+// Official daily history: the latest History_Master_AAAA_MM.xlsx in "Arquivos do site", as the fund's
 // monthly run writes it (sheet CUMULATIVE: Date plus one <Name>_Acc column per series). Read after the
 // downloads below; without one, the site hides the cumulative and drawdown tabs.
 const historyFile = [...files.keys()]

@@ -82,7 +82,7 @@ const CORTAR = ["Texto", "Regras"];
 const EXPLICACOES = {
   "Fundo mensal": {
     "Relatório (PDF)":
-      "Nome do PDF do relatório de gestão deste mês, na pasta 'Fotos do site'. Opcional. O site oferece para download.",
+      "Nome do PDF do relatório de gestão deste mês, na pasta 'Arquivos do site'. Opcional. O site oferece para download.",
   },
   Newsletter: {
     Edição: "mm/aaaa da edição. Obrigatório.",

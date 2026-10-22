@@ -8,7 +8,8 @@
  *  - colunas com lista suspensa viram uma lista de opções;
  *  - colunas lilás com fórmula (ex.: Status em Membros) ficam de fora e são calculadas na planilha;
  *  - colunas "(inglês)" ficam num grupo opcional;
- *  - Foto, Logo, Artigo (PDF) e Relatório (PDF) aceitam um arquivo, que vai para a pasta 'Fotos do site'.
+ *  - Foto, Logo, Artigo (PDF) e Relatório (PDF) aceitam um arquivo, que vai para a subpasta da aba em
+ *    'Arquivos do site' (Membros, Eventos, Fundo…).
  * Os campos obrigatórios são os mesmos que o site exige (scripts/sync-sheet.mjs, need()).
  */
 
@@ -136,10 +137,10 @@ function salvarLinha(nome, valores, arquivos) {
       i = colA.length;
     }
     const linha = 5 + i;
-    const pasta = pastaDeFotos(ss);
+    const raiz = pastaDeFotos(ss);
     campos.forEach((c) => {
       let v = valores[c.coluna];
-      if (arquivos[c.coluna]) v = subirArquivo(pasta, arquivos[c.coluna], valores, campos);
+      if (arquivos[c.coluna]) v = subirArquivo(raiz, nome, arquivos[c.coluna], valores, campos);
       if (v === undefined || v === "") return;
       const celula = aba.getRange(linha, c.coluna);
       if (c.tipo === "data") {
@@ -166,14 +167,30 @@ function salvarLinha(nome, valores, arquivos) {
 function pastaDeFotos(ss) {
   const pais = DriveApp.getFileById(ss.getId()).getParents();
   while (pais.hasNext()) {
-    const filhas = pais.next().getFoldersByName("Fotos do site");
+    const filhas = pais.next().getFoldersByName("Arquivos do site");
     if (filhas.hasNext()) return filhas.next();
   }
-  throw new Error("Não achei a pasta 'Fotos do site' ao lado da planilha.");
+  throw new Error("Não achei a pasta 'Arquivos do site' ao lado da planilha.");
 }
 
-/** Salva o arquivo na pasta com um nome limpo (nome-da-linha.ext) e devolve esse nome para a célula. */
-function subirArquivo(pasta, arquivo, valores, campos) {
+/** Subpasta de 'Arquivos do site' para cada aba; abas sem entrada usam o próprio nome. */
+const SUBPASTA = { "Fundo mensal": "Fundo" };
+
+/** Algum arquivo com este nome em qualquer subpasta? O site acha os arquivos só pelo nome. */
+function existe(pasta, nome) {
+  if (pasta.getFilesByName(nome).hasNext()) return true;
+  for (const filhas = pasta.getFolders(); filhas.hasNext(); ) if (existe(filhas.next(), nome)) return true;
+  return false;
+}
+
+/**
+ * Salva o arquivo na subpasta da aba com um nome limpo (nome-da-linha.ext), único em toda a
+ * 'Arquivos do site', e devolve esse nome para a célula.
+ */
+function subirArquivo(raiz, aba, arquivo, valores, campos) {
+  const sub = SUBPASTA[aba] || aba;
+  const achada = raiz.getFoldersByName(sub);
+  const pasta = achada.hasNext() ? achada.next() : raiz.createFolder(sub);
   const ext = (arquivo.nome.match(/\.[a-z0-9]+$/i) || [""])[0].toLowerCase();
   const titulo = campos.find((c) => !c.ingles && c.tipo !== "arquivo" && valores[c.coluna]);
   const base =
@@ -185,7 +202,7 @@ function subirArquivo(pasta, arquivo, valores, campos) {
       .replace(/^-|-$/g, "")
       .slice(0, 60) || "arquivo";
   let nome = base + ext;
-  for (let n = 2; pasta.getFilesByName(nome).hasNext(); n++) nome = base + "-" + n + ext;
+  for (let n = 2; existe(raiz, nome); n++) nome = base + "-" + n + ext;
   const blob = Utilities.newBlob(Utilities.base64Decode(arquivo.base64), arquivo.tipo, nome);
   pasta.createFile(blob);
   return nome;

@@ -6,9 +6,9 @@ O site é bilíngue (português por padrão, inglês em `/en`) e escuro por padr
 
 ## Atualizando o conteúdo (sem código)
 
-Equipe, eventos, projetos, competições, parceiros, depoimentos, números do fundo e dados da liga ficam na planilha **"FGV Quant - Site"**. Fotos e logos ficam na pasta **"Fotos do site"**, ao lado dela, no Drive da liga.
+Equipe, eventos, projetos, competições, parceiros, depoimentos, números do fundo e dados da liga ficam na planilha **"FGV Quant - Site"**. Fotos e logos ficam na pasta **"Arquivos do site"**, ao lado dela, no Drive da liga.
 
-1. Edite a linha na planilha. Para uma imagem, suba o arquivo em "Fotos do site" e escreva o nome exato do arquivo na linha.
+1. Edite a linha na planilha. Para uma imagem, suba o arquivo em "Arquivos do site" e escreva o nome exato do arquivo na linha.
 2. Atualize o site: use **Site → Atualizar o site agora** na planilha ou faça um redeploy no Vercel. Qualquer push na `main` também atualiza. O menu vem de [scripts/apps-script/atualizar-site.gs](scripts/apps-script/atualizar-site.gs), e o cabeçalho do arquivo explica como instalá-lo.
 3. Se alguma linha estiver inválida (coluna obrigatória vazia, parceiro que não existe na aba Parceiros, arquivo que não está na pasta), o build para e o site no ar continua como estava. O log do build no Vercel diz qual é a linha.
 
